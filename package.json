@@ -1,8 +1,8 @@
 {
-  "name": "mditor",
+  "name": "mditor-desktop",
   "version": "1.0.0",
   "description": "Hello Mokit",
-  "main": "./src/app.js",
+  "main": "./src/index.js",
   "scripts": {
     "start": "./bin/start.sh",
     "stop": "./bin/stop.sh",
@@ -56,7 +56,8 @@
     "karma-webpack": "1.8.0",
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
-    "mokit": "^3.0.6",
+    "mditor": "^1.0.0",
+    "mokit": "^3.0.11",
     "mokit-router": "^1.0.6",
     "mokit-touch": "^1.0.1",
     "mokit-transition": "^1.0.1",
