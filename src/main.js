@@ -19,6 +19,8 @@ function createWindow() {
     show: false
   })
 
+  win.setSheetOffset(38)
+
   win.once('ready-to-show', () => {
     win.show()
   })

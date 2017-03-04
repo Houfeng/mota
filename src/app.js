@@ -10,11 +10,11 @@ mokit({
   },
   onReady() {
     this.mditor.removeCommand('toggleFullScreen');
-    this.mditor.shortcut.bind('ctrl+s', () => {
+    this.mditor.shortcut.bind('{cmd}+s', () => {
       this.showSaveDialog();
     });
   },
   showSaveDialog() {
-    remote.dialog.showSaveDialog();
+    remote.dialog.showSaveDialog(remote.getCurrentWindow());
   }
 }).start();
