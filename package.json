@@ -2,7 +2,7 @@
   "name": "mditor-desktop",
   "version": "1.0.0",
   "description": "Hello Mokit",
-  "main": "./src/index.js",
+  "main": "./src/main.js",
   "scripts": {
     "start": "./bin/start.sh",
     "stop": "./bin/stop.sh",
@@ -56,11 +56,6 @@
     "karma-webpack": "1.8.0",
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
-    "mditor": "^1.0.1",
-    "mokit": "^3.0.11",
-    "mokit-router": "^1.0.6",
-    "mokit-touch": "^1.0.1",
-    "mokit-transition": "^1.0.1",
     "nokit-filter-proxy": "0.0.8",
     "nokitjs": "^1.26.3",
     "phantomjs-prebuilt": "^2.1.13",
@@ -68,5 +63,12 @@
     "selenium-webdriver": "^3.0.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.14.0"
+  },
+  "dependencies": {
+    "mditor": "^1.0.3",
+    "mokit": "^3.0.11",
+    "mokit-router": "^1.0.6",
+    "mokit-touch": "^1.0.1",
+    "mokit-transition": "^1.0.1"
   }
 }

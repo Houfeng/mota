@@ -9,12 +9,26 @@ html, body, .app {
 }
 
 .mditor {
+  margin: 0px !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  border-radius: 0px !important;
+  border: none !important;
   .head {
     padding-top: 1px !important;
-    padding-left: 80px !important;
+    padding-left: 72px !important;
     -webkit-app-region: drag;
-    .item {
-      -webkit-app-region: no-drag
+    .toolbar {
+      .item {
+        -webkit-app-region: no-drag
+      }
+      .item.fa-arrows-alt {
+        display: none !important;
+      }
     }
   }
   .editor {

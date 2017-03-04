@@ -1,9 +1,7 @@
-const {
-  app,
-  BrowserWindow
-} = require('electron')
-const path = require('path')
-const url = require('url')
+const app = require('electron').app;
+const BrowserWindow = require('electron').BrowserWindow;
+const path = require('path');
+const url = require('url');
 
 // 保持一个对于 window 对象的全局引用，如果你不这样做，
 // 当 JavaScript 对象被垃圾回收， window 会被自动地关闭
@@ -12,11 +10,17 @@ let win
 function createWindow() {
   // 创建浏览器窗口。
   win = new BrowserWindow({
-    width: 850,
-    height: 500,
+    backgroundColor: '#ffffff',
+    width: 800,
+    height: 494,
     minWidth: 650,
-    minHeight: 350,
-    titleBarStyle: 'hidden-inset'
+    minHeight: 402,
+    titleBarStyle: 'hidden-inset',
+    show: false
+  })
+
+  win.once('ready-to-show', () => {
+    win.show()
   })
 
   // 加载应用的 index.html。
