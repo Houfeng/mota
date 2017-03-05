@@ -4,7 +4,7 @@ const mokit = require('mokit');
 const Mditor = require('mditor').Client;
 const contextMenu = require('./contextmenu');
 
-mokit({
+window.ctx = mokit({
   element: document.body,
   components: {
     Mditor
