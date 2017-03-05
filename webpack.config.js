@@ -12,7 +12,7 @@ const cssBundlePlugin = new ExtractTextPlugin("css/bundle.css");
 const htmlPlugin = new HtmlWebpackPlugin({
   title: 'template',
   filename: 'index.html',
-  template: './src/assets/index.html',
+  template: './src/window/index.html',
 });
 
 const cleanPlugin = new CleanWebpackPlugin(['build/dist'], {
@@ -71,7 +71,7 @@ const loaders = [{
 // webpack configs
 module.exports = {
   entry: {
-    bundle: `./src/app.js`
+    bundle: `./src/window/index.js`
   },
   output: {
     path: './build/dist/',

@@ -7,13 +7,15 @@
 	<meta charset="UTF-8">
 	<title>Mditor</title>
 	<script>
-		const nodeRequire = require;
-		const electron = require('electron');
-		const remote = electron.remote;
+		if (self.require) {
+			self.nodeRequire = require;
+			self.electron = require('electron');
+			self.remote = electron.remote;
+		}
 	</script>
 </head>
 
-<body>
+<body m:on:contextmenu="onContextMenu">
 	<m:mditor m:id="mditor"></m:mditor>
 </body>
 
