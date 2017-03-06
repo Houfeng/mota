@@ -45,7 +45,7 @@ window.ctx = mokit({
     btn.handler = function () {
       remote.shell.openExternal('http://mditor.com');
     };
-  },
+  }
 
   /**
    * 打开保存对话框
