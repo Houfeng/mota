@@ -6,7 +6,7 @@ const template = [
   require('./view'),
   require('./window'),
   require('./help')
-]
+];
 
 if (process.platform === 'darwin') {
   template.unshift(require('./main'));
