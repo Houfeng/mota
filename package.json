@@ -73,9 +73,6 @@
     "bluebird": "^3.5.0",
     "electron-renderer-value": "^1.1.0",
     "mditor": "^1.0.3",
-    "mokit": "^3.0.12",
-    "mokit-router": "^1.0.6",
-    "mokit-touch": "^1.0.1",
-    "mokit-transition": "^1.0.1"
+    "mokit": "^3.0.12"
   }
 }
