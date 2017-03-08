@@ -4,21 +4,14 @@ const mokit = require('mokit');
 const Mditor = require('mditor').Client;
 const contextMenu = require('./contextmenu');
 const drapable = require('./drapable');
+const ipcRenderer = nodeRequire('electron').ipcRenderer;
 
 drapable(document.body);
 
-window.ctx = mokit({
+const ctx = window.ctx = mokit({
   element: document.body,
   components: {
     Mditor
-  },
-
-  /**
-   * 在窗口大小改变时
-   * @returns {void} 无返回
-   */
-  onResize() {
-    console.log('reszie');
   },
 
   /**
@@ -49,6 +42,19 @@ window.ctx = mokit({
     btn.handler = function () {
       remote.shell.openExternal('http://mditor.com');
     };
+  },
+
+  openFile(filename) {
+    ipcRenderer.send('open-file', {
+      filename: filename,
+      windowId: this.currentWindow.id
+    });
   }
 
 }).start();
+
+//在收到内容时
+ipcRenderer.on('file', function (event, info) {
+  document.title = info.filename;
+  ctx.mditor.value = info.content;
+});

@@ -24,7 +24,7 @@
   "license": "MIT",
   "dev": {
     "host": "localhost",
-    "port": 8002
+    "port": 8006
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -74,6 +74,7 @@
     "bluebird": "^3.5.0",
     "electron-renderer-value": "^1.1.0",
     "mditor": "^1.0.3",
-    "mokit": "^3.0.12"
+    "mokit": "^3.0.13",
+    "ntils": "^2.0.14"
   }
 }

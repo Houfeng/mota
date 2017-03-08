@@ -40,8 +40,7 @@ const items = [{
   label: '全选',
   role: 'selectall',
   accelerator: 'CmdOrCtrl+A'
-}
-];
+}];
 
 const menu = new Menu();
 items.forEach(item => {
