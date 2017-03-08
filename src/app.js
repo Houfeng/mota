@@ -125,6 +125,7 @@ app.saveFile = async function (filename, window) {
   if (utils.isNull(content)) return;
   window.filename = filename;
   window.content = content;
+  window.isChanged = false;
   await writeFile(filename, content);
 };
 
@@ -165,6 +166,12 @@ app.leaveConfirm = function (window) {
   });
 };
 
+//在收到打开文件请求时
+ipcMain.on('content-changed', function (event, info) {
+  let window = BrowserWindow.fromId(info.windowId);
+  window.isChanged = true;
+});
+
 //打开一个文件 
 app.openFile = async function (filename, window) {
   let buffer = await readFile(filename);
@@ -179,6 +186,7 @@ app.openFile = async function (filename, window) {
   }
   window.filename = filename;
   window.content = content;
+  window.isChanged = false;
   window.webContents.send('file', { filename, content });
 };
 
