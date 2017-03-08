@@ -46,22 +46,16 @@ app.createWindow = function createWindow() {
     window.content = '';
     window.filename = '';
     window.on('close', function (event) {
-      if (window.isChanged) return;
-      let result = dialog.showMessageBox(window, {
-        type: 'question',
-        buttons: ['保存', '取消', '不保存'],
-        defaultId: 0,
-        cancelId: 2,
-        message: '确认保存',
-        detail: `文件 '${window.filename}' 还是保存，是否现在保存？`
-      });
+      let result = app.leaveConfirm(window);
       if (result == 0) {
         event.preventDefault();
         app.save(window).then(function () {
           window.destroy();
         });
       }
-      if (result == 1) event.preventDefault();
+      if (result == 1) {
+        event.preventDefault();
+      }
     });
     //当 window 被关闭，这个事件会被触发。
     window.on('closed', () => {
@@ -157,12 +151,32 @@ app.saveAs = async function (window) {
   });
 };
 
+//离开检查
+app.leaveConfirm = function (window) {
+  window = window || this.getActiveWindow();
+  if (!window || !window.isChanged) return 2;
+  return dialog.showMessageBox(window, {
+    type: 'question',
+    buttons: ['保存', '取消', '不保存'],
+    defaultId: 0,
+    cancelId: 2,
+    message: '确认保存',
+    detail: `文件 '${window.filename}' 还是保存，是否现在保存？`
+  });
+};
+
 //打开一个文件 
 app.openFile = async function (filename, window) {
   let buffer = await readFile(filename);
   let content = buffer.toString();
   window = window || this.getActiveWindow();
-  if (!window) window = await app.createWindow();
+  if (window) {
+    let result = app.leaveConfirm(window);
+    if (result == 0) await app.save(window);
+    if (result == 1) return;
+  } else {
+    window = await app.createWindow();
+  }
   window.filename = filename;
   window.content = content;
   window.webContents.send('file', { filename, content });
@@ -172,6 +186,7 @@ app.openFile = async function (filename, window) {
 app.open = async function (window) {
   return new Promise(resolve => {
     window = window || this.getActiveWindow();
+    //这是不检查 window 是否存在，因为 openFile 发现没有窗口会创建
     dialog.showOpenDialog(window, async filenames => {
       if (!filenames || filenames.length < 1) return;
       app.openFile(filenames[0], window).then(resolve);
