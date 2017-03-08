@@ -17,7 +17,8 @@
     "unit": "./bin/unit.sh",
     "e2e": "./bin/e2e.sh",
     "test": "./bin/test.sh",
-    "release": "./bin/release.sh"
+    "release": "./bin/release.sh",
+    "desk": "electron ."
   },
   "author": "",
   "license": "MIT",

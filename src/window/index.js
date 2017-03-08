@@ -3,6 +3,9 @@ require('./index.less');
 const mokit = require('mokit');
 const Mditor = require('mditor').Client;
 const contextMenu = require('./contextmenu');
+const drapable = require('./drapable');
+
+drapable(document.body);
 
 window.ctx = mokit({
   element: document.body,
@@ -25,12 +28,13 @@ window.ctx = mokit({
   onReady() {
     this.currentWindow = remote.getCurrentWindow();
     this.mditor.removeCommand('toggleFullScreen');
-    // this.mditor.shortcut.bind('{cmd}+s', () => {
-    //   this.showSaveDialog();
-    // });
     this.overrideHelpBtn();
   },
 
+  /**
+   * 在右击时弹出内容菜单
+   * @param {object} event 
+   */
   onContextMenu(event) {
     if (event.target != this.mditor.editor.$element) return;
     contextMenu.popup(this.currentWindow);
@@ -46,13 +50,5 @@ window.ctx = mokit({
       remote.shell.openExternal('http://mditor.com');
     };
   }
-
-  /**
-   * 打开保存对话框
-   * @returns 无返回
-   */
-  // showSaveDialog() {
-  //   remote.dialog.showSaveDialog(remote.getCurrentWindow());
-  // }
 
 }).start();
