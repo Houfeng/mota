@@ -11,6 +11,7 @@ const writeFile = Promise.promisify(require('fs').writeFile);
 const readFile = Promise.promisify(require('fs').readFile);
 const ipcMain = require('electron').ipcMain;
 const utils = require('ntils');
+const recent = require('./recent');
 
 // 保持所有对于 window 对象的全局引用，如果你不这样做，
 // 当 JavaScript 对象被垃圾回收， window 会被自动地关闭
@@ -93,9 +94,9 @@ app.on('will-finish-launching', () => {
   //打开文件事件
   app.on('open-file', (event, filename) => {
     event.preventDefault();
-    setTimeout(() => {
-      app.openFile(filename, windows[0]);
-    }, 500);
+    setTimeout(async () => {
+      app.openFileInWindow(filename, await windows[0]);
+    }, 0);
   });
 });
 
@@ -134,6 +135,7 @@ app.saveFile = async function (filename, window) {
   window.filename = filename;
   window.isChanged = false;
   await writeFile(filename, content);
+  recent.add(filename);
 };
 
 //保存
@@ -184,34 +186,41 @@ app.openFile = async function (filename, window) {
   let buffer = await readFile(filename);
   let content = buffer.toString();
   window = window || this.getActiveWindow();
-  if (window) {
-    let result = app.leaveConfirm(window);
-    if (result == 0) await app.save(window);
-    if (result == 1) return;
-  } else {
-    window = await app.createWindow();
-  }
+  if (!window) return;
+  let result = app.leaveConfirm(window);
+  if (result == 0) await app.save(window);
+  if (result == 1) return;
   window.filename = filename;
   window.isChanged = false;
   window.webContents.send('file', {
     filename,
     content
   });
+  recent.add(filename);
+};
+
+//尝试打打一个文档，如果当前窗口没有内容，不关联文件，则使用，否则创新窗口
+app.openFileInWindow = async function (filename, window) {
+  window = window || this.getActiveWindow();
+  if (!window || window.filename || await app.getEditorValue(window)) {
+    window = await app.createWindow();
+  }
+  this.openFile(filename, window);
 };
 
 //打开
 app.open = async function (window) {
   return new Promise(resolve => {
     window = window || this.getActiveWindow();
-    //这是不检查 window 是否存在，因为 openFile 发现没有窗口会创建
+    //这是不检查 window 是否存在，因为 openFileInWindow 发现没有窗口会创建
     dialog.showOpenDialog(window, filenames => {
       if (!filenames || filenames.length < 1) return;
-      app.openFile(filenames[0], window).then(resolve);
+      app.openFileInWindow(filenames[0], window).then(resolve);
     });
   });
 };
 
-//在收到打开文件请求时
+//在收到打开文件请求时，用于拖拽
 ipcMain.on('open-file', function (event, info) {
   let window = BrowserWindow.fromId(info.windowId);
   app.openFile(info.filename, window);

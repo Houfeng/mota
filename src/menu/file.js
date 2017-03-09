@@ -21,7 +21,7 @@ module.exports = {
     }
   },
   {
-    label: '历史记录',
+    label: '最近编辑',
     submenu: []
   },
   {
