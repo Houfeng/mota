@@ -100,7 +100,7 @@ app.on('will-finish-launching', () => {
     event.preventDefault();
     setTimeout(async () => {
       app.openFileInWindow(filename, await windows[0]);
-    }, 0);
+    }, 600);
   });
 });
 
