@@ -5,7 +5,7 @@ const dialog = require('electron').dialog;
 const rendererVal = require('electron-renderer-value');
 const path = require('path');
 const url = require('url');
-const mainMenu = require('./menu');
+const menu = require('./menu');
 const Promise = require('bluebird');
 const writeFile = Promise.promisify(require('fs').writeFile);
 const readFile = Promise.promisify(require('fs').readFile);
@@ -86,9 +86,13 @@ app.createWindow = function createWindow() {
 // 创建浏览器窗口时，调用这个函数。
 // 部分 API 在 ready 事件触发后才能使用。
 app.on('ready', () => {
-  Menu.setApplicationMenu(mainMenu);
+  app.createMenu();
   app.createWindow();
 });
+
+app.createMenu = async function () {
+  return Menu.setApplicationMenu(await menu());
+};
 
 app.on('will-finish-launching', () => {
   //打开文件事件
