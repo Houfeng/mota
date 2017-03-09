@@ -73,7 +73,7 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "electron-renderer-value": "^1.1.0",
-    "mditor": "^1.0.3",
+    "mditor": "^1.0.9",
     "mokit": "^3.0.13",
     "ntils": "^2.0.14"
   }

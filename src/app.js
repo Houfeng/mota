@@ -25,8 +25,8 @@ app.createWindow = function createWindow() {
     // 创建浏览器窗口。
     let window = new BrowserWindow({
       backgroundColor: '#ffffff',
-      width: 800,
-      height: 494,
+      width: 900,
+      height: 556,
       minWidth: 650,
       minHeight: 402,
       titleBarStyle: 'hidden-inset',
@@ -43,7 +43,6 @@ app.createWindow = function createWindow() {
       protocol: 'file:',
       slashes: true
     }));
-    window.content = '';
     window.filename = '';
     window.on('close', function (event) {
       let result = app.leaveConfirm(window);
@@ -124,7 +123,6 @@ app.saveFile = async function (filename, window) {
   let content = await app.getEditorValue(window);
   if (utils.isNull(content)) return;
   window.filename = filename;
-  window.content = content;
   window.isChanged = false;
   await writeFile(filename, content);
 };
@@ -185,9 +183,11 @@ app.openFile = async function (filename, window) {
     window = await app.createWindow();
   }
   window.filename = filename;
-  window.content = content;
   window.isChanged = false;
-  window.webContents.send('file', { filename, content });
+  window.webContents.send('file', {
+    filename,
+    content
+  });
 };
 
 //打开

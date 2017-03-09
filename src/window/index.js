@@ -49,6 +49,13 @@ const ctx = window.ctx = mokit({
       filename: filename,
       windowId: this.currentWindow.id
     });
+  },
+
+  onChanged() {
+    ipcRenderer.send('content-changed', {
+      filename: ctx.filename,
+      windowId: this.currentWindow.id
+    });
   }
 
 }).start();
@@ -56,5 +63,6 @@ const ctx = window.ctx = mokit({
 //在收到内容时
 ipcRenderer.on('file', function (event, info) {
   document.title = info.filename;
+  ctx.filename = info.filename;
   ctx.mditor.value = info.content;
 });
