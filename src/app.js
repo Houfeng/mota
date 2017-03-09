@@ -13,6 +13,11 @@ const ipcMain = require('electron').ipcMain;
 const utils = require('ntils');
 const recent = require('./recent');
 
+const FILE_FILTERS = [{
+  name: 'Markdown',
+  extensions: ['md']
+}];
+
 // 保持所有对于 window 对象的全局引用，如果你不这样做，
 // 当 JavaScript 对象被垃圾回收， window 会被自动地关闭
 const windows = [];
@@ -158,10 +163,14 @@ app.saveAs = async function (window) {
   return new Promise(resolve => {
     window = window || this.getActiveWindow();
     if (!window) return;
-    dialog.showSaveDialog(window, filename => {
+    window.focus();
+    dialog.showSaveDialog(window, {
+      filters: FILE_FILTERS
+    }, filename => {
       if (!filename) return;
       app.saveFile(filename, window).then(resolve);
     });
+    window.focus();
   });
 };
 
@@ -217,7 +226,9 @@ app.open = async function (window) {
   return new Promise(resolve => {
     window = window || this.getActiveWindow();
     //这是不检查 window 是否存在，因为 openFileInWindow 发现没有窗口会创建
-    dialog.showOpenDialog(window, filenames => {
+    dialog.showOpenDialog(window, {
+      filters: FILE_FILTERS
+    }, filenames => {
       if (!filenames || filenames.length < 1) return;
       app.openFileInWindow(filenames[0], window).then(resolve);
     });

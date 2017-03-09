@@ -49,7 +49,7 @@ const ctx = window.ctx = mokit({
       remote.dialog.showOpenDialog(this.currentWindow, {
         filters: [{
           name: '图片',
-          extensions: ['jpg', 'png', 'gif']
+          extensions: ['png', 'jpg', 'jpeg', 'gif']
         }],
         properties: ['openFile', 'multiSelections']
       }, filenames => {
