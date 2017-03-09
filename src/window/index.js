@@ -21,7 +21,7 @@ const ctx = window.ctx = mokit({
   onReady() {
     this.currentWindow = remote.getCurrentWindow();
     this.mditor.removeCommand('toggleFullScreen');
-    this.overrideHelpBtn();
+    this.overrideToolbar();
   },
 
   /**
@@ -37,10 +37,25 @@ const ctx = window.ctx = mokit({
    * 重写帮助按钮
    * @returns {void} 无返回
    */
-  overrideHelpBtn() {
-    let btn = this.mditor.toolbar.items.find(item => item.name == 'help');
-    btn.handler = function () {
+  overrideToolbar() {
+    //帮助按钮
+    let helpBtn = this.mditor.toolbar.getItem('help');
+    helpBtn.handler = () => {
       remote.shell.openExternal('http://mditor.com');
+    };
+    //图片按钮
+    let imgBtn = this.mditor.toolbar.getItem('image');
+    imgBtn.handler = () => {
+      remote.dialog.showOpenDialog(this.currentWindow, {
+        filters: [{
+          name: '图片',
+          extensions: ['jpg', 'png', 'gif']
+        }],
+        properties: ['openFile', 'multiSelections']
+      }, filenames => {
+        if (!filenames || filenames.length < 1) return;
+        this.mditor.editor.insertBeforeText(filenames.map(filename => `![alt](${filename})`).join('\n'));
+      });
     };
   },
 

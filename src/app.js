@@ -195,7 +195,7 @@ app.open = async function (window) {
   return new Promise(resolve => {
     window = window || this.getActiveWindow();
     //这是不检查 window 是否存在，因为 openFile 发现没有窗口会创建
-    dialog.showOpenDialog(window, async filenames => {
+    dialog.showOpenDialog(window, filenames => {
       if (!filenames || filenames.length < 1) return;
       app.openFile(filenames[0], window).then(resolve);
     });
