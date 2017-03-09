@@ -27,8 +27,8 @@ app.createWindow = function createWindow() {
       backgroundColor: '#ffffff',
       width: 900,
       height: 556,
-      minWidth: 650,
-      minHeight: 402,
+      minWidth: 700,
+      minHeight: 432,
       titleBarStyle: 'hidden-inset',
       frame: false,
       show: false
