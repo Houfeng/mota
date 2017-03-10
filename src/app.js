@@ -184,7 +184,7 @@ app.leaveConfirm = function (window) {
     defaultId: 0,
     cancelId: 2,
     message: '确认保存',
-    detail: `文件 '${window.filename}' 还是保存，是否现在保存？`
+    detail: `文件 '${window.filename}' 还未保存，是否现在保存？`
   });
 };
 
