@@ -103,7 +103,7 @@ app.on('will-finish-launching', () => {
   //打开文件事件
   app.on('open-file', (event, filename) => {
     event.preventDefault();
-    setTimeout(async () => {
+    setTimeout(async() => {
       app.openFileInWindow(filename, await windows[0]);
     }, 600);
   });
@@ -184,7 +184,7 @@ app.leaveConfirm = function (window) {
     defaultId: 0,
     cancelId: 2,
     message: '确认保存',
-    detail: `文件 '${window.filename}' 还未保存，是否现在保存？`
+    detail: `文件 "${window.filename||'Untitled'}" 还未保存，是否现在保存？`
   });
 };
 
