@@ -1,5 +1,5 @@
 const app = require('electron').app;
-const recent = require('../recent');
+const recent = require('../common/recent');
 
 module.exports = async () => {
 
@@ -69,11 +69,20 @@ module.exports = async () => {
     {
       label: '导出',
       submenu: [{
-        label: 'HTML...'
+        label: 'HTML...',
+        click() {
+          app.toHTML();
+        }
       }, {
-        label: 'PDF...'
+        label: 'PDF...',
+        click() {
+          app.toPDF();
+        }
       }, {
-        label: '图片...'
+        label: '图片...',
+        click() {
+          app.toImage();
+        }
       }]
     }, {
       type: 'separator'

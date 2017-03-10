@@ -11,7 +11,8 @@ const writeFile = Promise.promisify(require('fs').writeFile);
 const readFile = Promise.promisify(require('fs').readFile);
 const ipcMain = require('electron').ipcMain;
 const utils = require('ntils');
-const recent = require('./recent');
+const recent = require('./common/recent');
+const convert = require('./convert');
 
 const FILE_FILTERS = [{
   name: 'Markdown',
@@ -240,3 +241,61 @@ ipcMain.on('open-file', function (event, info) {
   let window = BrowserWindow.fromId(info.windowId);
   app.openFile(info.filename, window);
 });
+
+//导出 HTML
+app.toHTML = async function (window) {
+  window = window || this.getActiveWindow();
+  if (!window) return;
+  let html = await convert.toHTML({
+    title: path.basename(window.filename),
+    content: await this.getEditorValue(window),
+    border: true
+  });
+  dialog.showSaveDialog(window, {
+    filters: [{
+      name: 'HTML',
+      extensions: ['htm', 'html']
+    }]
+  }, async filename => {
+    if (!filename) return;
+    await writeFile(filename, html);
+  });
+};
+
+//导出 PDF
+app.toPDF = async function (window) {
+  window = window || this.getActiveWindow();
+  if (!window) return;
+  let html = await convert.toPDF({
+    title: path.basename(window.filename),
+    content: await this.getEditorValue(window)
+  });
+  dialog.showSaveDialog(window, {
+    filters: [{
+      name: 'PDF',
+      extensions: ['pdf']
+    }]
+  }, async filename => {
+    if (!filename) return;
+    await writeFile(filename, html);
+  });
+};
+
+//导出 png
+app.toImage = async function (window) {
+  window = window || this.getActiveWindow();
+  if (!window) return;
+  let html = await convert.toImage({
+    title: path.basename(window.filename),
+    content: await this.getEditorValue(window)
+  });
+  dialog.showSaveDialog(window, {
+    filters: [{
+      name: 'PNG',
+      extensions: ['png']
+    }]
+  }, async filename => {
+    if (!filename) return;
+    await writeFile(filename, html);
+  });
+};
