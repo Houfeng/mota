@@ -2,4 +2,4 @@
 
 set -e
 
-nokit delete $npm_package_name
+#nokit delete $npm_package_name

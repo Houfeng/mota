@@ -1,7 +1,7 @@
 require('./index.less');
 
 const mokit = require('mokit');
-const Mditor = require('mditor').Client;
+const Mditor = require('mditor/src/client');
 const contextMenu = require('./contextmenu');
 const drapable = require('./drapable');
 const ipcRenderer = nodeRequire('electron').ipcRenderer;
