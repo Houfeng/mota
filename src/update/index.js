@@ -12,7 +12,6 @@ exports.check = async function (force) {
   }
   let response = await fetch(pkg.update.url);
   let info = await response.json();
-  console.log('update', info);
   store.setItem(STORE_KEY, Date.now());
   if (info.version == pkg.version) return;
   return info;
