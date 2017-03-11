@@ -104,7 +104,7 @@ app.on('will-finish-launching', () => {
   //打开文件事件
   app.on('open-file', (event, filename) => {
     event.preventDefault();
-    setTimeout(async() => {
+    setTimeout(async () => {
       app.openFileInWindow(filename, await windows[0]);
     }, 600);
   });
@@ -185,7 +185,7 @@ app.leaveConfirm = function (window) {
     defaultId: 0,
     cancelId: 2,
     message: '确认保存',
-    detail: `文件 "${window.filename||'Untitled'}" 还未保存，是否现在保存？`
+    detail: `文件 "${window.filename || 'Untitled'}" 还未保存，是否现在保存？`
   });
 };
 
@@ -246,11 +246,6 @@ ipcMain.on('open-file', function (event, info) {
 app.toHTML = async function (window) {
   window = window || this.getActiveWindow();
   if (!window) return;
-  let html = await convert.toHTML({
-    title: path.basename(window.filename),
-    content: await this.getEditorValue(window),
-    border: true
-  });
   dialog.showSaveDialog(window, {
     filters: [{
       name: 'HTML',
@@ -258,6 +253,11 @@ app.toHTML = async function (window) {
     }]
   }, async filename => {
     if (!filename) return;
+    let html = await convert.toHTML({
+      title: path.basename(window.filename),
+      content: await this.getEditorValue(window),
+      border: true
+    });
     await writeFile(filename, html);
   });
 };
@@ -266,10 +266,6 @@ app.toHTML = async function (window) {
 app.toPDF = async function (window) {
   window = window || this.getActiveWindow();
   if (!window) return;
-  let html = await convert.toPDF({
-    title: path.basename(window.filename),
-    content: await this.getEditorValue(window)
-  });
   dialog.showSaveDialog(window, {
     filters: [{
       name: 'PDF',
@@ -277,6 +273,10 @@ app.toPDF = async function (window) {
     }]
   }, async filename => {
     if (!filename) return;
+    let html = await convert.toPDF({
+      title: path.basename(window.filename),
+      content: await this.getEditorValue(window)
+    });
     await writeFile(filename, html);
   });
 };
@@ -285,10 +285,6 @@ app.toPDF = async function (window) {
 app.toImage = async function (window) {
   window = window || this.getActiveWindow();
   if (!window) return;
-  let html = await convert.toImage({
-    title: path.basename(window.filename),
-    content: await this.getEditorValue(window)
-  });
   dialog.showSaveDialog(window, {
     filters: [{
       name: 'PNG',
@@ -296,6 +292,10 @@ app.toImage = async function (window) {
     }]
   }, async filename => {
     if (!filename) return;
+    let html = await convert.toImage({
+      title: path.basename(window.filename),
+      content: await this.getEditorValue(window)
+    });
     await writeFile(filename, html);
   });
 };
