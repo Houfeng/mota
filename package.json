@@ -1,7 +1,7 @@
 {
   "name": "mditor",
   "displayName": "Mditor",
-  "version": "1.0.0",
+  "version": "1.0.0Beta",
   "description": "Mditor，最好用的 markdown 编辑器！",
   "main": "./src/app.js",
   "electronVersion": "1.6.1",
