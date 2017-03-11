@@ -2,6 +2,8 @@
 
 set -e
 
+npm run build
+
 #icns converter https://iconverticons.com/online/
 
 node ./bin/release.js
