@@ -6,7 +6,7 @@ set -e
 
 node ./bin/release.js
 
-#prjroot=$pwd
+PRJ_PATH=$PWD
 
 #install deps
 cd ./release/Mditor-darwin-x64/Mditor.app/Contents/Resources/app/
@@ -17,3 +17,6 @@ cnpm prune --production
 #cd $prjroot
 #release/Mditor-darwin-x64/Mditor.app
 #build --prepackaged ./
+
+#dmg
+#electron-installer-dmg $PRJ_PATH/release/Mditor-darwin-x64/Mditor.app mditor
