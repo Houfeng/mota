@@ -11,8 +11,10 @@ const writeFile = Promise.promisify(require('fs').writeFile);
 const readFile = Promise.promisify(require('fs').readFile);
 const ipcMain = require('electron').ipcMain;
 const utils = require('ntils');
-const recent = require('./common/recent');
+const recent = require('./recent');
 const convert = require('./convert');
+const update = require('./update');
+const shell = require('electron').shell;
 
 const FILE_FILTERS = [{
   name: 'Markdown',
@@ -47,7 +49,7 @@ app.createWindow = function createWindow() {
   window.setFullScreenable(false);
   // 加载应用的 index.html。
   window.loadURL(url.format({
-    pathname: path.resolve(__dirname, '../build/dist/index.html'),
+    pathname: path.resolve(__dirname, '../build/index.html'),
     protocol: 'file:',
     slashes: true
   }));
@@ -94,6 +96,7 @@ app.createWindow = function createWindow() {
 app.on('ready', () => {
   app.createMenu();
   app.createWindow();
+  setTimeout(app.checkUpdate, 3000);
 });
 
 app.createMenu = async function () {
@@ -298,4 +301,21 @@ app.toImage = async function (window) {
     });
     await writeFile(filename, html);
   });
+};
+
+//检查更新
+app.checkUpdate = async function (force) {
+  let info = await update.check(force);
+  if (!info) return;
+  let window = await app.getActiveWindow();
+  let result = dialog.showMessageBox(window, {
+    type: 'question',
+    buttons: ['前往下载', '暂不'],
+    defaultId: 0,
+    cancelId: 1,
+    message: `发现新版本 ${info.version}`,
+    detail: info.detail || '建议现在就去下载新版本'
+  });
+  if (result == 1) return;
+  shell.openExternal(info.url);
 };

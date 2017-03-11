@@ -1,5 +1,5 @@
 const app = require('electron').app;
-const store = require('./store');
+const store = require('../common/store');
 
 const STORE_KEY = 'recent';
 const MAX_NUM = 10;

@@ -80,7 +80,7 @@ module.exports = {
     bundle: `./src/window/index.js`
   },
   output: {
-    path: './build/dist/',
+    path: './build/',
     filename: 'js/[name].js'
   },
   devtool: 'source-map',

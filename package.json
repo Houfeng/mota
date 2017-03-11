@@ -26,6 +26,9 @@
     "host": "localhost",
     "port": 8006
   },
+  "update": {
+    "url": "http://mditor.com/update.json"
+  },
   "devDependencies": {
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",
@@ -79,6 +82,7 @@
     "html-pdf": "^2.1.0",
     "mditor": "^1.0.11",
     "mokit": "^3.0.13",
+    "node-fetch": "^1.6.3",
     "ntils": "^2.0.14",
     "stp": "^0.0.2"
   }

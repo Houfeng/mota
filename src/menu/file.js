@@ -1,5 +1,5 @@
 const app = require('electron').app;
-const recent = require('../common/recent');
+const recent = require('../recent');
 
 module.exports = async () => {
 
