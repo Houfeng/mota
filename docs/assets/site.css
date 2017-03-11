@@ -20,13 +20,13 @@ body {
     text-align: center;
     background: #F5F5F5;
     font-weight: 300;
+    background-image: url("../assets/background.jpg"); 
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #intro {
     color: #263C69;
-    background-image: url("../assets/background.jpg"); 
-    background-size: cover;
-    background-repeat: no-repeat;
 }
 
 h1 {
@@ -212,12 +212,12 @@ hr {
     opacity: .9;
 }
 .footer {
-    color: #ccc;
+    color: #999;
     font-size: .8em;
     margin: 2em;
 }
 .footer a {
-    color: #ccc;
+    color: #999;
     text-decoration: none;
 }
 .footer a ~ a {
