@@ -4,7 +4,6 @@
   "version": "1.0.0Beta",
   "description": "Mditor，最好用的 markdown 编辑器！",
   "main": "./src/app.js",
-  "electronVersion": "1.6.1",
   "scripts": {
     "start": "./bin/start.sh",
     "stop": "./bin/stop.sh",
@@ -42,7 +41,7 @@
     "cify": "^2.1.11",
     "clean-webpack-plugin": "^0.1.14",
     "css-loader": "^0.26.1",
-    "electron": "^1.6.1",
+    "electron": "^1.6.2",
     "electron-builder": "^15.2.0",
     "electron-installer-dmg": "^0.2.0",
     "electron-packager": "^8.5.2",
