@@ -1,10 +1,17 @@
 const pkg = require('../../package.json');
+const app = require('electron').app;
 
 module.exports = {
   label: pkg.displayName,
   submenu: [{
     label: `关于 ${pkg.displayName}`,
     role: 'about'
+  },
+  {
+    label: '检查更新...',
+    click() {
+      app.checkUpdate(true);
+    }
   },
   {
     type: 'separator'
