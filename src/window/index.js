@@ -19,14 +19,32 @@ const ctx = window.ctx = mokit({
    * @returns {void} 无返回
    */
   onReady() {
+    this.fixWebkitIMEBug();
     this.currentWindow = remote.getCurrentWindow();
     this.mditor.removeCommand('toggleFullScreen');
     this.overrideToolbar();
   },
 
   /**
+   * 在输入中文时，输入法「候选词面板」位置会发生定位错误
+   * 经过反复尝试发现了「规律」，第一次「侯选词」上屏后才会位置错误
+   * 在「候选词」上屏后让输入框「失去焦点再获取焦点」可「规避」这个 Bug
+   * 附上相关 issues
+   * https://github.com/electron/electron/issues/8894
+   * https://github.com/electron/electron/issues/4539
+   * @returns {void} 无返回
+   */
+  fixWebkitIMEBug() {
+    this.mditor.editor.$element.addEventListener('compositionend', () => {
+      this.mditor.editor.$element.blur();
+      this.mditor.editor.$element.focus();
+    }, false);
+  },
+
+  /**
    * 在右击时弹出内容菜单
-   * @param {object} event 
+   * @param {object} event 事件对象
+   * @returns {void} 无返回
    */
   onContextMenu(event) {
     if (event.target != this.mditor.editor.$element) return;
