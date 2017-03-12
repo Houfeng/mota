@@ -11,7 +11,7 @@ exports.setItem = async function (key, value) {
   try {
     await writeFile(storeFile, JSON.stringify(value));
   } catch (err) {
-    //console.error('setItem', err);
+    console.error('setItem', err);
   }
 };
 
@@ -21,7 +21,7 @@ exports.getItem = async function (key) {
     let buffer = await readFile(storeFile);
     return JSON.parse(buffer.toString());
   } catch (err) {
-    //console.error('getItem', err);
+    console.error('getItem', err);
   }
 };
 
@@ -30,6 +30,6 @@ exports.removeItem = async function (key) {
   try {
     await deleteFile(storeFile);
   } catch (err) {
-    //console.error('removeItem', err);
+    console.error('removeItem', err);
   }
 };
