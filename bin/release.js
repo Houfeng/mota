@@ -24,7 +24,7 @@ packager({
     /release/,
     /test/,
     /bin/,
-    /(.DS_Store|.babelrc|.yml|ignore|.conf.js|.rename|.config.js|jasmine.json)$/
+    /(.DS_Store|.babelrc|.yml|ignore|.conf.js|.rename|.config.js|.map|jasmine.json)$/
   ]
 }, function (err, appPaths) {
   if (err) console.error(err);
