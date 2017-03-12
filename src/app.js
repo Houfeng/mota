@@ -15,6 +15,7 @@ const recent = require('./recent');
 const convert = require('./convert');
 const update = require('./update');
 const shell = require('electron').shell;
+const globalShortcut = require('electron').globalShortcut;
 
 const FILE_FILTERS = [{
   name: 'Markdown',
@@ -96,6 +97,7 @@ app.createWindow = function createWindow() {
 app.on('ready', () => {
   app.createMenu();
   app.createWindow();
+  app.bindDevShortcuts();
   setTimeout(app.checkUpdate, 3000);
 });
 
@@ -103,11 +105,24 @@ app.createMenu = async function () {
   return Menu.setApplicationMenu(await menu());
 };
 
+app.bindDevShortcuts = function () {
+  globalShortcut.register('CommandOrControl+Shift+Alt+I', () => {
+    let window = this.getActiveWindow();
+    if (!window) return;
+    window.webContents.toggleDevTools();
+  });
+  globalShortcut.register('CommandOrControl+Shift+Alt+R', () => {
+    let window = this.getActiveWindow();
+    if (!window) return;
+    window.webContents.reloadIgnoringCache();
+  });
+};
+
 app.on('will-finish-launching', () => {
   //打开文件事件
   app.on('open-file', (event, filename) => {
     event.preventDefault();
-    setTimeout(async () => {
+    setTimeout(async() => {
       app.openFileInWindow(filename, await windows[0]);
     }, 600);
   });

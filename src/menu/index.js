@@ -4,7 +4,7 @@ module.exports = async function () {
   const template = [
     await require('./file')(),
     require('./edit'),
-    require('./view'),
+    //require('./view'),
     require('./window'),
     require('./help')
   ];
