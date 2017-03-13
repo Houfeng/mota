@@ -16,7 +16,7 @@ Mditor 目前有两个版本
 ## 如何参与
 - 如果有任何问题或建议，可以直接发起 [Issue](https://github.com/Houfeng/mditor-desktop/issues)
 - 当然，你也可以直接向 Mditor 发起 [Pull Request](https://github.com/Houfeng/mditor-desktop/pulls)
-- 我们也很高兴，直接给 Mditor 加一个 Star，一来收藏，二来表示对 Midior 鼓励，它会变成动力。
+- 我们也很高兴，直接给 Mditor 加一个 `Star`，一来收藏，二来表示对 Midior 鼓励，它会变成动力。
 
 ## 构建 Mditor 桌面版
 
@@ -31,12 +31,12 @@ $ git clone git@github.com:Houfeng/mditor-desktop.git your_path
 $ npm i
 ```
 
-##### 启动自动构建
+##### 自动构建
 ```sh
 $ npm run dev
 ```
 
-##### 运行程序
+##### 启动 Mditor 
 ```sh
 $ npm start
 ```
