@@ -8,7 +8,7 @@
 # 简单说明
 Mditor 最早只有「组件版」，随着「桌面版」的发布，Mditor 目前有两个版本：
 - 可嵌入到任意 Web 应用的 Embed 版本，这是一桌面版的基础，Repo: [https://github.com/houfeng/mditor](https://github.com/Houfeng/mditor) 
-- 独立的桌面版本，目前仅有 Mac 版本，主页：[http://mditor.com](http://mditor.com) 
+- 独立的桌面版本，目前仅有 Mac 版本，主页：[http://mditor.com](http://mditor.com)，Repo: [https://github.com/houfeng/mditor-desktop](https://github.com/houfeng/mditor-desktop)
 
   
 # 相关特性
@@ -25,8 +25,7 @@ Mditor 最早只有「组件版」，随着「桌面版」的发布，Mditor 目
 # 如何参与
 - 如果有任何问题或建议，可以直接发起 [Issue](https://github.com/Houfeng/mditor-desktop/issues)
 - 当然，你也可以直接向 Mditor 发起 [Pull Request](https://github.com/Houfeng/mditor-desktop/pulls)
-- 我们也很高兴，直接给 Mditor 加一个 ```Star```，一来收藏，二来表示对 Midior 鼓励，它会变成动力。
-
+- 我们也很高兴，直接给 Mditor 加一个 ```Star``` [https://github.com/houfeng/mditor-desktop](https://github.com/houfeng/mditor-desktop)，这将是对 Midior 不错的鼓励，它会变成动力。
 
   
 ## 开发指南
