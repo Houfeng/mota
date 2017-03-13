@@ -25,7 +25,7 @@ Mditor 最早只有「组件版」，随着「桌面版」的发布，Mditor 目
 # 如何参与
 - 如果有任何问题或建议，可以直接发起 [Issue](https://github.com/Houfeng/mditor-desktop/issues)
 - 当然，你也可以直接向 Mditor 发起 [Pull Request](https://github.com/Houfeng/mditor-desktop/pulls)
-- 我们也很高兴，直接给 Mditor 加一个 ```Star``` [https://github.com/houfeng/mditor-desktop](https://github.com/houfeng/mditor-desktop)，这将是对 Midior 不错的鼓励，它会变成动力。
+- 我们也很高兴，直接给 Mditor [加个 Star](https://github.com/houfeng/mditor-desktop)，这将是对 Midior 不错的鼓励，它会变成动力。
 
   
 ## 开发指南
@@ -38,15 +38,17 @@ $ git clone git@github.com:Houfeng/mditor-desktop.git your_path
 ##### 安装依赖
 前提是需要安装好 Nodejs 和 npm（建议用 cnpm 可以通过国内镜象加速）
 ```sh
-$ npm i
+$ npm install
 ```
 
 ##### 自动构建
+将会自动进行基于 Webpack 的构建（部分资源需要 Webpack 打包），并将 Watch 文件的改动然后自动进行构建
 ```sh
 $ npm run dev
 ```
 
 ##### 启动程序 
+和 Electron . 相同，将会启动开发中的 Mditor 
 ```sh
 $ npm start
 ```
