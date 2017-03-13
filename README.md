@@ -21,7 +21,7 @@ Mditor 最早只有「组件版」，随着「桌面版」的发布，Mditor 目
 # 如何参与
 - 如果有任何问题或建议，可以直接发起 [Issue](https://github.com/Houfeng/mditor-desktop/issues)
 - 当然，你也可以直接向 Mditor 发起 [Pull Request](https://github.com/Houfeng/mditor-desktop/pulls)
-- 我们也很高兴，直接给 Mditor [加个 Star](https://github.com/houfeng/mditor-desktop)，这将是对 Midior 不错的鼓励，它会变成动力。
+- 非常欢迎，直接给 Mditor [加个 Star](https://github.com/houfeng/mditor-desktop)，这将是对 Midior 不错的鼓励，它会变成动力。
 
   
 ## 开发指南
@@ -44,7 +44,7 @@ $ npm run dev
 ```
 
 ##### 启动程序 
-和 Electron . 相同，将会启动开发中的 Mditor 
+将会启动开发中的 Mditor 
 ```sh
 $ npm start
 ```
