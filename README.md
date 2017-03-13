@@ -1,9 +1,5 @@
 ![alt](http://mditor.com/assets/site-shot.png)
-
-# 只求极致
-[ **M** ] arkdown + E [ **ditor** ] = **Mditor** ，Mditor 是一个简单、自由、舒服的 Markdown 编辑软件。
-
-![image](http://mditor.com/assets/screen-shot.png)  
+ 
 
 # 简单说明
 Mditor 最早只有「组件版」，随着「桌面版」的发布，Mditor 目前有两个版本：
