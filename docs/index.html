@@ -91,7 +91,7 @@
         .github-corner:hover .octo-arm {
             animation: octocat-wave 560ms ease-in-out
         }
-
+        
         @keyframes octocat-wave {
             0%,
             100% {
@@ -106,7 +106,7 @@
                 transform: rotate(10deg)
             }
         }
-
+        
         @media (max-width:500px) {
             .github-corner:hover .octo-arm {
                 animation: none
@@ -121,6 +121,8 @@
 <script>
     var os = 'mac'; //暂时只有 mac 版本，window.navigator.platform.toLowerCase();
 
+    var mac_url = 'http://omn9w2zgq.bkt.clouddn.com/Mditor-1.0.0Beta2.dmg';
+
     if (os.indexOf("win") > -1) {
         console.log("Windows Detected");
         for (var i = 0; i < document.getElementsByName('windows-btn').length; i++) { //we remove hide class
@@ -132,7 +134,7 @@
         }
 
         for (var i = 0; i < document.getElementsByName('download_link').length; i++) {
-            document.getElementsByName('download_link')[i].href = "http://omn9w2zgq.bkt.clouddn.com/Mditor.dmg";
+            document.getElementsByName('download_link')[i].href = mac_url;
         }
     } else if (os.indexOf("linux") > -1) {
         console.log("Linux detected");
@@ -145,7 +147,7 @@
         }
 
         for (var i = 0; i < document.getElementsByName('download_link').length; i++) {
-            document.getElementsByName('download_link')[i].href = "http://omn9w2zgq.bkt.clouddn.com/Mditor.dmg";
+            document.getElementsByName('download_link')[i].href = mac_url;
         }
     } else if (os.indexOf("mac") > -1) {
         console.log("Mac OS detected");
@@ -158,7 +160,7 @@
         }
 
         for (var i = 0; i < document.getElementsByName('download_link').length; i++) {
-            document.getElementsByName('download_link')[i].href = "http://omn9w2zgq.bkt.clouddn.com/Mditor.dmg";
+            document.getElementsByName('download_link')[i].href = mac_url;
         }
     } else {
         for (var i = 0; i < document.getElementsByName('linux-btn').length; i++) {
@@ -170,7 +172,7 @@
         }
 
         for (var i = 0; i < document.getElementsByName('download_link').length; i++) {
-            document.getElementsByName('download_link')[i].href = "http://omn9w2zgq.bkt.clouddn.com/Mditor.dmg";
+            document.getElementsByName('download_link')[i].href = mac_url;
         }
     }
 
@@ -187,7 +189,6 @@
     function each(sel, fn) {
         Array.prototype.forEach.call(document.querySelectorAll(sel), fn);
     }
-
 </script>
 
 </html>
