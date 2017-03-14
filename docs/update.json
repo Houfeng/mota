@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0Beta2",
+  "version": "1.0.0Beta1",
   "detail": "修复了中文输入法「候选词面板」定位不准的问题",
   "url": "http://mditor.com/"
 }
