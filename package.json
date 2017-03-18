@@ -79,8 +79,8 @@
     "bluebird": "^3.5.0",
     "electron-renderer-value": "^1.1.0",
     "html-pdf": "^2.1.0",
-    "mditor": "^1.0.13",
-    "mokit": "^3.0.14",
+    "mditor": "^1.1.1",
+    "mokit": "^3.0.15",
     "node-fetch": "^1.6.3",
     "ntils": "^2.0.14",
     "stp": "^0.0.2"

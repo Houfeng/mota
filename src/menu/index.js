@@ -3,8 +3,8 @@ const Menu = require('electron').Menu;
 module.exports = async function () {
   const template = [
     await require('./file')(),
-    require('./edit'),
-    //require('./view'),
+    await require('./edit')(),
+    await require('./view')(),
     require('./window'),
     require('./help')
   ];

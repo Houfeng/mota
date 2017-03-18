@@ -1,0 +1,1 @@
+//http://www.plantuml.com/plantuml/svg/

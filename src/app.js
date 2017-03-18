@@ -318,11 +318,29 @@ app.toImage = async function (window) {
   });
 };
 
+//执行一条编辑器命令
+app.execCommand = async function (command, window) {
+  window = window || this.getActiveWindow();
+  if (!window) return;
+  window.webContents.send('command', {
+    name: command
+  });
+};
+
 //检查更新
 app.checkUpdate = async function (force) {
-  let info = await update.check(force);
-  if (!info) return;
   let window = await app.getActiveWindow();
+  let info = await update.check(force);
+  if (!info && !force) {
+    return;
+  } else if (!info) {
+    return dialog.showMessageBox(window, {
+      type: 'question',
+      buttons: ['关闭'],
+      message: '检查更新',
+      detail: '当前已是最新版本'
+    });
+  }
   let result = dialog.showMessageBox(window, {
     type: 'question',
     buttons: ['前往下载', '暂不'],

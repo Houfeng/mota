@@ -19,26 +19,9 @@ const ctx = window.ctx = mokit({
    * @returns {void} 无返回
    */
   onReady() {
-    this.fixWebkitIMEBug();
     this.currentWindow = remote.getCurrentWindow();
     this.mditor.removeCommand('toggleFullScreen');
     this.overrideToolbar();
-  },
-
-  /**
-   * 在输入中文时，输入法「候选词面板」位置会发生定位错误
-   * 经过反复尝试发现了「规律」，第一次「侯选词」上屏后才会位置错误
-   * 在「候选词」上屏后让输入框「失去焦点再获取焦点」可「规避」这个 Bug
-   * 附上相关 issues
-   * https://github.com/electron/electron/issues/8894
-   * https://github.com/electron/electron/issues/4539
-   * @returns {void} 无返回
-   */
-  fixWebkitIMEBug() {
-    this.mditor.editor.$element.addEventListener('compositionend', () => {
-      this.mditor.editor.$element.blur();
-      this.mditor.editor.$element.focus();
-    }, false);
   },
 
   /**
@@ -72,7 +55,7 @@ const ctx = window.ctx = mokit({
         properties: ['openFile', 'multiSelections']
       }, filenames => {
         if (!filenames || filenames.length < 1) return;
-        this.mditor.editor.insertBeforeText(filenames.map(filename => `![alt](${filename})`).join('\n'));
+        this.mditor.editor.insertBeforeText(filenames.map(filename => `![alt](file://${filename})`).join('\n'));
       });
     };
   },
@@ -98,4 +81,10 @@ ipcRenderer.on('file', function (event, info) {
   document.title = info.filename;
   ctx.filename = info.filename;
   ctx.mditor.value = info.content;
+  ctx.mditor.editor.stack.init(info.content);
+});
+
+//在收到内容时
+ipcRenderer.on('command', function (event, info) {
+  ctx.mditor.execCommand(info.name);
 });
