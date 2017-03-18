@@ -3,7 +3,7 @@ const store = require('../common/store');
 const fetch = require('node-fetch');
 
 const STORE_KEY = 'update';
-const ONE_DAY_MS = 21600000; //6 个小时内只提示一次
+const ONE_DAY_MS = 10800000; //3 个小时内只提示一次
 
 exports.check = async function (force) {
   if (!force) {
