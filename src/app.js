@@ -34,7 +34,7 @@ app.createWindow = function createWindow() {
   // 创建浏览器窗口。
   let window = new BrowserWindow({
     backgroundColor: '#ffffff',
-    width: 900,
+    width: 960,
     height: 556,
     minWidth: 700,
     minHeight: 432,

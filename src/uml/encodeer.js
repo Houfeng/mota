@@ -1663,13 +1663,13 @@ function zip_deflate(str, level) {
   return out;
 }
 
-GID = function (id) {
+function GID(id) {
   return document.getElementById(id)
 };
 
 function encode64(data) {
-  r = "";
-  for (i = 0; i < data.length; i += 3) {
+  let r = "";
+  for (let i = 0; i < data.length; i += 3) {
     if (i + 2 == data.length) {
       r += append3bytes(data.charCodeAt(i), data.charCodeAt(i + 1), 0);
     } else if (i + 1 == data.length) {
@@ -1682,11 +1682,11 @@ function encode64(data) {
 }
 
 function append3bytes(b1, b2, b3) {
-  c1 = b1 >> 2;
-  c2 = ((b1 & 0x3) << 4) | (b2 >> 4);
-  c3 = ((b2 & 0xF) << 2) | (b3 >> 6);
-  c4 = b3 & 0x3F;
-  r = "";
+  let c1 = b1 >> 2;
+  let c2 = ((b1 & 0x3) << 4) | (b2 >> 4);
+  let c3 = ((b2 & 0xF) << 2) | (b3 >> 6);
+  let c4 = b3 & 0x3F;
+  let r = "";
   r += encode6bit(c1 & 0x3F);
   r += encode6bit(c2 & 0x3F);
   r += encode6bit(c3 & 0x3F);
@@ -1715,3 +1715,6 @@ function encode6bit(b) {
   }
   return '?';
 }
+
+exports.encode64 = encode64;
+exports.zipDeflate = zip_deflate;

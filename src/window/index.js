@@ -5,6 +5,9 @@ const Mditor = require('mditor/src/client');
 const contextMenu = require('./contextmenu');
 const drapable = require('./drapable');
 const ipcRenderer = nodeRequire('electron').ipcRenderer;
+const uml = require('../uml');
+
+Mditor.Parser.highlights['uml'] = uml;
 
 drapable(document.body);
 

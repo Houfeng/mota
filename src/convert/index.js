@@ -4,7 +4,10 @@ const writeFile = Promise.promisify(require('fs').writeFile);
 const readFile = Promise.promisify(require('fs').readFile);
 const path = require('path');
 const stp = require('stp');
+const uml = require('../uml');
+
 const Parser = require('mditor').Parser;
+Parser.highlights['uml'] = uml;
 
 const parser = new Parser();
 
