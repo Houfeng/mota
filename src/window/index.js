@@ -8,10 +8,16 @@ const ipcRenderer = nodeRequire('electron').ipcRenderer;
 const pkg = require('../../package');
 const uml = require('../uml');
 
+//初始处理
+drapable(document.body);
+window.open = function (url) {
+  remote.shell.openExternal(url);
+};
+
+//插件
 Mditor.Parser.highlights['uml'] = uml;
 
-drapable(document.body);
-
+//context
 const ctx = window.ctx = mokit({
   element: document.body,
   components: {
