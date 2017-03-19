@@ -15,9 +15,7 @@ window.open = function (url) {
 };
 
 //插件
-const umlParser = new UMLParser({
-  rarefaction: true
-});
+const umlParser = new UMLParser();
 Mditor.Parser.highlights['uml'] = umlParser.parse.bind(umlParser);
 
 //context
