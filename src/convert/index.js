@@ -4,12 +4,13 @@ const writeFile = Promise.promisify(require('fs').writeFile);
 const readFile = Promise.promisify(require('fs').readFile);
 const path = require('path');
 const stp = require('stp');
-const uml = require('../uml');
+const UMLParser = require('../uml');
 
 const Parser = require('mditor').Parser;
-Parser.highlights['uml'] = uml;
+const umlParser = new UMLParser();
+Parser.highlights['uml'] = umlParser.parse.bind(umlParser);
 
-const parser = new Parser();
+const parser = Promise.promisifyAll(new Parser());
 
 exports.toHTML = async function (opts) {
   if (!opts) return;
@@ -21,7 +22,7 @@ exports.toHTML = async function (opts) {
   if (opts.border) {
     opts.style += (await readFile(`${__dirname}/border.css`)).toString();
   }
-  opts.content = parser.parse(opts.content);
+  opts.content = await parser.parseAsync(opts.content);
   let tmpl = (await readFile(`${__dirname}/tmpl.html`)).toString();
   let fn = stp(tmpl);
   return fn(opts);

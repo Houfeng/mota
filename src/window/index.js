@@ -6,7 +6,7 @@ const contextMenu = require('./contextmenu');
 const drapable = require('./drapable');
 const ipcRenderer = nodeRequire('electron').ipcRenderer;
 const pkg = require('../../package');
-const uml = require('../uml');
+const UMLParser = require('../uml');
 
 //初始处理
 drapable(document.body);
@@ -15,7 +15,10 @@ window.open = function (url) {
 };
 
 //插件
-Mditor.Parser.highlights['uml'] = uml;
+const umlParser = new UMLParser({
+  rarefaction: true
+});
+Mditor.Parser.highlights['uml'] = umlParser.parse.bind(umlParser);
 
 //context
 const ctx = window.ctx = mokit({
