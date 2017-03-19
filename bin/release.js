@@ -17,6 +17,10 @@ packager({
   icon: `${CWD}/design/icon.icns`,
   overwrite: true,
   electronVersion: '1.6.2',
+  platform: "darwin",
+  "osx-sign": {
+    type: "distribution"
+  },
   ignore: [
     /node_modules/,
     /design/,
