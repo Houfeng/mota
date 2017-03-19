@@ -21,6 +21,7 @@ packager({
   "osx-sign": {
     type: "distribution"
   },
+  'extend-info': `${__dirname}/info.plist`,
   ignore: [
     /node_modules/,
     /design/,
