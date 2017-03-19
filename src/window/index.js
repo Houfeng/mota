@@ -5,6 +5,7 @@ const Mditor = require('mditor/src/client');
 const contextMenu = require('./contextmenu');
 const drapable = require('./drapable');
 const ipcRenderer = nodeRequire('electron').ipcRenderer;
+const pkg = require('../../package');
 const uml = require('../uml');
 
 Mditor.Parser.highlights['uml'] = uml;
@@ -45,7 +46,7 @@ const ctx = window.ctx = mokit({
     //帮助按钮
     let helpBtn = this.mditor.toolbar.getItem('help');
     helpBtn.handler = () => {
-      remote.shell.openExternal('http://mditor.com');
+      remote.shell.openExternal(pkg.homepage);
     };
     //图片按钮
     let imgBtn = this.mditor.toolbar.getItem('image');

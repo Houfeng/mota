@@ -25,6 +25,7 @@
     "host": "localhost",
     "port": 8006
   },
+  "homepage": "http://mditor.com",
   "update": {
     "url": "http://mditor.com/update.json"
   },

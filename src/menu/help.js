@@ -1,4 +1,5 @@
 const shell = require('electron').shell;
+const pkg = require('../../package');
 
 module.exports = {
   label: '帮助',
@@ -6,7 +7,7 @@ module.exports = {
   submenu: [{
     label: '更多...',
     click() {
-      shell.openExternal('http://mditor.com');
+      shell.openExternal(pkg.homepage);
     }
   }]
 };
