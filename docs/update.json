@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0Beta3",
-  "detail": "1. 修复导出 PDF/Image 时图片不显示的问题\n2. 新增查找替换功能\n3. 改进 Undo/Redo\n4. 添加 .md 文件关联\n5. 新增 UML 图形支持（需联网）",
+  "version": "1.0.0Beta4",
+  "detail": "1. 修复导出 PDF/Image 时图片不显示的问题\n2. 改进代码高亮\n3. 新增查找替换功能\n4. 改进 Undo/Redo\n5. 添加 .md 文件关联\n6. 新增 UML 图形支持（需联网）",
   "url": "http://mditor.com/"
 }
