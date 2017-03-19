@@ -7,8 +7,7 @@ const stp = require('stp');
 const UMLParser = require('../uml');
 
 const Parser = require('mditor').Parser;
-const umlParser = new UMLParser();
-Parser.highlights['uml'] = umlParser.parse.bind(umlParser);
+Parser.highlights['uml'] = new UMLParser();
 
 const parser = Promise.promisifyAll(new Parser());
 
@@ -17,7 +16,7 @@ exports.toHTML = async function (opts) {
   opts.title = opts.title || 'Untitled';
   opts.style = opts.style || '';
   opts.content = opts.content || '';
-  let styleFile = path.resolve(__dirname, '../../node_modules/github-markdown-css/github-markdown.css');
+  let styleFile = require.resolve('mditor/dist/css/mditor.min.css');
   opts.style += (await readFile(styleFile)).toString();
   if (opts.border) {
     opts.style += (await readFile(`${__dirname}/border.css`)).toString();

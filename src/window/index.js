@@ -15,8 +15,7 @@ window.open = function (url) {
 };
 
 //插件
-const umlParser = new UMLParser();
-Mditor.Parser.highlights['uml'] = umlParser.parse.bind(umlParser);
+Mditor.Parser.highlights['uml'] = new UMLParser();
 
 //context
 const ctx = window.ctx = mokit({
