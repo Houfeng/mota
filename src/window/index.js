@@ -14,6 +14,8 @@ window.open = function (url) {
   remote.shell.openExternal(url);
 };
 
+const baseElement = document.querySelector('base');
+
 //插件
 Mditor.Parser.highlights['uml'] = new UMLParser();
 
@@ -40,7 +42,7 @@ const ctx = window.ctx = mokit({
    * @returns {void} 无返回
    */
   onContextMenu(event) {
-    if (event.target != this.mditor.editor.$element) return;
+    if (event.target != this.mditor.editor.textarea) return;
     contextMenu.popup(this.currentWindow);
   },
 
@@ -82,6 +84,14 @@ const ctx = window.ctx = mokit({
       filename: ctx.filename,
       windowId: this.currentWindow.id
     });
+  },
+
+  toggleMaximize() {
+    if (this.currentWindow.isMaximized()) {
+      this.currentWindow.unmaximize();
+    } else {
+      this.currentWindow.maximize();
+    }
   }
 
 }).start();
@@ -89,6 +99,7 @@ const ctx = window.ctx = mokit({
 //在收到内容时
 ipcRenderer.on('file', function (event, info) {
   document.title = info.filename;
+  baseElement.href = info.filename;
   ctx.filename = info.filename;
   ctx.mditor.value = info.content;
   ctx.mditor.editor.stack.init(info.content);
