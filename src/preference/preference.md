@@ -6,7 +6,7 @@
 ```editor
 # 数字指定 tab 缩进空格数，0 不使用空格代替 tab
 # tab: 2
-# 编辑区背景色
+# 编辑区背景色，16 进制需加「引号」，如 '#000'
 # backgroundColor: black
 # 编辑区前景色
 # color: white

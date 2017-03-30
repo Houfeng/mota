@@ -81,7 +81,7 @@
     "electron-renderer-value": "^1.1.0",
     "html-pdf": "^2.1.0",
     "js-yaml": "^3.8.2",
-    "mditor": "^1.1.12",
+    "mditor": "^1.2.0",
     "mokit": "^3.0.15",
     "node-fetch": "^1.6.3",
     "ntils": "^2.0.14",

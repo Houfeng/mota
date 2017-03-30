@@ -83,11 +83,6 @@ module.exports = async() => {
           click() {
             app.toImage();
           }
-        }, {
-          label: '演示...',
-          click() {
-            app.toImage();
-          }
         }]
       }, {
         type: 'separator'
