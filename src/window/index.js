@@ -7,6 +7,7 @@ const drapable = require('./drapable');
 const ipcRenderer = nodeRequire('electron').ipcRenderer;
 const pkg = require('../../package');
 const UMLParser = require('../uml');
+const utils = require('ntils');
 
 //初始处理
 drapable(document.body);
@@ -16,8 +17,12 @@ window.open = function (url) {
 
 const baseElement = document.querySelector('base');
 
-//插件
-Mditor.Parser.highlights['uml'] = new UMLParser();
+//插件或语法扩展
+let languages = Mditor.Parser.Prism.languages;
+let highlights = Mditor.Parser.highlights;
+highlights['uml'] = new UMLParser();
+languages['editor'] = languages['yaml'];
+languages['shortcut'] = languages['yaml'];
 
 //context
 const ctx = window.ctx = mokit({
@@ -34,6 +39,7 @@ const ctx = window.ctx = mokit({
     this.currentWindow = remote.getCurrentWindow();
     this.mditor.removeCommand('toggleFullScreen');
     this.overrideToolbar();
+    this.applyPreference(remote.getGlobal('preference'));
   },
 
   /**
@@ -92,6 +98,29 @@ const ctx = window.ctx = mokit({
     } else {
       this.currentWindow.maximize();
     }
+  },
+
+  applyPreference(preference) {
+    if (!preference) return;
+    this.applyEditorPreference(preference.editor);
+    this.applyShortcutPreference(preference.shortcut);
+  },
+
+  applyEditorPreference(configs) {
+    if (!configs) return;
+    if (configs.tab < 1) {
+      this.mditor.INDENT = '\t';
+    } else {
+      this.mditor.INDENT = new Array(configs.tab).fill(' ').join('');
+    }
+  },
+
+  applyShortcutPreference(configs) {
+    if (!configs) return;
+    utils.each(configs, (cmd, key) => {
+      this.mditor.shortcut.unbind(key);
+      this.mditor.shortcut.bind(key, cmd);
+    });
   }
 
 }).start();
@@ -102,10 +131,17 @@ ipcRenderer.on('file', function (event, info) {
   baseElement.href = info.filename;
   ctx.filename = info.filename;
   ctx.mditor.value = info.content;
-  ctx.mditor.editor.stack.init(info.content);
+  ctx.mditor.editor.stack.init({
+    value: info.content
+  });
 });
 
 //在收到内容时
 ipcRenderer.on('command', function (event, info) {
   ctx.mditor.execCommand(info.name);
+});
+
+//在收到偏好设置时
+ipcRenderer.on('preference', function (event, preference) {
+  ctx.applyPreference(preference);
 });

@@ -16,6 +16,7 @@ const convert = require('./convert');
 const update = require('./update');
 const shell = require('electron').shell;
 const globalShortcut = require('electron').globalShortcut;
+const preference = require('./preference');
 
 const FILE_FILTERS = [{
   name: 'Markdown',
@@ -94,7 +95,8 @@ app.createWindow = function createWindow() {
 // Electron 会在初始化后并准备
 // 创建浏览器窗口时，调用这个函数。
 // 部分 API 在 ready 事件触发后才能使用。
-app.on('ready', () => {
+app.on('ready', async() => {
+  await app.loadPreference();
   app.createMenu();
   app.createWindow();
   app.bindDevShortcuts();
@@ -164,6 +166,7 @@ app.saveFile = async function (filename, window) {
   window.isChanged = false;
   await writeFile(filename, content);
   recent.add(filename);
+  if (filename === this.PERFERENCE_FILE) this.dispatchPreference();
 };
 
 //保存
@@ -351,4 +354,29 @@ app.checkUpdate = async function (force) {
   });
   if (result == 1) return;
   shell.openExternal(info.url);
+};
+
+//广播一个事件
+app.dispatch = function (event, value) {
+  windows.forEach(window => {
+    window.webContents.send(event, value);
+  });
+};
+
+//打开偏好设置
+app.openPreference = async function () {
+  this.PERFERENCE_FILE = await preference.getFile();
+  this.openFileInWindow(this.PERFERENCE_FILE);
+};
+
+//加载偏好设置
+app.loadPreference = async function () {
+  global.preference = await preference.load();
+  return global.preference;
+};
+
+//广播偏好设置
+app.dispatchPreference = async function () {
+  let preference = await this.loadPreference();
+  this.dispatch('preference', preference);
 };

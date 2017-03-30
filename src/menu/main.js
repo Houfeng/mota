@@ -19,7 +19,7 @@ module.exports = {
     {
       label: '偏好设置...',
       click() {
-        app.checkUpdate(true);
+        app.openPreference();
       }
     },
     {
