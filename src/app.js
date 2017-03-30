@@ -17,6 +17,7 @@ const update = require('./update');
 const shell = require('electron').shell;
 const globalShortcut = require('electron').globalShortcut;
 const preference = require('./preference');
+const sleep = require('./common/sleep');
 
 const FILE_FILTERS = [{
   name: 'Markdown',
@@ -100,7 +101,8 @@ app.on('ready', async() => {
   app.createMenu();
   app.createWindow();
   app.bindDevShortcuts();
-  setTimeout(app.checkUpdate, 3000);
+  sleep(3000);
+  app.checkUpdate();
 });
 
 app.createMenu = async function () {
@@ -122,11 +124,10 @@ app.bindDevShortcuts = function () {
 
 app.on('will-finish-launching', () => {
   //打开文件事件
-  app.on('open-file', (event, filename) => {
+  app.on('open-file', async(event, filename) => {
     event.preventDefault();
-    setTimeout(async() => {
-      app.openFileInWindow(filename, await windows[0]);
-    }, 600);
+    sleep(600);
+    app.openFileInWindow(filename, await windows[0]);
   });
 });
 
@@ -386,8 +387,10 @@ app.resetPreference = async function () {
   await preference.reset();
   await this.loadPreference();
   windows.forEach(window => {
-    let filename = window.filename;
-    window.close();
-    this.openPreference();
+    //electron 有 Bug 不 setTimeout 关不完
+    setTimeout(() => {
+      window.close();
+    }, 0);
   });
+  this.openPreference();
 };

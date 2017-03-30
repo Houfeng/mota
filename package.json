@@ -1,7 +1,7 @@
 {
   "name": "mditor-desktop",
   "displayName": "Mditor",
-  "version": "1.0.0Beta5",
+  "version": "1.0.0Beta6",
   "description": "Mditor，最好用的 markdown 编辑器！",
   "main": "./src/app.js",
   "scripts": {
