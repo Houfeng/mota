@@ -47,7 +47,7 @@ app.createWindow = function createWindow() {
   //对话框偏移量，针对打开保存等弹出窗口
   window.setSheetOffset(38);
   //不可全屏
-  //window.setFullScreenable(false);
+  window.setFullScreenable(false);
   // 加载应用的 index.html。
   window.loadURL(url.format({
     pathname: path.resolve(__dirname, '../build/index.html'),
