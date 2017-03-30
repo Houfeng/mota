@@ -55,6 +55,8 @@ async function load() {
   };
   let parser = new Parser();
   parser.parse(content);
+  Parser.highlights['editor'] = null;
+  Parser.highlights['shortcut'] = null;
   return {
     editor: parseYaml(editorConfigs),
     shortcut: parseYaml(shortcutConfigs)
