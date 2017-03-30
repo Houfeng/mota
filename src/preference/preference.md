@@ -4,8 +4,12 @@
 
 一、编辑设置
 ```editor
-# 数字指定 tab 缩进空格数，0 代表不使用空格代替 tab
+# 数字指定 tab 缩进空格数，0 不使用空格代替 tab
 # tab: 2
+# 编辑区背景色
+# backgroundColor: black
+# 编辑区前景色
+# color: white
 ```
 
 二、自定义快捷键

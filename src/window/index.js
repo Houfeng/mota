@@ -113,6 +113,10 @@ const ctx = window.ctx = mokit({
     } else {
       this.mditor.INDENT = new Array(configs.tab).fill(' ').join('');
     }
+    if (configs.color)
+      this.mditor.editor.textarea.style.color = configs.color;
+    if (configs.backgroundColor)
+      this.mditor.editor.$element.style.backgroundColor = configs.backgroundColor;
   },
 
   applyShortcutPreference(configs) {
