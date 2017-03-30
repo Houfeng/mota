@@ -23,6 +23,12 @@ module.exports = {
       }
     },
     {
+      label: '重置偏好设置...',
+      click() {
+        app.resetPreference();
+      }
+    },
+    {
       type: 'separator'
     },
     {

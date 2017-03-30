@@ -377,6 +377,17 @@ app.loadPreference = async function () {
 
 //广播偏好设置
 app.dispatchPreference = async function () {
-  let preference = await this.loadPreference();
-  this.dispatch('preference', preference);
+  let configs = await this.loadPreference();
+  this.dispatch('preference', configs);
+};
+
+//重置偏好设置
+app.resetPreference = async function () {
+  await preference.reset();
+  await this.loadPreference();
+  windows.forEach(window => {
+    let filename = window.filename;
+    window.close();
+    this.openPreference();
+  });
 };
