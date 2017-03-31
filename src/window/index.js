@@ -107,20 +107,19 @@ const ctx = window.ctx = mokit({
   },
 
   applyEditorPreference(configs) {
-    if (!configs) return;
+    configs = configs || {};
+    if (!utils.isNumber(configs.tab)) this.mditor.INDENT = 2;
     if (configs.tab < 1) {
       this.mditor.INDENT = '\t';
     } else {
       this.mditor.INDENT = new Array(configs.tab).fill(' ').join('');
     }
-    if (configs.color)
-      this.mditor.editor.textarea.style.color = configs.color;
-    if (configs.backgroundColor)
-      this.mditor.editor.$element.style.backgroundColor = configs.backgroundColor;
+    this.mditor.editor.textarea.style.color = configs.color || '';
+    this.mditor.editor.$element.style.backgroundColor = configs.backgroundColor || '';
   },
 
   applyShortcutPreference(configs) {
-    if (!configs) return;
+    configs = configs || {};
     utils.each(configs, (cmd, key) => {
       this.mditor.shortcut.unbind(key);
       this.mditor.shortcut.bind(key, cmd);

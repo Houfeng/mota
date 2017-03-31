@@ -392,7 +392,7 @@ app.resetPreference = async function () {
       window.close();
     }, 0);
   });
-  await sleep(200);
+  await sleep(300);
   windows.length = 0;
   this.openPreference();
 };
