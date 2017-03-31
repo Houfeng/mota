@@ -39,6 +39,16 @@ module.exports = async() => {
       {
         label: '全选',
         role: 'selectall'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: '查换替换',
+        accelerator: 'CmdOrCtrl+F',
+        click() {
+          app.execCommand('find');
+        }
       }
     ]
   };
