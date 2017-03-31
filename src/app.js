@@ -101,7 +101,7 @@ app.on('ready', async() => {
   app.createMenu();
   app.createWindow();
   app.bindDevShortcuts();
-  sleep(3000);
+  await sleep(3000);
   app.checkUpdate();
 });
 
@@ -126,7 +126,7 @@ app.on('will-finish-launching', () => {
   //打开文件事件
   app.on('open-file', async(event, filename) => {
     event.preventDefault();
-    sleep(600);
+    await sleep(600);
     app.openFileInWindow(filename, await windows[0]);
   });
 });
@@ -392,5 +392,7 @@ app.resetPreference = async function () {
       window.close();
     }, 0);
   });
+  await sleep(200);
+  windows.length = 0;
   this.openPreference();
 };
