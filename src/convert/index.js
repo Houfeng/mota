@@ -5,6 +5,7 @@ const readFile = Promise.promisify(require('fs').readFile);
 const path = require('path');
 const stp = require('stp');
 const UMLParser = require('../uml');
+const yaml = require('../common/yaml');
 
 const Parser = require('mditor').Parser;
 Parser.highlights['uml'] = new UMLParser();
@@ -54,4 +55,26 @@ exports.toImage = async function (opts) {
       resolve(buffer);
     });
   });
+};
+
+exports.toSlide = async function (opts) {
+  if (!opts) return;
+  opts.title = opts.title || 'Untitled';
+  opts.content = opts.content || '';
+  let parts = opts.content.split(/`{1,3}slide([\s\S]*?)`{1,3}/).slice(1);
+  opts.items = [];
+  for (let i = 0; i < parts.length; i += 2) {
+    let meta = yaml(parts[i]) || {};
+    let body = await parser.parseAsync(parts[i + 1]);
+    opts.items.push(`<script 
+    bgcolor="${meta.bgcolor||''}" 
+    align="${meta.align||''}" 
+    style="${meta.style||''}" 
+    type="text/slide">
+    ${body||';-D ...'}
+    </script>`);
+  }
+  let tmpl = (await readFile(`${__dirname}/slide.html`)).toString();
+  let fn = stp(tmpl);
+  return fn(opts);
 };

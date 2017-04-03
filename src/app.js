@@ -105,10 +105,12 @@ app.on('ready', async() => {
   app.checkUpdate();
 });
 
+//创建主菜单
 app.createMenu = async function () {
   return Menu.setApplicationMenu(await menu());
 };
 
+//绑定开发人员快捷键
 app.bindDevShortcuts = function () {
   globalShortcut.register('CommandOrControl+Shift+Alt+I', () => {
     let window = this.getActiveWindow();
@@ -279,6 +281,25 @@ app.toHTML = async function (window) {
       title: path.basename(window.filename),
       content: await this.getEditorValue(window),
       border: true
+    });
+    await writeFile(filename, html);
+  });
+};
+
+//导出演示
+app.toSlide = async function (window) {
+  window = window || this.getActiveWindow();
+  if (!window) return;
+  dialog.showSaveDialog(window, {
+    filters: [{
+      name: 'HTML',
+      extensions: ['htm', 'html']
+    }]
+  }, async filename => {
+    if (!filename) return;
+    let html = await convert.toSlide({
+      title: path.basename(window.filename),
+      content: await this.getEditorValue(window)
     });
     await writeFile(filename, html);
   });

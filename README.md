@@ -15,8 +15,6 @@ Mditor 最早只有「组件版」，随着「桌面版」的发布，Mditor 目
 - 多种编辑语言的的「代码高亮」支持（通过 ``` 语法）
 - 分屏实时预览，全屏预览
 - 导出 「HTML、PDF、Image」等功能。
-
-![alt](http://mditor.com/assets/export-shot.png)
   
 # 如何参与
 - 如果有任何问题或建议，可以直接发起 [Issue](https://github.com/Houfeng/mditor-desktop/issues)

@@ -5,7 +5,7 @@ const writeFile = Promise.promisify(require('fs').writeFile);
 const readFile = Promise.promisify(require('fs').readFile);
 const unlink = Promise.promisify(require('fs').unlink);
 const Parser = require('mditor').Parser;
-const yaml = require('js-yaml');
+const yaml = require('../common/yaml');
 
 const DATA_PATH = app.getPath('userData');
 const PREFERENCE_FILE = `${DATA_PATH}/preference.md`;
@@ -14,15 +14,6 @@ async function exists(file) {
   return new Promise(resolve => {
     fs.exists(file, resolve);
   });
-}
-
-function parseYaml(text) {
-  try {
-    return yaml.safeLoad(text, 'utf8');
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
 }
 
 async function createFile() {
@@ -58,8 +49,8 @@ async function load() {
   Parser.highlights['editor'] = null;
   Parser.highlights['shortcut'] = null;
   return {
-    editor: parseYaml(editorConfigs),
-    shortcut: parseYaml(shortcutConfigs)
+    editor: yaml(editorConfigs),
+    shortcut: yaml(shortcutConfigs)
   }
 }
 
