@@ -47,3 +47,8 @@ style: 'color: red' # 可指定样式
 1. 项目一
 2. 项目二
 ```
+
+```slide
+align: center
+```
+# 谢 谢
