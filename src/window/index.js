@@ -23,6 +23,7 @@ let highlights = Mditor.Parser.highlights;
 highlights['uml'] = new UMLParser();
 languages['editor'] = languages['yaml'];
 languages['shortcut'] = languages['yaml'];
+languages['slide'] = languages['yaml'];
 
 //context
 const ctx = window.ctx = mokit({
@@ -108,7 +109,7 @@ const ctx = window.ctx = mokit({
 
   applyEditorPreference(configs) {
     configs = configs || {};
-    if (!utils.isNumber(configs.tab)) this.mditor.INDENT = 2;
+    if (!utils.isNumber(configs.tab)) configs.tab = 2;
     if (configs.tab < 1) {
       this.mditor.INDENT = '\t';
     } else {
@@ -119,8 +120,9 @@ const ctx = window.ctx = mokit({
   },
 
   applyShortcutPreference(configs) {
-    configs = configs || {};
+    if (!configs) return;
     utils.each(configs, (cmd, key) => {
+      if (!key || !cmd) return;
       this.mditor.shortcut.unbind(key);
       this.mditor.shortcut.bind(key, cmd);
     });

@@ -70,6 +70,7 @@ exports.toSlide = async function (opts) {
     bgcolor="${meta.bgcolor||''}" 
     align="${meta.align||''}" 
     style="${meta.style||''}" 
+    effect="${meta.effect||''}"
     type="text/slide">
     ${body||';-D ...'}
     </script>`);
