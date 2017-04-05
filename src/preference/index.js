@@ -1,36 +1,29 @@
 const app = require('electron').app;
 const Promise = require('bluebird');
-const fs = require('fs');
-const writeFile = Promise.promisify(require('fs').writeFile);
-const readFile = Promise.promisify(require('fs').readFile);
-const unlink = Promise.promisify(require('fs').unlink);
+const fs = require('../common/fs');
 const Parser = require('mditor').Parser;
 const yaml = require('../common/yaml');
 
 const DATA_PATH = app.getPath('userData');
 const PREFERENCE_FILE = `${DATA_PATH}/preference.md`;
 
-async function exists(file) {
-  return new Promise(resolve => {
-    fs.exists(file, resolve);
-  });
+async function createFile() {
+  let buffer = await fs.readFile(`${__dirname}/preference.md`)
+  return fs.writeFile(PREFERENCE_FILE, buffer);
 }
 
-async function createFile() {
-  let buffer = await readFile(`${__dirname}/preference.md`)
-  return writeFile(PREFERENCE_FILE, buffer);
+async function isExists() {
+  return await fs.exists(PREFERENCE_FILE)
 }
 
 async function getFile() {
-  let isExists = await exists(PREFERENCE_FILE);
-  if (!isExists) await createFile();
+  if (!await isExists()) await createFile();
   return PREFERENCE_FILE;
 }
 
 async function load() {
-  let isExists = await exists(PREFERENCE_FILE);
-  if (!isExists) return;
-  let buffer = await readFile(PREFERENCE_FILE);
+  if (!await isExists()) return;
+  let buffer = await fs.readFile(PREFERENCE_FILE);
   if (!buffer) return;
   let content = buffer.toString();
   let editorConfigs, shortcutConfigs;
@@ -55,9 +48,8 @@ async function load() {
 }
 
 async function reset() {
-  let isExists = await exists(PREFERENCE_FILE);
-  if (!isExists) return;
-  return unlink(PREFERENCE_FILE);
+  if (!await isExists()) return;
+  return fs.unlink(PREFERENCE_FILE);
 }
 
 exports.getFile = getFile;

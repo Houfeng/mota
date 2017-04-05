@@ -1,21 +1,21 @@
-const app = require('electron').app;
-const BrowserWindow = require('electron').BrowserWindow;
-const Menu = require('electron').Menu;
-const dialog = require('electron').dialog;
+const electron = require('electron');
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+const Menu = electron.Menu;
+const dialog = electron.dialog;
 const rendererVal = require('electron-renderer-value');
 const path = require('path');
 const url = require('url');
 const menu = require('./menu');
 const Promise = require('bluebird');
-const writeFile = Promise.promisify(require('fs').writeFile);
-const readFile = Promise.promisify(require('fs').readFile);
-const ipcMain = require('electron').ipcMain;
+const fs = require('./common/fs');
+const ipcMain = electron.ipcMain;
 const utils = require('ntils');
 const recent = require('./recent');
 const convert = require('./convert');
 const update = require('./update');
-const shell = require('electron').shell;
-const globalShortcut = require('electron').globalShortcut;
+const shell = electron.shell;
+const globalShortcut = electron.globalShortcut;
 const preference = require('./preference');
 const sleep = require('./common/sleep');
 
@@ -167,7 +167,7 @@ app.saveFile = async function (filename, window) {
   if (utils.isNull(content)) return;
   window.filename = filename;
   window.isChanged = false;
-  await writeFile(filename, content);
+  await fs.writeFile(filename, content);
   recent.add(filename);
   if (filename === this.PERFERENCE_FILE) this.dispatchPreference();
 };
@@ -221,7 +221,7 @@ ipcMain.on('content-changed', function (event, info) {
 
 //打开一个文件 
 app.openFile = async function (filename, window) {
-  let buffer = await readFile(filename);
+  let buffer = await fs.readFile(filename);
   let content = buffer.toString();
   window = window || this.getActiveWindow();
   if (!window) return;
@@ -282,7 +282,7 @@ app.toHTML = async function (window) {
       content: await this.getEditorValue(window),
       border: true
     });
-    await writeFile(filename, html);
+    await fs.writeFile(filename, html);
   });
 };
 
@@ -301,7 +301,7 @@ app.toSlide = async function (window) {
       title: path.basename(window.filename),
       content: await this.getEditorValue(window)
     });
-    await writeFile(filename, html);
+    await fs.writeFile(filename, html);
   });
 };
 
@@ -320,7 +320,7 @@ app.toPDF = async function (window) {
       title: path.basename(window.filename),
       content: await this.getEditorValue(window)
     });
-    await writeFile(filename, html);
+    await fs.writeFile(filename, html);
   });
 };
 
@@ -339,7 +339,7 @@ app.toImage = async function (window) {
       title: path.basename(window.filename),
       content: await this.getEditorValue(window)
     });
-    await writeFile(filename, html);
+    await fs.writeFile(filename, html);
   });
 };
 

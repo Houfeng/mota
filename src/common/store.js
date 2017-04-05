@@ -1,15 +1,12 @@
 const app = require('electron').app;
-const Promise = require('bluebird');
-const writeFile = Promise.promisify(require('fs').writeFile);
-const readFile = Promise.promisify(require('fs').readFile);
-const deleteFile = Promise.promisify(require('fs').unlink);
+const fs = require('../common/fs');
 
 const DATA_PATH = app.getPath('userData');
 
 exports.setItem = async function (key, value) {
   let storeFile = `${DATA_PATH}/${key}.json`;
   try {
-    await writeFile(storeFile, JSON.stringify(value));
+    await fs.writeFile(storeFile, JSON.stringify(value));
   } catch (err) {
     console.error('setItem', err);
   }
@@ -18,7 +15,7 @@ exports.setItem = async function (key, value) {
 exports.getItem = async function (key) {
   let storeFile = `${DATA_PATH}/${key}.json`;
   try {
-    let buffer = await readFile(storeFile);
+    let buffer = await fs.readFile(storeFile);
     return JSON.parse(buffer.toString());
   } catch (err) {
     console.error('getItem', err);
@@ -28,7 +25,7 @@ exports.getItem = async function (key) {
 exports.removeItem = async function (key) {
   let storeFile = `${DATA_PATH}/${key}.json`;
   try {
-    await deleteFile(storeFile);
+    await fs.unlink(storeFile);
   } catch (err) {
     console.error('removeItem', err);
   }
