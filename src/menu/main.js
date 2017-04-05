@@ -1,62 +1,66 @@
 const pkg = require('../../package.json');
 const app = require('electron').app;
+const lang = require('../lang');
 
-module.exports = {
-  label: pkg.displayName,
-  submenu: [{
-      label: `关于 ${pkg.displayName}`,
-      role: 'about'
-    },
-    {
-      label: '检查更新...',
-      click() {
-        app.checkUpdate(true);
+module.exports = async() => {
+  let locale = await lang.load();
+  return {
+    label: pkg.displayName,
+    submenu: [{
+        label: `${locale.about} ${pkg.displayName}`,
+        role: 'about'
+      },
+      {
+        label: `${locale.checkUpdate}...`,
+        click() {
+          app.checkUpdate(true);
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: `${locale.preference}...`,
+        click() {
+          app.openPreference();
+        }
+      },
+      {
+        label: `${locale.resetPreference}...`,
+        click() {
+          app.resetPreference();
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: locale.services,
+        role: 'services',
+        submenu: []
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: locale.hide,
+        role: 'hide'
+      },
+      {
+        label: locale.hideOthers,
+        role: 'hideothers'
+      },
+      {
+        label: locale.unHide,
+        role: 'unhide'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: locale.quit,
+        role: 'quit'
       }
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: '偏好设置...',
-      click() {
-        app.openPreference();
-      }
-    },
-    {
-      label: '重置偏好设置...',
-      click() {
-        app.resetPreference();
-      }
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: '服务',
-      role: 'services',
-      submenu: []
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: '隐藏',
-      role: 'hide'
-    },
-    {
-      label: '隐藏其它',
-      role: 'hideothers'
-    },
-    {
-      label: '取消隐藏',
-      role: 'unhide'
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: '退出',
-      role: 'quit'
-    }
-  ]
+    ]
+  };
 };

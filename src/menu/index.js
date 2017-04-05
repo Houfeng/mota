@@ -1,15 +1,20 @@
 const Menu = require('electron').Menu;
+const Promise = require('bluebird');
 
-module.exports = async function () {
-  const template = [
-    await require('./file')(),
-    await require('./edit')(),
-    await require('./view')(),
-    require('./window'),
-    require('./help')
-  ];
+exports.createMain = async function () {
+  let template = await Promise.all([
+    require('./file')(),
+    require('./edit')(),
+    require('./view')(),
+    require('./window')(),
+    require('./help')()
+  ]);
   if (process.platform === 'darwin') {
-    template.unshift(require('./main'));
+    template.unshift(await require('./main')());
   }
   return Menu.buildFromTemplate(template);
+};
+
+exports.createContextMenu = async function () {
+  return require('./contextmenu')();
 };

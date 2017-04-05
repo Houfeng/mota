@@ -1,8 +1,9 @@
 const app = require('electron').app;
 const recent = require('../recent');
+const lang = require('../lang');
 
 module.exports = async() => {
-
+  let locale = await lang.load();
   let recentItems = await recent.getItems();
   recentItems = recentItems.map(filename => {
     return {
@@ -16,17 +17,17 @@ module.exports = async() => {
     type: 'separator'
   });
   recentItems.push({
-    label: '清除最近编辑',
+    label: locale.clearRecent,
     click() {
       recent.clear();
     }
   });
 
   return {
-    label: '文件',
+    label: locale.file,
     role: 'file',
     submenu: [{
-        label: '新建',
+        label: locale.newFile,
         accelerator: 'CmdOrCtrl+N',
         click() {
           app.createWindow();
@@ -36,14 +37,14 @@ module.exports = async() => {
         type: 'separator'
       },
       {
-        label: '打开...',
+        label: `${locale.open}...`,
         accelerator: 'CmdOrCtrl+O',
         click() {
           app.open();
         }
       },
       {
-        label: '最近编辑',
+        label: locale.recentItems,
         submenu: recentItems
       },
       {
@@ -51,14 +52,14 @@ module.exports = async() => {
       },
       {
         accelerator: 'CmdOrCtrl+S',
-        label: '保存...',
+        label: `${locale.save}...`,
         click() {
           app.save();
         }
       },
       {
         accelerator: 'Shift+CmdOrCtrl+S',
-        label: '另存为...',
+        label: `${locale.saveAs}...`,
         click() {
           app.saveAs();
         }
@@ -67,24 +68,24 @@ module.exports = async() => {
         type: 'separator'
       },
       {
-        label: '导出',
+        label: locale.export,
         submenu: [{
-          label: 'HTML...',
+          label: `${locale.html}...`,
           click() {
             app.toHTML();
           }
         }, {
-          label: 'PDF...',
+          label: `${locale.pdf}...`,
           click() {
             app.toPDF();
           }
         }, {
-          label: '图片...',
+          label: `${locale.image}...`,
           click() {
             app.toImage();
           }
         }, {
-          label: '演示...',
+          label: `${locale.slide}...`,
           click() {
             app.toSlide();
           }
@@ -92,7 +93,7 @@ module.exports = async() => {
       }, {
         type: 'separator'
       }, {
-        label: '退出',
+        label: locale.quit,
         click() {
           app.quit();
         }

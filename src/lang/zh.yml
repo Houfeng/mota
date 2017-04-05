@@ -5,11 +5,11 @@ resetPreference: 重置偏好设置
 services: 服务
 hide: 隐藏
 hideOthers: 隐藏其它
-unhide: 取消隐藏
+unHide: 取消隐藏
 quit: 退出
 clearRecent: 清除最近编辑
 file: 文件
-new: 新建
+newFile: 新建
 open: 打开
 recentItems: 最近编辑
 save: 保存
@@ -17,7 +17,7 @@ saveAs: 另存为
 export: 导出
 pdf: PDF
 html: HTML
-iamge: 图片
+image: 图片
 slide: 演示
 edit: 编辑
 undo: 撤销
@@ -27,8 +27,8 @@ copy: 复制
 paste: 粘贴
 selectAll: 全选
 delete: 删除
-find: 查找
-replace: 替换
+find: 查找和替换
+view: 视图
 toggleSplit: 切换分屏
 togglePreview: 切换预览
 window: 窗口

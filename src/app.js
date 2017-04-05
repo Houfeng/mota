@@ -107,7 +107,13 @@ app.on('ready', async() => {
 
 //创建主菜单
 app.createMenu = async function () {
-  return Menu.setApplicationMenu(await menu());
+  return Menu.setApplicationMenu(await menu.createMain());
+};
+
+//弹出内容菜单
+app.popupContextMenu = async function () {
+  let contextMenu = await menu.createContextMenu();
+  contextMenu.popup(this.getActiveWindow());
 };
 
 //绑定开发人员快捷键
@@ -264,6 +270,11 @@ app.open = async function (window) {
 ipcMain.on('open-file', function (event, info) {
   let window = BrowserWindow.fromId(info.windowId);
   app.openFile(info.filename, window);
+});
+
+//在收到弹出内容菜单时
+ipcMain.on('contextmenu', function (event) {
+  app.popupContextMenu();
 });
 
 //导出 HTML

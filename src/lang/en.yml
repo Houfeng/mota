@@ -1,0 +1,43 @@
+about: About
+checkUpdate: Check For Update
+preference: Preference
+resetPreference: Reset Preference
+services: Services
+hide: Hide
+hideOthers: Hide Others
+unHide: Un Hide
+quit: Quit
+clearRecent: Clear Recent Items
+file: File
+newFile: New File
+open: Open
+recentItems: Recent Items
+save: Save
+saveAs: Save As
+export: Export
+pdf: PDF
+html: HTML
+image: Image
+slide: Slide
+edit: Edit
+undo: Undo
+redo: Redo
+cut: Cut
+copy: Copy
+paste: Paste
+selectAll: Select All
+delete: Delete
+findAndReplace: Find And Replace
+view: View
+toggleSplit: Toggle Split
+togglePreview: Toggle Preview
+window: Window
+minimize: Minimize
+close: Close
+zoom: Zoom
+front: Bring To Front
+help: Help
+homepage: Homepage
+umlDoc: How to generate UML graphics
+slideDoc: How to write "Slide"
+previewArea: Preview Area

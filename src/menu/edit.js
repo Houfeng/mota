@@ -1,17 +1,19 @@
 const app = require('electron').app;
+const lang = require('../lang');
 
 module.exports = async() => {
+  let locale = await lang.load();
   return {
-    label: '编辑',
+    label: locale.edit,
     submenu: [{
-        label: '撤销',
+        label: locale.undo,
         accelerator: 'CmdOrCtrl+Z',
         click() {
           app.execCommand('undo');
         }
       },
       {
-        label: '重做',
+        label: locale.redo,
         accelerator: 'CmdOrCtrl+Shift+Z',
         click() {
           app.execCommand('redo');
@@ -21,30 +23,30 @@ module.exports = async() => {
         type: 'separator'
       },
       {
-        label: '剪切',
+        label: locale.cut,
         role: 'cut'
       },
       {
-        label: '复制',
+        label: locale.copy,
         role: 'copy'
       },
       {
-        label: '粘贴',
+        label: locale.paste,
         role: 'paste'
       },
       {
-        label: '删除',
+        label: locale.delete,
         role: 'delete'
       },
       {
-        label: '全选',
+        label: locale.selectAll,
         role: 'selectall'
       },
       {
         type: 'separator'
       },
       {
-        label: '查换替换',
+        label: locale.findAndReplace,
         accelerator: 'CmdOrCtrl+F',
         click() {
           app.execCommand('find');

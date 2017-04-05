@@ -1,23 +1,28 @@
 const shell = require('electron').shell;
 const pkg = require('../../package');
+const lang = require('../lang');
 
-module.exports = {
-  label: '帮助',
-  role: 'help',
-  submenu: [{
-    label: `${pkg.displayName} 主页`,
-    click() {
-      shell.openExternal(pkg.homepage);
-    }
-  }, {
-    label: '如何生成 UML 图形',
-    click() {
-      shell.openExternal(`${pkg.homepage}/doc/uml.html`);
-    }
-  }, {
-    label: '如何编写「演示」',
-    click() {
-      shell.openExternal(`${pkg.homepage}/doc/slide.html`);
-    }
-  }]
+module.exports = async() => {
+  let locale = await lang.load();
+
+  return {
+    label: locale.help,
+    role: 'help',
+    submenu: [{
+      label: `${pkg.displayName} ${locale.homepage}`,
+      click() {
+        shell.openExternal(pkg.homepage);
+      }
+    }, {
+      label: locale.umlDoc,
+      click() {
+        shell.openExternal(`${pkg.homepage}/doc/uml.html`);
+      }
+    }, {
+      label: locale.slideDoc,
+      click() {
+        shell.openExternal(`${pkg.homepage}/doc/slide.html`);
+      }
+    }]
+  };
 };

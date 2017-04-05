@@ -1,26 +1,19 @@
 const app = require('electron').app;
+const lang = require('../lang');
 
 module.exports = async() => {
+  let locale = await lang.load();
   return {
-    label: '视图',
-    submenu: [
-      // {
-      //   label: '重新载入',
-      //   role: 'forcereload'
-      // },
-      // {
-      //   label: '开发人员工具',
-      //   role: 'toggledevtools'
-      // }
-      {
-        label: '切换分屏',
+    label: locale.view,
+    submenu: [{
+        label: locale.toggleSplit,
         accelerator: 'Shift+Alt+S',
         click() {
           app.execCommand('toggleSplit');
         }
       },
       {
-        label: '切换预览',
+        label: locale.togglePreview,
         accelerator: 'Shift+Alt+V',
         click() {
           app.execCommand('togglePreview');

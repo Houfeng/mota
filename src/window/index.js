@@ -2,7 +2,6 @@ require('./index.less');
 
 const mokit = require('mokit');
 const Mditor = require('mditor/src/client');
-const contextMenu = require('./contextmenu');
 const drapable = require('./drapable');
 const ipcRenderer = nodeRequire('electron').ipcRenderer;
 const pkg = require('../../package');
@@ -50,7 +49,7 @@ const ctx = window.ctx = mokit({
    */
   onContextMenu(event) {
     if (event.target != this.mditor.editor.textarea) return;
-    contextMenu.popup(this.currentWindow);
+    ipcRenderer.send('contextmenu');
   },
 
   /**
