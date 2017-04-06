@@ -1,9 +1,9 @@
 const app = require('electron').app;
 const recent = require('../recent');
-const lang = require('../lang');
+const i18n = require('../i18n');
 
 module.exports = async() => {
-  let locale = await lang.load();
+  let locale = i18n.locale;
   let recentItems = await recent.getItems();
   recentItems = recentItems.map(filename => {
     return {

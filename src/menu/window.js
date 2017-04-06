@@ -1,7 +1,7 @@
-const lang = require('../lang');
+const i18n = require('../i18n');
 
 module.exports = async() => {
-  let locale = await lang.load();
+  let locale = i18n.locale;
   const windowMenu = {
     label: locale.window,
     role: 'window',

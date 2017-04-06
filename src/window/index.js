@@ -40,6 +40,7 @@ const ctx = window.ctx = mokit({
     this.mditor.removeCommand('toggleFullScreen');
     this.overrideToolbar();
     this.applyPreference(remote.getGlobal('preference'));
+    this.applyLocale(remote.getGlobal('locale'));
   },
 
   /**
@@ -125,6 +126,14 @@ const ctx = window.ctx = mokit({
       this.mditor.shortcut.unbind(key);
       this.mditor.shortcut.bind(key, cmd);
     });
+  },
+
+  applyLocale(locale) {
+    this.mditor.viewer.alert = locale.previewArea;
+    this.mditor.toolbar.items.forEach(item => {
+      let name = item.name.replace(/\-([a-z]{1})/ig, $1 => $1.slice(1).toUpperCase());
+      item.title = locale[name];
+    });
   }
 
 }).start();
@@ -148,4 +157,9 @@ ipcRenderer.on('command', function (event, info) {
 //在收到偏好设置时
 ipcRenderer.on('preference', function (event, preference) {
   ctx.applyPreference(preference);
+});
+
+//在收到国际化设置时
+ipcRenderer.on('locale', function (event, locale) {
+  ctx.applyLocale(locale);
 });

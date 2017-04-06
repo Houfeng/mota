@@ -18,6 +18,8 @@ const shell = electron.shell;
 const globalShortcut = electron.globalShortcut;
 const preference = require('./preference');
 const sleep = require('./common/sleep');
+const i18n = require('./i18n');
+const stp = require('stp');
 
 const FILE_FILTERS = [{
   name: 'Markdown',
@@ -57,7 +59,7 @@ app.createWindow = function createWindow() {
     slashes: true
   }));
   window.filename = '';
-  window.on('close', function (event) {
+  window.on('close', event => {
     let result = app.leaveConfirm(window);
     if (result == 0) {
       event.preventDefault();
@@ -98,6 +100,7 @@ app.createWindow = function createWindow() {
 // 部分 API 在 ready 事件触发后才能使用。
 app.on('ready', async() => {
   await app.loadPreference();
+  await app.loadLocale();
   app.createMenu();
   app.createWindow();
   app.bindDevShortcuts();
@@ -209,13 +212,16 @@ app.saveAs = async function (window) {
 app.leaveConfirm = function (window) {
   window = window || this.getActiveWindow();
   if (!window || !window.isChanged) return 2;
+  let locale = i18n.locale;
   return dialog.showMessageBox(window, {
     type: 'question',
-    buttons: ['保存', '取消', '不保存'],
+    buttons: [locale.save, locale.cancel, locale.donNotSave],
     defaultId: 0,
     cancelId: 2,
-    message: '确认保存',
-    detail: `文件 "${window.filename || 'Untitled'}" 还未保存，是否现在保存？`
+    message: locale.confirmSave,
+    detail: stp(locale.saveAlertDetail)({
+      filename: window.filename || 'Untitled'
+    })
   });
 };
 
@@ -365,6 +371,7 @@ app.execCommand = async function (command, window) {
 
 //检查更新
 app.checkUpdate = async function (force) {
+  let locale = i18n.locale;
   let window = await app.getActiveWindow();
   let info = await update.check(force);
   if (!info && !force) {
@@ -372,18 +379,18 @@ app.checkUpdate = async function (force) {
   } else if (!info) {
     return dialog.showMessageBox(window, {
       type: 'question',
-      buttons: ['关闭'],
-      message: '检查更新',
-      detail: '当前已是最新版本'
+      buttons: [locale.close],
+      message: locale.checkUpdate,
+      detail: locale.currentlyTheLatestVersion
     });
   }
   let result = dialog.showMessageBox(window, {
     type: 'question',
-    buttons: ['前往下载', '暂不'],
+    buttons: [locale.goDownload, locale.donNotUpdate],
     defaultId: 0,
     cancelId: 1,
-    message: `发现新版本 ${info.version}`,
-    detail: info.detail || '建议现在就去下载新版本'
+    message: `${locale.discoverNewVersion} ${info.version}`,
+    detail: info.detail || locale.recommendDownload
   });
   if (result == 1) return;
   shell.openExternal(info.url);
@@ -412,6 +419,18 @@ app.loadPreference = async function () {
 app.dispatchPreference = async function () {
   let configs = await this.loadPreference();
   this.dispatch('preference', configs);
+};
+
+//加载国际化资源
+app.loadLocale = async function () {
+  global.locale = await i18n.load();
+  return global.locale;
+};
+
+//广播国际化资源
+app.dispatchLocale = async function () {
+  let locale = await this.loadLocale();
+  this.dispatch('locale', locale);
 };
 
 //重置偏好设置

@@ -1,10 +1,10 @@
 const electron = require('electron');
 const Menu = electron.Menu;
 const MenuItem = electron.MenuItem;
-const lang = require('../lang');
+const i18n = require('../i18n');
 
 module.exports = async() => {
-  let locale = await lang.load();
+  let locale = i18n.locale;
   const items = [{
       label: locale.undo,
       role: 'undo',
