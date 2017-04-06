@@ -3,7 +3,7 @@ const yaml = require('../common/yaml');
 const fs = require('../common/fs');
 
 exports.getName = async function () {
-  this.localeName = 'zh'; //app.getLocale().toLowerCase();
+  this.localeName = app.getLocale().toLowerCase();
   return this.localeName;
 };
 
