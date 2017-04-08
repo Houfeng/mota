@@ -9,6 +9,13 @@ module.exports = function (element) {
     event.preventDefault();
     let files = [].slice.call(event.dataTransfer.files);
     if (!files || files.length < 1) return;
-    ctx.openFile(files[0].path);
+    let firstFile = files[0];
+    if (firstFile.type.startsWith('text/')) {
+      ctx.openFile(firstFile.path);
+    } else {
+      let imageFiles = files.filter(file => file.type.startsWith('image/'));
+      if (imageFiles.length < 1) return;
+      ctx.insertImage(imageFiles.map(item => item.path));
+    }
   });
 };

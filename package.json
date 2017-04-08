@@ -1,7 +1,7 @@
 {
   "name": "mditor-desktop",
   "displayName": "Mditor",
-  "version": "1.0.0Beta9",
+  "version": "1.0.0Beta10",
   "description": "Mditor，最好用的 markdown 编辑器！",
   "main": "./src/app.js",
   "scripts": {
@@ -81,7 +81,9 @@
     "electron-renderer-value": "^1.1.0",
     "html-pdf": "^2.1.0",
     "js-yaml": "^3.8.2",
-    "mditor": "^1.2.3",
+    "md5": "^2.2.1",
+    "mditor": "^1.2.6",
+    "mkdirp": "^0.5.1",
     "mokit": "^3.0.15",
     "node-fetch": "^1.6.3",
     "ntils": "^2.0.14",

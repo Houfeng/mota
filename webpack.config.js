@@ -31,7 +31,7 @@ const plugins = [
   cssBundlePlugin,
   cleanPlugin,
 ];
-if (ENV === 'prod') plugins.push(compressPlugin);
+//if (ENV === 'prod') plugins.push(compressPlugin);
 
 // webpack loaders
 const loaders = [{

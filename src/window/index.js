@@ -7,6 +7,7 @@ const ipcRenderer = nodeRequire('electron').ipcRenderer;
 const pkg = require('../../package');
 const UMLParser = require('../uml');
 const utils = require('ntils');
+const blobToBase64 = require('../common/blob2buffer');
 
 //初始处理
 drapable(document.body);
@@ -68,15 +69,25 @@ const ctx = window.ctx = mokit({
     imgBtn.handler = () => {
       remote.dialog.showOpenDialog(this.currentWindow, {
         filters: [{
-          name: '图片',
+          name: 'Images',
           extensions: ['png', 'jpg', 'jpeg', 'gif']
         }],
         properties: ['openFile', 'multiSelections']
-      }, filenames => {
-        if (!filenames || filenames.length < 1) return;
-        this.mditor.editor.insertBeforeText(filenames.map(filename => `![alt](file://${filename})`).join('\n'));
-      });
+      }, this.insertImage.bind(this));
     };
+  },
+
+  insertImage(filenames) {
+    if (!filenames) return;
+    if (!utils.isArray(filenames)) {
+      filenames = [filenames];
+    }
+    filenames = filenames.filter(item => !!item);
+    if (!filenames || filenames.length < 1) return;
+    let text = filenames.map(filename => {
+      return `![${filename.split('/').pop()}](file://${filename})`;
+    }).join(this.mditor.EOL);
+    this.mditor.editor.insertBeforeText(text);
   },
 
   openFile(filename) {
@@ -90,6 +101,29 @@ const ctx = window.ctx = mokit({
     ipcRenderer.send('content-changed', {
       filename: ctx.filename,
       windowId: this.currentWindow.id
+    });
+  },
+
+  async onPaste(event) {
+    let items = [].slice.call(event.clipboardData.items);
+    let imageItems = items.filter(item => {
+      return item.type.startsWith('image/');
+    }).map(item => ({
+      type: item.type,
+      file: item.getAsFile()
+    }));
+    if (imageItems.length < 1) return;
+    event.preventDefault();
+    await Promise.all(imageItems.map(item => {
+      return blobToBase64(item.file).then(content => {
+        item.content = content;
+      });
+    }));
+    imageItems.forEach(image => {
+      ipcRenderer.send('save-image', {
+        type: image.type,
+        content: image.content
+      });
     });
   },
 
@@ -138,7 +172,7 @@ const ctx = window.ctx = mokit({
 
 }).start();
 
-//在收到内容时
+//在收到文件内容时
 ipcRenderer.on('file', function (event, info) {
   document.title = info.filename;
   baseElement.href = info.filename;
@@ -149,7 +183,7 @@ ipcRenderer.on('file', function (event, info) {
   });
 });
 
-//在收到内容时
+//在收到执行命令时
 ipcRenderer.on('command', function (event, info) {
   ctx.mditor.execCommand(info.name);
 });
@@ -162,4 +196,9 @@ ipcRenderer.on('preference', function (event, preference) {
 //在收到国际化设置时
 ipcRenderer.on('locale', function (event, locale) {
   ctx.applyLocale(locale);
+});
+
+//在收到插入图片时
+ipcRenderer.on('image', function (event, info) {
+  ctx.insertImage(info.filename);
 });

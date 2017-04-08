@@ -20,6 +20,8 @@ const preference = require('./preference');
 const sleep = require('./common/sleep');
 const i18n = require('./i18n');
 const stp = require('stp');
+const mkdirp = require('./common/mkdirp');
+const md5 = require('md5');
 
 const FILE_FILTERS = [{
   name: 'Markdown',
@@ -192,6 +194,14 @@ app.save = function (window) {
   }
 };
 
+//获取当前不含路径的文件名
+app.getBaseName = function (window) {
+  window = window || this.getActiveWindow();
+  if (!window || !window.filename) return;
+  let name = path.basename(window.filename, '.md');
+  return name;
+};
+
 //另存为
 app.saveAs = async function (window) {
   return new Promise(resolve => {
@@ -199,6 +209,7 @@ app.saveAs = async function (window) {
     if (!window) return;
     window.focus();
     dialog.showSaveDialog(window, {
+      defaultPath: this.getBaseName(window),
       filters: FILE_FILTERS
     }, filename => {
       if (!filename) return;
@@ -225,7 +236,7 @@ app.leaveConfirm = function (window) {
   });
 };
 
-//在收到打开文件请求时
+//在内容改变时
 ipcMain.on('content-changed', function (event, info) {
   let window = BrowserWindow.fromId(info.windowId);
   window.isChanged = true;
@@ -283,11 +294,29 @@ ipcMain.on('contextmenu', function (event) {
   app.popupContextMenu();
 });
 
+//在保存一个附件时
+ipcMain.on('save-image', async function (event, info) {
+  let window = app.getActiveWindow();
+  if (!window) return;
+  let savePath = app.getPath('temp');
+  if (window.filename) {
+    savePath = `${path.dirname(window.filename)}/images`;
+  }
+  await mkdirp(savePath);
+  info.name = `${md5(info.content).substr(8,16)}.${info.type.split('/')[1]}`;
+  let imageFile = path.normalize(`${savePath}/${info.name}`);
+  await fs.writeFile(imageFile, info.content);
+  window.webContents.send('image', {
+    filename: imageFile
+  });
+});
+
 //导出 HTML
 app.toHTML = async function (window) {
   window = window || this.getActiveWindow();
   if (!window) return;
   dialog.showSaveDialog(window, {
+    defaultPath: this.getBaseName(window),
     filters: [{
       name: 'HTML',
       extensions: ['htm', 'html']
@@ -295,7 +324,7 @@ app.toHTML = async function (window) {
   }, async filename => {
     if (!filename) return;
     let html = await convert.toHTML({
-      title: path.basename(window.filename),
+      title: this.getBaseName(window),
       content: await this.getEditorValue(window),
       border: true
     });
@@ -308,6 +337,7 @@ app.toSlide = async function (window) {
   window = window || this.getActiveWindow();
   if (!window) return;
   dialog.showSaveDialog(window, {
+    defaultPath: this.getBaseName(window),
     filters: [{
       name: 'HTML',
       extensions: ['htm', 'html']
@@ -315,7 +345,7 @@ app.toSlide = async function (window) {
   }, async filename => {
     if (!filename) return;
     let html = await convert.toSlide({
-      title: path.basename(window.filename),
+      title: this.getBaseName(window),
       content: await this.getEditorValue(window)
     });
     await fs.writeFile(filename, html);
@@ -327,6 +357,7 @@ app.toPDF = async function (window) {
   window = window || this.getActiveWindow();
   if (!window) return;
   dialog.showSaveDialog(window, {
+    defaultPath: this.getBaseName(window),
     filters: [{
       name: 'PDF',
       extensions: ['pdf']
@@ -334,7 +365,7 @@ app.toPDF = async function (window) {
   }, async filename => {
     if (!filename) return;
     let html = await convert.toPDF({
-      title: path.basename(window.filename),
+      title: this.getBaseName(window),
       content: await this.getEditorValue(window)
     });
     await fs.writeFile(filename, html);
@@ -346,6 +377,7 @@ app.toImage = async function (window) {
   window = window || this.getActiveWindow();
   if (!window) return;
   dialog.showSaveDialog(window, {
+    defaultPath: this.getBaseName(window),
     filters: [{
       name: 'PNG',
       extensions: ['png']
@@ -353,7 +385,7 @@ app.toImage = async function (window) {
   }, async filename => {
     if (!filename) return;
     let html = await convert.toImage({
-      title: path.basename(window.filename),
+      title: this.getBaseName(window),
       content: await this.getEditorValue(window)
     });
     await fs.writeFile(filename, html);

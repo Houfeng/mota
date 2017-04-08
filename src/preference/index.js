@@ -8,7 +8,7 @@ const DATA_PATH = app.getPath('userData');
 const PREFERENCE_FILE = `${DATA_PATH}/preference.md`;
 
 async function createFile() {
-  let buffer = await fs.readFile(`${__dirname}/preference.md`)
+  let buffer = await fs.readFile(`${__dirname}/tmpl.md`)
   return fs.writeFile(PREFERENCE_FILE, buffer);
 }
 

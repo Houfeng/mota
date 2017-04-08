@@ -1,7 +1,7 @@
 about: About
-checkUpdate: Check For Update
-preference: Preference
-resetPreference: Reset Preference
+checkUpdate: Check For Updates
+preference: Preferences
+resetPreference: Reset Preferences
 services: Services
 hide: Hide
 hideOthers: Hide Others
@@ -31,7 +31,7 @@ findAndReplace: Find And Replace
 view: View
 toggleSplit: Toggle Split
 togglePreview: Toggle Preview
-previewArea: Preview View
+previewArea: Preview Area
 window: Window
 minimize: Minimize
 close: Close
