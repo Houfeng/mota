@@ -1,4 +1,4 @@
-![alt](http://mditor.com/assets/site-shot.png)
+![alt](http://mditor.com/assets/screen-shot.png)
  
 
 # 简单说明
