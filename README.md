@@ -5,7 +5,7 @@
 Mditor 最早只有「组件版」，随着「桌面版」的发布，Mditor 目前有两个版本：
 - 可嵌入到任意 Web 应用的 Embed 版本，这是一桌面版的基础，Repo: [https://github.com/houfeng/mditor](https://github.com/Houfeng/mditor) 
 - 独立的桌面版本，目前仅有 Mac 版本，主页：[http://mditor.com](http://mditor.com)，Repo: [https://github.com/houfeng/mditor-desktop](https://github.com/houfeng/mditor-desktop)
-
+ 
   
 # 相关特性
 除常规的编辑功能，Mditor 桌面版还有如下特性
