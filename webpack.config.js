@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const os = require('os');
+const path = require('path');
 
 const ENV = process.env.NODE_ENV || 'prod';
 console.log(`${os.EOL}NODE_ENV:`, ENV);
@@ -80,7 +81,7 @@ module.exports = {
     bundle: `./src/window/index.js`
   },
   output: {
-    path: './build/',
+    path: path.resolve(__dirname, './build'),
     filename: 'js/[name].js'
   },
   devtool: 'source-map',
