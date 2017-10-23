@@ -33,12 +33,13 @@ function createUnmount(proto) {
     if (initailUnmount) {
       result = initailUnmount.call(this);
     }
+    const observer = this.model._observer_;
     if (this._run_) {
       observer.stop(this._run_);
       this._run_ = null;
     }
     if (this._isNewModelInstance_) {
-      this.model._observer_.clearReference();
+      observer.clearReference();
     }
     return result;
   };

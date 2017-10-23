@@ -3,24 +3,29 @@ init:
 
 dev:
   - name: clean
+    target: ./dist/example/
   - name: copy
     files:
       ./build/(0).ico: ./src/assets/favicon.ico
   - name: webpack
     entry: ./example/index.js
     template: ./example/assets/index.html
+    output: ./dist/example/
     watch: true
   - name: server
+    public: ./dist/example/
   - name: browser-sync
 
 build:
   - name: clean
+    target: ./dist/
   - name: copy
     files:
       (0): ./src/assets/favicon.ico
   - name: webpack
     entry:
       mota: ./src/index.js
+    output: ./dist/
     folders:
       js: '.'
     common:

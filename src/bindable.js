@@ -1,5 +1,3 @@
-import { getByPath, setByPath } from 'ntils';
-
 const defaultOpts = {
   prop: ['value'],
   event: ['onChange']
@@ -62,14 +60,14 @@ export function bindable(opts, component) {
   if (component) {
     return function (component) {
       bindable(opts, component);
-    }
+    };
   } else {
     component.bindOpts = Object.assign({}, opts);
     return component;
   }
 }
 
-bindable.getOptions = function (element) {
+export function getOptions(element) {
   const type = element.type;
   let opts = (typeof type === 'string') ? binltIn[type] : type.bindOpts;
   if (opts instanceof Function) opts = opts(element);
@@ -83,4 +81,5 @@ bindable.getOptions = function (element) {
   return opts;
 }
 
+bindable.getOptions = getOptions;
 export default bindable;

@@ -1,8 +1,8 @@
 {
   "name": "mota",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "",
-  "main": "./build/mota.js",
+  "main": "./dist/mota.js",
   "scripts": {
     "test": "dn test && dn build -e prod"
   },

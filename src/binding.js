@@ -1,13 +1,12 @@
 import React from 'react';
 import bindable from './bindable';
-import { getByPath } from 'ntils';
-import { expression } from 'mokit/src/template/expression'
+import { expression } from 'mokit/src/template/expression';
 
 function compileExpr(expr) {
   return {
     get: expression(expr),
     set: expression(`$scope.${expr}=$value`)
-  }
+  };
 }
 
 function toArray(children) {
@@ -68,4 +67,4 @@ export default function (component) {
     return wrap(element, this.model);
   };
   return component;
-};
+}
