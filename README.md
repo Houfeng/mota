@@ -1,38 +1,49 @@
-# dn-template-react
+# mota
 
-这是一个 React 项目模板，默认安装了 react/react-dom，同时单元测试等基础设施都已配置完成。
+mota 是一个「面向对象」的、支持「双向绑定」的 react 状态管理库。
 
-## 使用
+## 安装
 
-使用这个模板需要先安装好 Dawn [https://github.com/alibaba/dawn](https://github.com/alibaba/dawn)
-
-### 初始化
 ```sh
-mkdir demo
-cd demo
-dn init -t react
+npm i mota --save
 ```
 
-通过如上命令便可以完成项目的初始化
+## 示例
 
-### 测试
-```sh
-dn test
+定义模型
+```js
+export default class User {
+  firstName = 'jack';
+  lastName = 'hou';
+  get fullName(){
+    reutrn `${this.firstName} ${this.lastName}`;
+  }
+}
 ```
 
-### 开发
-```sh
-dn dev
+关联到组件
+```js
+import { model } from 'mota';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import User from './user';
+
+@model(User, true)
+class App extends React.Component {
+  render(){
+    return <div>
+      <p>{this.model.fullName}</p>
+      <p>
+        <input data-bind="firstName"/>
+        <br/>
+        <input data-bind="lastName"/>
+      </p>
+    </div>;
+  }
+}
 ```
 
-### 构建
-```sh
-dn dev
-```
+## 文档
 
-### 发布
-```
-dn publish
-```
-
-默认的发布配置是「发布到 npm」，请根据需要更改 `.dawn/pipe.yml` 进行 `publish` 配置
+绝大多数情况下，仅需 `model` 一个 api 就够了，通过 model 可用为组件注入 model。
+同时，第二个参数为 `true` 可以启用双向绑定，在 jsx 中可以通过 `data-bind` 进行绑定。
