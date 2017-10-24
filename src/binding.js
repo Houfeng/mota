@@ -64,7 +64,7 @@ export default function (component) {
   const initailRender = proto.render;
   proto.render = function () {
     const element = initailRender.call(this);
-    return wrap(element, this.model);
+    return wrap(element, this.model || this.prop.model);
   };
   return component;
 }

@@ -6,7 +6,7 @@ dev:
     target: ./dist/example/
   - name: copy
     files:
-      ./build/(0).ico: ./src/assets/favicon.ico
+      ./dist/example/(0).ico: ./src/assets/favicon.ico
   - name: webpack
     entry: ./example/index.js
     template: ./example/assets/index.html
@@ -19,9 +19,15 @@ dev:
 build:
   - name: clean
     target: ./dist/
-  - name: copy
-    files:
-      (0): ./src/assets/favicon.ico
+  - name: webpack
+    entry:
+      mota-min: ./src/index.js
+    output: ./dist/
+    folders:
+      js: '.'
+    common:
+      disabled: true
+    library: true
   - name: webpack
     entry:
       mota: ./src/index.js
@@ -30,6 +36,8 @@ build:
       js: '.'
     common:
       disabled: true
+    compress: false
+    library: true
 
 test:
   - name: lint
