@@ -8,18 +8,21 @@ function createRender(proto, model) {
   const initailRender = proto.render;
   return function () {
     if (!this._run_) {
+      model = this.props.model || model;
+      if (!model) throw new Error('Invalid Model');
       if (model instanceof Function) {
-        model = new model();
+        this._model_ = new model();
         this._isNewModelInstance_ = true;
       } else {
+        this._model_ = model;
         this._isNewModelInstance_ = false;
       }
       delete proto.model;
       Object.defineProperty(proto, 'model', {
         enumerable: false,
-        get() { return model; }
+        get() { return this._model_; }
       });
-      const observer = new Observer(model);
+      const observer = new Observer(this.model);
       this._run_ = observer.run(initailRender, trigger, this);
     }
     return this._run_.run();

@@ -589,20 +589,23 @@ function createRender(proto, model) {
   var initailRender = proto.render;
   return function () {
     if (!this._run_) {
+      model = this.props.model || model;
+      if (!model) throw new Error('Invalid Model');
       if (model instanceof Function) {
-        model = new model();
+        this._model_ = new model();
         this._isNewModelInstance_ = true;
       } else {
+        this._model_ = model;
         this._isNewModelInstance_ = false;
       }
       delete proto.model;
       Object.defineProperty(proto, 'model', {
         enumerable: false,
         get: function get() {
-          return model;
+          return this._model_;
         }
       });
-      var observer = new Observer(model);
+      var observer = new Observer(this.model);
       this._run_ = observer.run(initailRender, trigger, this);
     }
     return this._run_.run();
@@ -1835,7 +1838,7 @@ module.exports = function (component) {
   var initailRender = proto.render;
   proto.render = function () {
     var element = initailRender.call(this);
-    return wrap(element, this.model || this.props.model);
+    return wrap(element, this.model);
   };
   return component;
 };
@@ -3441,6 +3444,9 @@ var connect = __webpack_require__(33);
 var binding = __webpack_require__(50);
 
 module.exports = function model(model, isBinding) {
+  if (model instanceof Boolean) {
+    isBinding = [model, model = isBinding][0];
+  }
   return function (component) {
     if (isBinding) binding(component);
     connect(model, component);
