@@ -1835,7 +1835,7 @@ module.exports = function (component) {
   var initailRender = proto.render;
   proto.render = function () {
     var element = initailRender.call(this);
-    return wrap(element, this.model || this.prop.model);
+    return wrap(element, this.model || this.props.model);
   };
   return component;
 };
