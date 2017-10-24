@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import logo from '../assets/logo.svg';
 import './app.css';
-import { model } from '../../src';
+import { model, binding } from '../../src';
 import Info from '../model/info';
 import { Input, DatePicker } from 'antd';
 
-@model(Info, true)
+@model(Info)
+@binding()
 class App extends Component {
   render() {
     return (

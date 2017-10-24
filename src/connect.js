@@ -48,9 +48,13 @@ function createUnmount(proto) {
   };
 }
 
-module.exports = function connect(model, component) {
+function connect(model, component) {
+  if (!component) return component => connect(model, component);
   const proto = component.prototype;
   proto.render = createRender(proto, model);
   proto.componentWillUnmount = createUnmount(proto);
+  proto._contented_ = true;
   return component;
 }
+
+module.exports = connect;

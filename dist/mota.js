@@ -7,7 +7,7 @@
 		exports["mota"] = factory(require("react"));
 	else
 		root["mota"] = factory(root["React"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_103__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_50__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -631,12 +631,18 @@ function createUnmount(proto) {
   };
 }
 
-module.exports = function connect(model, component) {
+function connect(model, component) {
+  if (!component) return function (component) {
+    return connect(model, component);
+  };
   var proto = component.prototype;
   proto.render = createRender(proto, model);
   proto.componentWillUnmount = createUnmount(proto);
+  proto._contented_ = true;
   return component;
-};
+}
+
+module.exports = connect;
 
 /***/ }),
 /* 34 */
@@ -1744,110 +1750,15 @@ module.exports = InternalError;
 
 /***/ }),
 /* 50 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var _create = __webpack_require__(47);
-
-var _create2 = _interopRequireDefault(_create);
-
-var _extends3 = __webpack_require__(99);
-
-var _extends4 = _interopRequireDefault(_extends3);
-
-var _typeof2 = __webpack_require__(25);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var React = __webpack_require__(103);
-var bindable = __webpack_require__(52);
-
-var _require = __webpack_require__(104),
-    expression = _require.expression;
-
-function compileExpr(expr) {
-  return {
-    get: expression(expr),
-    set: expression('$scope.' + expr + '=$value')
-  };
-}
-
-function toArray(children) {
-  var result = [];
-  React.Children.forEach(children, function (child) {
-    result.push(child);
-  });
-  return result;
-}
-
-function wrap(element, model) {
-  var _extends2;
-
-  if (!element || (typeof element === 'undefined' ? 'undefined' : (0, _typeof3.default)(element)) !== 'object') return element;
-  var props = element.props || {};
-  var initailChildren = toArray(props.children);
-  var children = initailChildren.length > 0 ? initailChildren.map(function (child) {
-    return wrap(child, model);
-  }) : undefined;
-  var dataBind = props['data-bind'];
-  var bindOpts = dataBind && bindable.getOptions(element);
-  if (!dataBind || !bindOpts) {
-    return React.cloneElement(element, (0, _extends4.default)({}, props, { children: children }));
-  }
-  var initailChange = props[bindOpts.change];
-  var bindExpr = compileExpr(dataBind);
-  var setValue = function setValue(value) {
-    return bindExpr.set((0, _create2.default)(model, {
-      $value: { value: value }
-    }));
-  };
-  var getValue = function getValue() {
-    return bindExpr.get(model);
-  };
-  var context = { getValue: getValue, setValue: setValue };
-  var bindEvent = bindOpts.event[0];
-  var bindEventHandler = function bindEventHandler(event) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
-    var handler = bindOpts.event[1];
-    if (handler instanceof Function) {
-      handler.apply(undefined, [context, event].concat(args));
-    } else if (!handler) {
-      var value = 'target' in event ? event.target.value : event;
-      setValue(value);
-    } else {
-      setValue(expression(String(handler))(event));
-    }
-    if (initailChange) return initailChange(event);
-  };
-  var bindProp = bindOpts.prop[0];
-  var bindPropHandler = bindOpts.prop[1] || function (ctx) {
-    return ctx.getValue();
-  };
-  return React.cloneElement(element, (0, _extends4.default)({}, props, (_extends2 = {
-    'data-bind': undefined,
-    children: children
-  }, _extends2[bindProp] = bindPropHandler(context, props), _extends2[bindEvent] = bindEventHandler, _extends2)));
-}
-
-module.exports = function (component) {
-  var proto = component.prototype;
-  var initailRender = proto.render;
-  proto.render = function () {
-    var element = initailRender.call(this);
-    return wrap(element, this.model);
-  };
-  return component;
-};
+module.exports = __WEBPACK_EXTERNAL_MODULE_50__;
 
 /***/ }),
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(100), __esModule: true };
+module.exports = { "default": __webpack_require__(101), __esModule: true };
 
 /***/ }),
 /* 52 */
@@ -1924,17 +1835,6 @@ var binltIn = {
   textaren: defaultOpts
 };
 
-function bindable(opts, component) {
-  if (component) {
-    return function (component) {
-      bindable(opts, component);
-    };
-  } else {
-    component.bindOpts = (0, _assign2.default)({}, opts);
-    return component;
-  }
-}
-
 function getOptions(element) {
   var type = element.type;
   var opts = typeof type === 'string' ? binltIn[type] : type.bindOpts;
@@ -1947,6 +1847,15 @@ function getOptions(element) {
     opts.prop = opts.prop.split(',');
   }
   return opts;
+}
+
+function bindable(opts, component) {
+  if (!opts) throw new Error('Invalid binding options');
+  if (!component) return function (component) {
+    return bindable(opts, component);
+  };
+  component.bindOpts = (0, _assign2.default)({}, opts);
+  return component;
 }
 
 bindable.getOptions = getOptions;
@@ -1965,7 +1874,7 @@ module.exports = __webpack_require__(54);
 
 var connect = __webpack_require__(33);
 var model = __webpack_require__(98);
-var binding = __webpack_require__(50);
+var binding = __webpack_require__(99);
 var bindable = __webpack_require__(52);
 
 module.exports = { connect: connect, model: model, binding: binding, bindable: bindable };
@@ -3441,20 +3350,127 @@ module.exports = function AutoRun(exec, trigger, ctx) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var connect = __webpack_require__(33);
-var binding = __webpack_require__(50);
+var React = __webpack_require__(50);
 
-module.exports = function model(model, isBinding) {
-  if (typeof model === 'boolean') {
-    isBinding = [model, model = isBinding][0];
+module.exports = function model(model) {
+  if (model instanceof React.Component) {
+    return connect(null, model);
+  } else {
+    return function (component) {
+      return connect(model, component);
+    };
   }
-  return function (component) {
-    if (isBinding) binding(component);
-    connect(model, component);
-  };
 };
 
 /***/ }),
 /* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _create = __webpack_require__(47);
+
+var _create2 = _interopRequireDefault(_create);
+
+var _extends3 = __webpack_require__(100);
+
+var _extends4 = _interopRequireDefault(_extends3);
+
+var _typeof2 = __webpack_require__(25);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var React = __webpack_require__(50);
+var bindable = __webpack_require__(52);
+
+var _require = __webpack_require__(104),
+    expression = _require.expression;
+
+function compileExpr(expr) {
+  return {
+    get: expression(expr),
+    set: expression('$scope.' + expr + '=$value')
+  };
+}
+
+function toArray(children) {
+  var result = [];
+  React.Children.forEach(children, function (child) {
+    result.push(child);
+  });
+  return result;
+}
+
+function wrap(element, model) {
+  var _extends2;
+
+  if (!element || (typeof element === 'undefined' ? 'undefined' : (0, _typeof3.default)(element)) !== 'object') return element;
+  var props = element.props || {};
+  var initailChildren = toArray(props.children);
+  var children = initailChildren.length > 0 ? initailChildren.map(function (child) {
+    return wrap(child, model);
+  }) : undefined;
+  var dataBind = props['data-bind'];
+  var bindOpts = dataBind && bindable.getOptions(element);
+  if (!dataBind || !bindOpts) {
+    return React.cloneElement(element, (0, _extends4.default)({}, props, { children: children }));
+  }
+  var initailChange = props[bindOpts.change];
+  var bindExpr = compileExpr(dataBind);
+  var setValue = function setValue(value) {
+    return bindExpr.set((0, _create2.default)(model, {
+      $value: { value: value }
+    }));
+  };
+  var getValue = function getValue() {
+    return bindExpr.get(model);
+  };
+  var context = { getValue: getValue, setValue: setValue };
+  var bindEvent = bindOpts.event[0];
+  var bindEventHandler = function bindEventHandler(event) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var handler = bindOpts.event[1];
+    if (handler instanceof Function) {
+      handler.apply(undefined, [context, event].concat(args));
+    } else if (!handler) {
+      var value = 'target' in event ? event.target.value : event;
+      setValue(value);
+    } else {
+      setValue(expression(String(handler))(event));
+    }
+    if (initailChange) return initailChange(event);
+  };
+  var bindProp = bindOpts.prop[0];
+  var bindPropHandler = bindOpts.prop[1] || function (ctx) {
+    return ctx.getValue();
+  };
+  return React.cloneElement(element, (0, _extends4.default)({}, props, (_extends2 = {
+    'data-bind': undefined,
+    children: children
+  }, _extends2[bindProp] = bindPropHandler(context, props), _extends2[bindEvent] = bindEventHandler, _extends2)));
+}
+
+function binding(component) {
+  if (!component) return binding;
+  var proto = component.prototype;
+  if (proto._contented_) {
+    throw new Error('`binding` must be enabled before `model`');
+  }
+  var initailRender = proto.render;
+  proto.render = function () {
+    var element = initailRender.call(this);
+    return wrap(element, this.model);
+  };
+  return component;
+}
+
+module.exports = binding;
+
+/***/ }),
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3483,25 +3499,25 @@ exports.default = _assign2.default || function (target) {
 };
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(101);
+__webpack_require__(102);
 module.exports = __webpack_require__(0).Object.assign;
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.1 Object.assign(target, source)
 var $export = __webpack_require__(4);
 
-$export($export.S + $export.F, 'Object', { assign: __webpack_require__(102) });
+$export($export.S + $export.F, 'Object', { assign: __webpack_require__(103) });
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3540,12 +3556,6 @@ module.exports = !$assign || __webpack_require__(8)(function () {
   } return T;
 } : $assign;
 
-
-/***/ }),
-/* 103 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_103__;
 
 /***/ }),
 /* 104 */

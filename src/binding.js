@@ -59,8 +59,12 @@ function wrap(element, model) {
   });
 }
 
-module.exports = function (component) {
+function binding(component) {
+  if (!component) return binding;
   const proto = component.prototype;
+  if (proto._contented_) {
+    throw new Error('`binding` must be enabled before `model`');
+  }
   const initailRender = proto.render;
   proto.render = function () {
     const element = initailRender.call(this);
@@ -68,3 +72,5 @@ module.exports = function (component) {
   };
   return component;
 }
+
+module.exports = binding;

@@ -56,17 +56,6 @@ const binltIn = {
   textaren: defaultOpts
 };
 
-function bindable(opts, component) {
-  if (component) {
-    return function (component) {
-      bindable(opts, component);
-    };
-  } else {
-    component.bindOpts = Object.assign({}, opts);
-    return component;
-  }
-}
-
 function getOptions(element) {
   const type = element.type;
   let opts = (typeof type === 'string') ? binltIn[type] : type.bindOpts;
@@ -79,6 +68,13 @@ function getOptions(element) {
     opts.prop = opts.prop.split(',');
   }
   return opts;
+}
+
+function bindable(opts, component) {
+  if (!opts) throw new Error('Invalid binding options');
+  if (!component) return component => bindable(opts, component);
+  component.bindOpts = Object.assign({}, opts);
+  return component;
 }
 
 bindable.getOptions = getOptions;

@@ -1,12 +1,10 @@
 const connect = require('./connect');
-const binding = require('./binding');
+const React = require('react');
 
-module.exports = function model(model, isBinding) {
-  if (typeof model === 'boolean') {
-    isBinding = [model, model = isBinding][0];
+module.exports = function model(model) {
+  if (model instanceof React.Component) {
+    return connect(null, model);
+  } else {
+    return component => connect(model, component);
   }
-  return function (component) {
-    if (isBinding) binding(component);
-    connect(model, component);
-  };
 };
