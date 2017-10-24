@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "main": "./dist/mota.js",
   "scripts": {
@@ -15,10 +15,7 @@
   "devDependencies": {
     "antd": "^2.13.7",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
-  },
-  "dependencies": {
-    "mokit": "^4.0.0-beta3",
-    "ntils": "^3.1.5"
+    "react-dom": "^15.6.1",
+    "mokit": "^4.0.0-beta5"
   }
 }
