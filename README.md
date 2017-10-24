@@ -23,12 +23,13 @@ export default class User {
 
 关联到组件
 ```js
-import { model } from 'mota';
+import { model,binding } from 'mota';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import User from './user';
 
-@model(User, true)
+@model(User)
+@binding
 class App extends React.Component {
   render(){
     return <div>
@@ -41,9 +42,11 @@ class App extends React.Component {
     </div>;
   }
 }
+
+ReactDOM.render(<App/>, mountNode);
 ```
 
 ## 文档
 
-绝大多数情况下，仅需 `model` 一个 api 就够了，通过 model 可用为组件注入 model。
-同时，第二个参数为 `true` 可以启用双向绑定，在 jsx 中可以通过 `data-bind` 进行绑定。
+绝大多数情况下，仅需 `@model` 一个 api 就够了，通过 `@model` 可用为组件注入 `model`。
+同时，可以使用 `@binding` 启用双向绑定，启用后可在 jsx 中通过 `data-bind` 进行绑定。
