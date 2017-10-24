@@ -3353,7 +3353,7 @@ var connect = __webpack_require__(33);
 var React = __webpack_require__(50);
 
 module.exports = function model(model) {
-  if (model instanceof React.Component) {
+  if (model && model.prototype instanceof React.Component) {
     return connect(null, model);
   } else {
     return function (component) {
