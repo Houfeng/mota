@@ -1,4 +1,4 @@
-import Observer from 'mokit/src/observer';
+const Observer = require('mokit/src/observer');
 
 function trigger() {
   this.setState({ _model_: this.model });
@@ -45,7 +45,7 @@ function createUnmount(proto) {
   };
 }
 
-export default function connect(model, component) {
+module.exports = function connect(model, component) {
   const proto = component.prototype;
   proto.render = createRender(proto, model);
   proto.componentWillUnmount = createUnmount(proto);

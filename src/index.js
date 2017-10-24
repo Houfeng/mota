@@ -1,7 +1,6 @@
-import connect from './connect';
-import model from './model';
-import binding from './binding';
-import bindable from './bindable';
+const connect = require('./connect');
+const model = require('./model');
+const binding = require('./binding');
+const bindable = require('./bindable');
 
-export { connect, model, binding, bindable };
-export default { connect, model, binding, bindable };
+module.exports = { connect, model, binding, bindable };

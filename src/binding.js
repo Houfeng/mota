@@ -1,6 +1,6 @@
-import React from 'react';
-import bindable from './bindable';
-import { expression } from 'mokit/src/template/expression';
+const React = require('react');
+const bindable = require('./bindable');
+const { expression } = require('mokit/src/template/expression');
 
 function compileExpr(expr) {
   return {
@@ -59,7 +59,7 @@ function wrap(element, model) {
   });
 }
 
-export default function (component) {
+module.exports = function (component) {
   const proto = component.prototype;
   const initailRender = proto.render;
   proto.render = function () {

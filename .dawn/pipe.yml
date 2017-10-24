@@ -28,6 +28,10 @@ build:
     common:
       disabled: true
     library: true
+    umd:
+      library: '${project.name}'
+      libraryTarget: 'umd'
+      umdNamedDefine: true
   - name: webpack
     entry:
       mota: ./src/index.js
@@ -38,6 +42,10 @@ build:
       disabled: true
     compress: false
     library: true
+    umd:
+      library: '${project.name}'
+      libraryTarget: 'umd'
+      umdNamedDefine: true
 
 test:
   - name: lint

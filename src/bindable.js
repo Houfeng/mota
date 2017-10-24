@@ -56,7 +56,7 @@ const binltIn = {
   textaren: defaultOpts
 };
 
-export function bindable(opts, component) {
+function bindable(opts, component) {
   if (component) {
     return function (component) {
       bindable(opts, component);
@@ -67,7 +67,7 @@ export function bindable(opts, component) {
   }
 }
 
-export function getOptions(element) {
+function getOptions(element) {
   const type = element.type;
   let opts = (typeof type === 'string') ? binltIn[type] : type.bindOpts;
   if (opts instanceof Function) opts = opts(element);
@@ -82,4 +82,4 @@ export function getOptions(element) {
 }
 
 bindable.getOptions = getOptions;
-export default bindable;
+module.exports = bindable;

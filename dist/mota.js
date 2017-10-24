@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("react"));
+	else if(typeof define === 'function' && define.amd)
+		define("mota", ["react"], factory);
+	else if(typeof exports === 'object')
+		exports["mota"] = factory(require("react"));
+	else
+		root["mota"] = factory(root["React"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_103__) {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -569,14 +579,7 @@ exports.f = Object.getOwnPropertySymbols;
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.__esModule = true;
-exports.default = connect;
-
-var _observer = __webpack_require__(55);
-
-var _observer2 = _interopRequireDefault(_observer);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var Observer = __webpack_require__(55);
 
 function trigger() {
   this.setState({ _model_: this.model });
@@ -599,7 +602,7 @@ function createRender(proto, model) {
           return model;
         }
       });
-      var observer = new _observer2.default(model);
+      var observer = new Observer(model);
       this._run_ = observer.run(initailRender, trigger, this);
     }
     return this._run_.run();
@@ -625,13 +628,12 @@ function createUnmount(proto) {
   };
 }
 
-function connect(model, component) {
+module.exports = function connect(model, component) {
   var proto = component.prototype;
   proto.render = createRender(proto, model);
   proto.componentWillUnmount = createUnmount(proto);
   return component;
-}
-module.exports = exports['default'];
+};
 
 /***/ }),
 /* 34 */
@@ -1619,8 +1621,6 @@ module.exports = InternalError;
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.__esModule = true;
-
 var _create = __webpack_require__(47);
 
 var _create2 = _interopRequireDefault(_create);
@@ -1633,38 +1633,24 @@ var _typeof2 = __webpack_require__(25);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
-exports.default = function (component) {
-  var proto = component.prototype;
-  var initailRender = proto.render;
-  proto.render = function () {
-    var element = initailRender.call(this);
-    return wrap(element, this.model || this.prop.model);
-  };
-  return component;
-};
-
-var _react = __webpack_require__(103);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _bindable = __webpack_require__(52);
-
-var _bindable2 = _interopRequireDefault(_bindable);
-
-var _expression = __webpack_require__(104);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var React = __webpack_require__(103);
+var bindable = __webpack_require__(52);
+
+var _require = __webpack_require__(104),
+    expression = _require.expression;
 
 function compileExpr(expr) {
   return {
-    get: (0, _expression.expression)(expr),
-    set: (0, _expression.expression)('$scope.' + expr + '=$value')
+    get: expression(expr),
+    set: expression('$scope.' + expr + '=$value')
   };
 }
 
 function toArray(children) {
   var result = [];
-  _react2.default.Children.forEach(children, function (child) {
+  React.Children.forEach(children, function (child) {
     result.push(child);
   });
   return result;
@@ -1680,9 +1666,9 @@ function wrap(element, model) {
     return wrap(child, model);
   }) : undefined;
   var dataBind = props['data-bind'];
-  var bindOpts = dataBind && _bindable2.default.getOptions(element);
+  var bindOpts = dataBind && bindable.getOptions(element);
   if (!dataBind || !bindOpts) {
-    return _react2.default.cloneElement(element, (0, _extends4.default)({}, props, { children: children }));
+    return React.cloneElement(element, (0, _extends4.default)({}, props, { children: children }));
   }
   var initailChange = props[bindOpts.change];
   var bindExpr = compileExpr(dataBind);
@@ -1708,7 +1694,7 @@ function wrap(element, model) {
       var value = 'target' in event ? event.target.value : event;
       setValue(value);
     } else {
-      setValue((0, _expression.expression)(String(handler))(event));
+      setValue(expression(String(handler))(event));
     }
     if (initailChange) return initailChange(event);
   };
@@ -1716,13 +1702,21 @@ function wrap(element, model) {
   var bindPropHandler = bindOpts.prop[1] || function (ctx) {
     return ctx.getValue();
   };
-  return _react2.default.cloneElement(element, (0, _extends4.default)({}, props, (_extends2 = {
+  return React.cloneElement(element, (0, _extends4.default)({}, props, (_extends2 = {
     'data-bind': undefined,
     children: children
   }, _extends2[bindProp] = bindPropHandler(context, props), _extends2[bindEvent] = bindEventHandler, _extends2)));
 }
 
-module.exports = exports['default'];
+module.exports = function (component) {
+  var proto = component.prototype;
+  var initailRender = proto.render;
+  proto.render = function () {
+    var element = initailRender.call(this);
+    return wrap(element, this.model || this.prop.model);
+  };
+  return component;
+};
 
 /***/ }),
 /* 51 */
@@ -1734,14 +1728,9 @@ module.exports = { "default": __webpack_require__(100), __esModule: true };
 /* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.__esModule = true;
-
 var _assign = __webpack_require__(51);
 
 var _assign2 = _interopRequireDefault(_assign);
-
-exports.bindable = bindable;
-exports.getOptions = getOptions;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1836,7 +1825,7 @@ function getOptions(element) {
 }
 
 bindable.getOptions = getOptions;
-exports.default = bindable;
+module.exports = bindable;
 
 /***/ }),
 /* 53 */
@@ -1849,32 +1838,12 @@ module.exports = __webpack_require__(54);
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.__esModule = true;
-exports.bindable = exports.binding = exports.model = exports.connect = undefined;
+var connect = __webpack_require__(33);
+var model = __webpack_require__(98);
+var binding = __webpack_require__(50);
+var bindable = __webpack_require__(52);
 
-var _connect = __webpack_require__(33);
-
-var _connect2 = _interopRequireDefault(_connect);
-
-var _model = __webpack_require__(98);
-
-var _model2 = _interopRequireDefault(_model);
-
-var _binding = __webpack_require__(50);
-
-var _binding2 = _interopRequireDefault(_binding);
-
-var _bindable = __webpack_require__(52);
-
-var _bindable2 = _interopRequireDefault(_bindable);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.connect = _connect2.default;
-exports.model = _model2.default;
-exports.binding = _binding2.default;
-exports.bindable = _bindable2.default;
-exports.default = { connect: _connect2.default, model: _model2.default, binding: _binding2.default, bindable: _bindable2.default };
+module.exports = { connect: connect, model: model, binding: binding, bindable: bindable };
 
 /***/ }),
 /* 55 */
@@ -3346,26 +3315,15 @@ module.exports = function AutoRun(exec, trigger, ctx) {
 /* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.__esModule = true;
-exports.default = model;
+var connect = __webpack_require__(33);
+var binding = __webpack_require__(50);
 
-var _connect = __webpack_require__(33);
-
-var _connect2 = _interopRequireDefault(_connect);
-
-var _binding = __webpack_require__(50);
-
-var _binding2 = _interopRequireDefault(_binding);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function model(model, isBinding) {
+module.exports = function model(model, isBinding) {
   return function (component) {
-    if (isBinding) (0, _binding2.default)(component);
-    (0, _connect2.default)(model, component);
+    if (isBinding) binding(component);
+    connect(model, component);
   };
-}
-module.exports = exports['default'];
+};
 
 /***/ }),
 /* 99 */
@@ -3459,7 +3417,7 @@ module.exports = !$assign || __webpack_require__(8)(function () {
 /* 103 */
 /***/ (function(module, exports) {
 
-module.exports = undefined;
+module.exports = __WEBPACK_EXTERNAL_MODULE_103__;
 
 /***/ }),
 /* 104 */
@@ -3541,4 +3499,5 @@ module.exports = compile;
 
 /***/ })
 /******/ ]);
+});
 //# sourceMappingURL=mota.js.map
