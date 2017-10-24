@@ -52,6 +52,8 @@ const binltIn = {
         return defaultOpts;
     }
   },
+  radio: radioOpts,
+  checkbox: checkboxOpts,
   select: defaultOpts,
   textaren: defaultOpts
 };
@@ -71,7 +73,11 @@ function getOptions(element) {
 }
 
 function bindable(opts, component) {
-  if (!opts) throw new Error('Invalid binding options');
+  if (opts && opts.prototype instanceof React.Component) {
+    return bindable(component, opts);
+  }
+  if (typeof opts === 'string') opts = binltIn[opts];
+  if (!opts) opts = defaultOpts;
   if (!component) return component => bindable(opts, component);
   component.bindOpts = Object.assign({}, opts);
   return component;

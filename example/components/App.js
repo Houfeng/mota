@@ -6,7 +6,7 @@ import Info from '../model/info';
 import { Input, DatePicker } from 'antd';
 
 @model(Info)
-@binding()
+@binding
 class App extends Component {
   render() {
     return (

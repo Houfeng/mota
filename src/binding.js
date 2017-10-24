@@ -67,6 +67,7 @@ function binding(component) {
   }
   const initailRender = proto.render;
   proto.render = function () {
+    if (!this.model) throw new Error('Invalid Model');
     const element = initailRender.call(this);
     return wrap(element, this.model);
   };

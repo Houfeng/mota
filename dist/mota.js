@@ -1831,6 +1831,8 @@ var binltIn = {
         return defaultOpts;
     }
   },
+  radio: radioOpts,
+  checkbox: checkboxOpts,
   select: defaultOpts,
   textaren: defaultOpts
 };
@@ -1850,7 +1852,11 @@ function getOptions(element) {
 }
 
 function bindable(opts, component) {
-  if (!opts) throw new Error('Invalid binding options');
+  if (opts && opts.prototype instanceof React.Component) {
+    return bindable(component, opts);
+  }
+  if (typeof opts === 'string') opts = binltIn[opts];
+  if (!opts) opts = defaultOpts;
   if (!component) return function (component) {
     return bindable(opts, component);
   };
@@ -3461,6 +3467,7 @@ function binding(component) {
   }
   var initailRender = proto.render;
   proto.render = function () {
+    if (!this.model) throw new Error('Invalid Model');
     var element = initailRender.call(this);
     return wrap(element, this.model);
   };
