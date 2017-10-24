@@ -1,3 +1,5 @@
+const React = require('react');
+
 const defaultOpts = {
   prop: ['value'],
   event: ['onChange']
