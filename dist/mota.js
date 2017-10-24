@@ -3444,7 +3444,7 @@ var connect = __webpack_require__(33);
 var binding = __webpack_require__(50);
 
 module.exports = function model(model, isBinding) {
-  if (model instanceof Boolean) {
+  if (typeof model === 'boolean') {
     isBinding = [model, model = isBinding][0];
   }
   return function (component) {
