@@ -17,16 +17,17 @@ function toArray(children) {
   return result;
 }
 
-function wrap(element, model) {
+function wrap(element, model, key) {
   if (!element || typeof element !== 'object') return element;
+  key = element.key || key;
   const props = element.props || {};
   const initailChildren = toArray(props.children);
-  const children = initailChildren.length > 0 ?
-    initailChildren.map(child => wrap(child, model)) : undefined;
+  const children = initailChildren.length > 0 ? initailChildren
+    .map((child, index) => wrap(child, model, index)) : undefined;
   const dataBind = props['data-bind'];
   const bindOpts = dataBind && bindable.getOptions(element);
   if (!dataBind || !bindOpts) {
-    return React.cloneElement(element, { ...props, children });
+    return React.cloneElement(element, { key, ...props, children });
   }
   const initailChange = props[bindOpts.change];
   const bindExpr = compileExpr(dataBind);
@@ -51,6 +52,7 @@ function wrap(element, model) {
   const bindProp = bindOpts.prop[0];
   const bindPropHandler = bindOpts.prop[1] || (ctx => ctx.getValue());
   return React.cloneElement(element, {
+    key,
     ...props,
     'data-bind': undefined,
     children: children,

@@ -3413,19 +3413,20 @@ function toArray(children) {
   return result;
 }
 
-function wrap(element, model) {
+function wrap(element, model, key) {
   var _extends2;
 
   if (!element || (typeof element === 'undefined' ? 'undefined' : (0, _typeof3.default)(element)) !== 'object') return element;
+  key = element.key || key;
   var props = element.props || {};
   var initailChildren = toArray(props.children);
-  var children = initailChildren.length > 0 ? initailChildren.map(function (child) {
-    return wrap(child, model);
+  var children = initailChildren.length > 0 ? initailChildren.map(function (child, index) {
+    return wrap(child, model, index);
   }) : undefined;
   var dataBind = props['data-bind'];
   var bindOpts = dataBind && bindable.getOptions(element);
   if (!dataBind || !bindOpts) {
-    return React.cloneElement(element, (0, _extends4.default)({}, props, { children: children }));
+    return React.cloneElement(element, (0, _extends4.default)({ key: key }, props, { children: children }));
   }
   var initailChange = props[bindOpts.change];
   var bindExpr = compileExpr(dataBind);
@@ -3459,7 +3460,9 @@ function wrap(element, model) {
   var bindPropHandler = bindOpts.prop[1] || function (ctx) {
     return ctx.getValue();
   };
-  return React.cloneElement(element, (0, _extends4.default)({}, props, (_extends2 = {
+  return React.cloneElement(element, (0, _extends4.default)({
+    key: key
+  }, props, (_extends2 = {
     'data-bind': undefined,
     children: children
   }, _extends2[bindProp] = bindPropHandler(context, props), _extends2[bindEvent] = bindEventHandler, _extends2)));
