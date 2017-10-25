@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "",
   "main": "./dist/mota-min.js",
   "scripts": {

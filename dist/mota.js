@@ -595,24 +595,8 @@ function createRender(proto, model) {
   var initailRender = proto.render;
   return function () {
     if (!this._run_) {
-      model = this.props.model || model;
-      if (!model) throw new Error('Invalid Model');
-      if (model instanceof Function) {
-        this._model_ = new model();
-        this._isNewModelInstance_ = true;
-      } else {
-        this._model_ = model;
-        this._isNewModelInstance_ = false;
-      }
-      delete proto.model;
-      Object.defineProperty(proto, 'model', {
-        enumerable: false,
-        get: function get() {
-          return this._model_;
-        }
-      });
-      var observer = new Observer(this.model);
-      this._run_ = observer.run(initailRender, trigger, this);
+      this._observer_ = new Observer(this.model);
+      this._run_ = this._observer_.run(initailRender, trigger, this);
     }
     return this._run_.run();
   };
@@ -625,15 +609,30 @@ function createUnmount(proto) {
     if (initailUnmount) {
       result = initailUnmount.call(this);
     }
-    var observer = this.model._observer_;
     if (this._run_) {
-      observer.stop(this._run_);
+      this._observer_.stop(this._run_);
       this._run_ = null;
     }
     if (this._isNewModelInstance_) {
-      observer.clearReference();
+      this._observer_.clearReference();
     }
     return result;
+  };
+}
+
+function createModelGetter(model) {
+  return function () {
+    if (this._model_) return this._model_;
+    model = this.props.model || model;
+    if (!model) throw new Error('Invalid Model');
+    if (model instanceof Function) {
+      this._model_ = new model();
+      this._isNewModelInstance_ = true;
+    } else {
+      this._model_ = model;
+      this._isNewModelInstance_ = false;
+    }
+    return this._model_;
   };
 }
 
@@ -642,6 +641,11 @@ function connect(model, component) {
     return connect(model, component);
   };
   var proto = component.prototype;
+  delete proto.model;
+  Object.defineProperty(proto, 'model', {
+    enumerable: false,
+    get: createModelGetter(model)
+  });
   proto.render = createRender(proto, model);
   proto.componentWillUnmount = createUnmount(proto);
   proto._contented_ = true;
