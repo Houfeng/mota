@@ -1840,7 +1840,7 @@ var binltIn = {
   radio: radioOpts,
   checkbox: checkboxOpts,
   select: defaultOpts,
-  textaren: defaultOpts
+  textarea: defaultOpts
 };
 
 function getOptions(element) {
