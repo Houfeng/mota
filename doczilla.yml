@@ -3,14 +3,15 @@ output: ./docs
 locales:
   - name: zh
     text: 中文
-    title: Apsara
+    title: Mota
     groups:
       - name: guide
         text: 使用指南
       - name: model
-        text: 模型
+        text: 定义模型
       - name: binding
         text: 双向绑定
+
     docs:
       - ./**/*.md
       - '!./node_modules/**/*.md'

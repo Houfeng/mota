@@ -1,4 +1,10 @@
-# mota
+---
+group: guide
+name: readme
+title: 快速开始
+---
+
+# 快速开始
 
 mota 是一个主张「面向对象」的、支持「双向绑定」的 React 状态管理库，它不同于 Redux/flux，
 和 MobX 稍像，但也并不相同且更易用。
@@ -92,7 +98,7 @@ ReactDOM.render(<App/>, mountNode);
 
 其中的「关键」就是 `@binding`，使用 `@binding` 后，组件便具备了「双向绑定」的能力，在 `jsx` 中便可以通过名为 `data-bind` 的 `attribute` 进行「绑定表达式」的声明，绑定表达式的 `scope` 是 `model` 而不是 `this`，也就是只能与 `model` 进行绑定。
 
-注意一下，默认情况下，所有的「原生表单组件」，比如 `input`、`textarea`、`select` 都可以直接进行绑定，但是对于一些「组件库」中的「部分表单组件」不能直接绑定，请阅读 [绑定原生表单组件](./markdowns/binding-builtin.md) 和 [绑定自定义表单组件](./markdowns/binding-custom.md)
+注意一下，默认情况下，所有的「原生表单组件」，比如 `input`、`textarea`、`select` 都可以直接进行绑定，但是对于一些「组件库」中的「部分表单组件」不能直接绑定，请阅读 [双向绑定说明](./markdowns/binding.md)
 
 ## 文档
 - [模型定义说明](./markdowns/model.md)

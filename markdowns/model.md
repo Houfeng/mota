@@ -1,10 +1,11 @@
 ---
 group: model
 name: model
-title: '@model'
+title: 如何编写模型
+index: 1
 ---
 
-# 定义模型
+# 如何编写模型
 
 在 mota 中模 model 通常是一个 `class`，如下
 
