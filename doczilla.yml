@@ -1,0 +1,16 @@
+output: ./docs
+
+locales:
+  - name: zh
+    text: 中文
+    title: Apsara
+    groups:
+      - name: guide
+        text: 使用指南
+      - name: model
+        text: 模型
+      - name: binding
+        text: 双向绑定
+    docs:
+      - ./**/*.md
+      - '!./node_modules/**/*.md'

@@ -1,3 +1,9 @@
+---
+group: model
+name: model
+title: '@model'
+---
+
 # 定义模型
 
 在 mota 中模 model 通常是一个 `class`，如下

@@ -46,6 +46,7 @@ build:
       library: '${project.name}'
       libraryTarget: 'umd'
       umdNamedDefine: true
+  - name: doc
 
 test:
   - name: lint
