@@ -1,10 +1,11 @@
+const {
+  isComponentInstance, registerMountHandler, registerUnMountHandler
+} = require('./utils');
 const autorun = require('./autorun');
-const React = require('react');
-const { registerMountHandler, registerUnMountHandler } = require('./utils');
 
 module.exports = function watch(calculator, ...args) {
   if (!calculator) return autorun;
-  if (calculator instanceof React.Component) {
+  if (isComponentInstance(calculator)) {
     return autorun(calculator, ...args);
   }
   return function (target, name) {

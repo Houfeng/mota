@@ -43,9 +43,12 @@ function convertElement(element, model, key, handlers) {
   return element;
 }
 
-function isComponent(com) {
-  return com instanceof Component ||
-    com.prototype instanceof Component;
+function isComponentInstance(instance) {
+  return instance && instance instanceof Component;
+}
+
+function isComponentClass(com) {
+  return isComponentInstance(com.prototype);
 }
 
 module.exports = {
@@ -53,5 +56,6 @@ module.exports = {
   registerMountHandler,
   registerUnMountHandler,
   convertElement,
-  isComponent
+  isComponentClass,
+  isComponentInstance
 };

@@ -1,7 +1,7 @@
 const Observer = require('mokit/src/observer');
 const React = require('react');
 const {
-  isComponent, convertElement, registerElementHandler
+  isComponentClass, convertElement, registerElementHandler
 } = require('./utils');
 const stateful = require('./stateful');
 
@@ -74,10 +74,8 @@ function createModelGetter(model) {
 }
 
 function deepConnect(element, model, key, children) {
-  const elementType = element.type;
-  if (typeof elementType == 'string') return element;
-  const InitailCom = isComponent(elementType) ?
-    elementType : stateful(elementType);
+  const InitailCom = element.type;
+  if (typeof InitailCom == 'string') return element;
   if (InitailCom.prototype._contented_) return element;
   const WrapedCom = connect(model, InitailCom);
   const props = element.props || {};
@@ -89,6 +87,7 @@ function deepConnect(element, model, key, children) {
 
 function connect(model, component) {
   if (!component) return component => connect(model, component);
+  if (!isComponentClass(component)) component = stateful(component);
   const proto = component.prototype;
   if (proto._contented_) return component;
   registerElementHandler(proto, deepConnect);

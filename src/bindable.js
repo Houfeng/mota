@@ -1,4 +1,4 @@
-const React = require('react');
+const { isComponentClass } = require('./utils');
 
 const defaultOpts = {
   prop: ['value'],
@@ -75,7 +75,7 @@ function getOptions(element) {
 }
 
 function bindable(opts, component) {
-  if (opts && opts.prototype instanceof React.Component) {
+  if (isComponentClass(opts)) {
     return bindable(component, opts);
   }
   if (typeof opts === 'string') opts = binltIn[opts];
