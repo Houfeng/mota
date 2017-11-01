@@ -1,4 +1,6 @@
 const Observer = require('mokit/src/observer');
+const utils = require('./utils');
+const React = require('react');
 
 function trigger() {
   this.setState({ _model_: this.model });
@@ -6,11 +8,16 @@ function trigger() {
 
 function createRender(proto) {
   const initailRender = proto.render;
+  const convertRender = function () {
+    const element = initailRender.call(this);
+    return utils.convertElement(element,
+      this.model, null, this._elementHandlers_);
+  };
   return function () {
     if (!this._run_) {
       this._observer_ = new Observer(this.model);
       const context = this;
-      this._run_ = this._observer_.run(initailRender, { trigger, context });
+      this._run_ = this._observer_.run(convertRender, { trigger, context });
     }
     return this._run_.run();
   };
@@ -63,9 +70,20 @@ function createModelGetter(model) {
   };
 }
 
+function deepConnect(element, model, key, children) {
+  if (typeof element.type == 'string') return element;
+  const InitailCom = element.type;
+  if (InitailCom.prototype._contented_) return element;
+  const WrapedCom = connect(model, InitailCom);
+  const props = element.props || {};
+  return <WrapedCom key={key} {...props}>{children}</WrapedCom>;
+}
+
 function connect(model, component) {
   if (!component) return component => connect(model, component);
   const proto = component.prototype;
+  if (proto._contented_) return component;
+  utils.registerElementHandler(proto, deepConnect);
   Object.defineProperty(proto, 'model', {
     enumerable: false,
     get: createModelGetter(model)

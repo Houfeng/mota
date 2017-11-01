@@ -1,6 +1,7 @@
 const React = require('react');
 const bindable = require('./bindable');
 const { expression } = require('mokit/src/template/expression');
+const utils = require('./utils');
 
 function compileExpr(expr) {
   return {
@@ -17,13 +18,8 @@ function toArray(children) {
   return result;
 }
 
-function wrap(element, model, key) {
-  if (!element || typeof element !== 'object') return element;
-  key = element.key || key;
+function elementHandler(element, model, key, children) {
   const props = element.props || {};
-  const initailChildren = toArray(props.children);
-  const children = initailChildren.length > 0 ? initailChildren
-    .map((child, index) => wrap(child, model, index)) : undefined;
   const dataBind = props['data-bind'];
   const bindOpts = dataBind && bindable.getOptions(element);
   if (!dataBind || !bindOpts) {
@@ -67,12 +63,7 @@ function binding(component) {
   if (proto._contented_) {
     throw new Error('`binding` must be enabled before `model`');
   }
-  const initailRender = proto.render;
-  proto.render = function () {
-    if (!this.model) throw new Error('Invalid Model');
-    const element = initailRender.call(this);
-    return wrap(element, this.model);
-  };
+  utils.registerElementHandler(proto, elementHandler);
   return component;
 }
 

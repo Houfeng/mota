@@ -3,6 +3,7 @@ import logo from '../assets/logo.svg';
 import './app.css';
 import { model, binding, autorun, watch } from '../../src';
 import Info from '../model/info';
+import List from './List';
 // import { Input, DatePicker } from 'antd';
 
 @model(Info)
@@ -21,11 +22,10 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div className="app">
         <input data-bind="name" /><br />
-        {String(this.model.date)}
+        {String(this.model.name)}<br />
         <select data-bind="name">
           <option value="1">1</option>
           <option value="2">2</option>
@@ -36,6 +36,8 @@ class App extends Component {
         <input type="radio" value="2" data-bind="name" />
         <hr />
         {this.model.list}
+        <hr />
+        <List opts={this.model.opts} />
       </div>
     );
   }

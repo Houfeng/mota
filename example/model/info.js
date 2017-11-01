@@ -5,5 +5,8 @@ export default class Info {
   date = null;
   get say() {
     return `${this.welcome} ${this.name}`;
-  }
+  };
+  opts = {
+    name: 'opts'
+  };
 }
