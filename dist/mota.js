@@ -1559,9 +1559,10 @@ function deepConnect(element, model, key, children) {
   if (InitailCom.prototype._contented_) return element;
   var WrapedCom = connect(model, InitailCom);
   var props = element.props || {};
+  var ref = element.ref;
   return React.createElement(
     WrapedCom,
-    (0, _extends3.default)({ key: key }, props),
+    (0, _extends3.default)({}, props, { key: key, ref: ref }),
     children
   );
 }

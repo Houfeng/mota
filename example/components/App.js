@@ -37,7 +37,7 @@ class App extends Component {
         <hr />
         {this.model.list}
         <hr />
-        <List opts={this.model.opts} />
+        <List key={'listKey'} ref="listRef" opts={this.model.opts} />
       </div>
     );
   }

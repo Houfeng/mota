@@ -76,7 +76,8 @@ function deepConnect(element, model, key, children) {
   if (InitailCom.prototype._contented_) return element;
   const WrapedCom = connect(model, InitailCom);
   const props = element.props || {};
-  return <WrapedCom key={key} {...props}>{children}</WrapedCom>;
+  const ref = element.ref;
+  return <WrapedCom {...props} key={key} ref={ref}>{children}</WrapedCom>;
 }
 
 function connect(model, component) {
