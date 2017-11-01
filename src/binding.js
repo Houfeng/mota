@@ -1,7 +1,7 @@
 const React = require('react');
 const bindable = require('./bindable');
 const { expression } = require('mokit/src/template/expression');
-const utils = require('./utils');
+const { registerElementHandler } = require('./utils');
 
 function compileExpr(expr) {
   return {
@@ -63,7 +63,7 @@ function binding(component) {
   if (proto._contented_) {
     throw new Error('`binding` must be enabled before `model`');
   }
-  utils.registerElementHandler(proto, elementHandler);
+  registerElementHandler(proto, elementHandler);
   return component;
 }
 

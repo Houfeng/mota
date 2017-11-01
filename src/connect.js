@@ -1,6 +1,9 @@
 const Observer = require('mokit/src/observer');
-const utils = require('./utils');
 const React = require('react');
+const {
+  isComponent, convertElement, registerElementHandler
+} = require('./utils');
+const stateful = require('./stateful');
 
 function trigger() {
   this.setState({ _model_: this.model });
@@ -10,7 +13,7 @@ function createRender(proto) {
   const initailRender = proto.render;
   const convertRender = function () {
     const element = initailRender.call(this);
-    return utils.convertElement(element,
+    return convertElement(element,
       this.model, null, this._elementHandlers_);
   };
   return function () {
@@ -71,20 +74,24 @@ function createModelGetter(model) {
 }
 
 function deepConnect(element, model, key, children) {
-  if (typeof element.type == 'string') return element;
-  const InitailCom = element.type;
+  const elementType = element.type;
+  if (typeof elementType == 'string') return element;
+  const InitailCom = isComponent(elementType) ?
+    elementType : stateful(elementType);
   if (InitailCom.prototype._contented_) return element;
   const WrapedCom = connect(model, InitailCom);
   const props = element.props || {};
   const ref = element.ref;
-  return <WrapedCom {...props} key={key} ref={ref}>{children}</WrapedCom>;
+  return <WrapedCom {...props} key={key} ref={ref}>
+    {children}
+  </WrapedCom>;
 }
 
 function connect(model, component) {
   if (!component) return component => connect(model, component);
   const proto = component.prototype;
   if (proto._contented_) return component;
-  utils.registerElementHandler(proto, deepConnect);
+  registerElementHandler(proto, deepConnect);
   Object.defineProperty(proto, 'model', {
     enumerable: false,
     get: createModelGetter(model)

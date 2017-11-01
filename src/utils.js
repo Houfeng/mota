@@ -1,4 +1,5 @@
 const React = require('react');
+const { Component } = React;
 
 function registerMountHandler(proto, handler) {
   if (!proto._mountHandlers_) proto._mountHandlers_ = [];
@@ -42,9 +43,15 @@ function convertElement(element, model, key, handlers) {
   return element;
 }
 
+function isComponent(com) {
+  return com instanceof Component ||
+    com.prototype instanceof Component;
+}
+
 module.exports = {
   registerElementHandler,
   registerMountHandler,
   registerUnMountHandler,
-  convertElement
+  convertElement,
+  isComponent
 };

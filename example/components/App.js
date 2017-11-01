@@ -4,6 +4,8 @@ import './app.css';
 import { model, binding, autorun, watch } from '../../src';
 import Info from '../model/info';
 import List from './List';
+import List2 from './List2';
+
 // import { Input, DatePicker } from 'antd';
 
 @model(Info)
@@ -37,7 +39,9 @@ class App extends Component {
         <hr />
         {this.model.list}
         <hr />
-        <List key={'listKey'} ref="listRef" opts={this.model.opts} />
+        <List key={'listKey1'} ref="listRef" opts={this.model.opts} />
+        <List2 key={'listKey2'} opts={this.model.opts} />
+
       </div>
     );
   }
