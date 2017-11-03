@@ -7,37 +7,45 @@ const defaultOpts = {
 
 const checkboxOpts = {
   prop: ['checked', (ctx, props) => {
-    const value = ctx.getValue();
-    if (value instanceof Array) {
-      return value.indexOf(props.value) > -1;
+    const mValue = ctx.getValue();
+    if (mValue instanceof Array) {
+      return mValue.indexOf(props.value) > -1;
     } else {
-      return !!value;
+      return !!mValue;
     }
   }],
   event: ['onChange', (ctx, event) => {
     const { value, checked } = event.target;
-    const oldValue = ctx.getValue();
-    if (oldValue instanceof Array) {
+    const mValue = ctx.getValue();
+    if (mValue instanceof Array) {
       if (checked) {
-        oldValue.push(value);
+        mValue.push(value);
       } else {
-        const index = oldValue.indexOf(value);
-        oldValue.splice(index, 1);
+        const index = mValue.indexOf(value);
+        mValue.splice(index, 1);
       }
     } else {
-      ctx.setValue(value);
+      ctx.setValue(checked);
     }
   }]
 };
 
 const radioOpts = {
   prop: ['checked', (ctx, props) => {
-    return ctx.getValue() == props.value;
+    const mValue = ctx.getValue();
+    if (typeof mValue == 'boolean') {
+      return !!mValue;
+    } else {
+      return mValue == props.value;
+    }
   }],
   event: ['onChange', (ctx, event) => {
     const { value, checked } = event.target;
-    if (checked) {
-      ctx.setValue(value);
+    const mValue = ctx.getValue();
+    if (typeof mValue == 'boolean') {
+      ctx.setValue(checked);
+    } else {
+      if (checked) ctx.setValue(value);
     }
   }]
 };

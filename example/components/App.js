@@ -32,6 +32,9 @@ class App extends Component {
           <option value="1">1</option>
           <option value="2">2</option>
         </select><br />
+        [<input type="radio" value="1" data-bind="ok" />]
+        [<input type="checkbox" value="1" data-bind="ok" />]
+        <br />
         <input type="checkbox" value="1" data-bind="list" />
         <input type="checkbox" value="2" data-bind="list" />
         <input type="radio" value="1" data-bind="name" />

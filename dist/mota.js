@@ -1985,11 +1985,11 @@ var defaultOpts = {
 
 var checkboxOpts = {
   prop: ['checked', function (ctx, props) {
-    var value = ctx.getValue();
-    if (value instanceof Array) {
-      return value.indexOf(props.value) > -1;
+    var mValue = ctx.getValue();
+    if (mValue instanceof Array) {
+      return mValue.indexOf(props.value) > -1;
     } else {
-      return !!value;
+      return !!mValue;
     }
   }],
   event: ['onChange', function (ctx, event) {
@@ -1997,31 +1997,39 @@ var checkboxOpts = {
         value = _event$target.value,
         checked = _event$target.checked;
 
-    var oldValue = ctx.getValue();
-    if (oldValue instanceof Array) {
+    var mValue = ctx.getValue();
+    if (mValue instanceof Array) {
       if (checked) {
-        oldValue.push(value);
+        mValue.push(value);
       } else {
-        var index = oldValue.indexOf(value);
-        oldValue.splice(index, 1);
+        var index = mValue.indexOf(value);
+        mValue.splice(index, 1);
       }
     } else {
-      ctx.setValue(value);
+      ctx.setValue(checked);
     }
   }]
 };
 
 var radioOpts = {
   prop: ['checked', function (ctx, props) {
-    return ctx.getValue() == props.value;
+    var mValue = ctx.getValue();
+    if (typeof mValue == 'boolean') {
+      return !!mValue;
+    } else {
+      return mValue == props.value;
+    }
   }],
   event: ['onChange', function (ctx, event) {
     var _event$target2 = event.target,
         value = _event$target2.value,
         checked = _event$target2.checked;
 
-    if (checked) {
-      ctx.setValue(value);
+    var mValue = ctx.getValue();
+    if (typeof mValue == 'boolean') {
+      ctx.setValue(checked);
+    } else {
+      if (checked) ctx.setValue(value);
     }
   }]
 };

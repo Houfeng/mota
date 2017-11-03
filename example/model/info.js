@@ -9,4 +9,5 @@ export default class Info {
   opts = {
     name: 'opts'
   };
+  ok = true;
 }
