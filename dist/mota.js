@@ -3938,7 +3938,9 @@ module.exports = function watch(calculator) {
     var watcher = void 0;
     registerMountHandler(target, function () {
       var context = this;
-      watcher = this._observer_.watch(calculator, target[name], { context: context });
+      watcher = this._observer_.watch(function () {
+        return calculator.call(this, context);
+      }, target[name], { context: context });
       watcher.autoRef.run(false);
     });
     registerUnMountHandler(target, function () {

@@ -13,7 +13,9 @@ module.exports = function watch(calculator, ...args) {
     let watcher;
     registerMountHandler(target, function () {
       const context = this;
-      watcher = this._observer_.watch(calculator, target[name], { context });
+      watcher = this._observer_.watch(function () {
+        return calculator.call(this, context);
+      }, target[name], { context });
       watcher.autoRef.run(false);
     });
     registerUnMountHandler(target, function () {
