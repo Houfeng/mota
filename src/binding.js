@@ -10,14 +10,6 @@ function compileExpr(expr) {
   };
 }
 
-function toArray(children) {
-  const result = [];
-  React.Children.forEach(children, child => {
-    result.push(child);
-  });
-  return result;
-}
-
 function elementHandler(element, model, key, children) {
   const props = element.props || {};
   const dataBind = props['data-bind'];

@@ -2028,9 +2028,7 @@ var radioOpts = {
     var mValue = ctx.getValue();
     if (typeof mValue == 'boolean') {
       ctx.setValue(checked);
-    } else {
-      if (checked) ctx.setValue(value);
-    }
+    } else if (checked) ctx.setValue(value);
   }]
 };
 
@@ -3764,14 +3762,6 @@ function compileExpr(expr) {
     get: expression(expr),
     set: expression('$scope.' + expr + '=$value')
   };
-}
-
-function toArray(children) {
-  var result = [];
-  React.Children.forEach(children, function (child) {
-    result.push(child);
-  });
-  return result;
 }
 
 function elementHandler(element, model, key, children) {

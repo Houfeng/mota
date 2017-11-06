@@ -44,9 +44,7 @@ const radioOpts = {
     const mValue = ctx.getValue();
     if (typeof mValue == 'boolean') {
       ctx.setValue(checked);
-    } else {
-      if (checked) ctx.setValue(value);
-    }
+    } else if (checked) ctx.setValue(value);
   }]
 };
 

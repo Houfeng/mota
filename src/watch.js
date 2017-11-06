@@ -22,4 +22,4 @@ module.exports = function watch(calculator, ...args) {
       this._observer_.unWatch(watcher);
     });
   };
-}
+};

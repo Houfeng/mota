@@ -50,7 +50,6 @@ build:
 
 test:
   - name: lint
-  - name: unit
 
 publish:
   - name: shell
