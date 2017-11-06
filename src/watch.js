@@ -8,14 +8,14 @@ module.exports = function watch(calculator, ...args) {
   if (isComponentInstance(calculator)) {
     return autorun(calculator, ...args);
   }
-  return function (target, name) {
+  return function (target, method) {
     if (!target) return autorun;
     let watcher;
     registerMountHandler(target, function () {
       const context = this;
       watcher = this._observer_.watch(function () {
-        return calculator.call(this, context);
-      }, target[name], { context });
+        return calculator.call(this, this.model);
+      }, target[method], { context });
       watcher.autoRef.run(false);
     });
     registerUnMountHandler(target, function () {

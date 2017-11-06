@@ -2091,12 +2091,12 @@ var _require = __webpack_require__(11),
     registerMountHandler = _require.registerMountHandler,
     registerUnMountHandler = _require.registerUnMountHandler;
 
-module.exports = function autorun(target, name) {
+module.exports = function autorun(target, method) {
   if (!target) return autorun;
   var autoRef = void 0;
   registerMountHandler(target, function () {
     var context = this;
-    autoRef = this._observer_.run(target[name], { context: context });
+    autoRef = this._observer_.run(target[method], { context: context });
     autoRef.run();
   });
   registerUnMountHandler(target, function () {
@@ -3933,14 +3933,14 @@ module.exports = function watch(calculator) {
 
     return autorun.apply(undefined, [calculator].concat(args));
   }
-  return function (target, name) {
+  return function (target, method) {
     if (!target) return autorun;
     var watcher = void 0;
     registerMountHandler(target, function () {
       var context = this;
       watcher = this._observer_.watch(function () {
-        return calculator.call(this, context);
-      }, target[name], { context: context });
+        return calculator.call(this, this.model);
+      }, target[method], { context: context });
       watcher.autoRef.run(false);
     });
     registerUnMountHandler(target, function () {

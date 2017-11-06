@@ -1,11 +1,11 @@
 const { registerMountHandler, registerUnMountHandler } = require('./utils');
 
-module.exports = function autorun(target, name) {
+module.exports = function autorun(target, method) {
   if (!target) return autorun;
   let autoRef;
   registerMountHandler(target, function () {
     const context = this;
-    autoRef = this._observer_.run(target[name], { context });
+    autoRef = this._observer_.run(target[method], { context });
     autoRef.run();
   });
   registerUnMountHandler(target, function () {

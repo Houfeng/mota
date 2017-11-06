@@ -16,17 +16,19 @@ class App extends Component {
     super(...args);
   }
 
-  @watch(function () {
-    return this.model.name;
-  })
+  @watch(model => model.name)
   test() {
-    console.log('test', this.model.name, this.model.date);
+    console.log('watch test', this.model.name, this.model.date);
   }
+
+  onKeyDown = event => {
+    console.log('keyCode', event.keyCode);
+  };
 
   render() {
     return (
       <div className="app">
-        <input data-bind="name" /><br />
+        <input onKeyDown={this.onKeyDown} data-bind="name" /><br />
         {String(this.model.name)}<br />
         <select data-bind="name">
           <option value="1">1</option>
