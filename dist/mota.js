@@ -982,12 +982,11 @@ function toArray(array) {
  * @static
  */
 function toDate(val) {
-  var self = this;
-  if (self.isNumber(val))
+  if (isNumber(val))
     return new Date(val);
-  else if (self.isString(val))
-    return new Date(self.replace(self.replace(val, '-', '/'), 'T', ' '));
-  else if (self.isDate(val))
+  else if (isString(val))
+    return new Date(replace(replace(val, '-', '/'), 'T', ' '));
+  else if (isDate(val))
     return val;
   else
     return null;
@@ -1110,11 +1109,11 @@ function clone(src, igonres) {
         objClone[key] = value;
       }
     }
-  }, this);
+  });
   ['toString', 'valueOf'].forEach(function (key) {
     if (contains(igonres, key)) return;
     final(objClone, key, src[key]);
-  }, this);
+  });
   return objClone;
 }
 
@@ -1157,7 +1156,7 @@ function mix(dst, src, igonres, mode, igonreNull) {
     } else {
       dst[key] = src[key];
     }
-  }, this);
+  });
   return dst;
 }
 
@@ -1251,7 +1250,7 @@ function deepEqual(a, b) {
     if (checkedMap[key]) return;
     if (!deepEqual(a[key], b[key])) result = false;
     checkedMap[key] = true;
-  }, this);
+  });
   return result;
 }
 
@@ -1316,7 +1315,7 @@ function setByPath(obj, path, value) {
       obj[name] = obj[name] || {};
       obj = obj[name];
     }
-  }, this);
+  });
 }
 
 /**
@@ -1332,7 +1331,7 @@ function getByPath(obj, path) {
   each(path, function (index, name) {
     if (isNull(name) || name.length < 1) return;
     if (!isNull(obj)) obj = obj[name];
-  }, this);
+  });
   return obj;
 }
 
@@ -3484,8 +3483,9 @@ var EventEmitter = function () {
     }
     this._listeners_[name] = this._listeners_[name] || [];
     this._listeners_[name].push(listener);
-    if (this._listeners_[name].length > EventEmitter._maxListeners) {
-      throw new Error('The `' + name + '` event listener is not more than 10');
+    var maxListeners = EventEmitter._maxListeners;
+    if (this._listeners_[name].length > maxListeners) {
+      throw new Error('The \'' + name + '\' event listener is not more than ' + maxListeners);
     }
   };
 
@@ -3606,7 +3606,7 @@ var EventEmitter = function () {
 //最多添加多少个 listener
 
 
-EventEmitter._maxListeners = 256;
+EventEmitter._maxListeners = 1024;
 
 //所有自定义事件
 EventEmitter._events = [];
@@ -3837,7 +3837,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var VARIABLE_FILTER = /(\(|\[|\{|\+|\-|\*|\/|\>|\<|\=|\!|\,|\;|\?|\:|\&|\|)\s*([a-z\_0-9\$]+)/ig;
 var VARIABLE_NAME = /^[a-z\$\_]/i;
-var ALLOWED_WORD = /(\$scope|true|false|null|undefined|Date|Number|String|Object|Boolean|Array|RegExp|Math|JSON|parseInt|parseFloat|isNaN|isFinite)/;
+var ALLOWED_WORD = /(\$scope|true|false|null|undefined|Date|Number|String|Object|Boolean|Array|RegExp|Math|JSON|parseInt|parseFloat|isNaN|isFinite)/; //eslint-disable-line
 var EXPRESSION_BLOCK = /\{\{([\s\S]+?)\}\}/;
 var EXPRESSION_CACHE = {};
 var TEMPLATE_CACHE = {};
@@ -3848,6 +3848,7 @@ function findVariables(expr) {
   var variables = {};
   var info = void 0;
   while (info = VARIABLE_FILTER.exec(expr)) {
+    //eslint-disable-line
     var name = info[2];
     if (VARIABLE_NAME.test(name) && !ALLOWED_WORD.test(name)) {
       variables[name] = true;
