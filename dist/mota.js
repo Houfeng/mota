@@ -1739,7 +1739,7 @@ module.exports = function () {
 /* 40 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.5"}
+module.exports = {"name":"mota","version":"0.2.6"}
 
 /***/ }),
 /* 41 */
@@ -3555,20 +3555,46 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var AutoRun = __webpack_require__(39);
 
 var UPDATE_EVENT = 'compositionupdate';
+var END_EVENT = 'compositionend';
 
-var Composition = function Composition() {
-  var _this = this;
-
-  (0, _classCallCheck3.default)(this, Composition);
-  this.updating = false;
-
-  this.onCompositionUpdate = function () {
-    _this.updating = true;
+var Composition = function () {
+  Composition.prototype.on = function on(event, handler) {
+    document.addEventListener(event, handler, true);
   };
 
-  document.removeEventListener(UPDATE_EVENT, this.onCompositionUpdate, true);
-  document.addEventListener(UPDATE_EVENT, this.onCompositionUpdate, true);
-};
+  Composition.prototype.off = function off(event, handler) {
+    document.removeEventListener(event, handler, true);
+  };
+
+  Composition.prototype.enable = function enable() {
+    this.on(UPDATE_EVENT, this.onUpdate);
+    this.on(END_EVENT, this.onEnd);
+  };
+
+  Composition.prototype.disable = function disable() {
+    this.off(UPDATE_EVENT, this.onUpdate);
+    this.off(END_EVENT, this.onEnd);
+  };
+
+  function Composition() {
+    var _this = this;
+
+    (0, _classCallCheck3.default)(this, Composition);
+    this.updating = false;
+
+    this.onUpdate = function () {
+      _this.updating = true;
+    };
+
+    this.onEnd = function () {
+      _this.updating = false;
+    };
+
+    this.enable();
+  }
+
+  return Composition;
+}();
 
 var composition = new Composition();
 
