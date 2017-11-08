@@ -3559,15 +3559,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var AutoRun = __webpack_require__(39);
 
+var UPDATE_EVENT = 'compositionupdate';
+
 var Composition = function Composition() {
   var _this = this;
 
   (0, _classCallCheck3.default)(this, Composition);
-
   this.updating = false;
-  document.addEventListener('compositionupdate', function () {
+
+  this.onCompositionUpdate = function () {
     _this.updating = true;
-  }, true);
+  };
+
+  document.removeEventListener(UPDATE_EVENT, this.onCompositionUpdate, true);
+  document.addEventListener(UPDATE_EVENT, this.onCompositionUpdate, true);
 };
 
 var composition = new Composition();

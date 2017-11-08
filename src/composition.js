@@ -1,12 +1,20 @@
 const AutoRun = require('mokit/src/observer/autorun');
 
+const UPDATE_EVENT = 'compositionupdate';
+
 class Composition {
+
+  updating = false;
+
+  onCompositionUpdate = () => {
+    this.updating = true;
+  };
+
   constructor() {
-    this.updating = false;
-    document.addEventListener('compositionupdate', () => {
-      this.updating = true;
-    }, true);
+    document.removeEventListener(UPDATE_EVENT, this.onCompositionUpdate, true);
+    document.addEventListener(UPDATE_EVENT, this.onCompositionUpdate, true);
   }
+
 }
 
 const composition = new Composition();
