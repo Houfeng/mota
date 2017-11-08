@@ -1,16 +1,14 @@
+const { isFunction } = require('ntils');
 const {
   isComponentInstance, registerMountHandler,
   registerUnMountHandler, markAsWatch
 } = require('./utils');
-const autorun = require('./autorun');
 
-function watch(calculator, ...args) {
-  if (!calculator) return autorun;
-  if (isComponentInstance(calculator)) {
-    return autorun(calculator, ...args);
+function watch(calculator, immed) {
+  if (!isFunction(calculator)) {
+    throw new Error('Watch needs to specify a calculation function');
   }
   return function (target, method) {
-    if (!target) return autorun;
     let watcher;
     registerMountHandler(target, function () {
       const context = this;
@@ -18,7 +16,7 @@ function watch(calculator, ...args) {
       watcher = this._observer_.watch(function () {
         return calculator.call(this, this.model);
       }, target[method], { context, deep });
-      watcher.autoRef.run(false);
+      watcher.autoRef.run(immed || false);
     });
     registerUnMountHandler(target, function () {
       this._observer_.unWatch(watcher);

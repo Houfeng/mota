@@ -16,7 +16,7 @@ class App extends Component {
     super(...args);
   }
 
-  @watch(model => model.name)
+  @watch(model => model.name, true)
   @deep
   testWatch() {
     console.log('watch test', this.model.name, this.model.date);
@@ -24,7 +24,7 @@ class App extends Component {
 
   @autorun
   testAutorun() {
-    console.log(this.model.opts);
+    console.log('autorun test', this.model.opts);
   }
 
   onKeyDown = event => {
