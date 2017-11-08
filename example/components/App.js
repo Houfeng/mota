@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../assets/logo.svg';
 import './app.css';
-import { model, binding, autorun, watch } from '../../src';
+import { model, binding, autorun, watch, deep } from '../../src';
 import Info from '../model/info';
 import List from './List';
 import List2 from './List2';
@@ -17,8 +17,14 @@ class App extends Component {
   }
 
   @watch(model => model.name)
-  test() {
+  @deep
+  testWatch() {
     console.log('watch test', this.model.name, this.model.date);
+  }
+
+  @autorun
+  testAutorun() {
+    console.log(this.model.opts);
   }
 
   onKeyDown = event => {
@@ -28,8 +34,8 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <input onKeyDown={this.onKeyDown} data-bind="name" /><br />
         {String(this.model.name)}<br />
+        <input onKeyDown={this.onKeyDown} data-bind="name" /><br />
         <select data-bind="name">
           <option value="1">1</option>
           <option value="2">2</option>

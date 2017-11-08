@@ -1,5 +1,6 @@
 const Observer = require('mokit/src/observer');
 const React = require('react');
+const { final } = require('ntils');
 const {
   isComponentClass, convertElement, registerElementHandler
 } = require('./utils');
@@ -18,9 +19,10 @@ function createRender(proto) {
   };
   return function () {
     if (!this._run_) {
-      this._observer_ = new Observer(this.model);
+      final(this, '_observer_', new Observer(this.model));
       const context = this;
-      this._run_ = this._observer_.run(convertRender, { trigger, context });
+      final(this, '_run_',
+        this._observer_.run(convertRender, { trigger, context }));
     }
     return this._run_.run();
   };
@@ -38,7 +40,6 @@ function createUnmount(proto) {
     }
     if (this._run_) {
       this._observer_.stop(this._run_);
-      this._run_ = null;
     }
     if (this._isNewModelInstance_) {
       this._observer_.clearReference();
@@ -61,14 +62,14 @@ function createModelGetter(model) {
   return function () {
     if (this._model_) return this._model_;
     model = this.props.model || model;
+    let isNewModelInstance = false;
     if (!model) throw new Error('Invalid Model');
     if (model instanceof Function) {
-      this._model_ = new model();
-      this._isNewModelInstance_ = true;
-    } else {
-      this._model_ = model;
-      this._isNewModelInstance_ = false;
+      model = new model();
+      isNewModelInstance = true;
     }
+    final(this, '_model_', model);
+    final(this, '_isNewModelInstance_', isNewModelInstance);
     return this._model_;
   };
 }
@@ -98,7 +99,7 @@ function connect(model, component) {
   proto.render = createRender(proto);
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
-  proto._contented_ = true;
+  final(proto, '_contented_', true);
   return component;
 }
 

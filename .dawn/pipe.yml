@@ -14,6 +14,7 @@ dev:
     watch: true
   - name: server
     public: ./dist/example/
+    port: 6006
   - name: browser-sync
 
 build:

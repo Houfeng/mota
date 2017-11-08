@@ -1,18 +1,20 @@
 const React = require('react');
 const { Component } = React;
+const { final } = require('ntils');
+const info = require('$info');
 
 function registerMountHandler(proto, handler) {
-  if (!proto._mountHandlers_) proto._mountHandlers_ = [];
+  if (!proto._mountHandlers_) final(proto, '_mountHandlers_', []);
   proto._mountHandlers_.push(handler);
 }
 
 function registerUnMountHandler(proto, handler) {
-  if (!proto._unmountHandlers_) proto._unmountHandlers_ = [];
+  if (!proto._unmountHandlers_) final(proto, '_unmountHandlers_', []);
   proto._unmountHandlers_.push(handler);
 }
 
 function registerElementHandler(proto, handler) {
-  if (!proto._elementHandlers_) proto._elementHandlers_ = [];
+  if (!proto._elementHandlers_) final(proto, '_elementHandlers_', []);
   proto._elementHandlers_.push(handler);
 }
 
@@ -29,8 +31,8 @@ function convertElement(element, model, key, handlers) {
     !handlers || handlers.length < 1) {
     return element;
   }
-  key = element.key || key;
   const props = element.props || {};
+  key = element.key || key;
   const initailChildren = childrenToArray(props.children);
   const children = initailChildren.length > 0 ? initailChildren
     .map((child, index) => convertElement(child, model, index, handlers))
@@ -51,11 +53,29 @@ function isComponentClass(com) {
   return isComponentInstance(com.prototype);
 }
 
+function markAsDeep(target, name) {
+  if (!target._deep_) final(target, '_deep_', {});
+  if (name) target._deep_[name] = true;
+}
+
+function markAsWatch(target, name) {
+  if (!target._watch_) final(target, '_watch_', {});
+  if (name) target._watch_[name] = true;
+}
+
+function markAsAutorun(target, name) {
+  if (!target._autorun_) final(target, '_autorun_', {});
+  if (name) target._autorun_[name] = true;
+}
+
 module.exports = {
-  registerElementHandler,
-  registerMountHandler,
-  registerUnMountHandler,
   convertElement,
   isComponentClass,
-  isComponentInstance
+  isComponentInstance,
+  markAsDeep,
+  markAsAutorun,
+  markAsWatch,
+  registerElementHandler,
+  registerMountHandler,
+  registerUnMountHandler
 };
