@@ -1739,7 +1739,7 @@ module.exports = function () {
 /* 40 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.3"}
+module.exports = {"name":"mota","version":"0.2.4"}
 
 /***/ }),
 /* 41 */
