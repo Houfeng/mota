@@ -48,7 +48,7 @@ const radioOpts = {
   }]
 };
 
-const binltIn = {
+const builtIn = {
   input: function (element) {
     const { type } = element.props;
     switch (type) {
@@ -68,7 +68,7 @@ const binltIn = {
 
 function getOptions(element) {
   const type = element.type;
-  let opts = (typeof type === 'string') ? binltIn[type] : type.bindOpts;
+  let opts = (typeof type === 'string') ? builtIn[type] : type.bindOpts;
   if (opts instanceof Function) opts = opts(element);
   opts = opts || defaultOpts;
   if (opts && typeof opts.event === 'string') {
@@ -84,7 +84,7 @@ function bindable(opts, component) {
   if (isComponentClass(opts)) {
     return bindable(component, opts);
   }
-  if (typeof opts === 'string') opts = binltIn[opts];
+  if (typeof opts === 'string') opts = builtIn[opts];
   if (!opts) opts = defaultOpts;
   if (!component) return component => bindable(opts, component);
   component.bindOpts = Object.assign({}, opts);

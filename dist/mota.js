@@ -1844,7 +1844,7 @@ var radioOpts = {
   }]
 };
 
-var binltIn = {
+var builtIn = {
   input: function input(element) {
     var type = element.props.type;
 
@@ -1865,7 +1865,7 @@ var binltIn = {
 
 function getOptions(element) {
   var type = element.type;
-  var opts = typeof type === 'string' ? binltIn[type] : type.bindOpts;
+  var opts = typeof type === 'string' ? builtIn[type] : type.bindOpts;
   if (opts instanceof Function) opts = opts(element);
   opts = opts || defaultOpts;
   if (opts && typeof opts.event === 'string') {
@@ -1881,7 +1881,7 @@ function bindable(opts, component) {
   if (isComponentClass(opts)) {
     return bindable(component, opts);
   }
-  if (typeof opts === 'string') opts = binltIn[opts];
+  if (typeof opts === 'string') opts = builtIn[opts];
   if (!opts) opts = defaultOpts;
   if (!component) return function (component) {
     return bindable(opts, component);
@@ -3600,7 +3600,7 @@ module.exports = composition;
 /* 88 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.7"}
+module.exports = {"name":"mota","version":"0.2.8"}
 
 /***/ })
 /******/ ]);
