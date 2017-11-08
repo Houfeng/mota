@@ -25,9 +25,9 @@ function elementHandler(element, model, key, children) {
   const getValue = () => bindExpr.get(model);
   const context = { getValue, setValue };
   const bindEvent = bindOpts.event[0];
-  let chInProcessing = false;
+  //let chInProcessing = false;
   const bindEventHandler = (event, ...args) => {
-    if (chInProcessing) return chInProcessing = false;
+    //if (chInProcessing) return chInProcessing = false;
     const handler = bindOpts.event[1];
     if (handler instanceof Function) {
       handler(context, event, ...args);
@@ -48,7 +48,7 @@ function elementHandler(element, model, key, children) {
     children: children,
     [bindProp]: bindPropHandler(context, props),
     [bindEvent]: bindEventHandler,
-    onCompositionUpdate: () => chInProcessing = true
+    //onCompositionUpdate: () => chInProcessing = true
   });
 }
 

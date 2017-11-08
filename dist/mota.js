@@ -1667,7 +1667,7 @@ module.exports = { "default": __webpack_require__(79), __esModule: true };
 /* 39 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.0"}
+module.exports = {"name":"mota","version":"0.2.1"}
 
 /***/ }),
 /* 40 */
@@ -3209,14 +3209,14 @@ module.exports = function AutoRun(handler, context, trigger, deep) {
 
   this.onChange = function (event) {
     if (_this.runing || !event || !_this.isDependent(event.path)) return;
-    if (_this.timer) {
-      clearTimeout(_this.timer);
-      _this.timer = null;
-    }
-    _this.timer = setTimeout(function () {
-      if (!_this.timer) return;
-      _this.trigger.call(_this.context);
-    }, 0);
+    // if (this.timer) {
+    //   clearTimeout(this.timer);
+    //   this.timer = null;
+    // }
+    // this.timer = setTimeout(() => {
+    //   if (!this.timer) return;
+    _this.trigger.call(_this.context);
+    //}, 0);
   };
 
   this.run = function () {
@@ -3352,13 +3352,13 @@ function elementHandler(element, model, key, children) {
   };
   var context = { getValue: getValue, setValue: setValue };
   var bindEvent = bindOpts.event[0];
-  var chInProcessing = false;
+  //let chInProcessing = false;
   var bindEventHandler = function bindEventHandler(event) {
     for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       args[_key - 1] = arguments[_key];
     }
 
-    if (chInProcessing) return chInProcessing = false;
+    //if (chInProcessing) return chInProcessing = false;
     var handler = bindOpts.event[1];
     if (handler instanceof Function) {
       handler.apply(undefined, [context, event].concat(args));
@@ -3379,9 +3379,7 @@ function elementHandler(element, model, key, children) {
   }, props, (_extends2 = {
     'data-bind': undefined,
     children: children
-  }, _extends2[bindProp] = bindPropHandler(context, props), _extends2[bindEvent] = bindEventHandler, _extends2.onCompositionUpdate = function onCompositionUpdate() {
-    return chInProcessing = true;
-  }, _extends2)));
+  }, _extends2[bindProp] = bindPropHandler(context, props), _extends2[bindEvent] = bindEventHandler, _extends2)));
 }
 
 function binding(component) {
