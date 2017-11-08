@@ -7,6 +7,7 @@ const watch = require('./watch');
 const deep = require('./deep');
 const utils = require('./utils');
 const stateful = require('./stateful');
+const composition = require('./composition');
 const info = require('$info');
 
 module.exports = {

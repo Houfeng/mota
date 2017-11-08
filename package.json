@@ -1,8 +1,8 @@
 {
   "name": "mota",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "",
-  "main": "./index.js",
+  "main": "./dist/mota.js",
   "scripts": {
     "test": "dn test && dn build -e prod"
   },
@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "mokit": "^4.0.0-beta15",
+    "mokit": "^4.0.0-beta16",
     "ntils": "^3.1.7",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
