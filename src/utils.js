@@ -1,7 +1,6 @@
 const React = require('react');
 const { Component } = React;
 const { final } = require('ntils');
-const info = require('$info');
 
 function registerMountHandler(proto, handler) {
   if (!proto._mountHandlers_) final(proto, '_mountHandlers_', []);

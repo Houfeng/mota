@@ -1,7 +1,6 @@
 const { isFunction } = require('ntils');
 const {
-  isComponentInstance, registerMountHandler,
-  registerUnMountHandler, markAsWatch
+  registerMountHandler, registerUnMountHandler, markAsWatch
 } = require('./utils');
 
 function watch(calculator, immed) {

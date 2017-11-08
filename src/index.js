@@ -12,5 +12,5 @@ const info = require('$info');
 
 module.exports = {
   connect, model, binding, bindable, watch, autorun, deep, stateful,
-  utils, ...info
+  composition, utils, ...info
 };

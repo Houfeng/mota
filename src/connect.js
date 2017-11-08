@@ -21,8 +21,9 @@ function createRender(proto) {
     if (!this._run_) {
       final(this, '_observer_', new Observer(this.model));
       const context = this;
+      const deep = !!this.constructor._deep_;
       final(this, '_run_',
-        this._observer_.run(convertRender, { trigger, context }));
+        this._observer_.run(convertRender, { trigger, context, deep }));
     }
     return this._run_.run();
   };
@@ -35,8 +36,8 @@ function createUnmount(proto) {
     if (initailUnmount) {
       result = initailUnmount.call(this);
     }
-    if (this._unmountHanlders_) {
-      this._unmountHanlders_.forEach(handler => handler.call(this));
+    if (this._unmountHandlers_) {
+      this._unmountHandlers_.forEach(handler => handler.call(this));
     }
     if (this._run_) {
       this._observer_.stop(this._run_);
