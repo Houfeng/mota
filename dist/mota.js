@@ -3319,15 +3319,16 @@ function elementHandler(element, model, key, children) {
   if (!dataBind || !bindOpts) {
     return React.cloneElement(element, (0, _extends4.default)({ key: key }, props, { children: children }));
   }
+  var dataScope = props['data-scope'] || model;
   var initailChange = props[bindOpts.change];
   var bindExpr = compileExpr(dataBind);
   var setValue = function setValue(value) {
-    return bindExpr.set((0, _create2.default)(model, {
+    return bindExpr.set((0, _create2.default)(dataScope, {
       $value: { value: value }
     }));
   };
   var getValue = function getValue() {
-    return bindExpr.get(model);
+    return bindExpr.get(dataScope);
   };
   var context = { getValue: getValue, setValue: setValue };
   var bindEvent = bindOpts.event[0];
@@ -3600,7 +3601,7 @@ module.exports = composition;
 /* 88 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.8"}
+module.exports = {"name":"mota","version":"0.2.9"}
 
 /***/ })
 /******/ ]);

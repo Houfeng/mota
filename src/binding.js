@@ -17,12 +17,13 @@ function elementHandler(element, model, key, children) {
   if (!dataBind || !bindOpts) {
     return React.cloneElement(element, { key, ...props, children });
   }
+  const dataScope = props['data-scope'] || model;
   const initailChange = props[bindOpts.change];
   const bindExpr = compileExpr(dataBind);
-  const setValue = value => bindExpr.set(Object.create(model, {
+  const setValue = value => bindExpr.set(Object.create(dataScope, {
     $value: { value }
   }));
-  const getValue = () => bindExpr.get(model);
+  const getValue = () => bindExpr.get(dataScope);
   const context = { getValue, setValue };
   const bindEvent = bindOpts.event[0];
   const bindEventHandler = (event, ...args) => {

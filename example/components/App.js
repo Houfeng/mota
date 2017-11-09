@@ -35,7 +35,7 @@ class App extends Component {
     return (
       <div className="app">
         {String(this.model.name)}<br />
-        <input onKeyDown={this.onKeyDown} data-bind="name" /><br />
+        <input onKeyDown={this.onKeyDown} data-bind="name" data-scope={this.model} /><br />
         <select data-bind="name">
           <option value="1">1</option>
           <option value="2">2</option>
