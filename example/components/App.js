@@ -12,6 +12,8 @@ import List2 from './List2';
 @binding
 class App extends Component {
 
+  state = {};
+
   constructor(...args) {
     super(...args);
   }
@@ -34,6 +36,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
+        {this.state.time}<br />
         {String(this.model.name)}<br />
         <input onKeyDown={this.onKeyDown} data-bind="name" data-scope={this.model} /><br />
         <select data-bind="name">

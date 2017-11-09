@@ -1672,6 +1672,8 @@ var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var TIMER_DELAY = 16.6;
+
 module.exports = function () {
   function AutoRun(handler, context, trigger, deep) {
     var _this = this;
@@ -1704,7 +1706,7 @@ module.exports = function () {
       _this.timer = setTimeout(function () {
         if (!_this.timer) return;
         _this.trigger.call(_this.context);
-      }, 0);
+      }, TIMER_DELAY);
     };
 
     this.run = function () {
@@ -3259,7 +3261,10 @@ var Watcher = function Watcher(calculator, handler, context) {
     return getByPath(_this.context, calculator);
   };
   this.handler = handler;
-};
+}
+
+//force: true 强制执行，false 强制不执行，无参数根据计算结果决定
+;
 
 module.exports = Watcher;
 
@@ -3601,7 +3606,7 @@ module.exports = composition;
 /* 88 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.9"}
+module.exports = {"name":"mota","version":"0.2.10"}
 
 /***/ })
 /******/ ]);
