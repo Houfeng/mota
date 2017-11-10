@@ -7,6 +7,7 @@ const {
 const stateful = require('./stateful');
 
 function trigger() {
+  if (!this._mounted_) return;
   this.setState({ _model_: this.model });
 }
 
@@ -32,6 +33,7 @@ function createRender(proto) {
 function createUnmount(proto) {
   const initailUnmount = proto.componentWillUnmount;
   return function () {
+    this._mounted_ = false;
     let result = null;
     if (initailUnmount) {
       result = initailUnmount.call(this);
@@ -52,6 +54,7 @@ function createUnmount(proto) {
 function createMount(proto) {
   const initailMount = proto.componentDidMount;
   return function () {
+    this._mounted_ = true;
     if (this._mountHandlers_) {
       this._mountHandlers_.forEach(handler => handler.call(this));
     }

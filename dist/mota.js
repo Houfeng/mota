@@ -1394,6 +1394,7 @@ var _require2 = __webpack_require__(2),
 var stateful = __webpack_require__(40);
 
 function trigger() {
+  if (!this._mounted_) return;
   this.setState({ _model_: this.model });
 }
 
@@ -1419,6 +1420,7 @@ function createUnmount(proto) {
   return function () {
     var _this = this;
 
+    this._mounted_ = false;
     var result = null;
     if (initailUnmount) {
       result = initailUnmount.call(this);
@@ -1443,6 +1445,7 @@ function createMount(proto) {
   return function () {
     var _this2 = this;
 
+    this._mounted_ = true;
     if (this._mountHandlers_) {
       this._mountHandlers_.forEach(function (handler) {
         return handler.call(_this2);
@@ -3606,7 +3609,7 @@ module.exports = composition;
 /* 88 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.10"}
+module.exports = {"name":"mota","version":"0.2.11"}
 
 /***/ })
 /******/ ]);
