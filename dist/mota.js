@@ -150,7 +150,7 @@ function convertElement(element, model, key, handlers) {
     return element;
   }
   var props = element.props || {};
-  key = element.key || key;
+  key = element.key || key || undefined;
   var initailChildren = childrenToArray(props.children);
   var children = initailChildren.length > 0 ? initailChildren.map(function (child, index) {
     return convertElement(child, model, index, handlers);
@@ -1762,22 +1762,22 @@ var _require = __webpack_require__(8),
 
 module.exports = function (stateless) {
   if (!stateless._stateful_) {
-    var Stateful = function (_Component) {
-      (0, _inherits3.default)(Stateful, _Component);
+    var StatelessWrapper = function (_Component) {
+      (0, _inherits3.default)(StatelessWrapper, _Component);
 
-      function Stateful() {
-        (0, _classCallCheck3.default)(this, Stateful);
+      function StatelessWrapper() {
+        (0, _classCallCheck3.default)(this, StatelessWrapper);
         return (0, _possibleConstructorReturn3.default)(this, _Component.apply(this, arguments));
       }
 
-      Stateful.prototype.render = function render() {
+      StatelessWrapper.prototype.render = function render() {
         return stateless(this.props);
       };
 
-      return Stateful;
+      return StatelessWrapper;
     }(Component);
 
-    stateless._stateful_ = Stateful;
+    stateless._stateful_ = StatelessWrapper;
   }
   return stateless._stateful_;
 };
@@ -3609,7 +3609,7 @@ module.exports = composition;
 /* 88 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.11"}
+module.exports = {"name":"mota","version":"0.2.12"}
 
 /***/ })
 /******/ ]);
