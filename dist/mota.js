@@ -150,7 +150,7 @@ function convertElement(element, model, key, handlers) {
     return element;
   }
   var props = element.props || {};
-  key = element.key || key || undefined;
+  key = element.key || key;
   var initailChildren = childrenToArray(props.children);
   var children = initailChildren.length > 0 ? initailChildren.map(function (child, index) {
     return convertElement(child, model, index, handlers);
@@ -3609,7 +3609,7 @@ module.exports = composition;
 /* 88 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.12"}
+module.exports = {"name":"mota","version":"0.2.13"}
 
 /***/ })
 /******/ ]);

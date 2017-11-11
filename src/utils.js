@@ -31,7 +31,7 @@ function convertElement(element, model, key, handlers) {
     return element;
   }
   const props = element.props || {};
-  key = element.key || key || undefined;
+  key = element.key || key;
   const initailChildren = childrenToArray(props.children);
   const children = initailChildren.length > 0 ? initailChildren
     .map((child, index) => convertElement(child, model, index, handlers))
