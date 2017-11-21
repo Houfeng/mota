@@ -236,8 +236,7 @@ function getType(obj) {
  * @static
  */
 function isNull(obj) {
-  var type = getType(obj);
-  return type === 'Undefined' || type === 'Null';
+  return obj === undefined || obj === null;
 }
 
 /**
@@ -3609,7 +3608,7 @@ module.exports = composition;
 /* 88 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.13"}
+module.exports = {"name":"mota","version":"0.2.14"}
 
 /***/ })
 /******/ ]);
