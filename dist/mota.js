@@ -152,9 +152,10 @@ function convertElement(element, model, key, handlers) {
   var props = element.props || {};
   key = element.key || key;
   var initailChildren = childrenToArray(props.children);
-  var children = initailChildren.length > 0 ? initailChildren.map(function (child, index) {
+  var covertedChildren = initailChildren.length > 0 ? initailChildren.map(function (child, index) {
     return convertElement(child, model, index, handlers);
   }) : undefined;
+  var children = covertedChildren && covertedChildren.length == 1 ? covertedChildren[0] : covertedChildren;
   if (handlers) {
     handlers.forEach(function (handler) {
       element = handler(element, model, key, children);
@@ -330,8 +331,33 @@ var hasProperty = has;
  */
 function isFunction(obj) {
   if (isNull(obj)) return false;
-  return getType(obj) === "Function";
+  return typeof obj === "function";
 }
+
+/**
+ * 验证一个对象是否为 AsyncFunction
+ * @method isAsyncFunction
+ * @param  {Object}  obj 要验证的对象
+ * @return {Boolean}     结果
+ * @static
+ */
+function isAsyncFunction(obj) {
+  if (isNull(obj)) return false;
+  return getType(obj) === "AsyncFunction";
+}
+
+/**
+ * 验证一个对象是否为 GeneratorFunction
+ * @method isGeneratorFunction
+ * @param  {Object}  obj 要验证的对象
+ * @return {Boolean}     结果
+ * @static
+ */
+function isGeneratorFunction(obj) {
+  if (isNull(obj)) return false;
+  return getType(obj) === "GeneratorFunction";
+}
+
 
 /**
  * 验证一个对象是否为String
@@ -868,7 +894,7 @@ function short(str, maxLength) {
  * 首字母大写
  */
 function firstUpper(str) {
-  if (isNull(str)) return;
+  if (!isString(str)) return '';
   return str.substring(0, 1).toUpperCase() + str.substring(1);
 }
 
@@ -876,6 +902,7 @@ function firstUpper(str) {
  * 编码正则字符串
  */
 function escapeRegExp(str) {
+  if (!isString(str)) return '';
   return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
@@ -886,6 +913,7 @@ function escapeRegExp(str) {
   * @return {string} 转换后的字符串
   */
 function toCamelCase(str, mode) {
+  if (!isString(str)) return '';
   if (str) {
     str = str.replace(/\-[a-z0-9]/g, function ($1) {
       return $1.slice(1).toUpperCase()
@@ -903,11 +931,12 @@ function toCamelCase(str, mode) {
  * @return {string} 转换后的字符串
  */
 function toSplitCase(str) {
+  if (!isString(str)) return '';
   if (str) {
     str = str.replace(/([A-Z])/g, '-$1');
     if (str[0] == '-') str = str.slice(1);
   }
-  return str;
+  return str.toLowerCase();
 }
 
 function htmlPrefilter(html) {
@@ -947,6 +976,8 @@ exports.endWith = endWith;
 exports.has = has;
 exports.hasProperty = hasProperty;
 exports.isFunction = isFunction;
+exports.isAsyncFunction = isAsyncFunction;
+exports.isGeneratorFunction = isGeneratorFunction;
 exports.isString = isString;
 exports.isNumber = isNumber;
 exports.isBoolean = isBoolean;
@@ -3608,7 +3639,7 @@ module.exports = composition;
 /* 88 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.14"}
+module.exports = {"name":"mota","version":"0.2.15"}
 
 /***/ })
 /******/ ]);

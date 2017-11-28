@@ -33,9 +33,11 @@ function convertElement(element, model, key, handlers) {
   const props = element.props || {};
   key = element.key || key;
   const initailChildren = childrenToArray(props.children);
-  const children = initailChildren.length > 0 ? initailChildren
+  const covertedChildren = initailChildren.length > 0 ? initailChildren
     .map((child, index) => convertElement(child, model, index, handlers))
     : undefined;
+  const children = covertedChildren && covertedChildren.length == 1
+    ? covertedChildren[0] : covertedChildren;
   if (handlers) {
     handlers.forEach(handler => {
       element = handler(element, model, key, children);
