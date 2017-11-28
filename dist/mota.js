@@ -1705,7 +1705,7 @@ var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TIMER_DELAY = 16.6;
+var TIMER_DELAY = 4;
 
 module.exports = function () {
   function AutoRun(handler, context, trigger, deep) {
@@ -3639,7 +3639,7 @@ module.exports = composition;
 /* 88 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.15"}
+module.exports = {"name":"mota","version":"0.2.16"}
 
 /***/ })
 /******/ ]);
