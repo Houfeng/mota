@@ -1,6 +1,6 @@
 const Observer = require('mokit/src/observer');
 const React = require('react');
-const { final } = require('ntils');
+const { final, isObject, isFunction } = require('ntils');
 const {
   isComponentClass, convertElement, registerElementHandler
 } = require('./utils');
@@ -8,7 +8,8 @@ const stateful = require('./stateful');
 
 function trigger() {
   if (!this._mounted_) return;
-  this.setState({ _model_: this.model });
+  //this.setState({ _model_: this.model });
+  this.forceUpdate();
 }
 
 function createRender(proto) {
@@ -62,12 +63,25 @@ function createMount(proto) {
   };
 }
 
+function createReceiveProps(proto) {
+  const initailReceiveProps = proto.componentWillReceiveProps;
+  return function (...args) {
+    if (this._receivePropsHandlers_) {
+      this._receivePropsHandlers_
+        .forEach(handler => handler.call(this, ...args));
+    }
+    if (initailReceiveProps) initailReceiveProps.call(this, ...args);
+  };
+}
+
 function createModelGetter(model) {
   return function () {
     if (this._model_) return this._model_;
-    model = this.props.model || model;
+    model = this.props.model || model || {};
     let isNewModelInstance = false;
-    if (!model) throw new Error('Invalid Model');
+    if (!isObject(model) && !isFunction(model)) {
+      throw new Error('Invalid Model');
+    }
     if (model instanceof Function) {
       model = new model();
       isNewModelInstance = true;
@@ -103,6 +117,7 @@ function connect(model, component) {
   proto.render = createRender(proto);
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
+  proto.componentWillReceiveProps = createReceiveProps(proto);
   final(proto, '_contented_', true);
   return component;
 }

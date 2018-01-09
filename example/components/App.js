@@ -53,7 +53,7 @@ class App extends Component {
         <hr />
         {this.model.list}
         <hr />
-        <List key={'listKey1'} ref="listRef" opts={this.model.opts} />
+        <List key={'listKey1'} name="from mapping" ref="listRef" opts={this.model.opts} />
         <List2 key={'listKey2'} opts={this.model.opts} />
 
       </div>

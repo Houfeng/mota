@@ -1,6 +1,6 @@
 const { isFunction } = require('ntils');
 const {
-  registerMountHandler, registerUnMountHandler, markAsWatch
+  registerMountHandler, registerUnmountHandler, markAsWatch
 } = require('./utils');
 
 function watch(calculator, immed) {
@@ -17,7 +17,7 @@ function watch(calculator, immed) {
       }, target[method], { context, deep });
       watcher.autoRef.run(immed || false);
     });
-    registerUnMountHandler(target, function () {
+    registerUnmountHandler(target, function () {
       this._observer_.unWatch(watcher);
     });
     markAsWatch(target, method);

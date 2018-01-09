@@ -1,5 +1,5 @@
 const {
-  registerMountHandler, registerUnMountHandler, markAsAutorun
+  registerMountHandler, registerUnmountHandler, markAsAutorun
 } = require('./utils');
 
 function autorun(target, method) {
@@ -11,7 +11,7 @@ function autorun(target, method) {
     autoRef = this._observer_.run(target[method], { context, deep });
     autoRef.run();
   });
-  registerUnMountHandler(target, function () {
+  registerUnmountHandler(target, function () {
     this._observer_.stop(autoRef);
   });
   markAsAutorun(target, method);

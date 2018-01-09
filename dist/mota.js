@@ -95,21 +95,6 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-exports.__esModule = true;
-
-exports.default = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var _typeof2 = __webpack_require__(14);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
@@ -119,7 +104,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var React = __webpack_require__(8);
 var Component = React.Component;
 
-var _require = __webpack_require__(4),
+var _require = __webpack_require__(3),
     final = _require.final;
 
 function registerMountHandler(proto, handler) {
@@ -127,9 +112,14 @@ function registerMountHandler(proto, handler) {
   proto._mountHandlers_.push(handler);
 }
 
-function registerUnMountHandler(proto, handler) {
+function registerUnmountHandler(proto, handler) {
   if (!proto._unmountHandlers_) final(proto, '_unmountHandlers_', []);
   proto._unmountHandlers_.push(handler);
+}
+
+function registerReceivePropsHandler(proto, handler) {
+  if (!proto._receivePropsHandlers_) final(proto, '_receivePropsHandlers_', []);
+  proto._receivePropsHandlers_.push(handler);
 }
 
 function registerElementHandler(proto, handler) {
@@ -196,18 +186,27 @@ module.exports = {
   markAsWatch: markAsWatch,
   registerElementHandler: registerElementHandler,
   registerMountHandler: registerMountHandler,
-  registerUnMountHandler: registerUnMountHandler
+  registerUnmountHandler: registerUnmountHandler,
+  registerReceivePropsHandler: registerReceivePropsHandler
+};
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+exports.default = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
 };
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-var core = module.exports = {version: '1.2.6'};
-if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1017,11 +1016,18 @@ exports.parseHTML = parseHTML;
 
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+var core = module.exports = {version: '1.2.6'};
+if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global    = __webpack_require__(9)
-  , core      = __webpack_require__(3)
+  , core      = __webpack_require__(4)
   , ctx       = __webpack_require__(23)
   , PROTOTYPE = 'prototype';
 
@@ -1302,7 +1308,7 @@ exports.default = function (subClass, superClass) {
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _classCallCheck2 = __webpack_require__(1);
+var _classCallCheck2 = __webpack_require__(2);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -1413,10 +1419,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Observer = __webpack_require__(48);
 var React = __webpack_require__(8);
 
-var _require = __webpack_require__(4),
-    final = _require.final;
+var _require = __webpack_require__(3),
+    final = _require.final,
+    isObject = _require.isObject,
+    isFunction = _require.isFunction;
 
-var _require2 = __webpack_require__(2),
+var _require2 = __webpack_require__(1),
     isComponentClass = _require2.isComponentClass,
     convertElement = _require2.convertElement,
     registerElementHandler = _require2.registerElementHandler;
@@ -1425,7 +1433,8 @@ var stateful = __webpack_require__(40);
 
 function trigger() {
   if (!this._mounted_) return;
-  this.setState({ _model_: this.model });
+  //this.setState({ _model_: this.model });
+  this.forceUpdate();
 }
 
 function createRender(proto) {
@@ -1485,12 +1494,32 @@ function createMount(proto) {
   };
 }
 
+function createReceiveProps(proto) {
+  var initailReceiveProps = proto.componentWillReceiveProps;
+  return function () {
+    var _this3 = this;
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    if (this._receivePropsHandlers_) {
+      this._receivePropsHandlers_.forEach(function (handler) {
+        return handler.call.apply(handler, [_this3].concat(args));
+      });
+    }
+    if (initailReceiveProps) initailReceiveProps.call.apply(initailReceiveProps, [this].concat(args));
+  };
+}
+
 function createModelGetter(model) {
   return function () {
     if (this._model_) return this._model_;
-    model = this.props.model || model;
+    model = this.props.model || model || {};
     var isNewModelInstance = false;
-    if (!model) throw new Error('Invalid Model');
+    if (!isObject(model) && !isFunction(model)) {
+      throw new Error('Invalid Model');
+    }
     if (model instanceof Function) {
       model = new model();
       isNewModelInstance = true;
@@ -1530,6 +1559,7 @@ function connect(model, component) {
   proto.render = createRender(proto);
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
+  proto.componentWillReceiveProps = createReceiveProps(proto);
   final(proto, '_contented_', true);
   return component;
 }
@@ -1548,7 +1578,7 @@ module.exports = { "default": __webpack_require__(49), __esModule: true };
 
 // most Object methods by ES6 should accept primitives
 var $export = __webpack_require__(5)
-  , core    = __webpack_require__(3)
+  , core    = __webpack_require__(4)
   , fails   = __webpack_require__(10);
 module.exports = function(KEY, exec){
   var fn  = (core.Object || {})[KEY] || Object[KEY]
@@ -1699,7 +1729,7 @@ module.exports = { "default": __webpack_require__(78), __esModule: true };
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _classCallCheck2 = __webpack_require__(1);
+var _classCallCheck2 = __webpack_require__(2);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -1773,7 +1803,7 @@ module.exports = function () {
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _classCallCheck2 = __webpack_require__(1);
+var _classCallCheck2 = __webpack_require__(2);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -1822,7 +1852,7 @@ var _assign2 = _interopRequireDefault(_assign);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _require = __webpack_require__(2),
+var _require = __webpack_require__(1),
     isComponentClass = _require.isComponentClass;
 
 var defaultOpts = {
@@ -1952,13 +1982,14 @@ var bindable = __webpack_require__(41);
 var autorun = __webpack_require__(84);
 var watch = __webpack_require__(85);
 var deep = __webpack_require__(86);
-var utils = __webpack_require__(2);
+var mapping = __webpack_require__(87);
+var utils = __webpack_require__(1);
 var stateful = __webpack_require__(40);
-var composition = __webpack_require__(87);
-var info = __webpack_require__(88);
+var composition = __webpack_require__(88);
+var info = __webpack_require__(89);
 
 module.exports = (0, _extends3.default)({
-  connect: connect, model: model, binding: binding, bindable: bindable, watch: watch, autorun: autorun, deep: deep, stateful: stateful,
+  connect: connect, model: model, binding: binding, bindable: bindable, watch: watch, mapping: mapping, autorun: autorun, deep: deep, stateful: stateful,
   composition: composition, utils: utils }, info);
 
 /***/ }),
@@ -1966,7 +1997,7 @@ module.exports = (0, _extends3.default)({
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(45);
-module.exports = __webpack_require__(3).Object.assign;
+module.exports = __webpack_require__(4).Object.assign;
 
 /***/ }),
 /* 45 */
@@ -2040,7 +2071,7 @@ var _defineProperty = __webpack_require__(54);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
-var _classCallCheck2 = __webpack_require__(1);
+var _classCallCheck2 = __webpack_require__(2);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -2054,7 +2085,7 @@ var _inherits3 = _interopRequireDefault(_inherits2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _require = __webpack_require__(4),
+var _require = __webpack_require__(3),
     isArray = _require.isArray,
     isFunction = _require.isFunction,
     isNull = _require.isNull,
@@ -2446,7 +2477,7 @@ module.exports = Observer;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(50);
-module.exports = __webpack_require__(3).Object.keys;
+module.exports = __webpack_require__(4).Object.keys;
 
 /***/ }),
 /* 50 */
@@ -2668,7 +2699,7 @@ module.exports = { "default": __webpack_require__(67), __esModule: true };
 
 __webpack_require__(68);
 __webpack_require__(73);
-module.exports = __webpack_require__(3).Symbol;
+module.exports = __webpack_require__(4).Symbol;
 
 /***/ }),
 /* 68 */
@@ -2989,7 +3020,7 @@ module.exports = { "default": __webpack_require__(75), __esModule: true };
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(76);
-module.exports = __webpack_require__(3).Object.setPrototypeOf;
+module.exports = __webpack_require__(4).Object.setPrototypeOf;
 
 /***/ }),
 /* 76 */
@@ -3043,13 +3074,13 @@ module.exports = function create(P, D){
 /* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _classCallCheck2 = __webpack_require__(1);
+var _classCallCheck2 = __webpack_require__(2);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _require = __webpack_require__(4),
+var _require = __webpack_require__(3),
     final = _require.final,
     isArray = _require.isArray,
     copy = _require.copy,
@@ -3257,13 +3288,13 @@ module.exports = EventEmitter;
 /* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _classCallCheck2 = __webpack_require__(1);
+var _classCallCheck2 = __webpack_require__(2);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _require = __webpack_require__(4),
+var _require = __webpack_require__(3),
     isFunction = _require.isFunction,
     isBoolean = _require.isBoolean,
     getByPath = _require.getByPath,
@@ -3338,7 +3369,7 @@ var bindable = __webpack_require__(41);
 var _require = __webpack_require__(83),
     expression = _require.expression;
 
-var _require2 = __webpack_require__(2),
+var _require2 = __webpack_require__(1),
     registerElementHandler = _require2.registerElementHandler;
 
 function compileExpr(expr) {
@@ -3493,9 +3524,9 @@ module.exports = compile;
 /* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _require = __webpack_require__(2),
+var _require = __webpack_require__(1),
     registerMountHandler = _require.registerMountHandler,
-    registerUnMountHandler = _require.registerUnMountHandler,
+    registerUnmountHandler = _require.registerUnmountHandler,
     markAsAutorun = _require.markAsAutorun;
 
 function autorun(target, method) {
@@ -3507,7 +3538,7 @@ function autorun(target, method) {
     autoRef = this._observer_.run(target[method], { context: context, deep: deep });
     autoRef.run();
   });
-  registerUnMountHandler(target, function () {
+  registerUnmountHandler(target, function () {
     this._observer_.stop(autoRef);
   });
   markAsAutorun(target, method);
@@ -3519,12 +3550,12 @@ module.exports = autorun;
 /* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _require = __webpack_require__(4),
+var _require = __webpack_require__(3),
     isFunction = _require.isFunction;
 
-var _require2 = __webpack_require__(2),
+var _require2 = __webpack_require__(1),
     registerMountHandler = _require2.registerMountHandler,
-    registerUnMountHandler = _require2.registerUnMountHandler,
+    registerUnmountHandler = _require2.registerUnmountHandler,
     markAsWatch = _require2.markAsWatch;
 
 function watch(calculator, immed) {
@@ -3541,7 +3572,7 @@ function watch(calculator, immed) {
       }, target[method], { context: context, deep: deep });
       watcher.autoRef.run(immed || false);
     });
-    registerUnMountHandler(target, function () {
+    registerUnmountHandler(target, function () {
       this._observer_.unWatch(watcher);
     });
     markAsWatch(target, method);
@@ -3554,7 +3585,7 @@ module.exports = watch;
 /* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _require = __webpack_require__(2),
+var _require = __webpack_require__(1),
     markAsDeep = _require.markAsDeep;
 
 function deep(target, method) {
@@ -3577,7 +3608,50 @@ module.exports = deep;
 /* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _classCallCheck2 = __webpack_require__(1);
+var _require = __webpack_require__(1),
+    registerReceivePropsHandler = _require.registerReceivePropsHandler,
+    registerMountHandler = _require.registerMountHandler;
+
+var _require2 = __webpack_require__(3),
+    isObject = _require2.isObject,
+    each = _require2.each,
+    isString = _require2.isString;
+
+function mapping(map) {
+  if (!isObject(map)) {
+    throw new Error('Mapping needs to specify a object or array');
+  }
+  function assign(model, props) {
+    each(map, function (propName, modelField) {
+      if (!isString(propName)) propName = modelField;
+      if (model[modelField] === props[propName]) return;
+      model[modelField] = props[propName];
+    });
+  }
+  return function (component) {
+    if (!component) return mapping;
+    var proto = component.prototype;
+    if (proto._contented_) {
+      throw new Error('`mapping` must be enabled before `model`');
+    }
+    registerMountHandler(proto, function () {
+      console.log('mapping mount');
+      assign(this.model, this.props);
+    });
+    registerReceivePropsHandler(proto, function (nextProps) {
+      console.log('mapping ReceiveProps');
+      assign(this.model, nextProps);
+    });
+  };
+}
+
+module.exports = mapping;
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _classCallCheck2 = __webpack_require__(2);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -3636,10 +3710,10 @@ AutoRun.prototype.isSync = function () {
 module.exports = composition;
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.2.17"}
+module.exports = {"name":"mota","version":"0.3.0"}
 
 /***/ })
 /******/ ]);

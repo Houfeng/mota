@@ -7,9 +7,14 @@ function registerMountHandler(proto, handler) {
   proto._mountHandlers_.push(handler);
 }
 
-function registerUnMountHandler(proto, handler) {
+function registerUnmountHandler(proto, handler) {
   if (!proto._unmountHandlers_) final(proto, '_unmountHandlers_', []);
   proto._unmountHandlers_.push(handler);
+}
+
+function registerReceivePropsHandler(proto, handler) {
+  if (!proto._receivePropsHandlers_) final(proto, '_receivePropsHandlers_', []);
+  proto._receivePropsHandlers_.push(handler);
 }
 
 function registerElementHandler(proto, handler) {
@@ -78,5 +83,6 @@ module.exports = {
   markAsWatch,
   registerElementHandler,
   registerMountHandler,
-  registerUnMountHandler
+  registerUnmountHandler,
+  registerReceivePropsHandler
 };
