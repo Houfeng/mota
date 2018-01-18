@@ -3635,11 +3635,9 @@ function mapping(map) {
       throw new Error('`mapping` must be enabled before `model`');
     }
     registerMountHandler(proto, function () {
-      console.log('mapping mount');
       assign(this.model, this.props);
     });
     registerReceivePropsHandler(proto, function (nextProps) {
-      console.log('mapping ReceiveProps');
       assign(this.model, nextProps);
     });
   };
@@ -3661,6 +3659,7 @@ var AutoRun = __webpack_require__(39);
 
 var UPDATE_EVENT = 'compositionupdate';
 var END_EVENT = 'compositionend';
+var INPUT_EVENT = 'input';
 
 var Composition = function () {
   Composition.prototype.on = function on(event, handler) {
@@ -3674,6 +3673,7 @@ var Composition = function () {
   Composition.prototype.enable = function enable() {
     this.on(UPDATE_EVENT, this.onUpdate);
     this.on(END_EVENT, this.onEnd);
+    this.on(INPUT_EVENT, this.onInput);
   };
 
   Composition.prototype.disable = function disable() {
@@ -3685,14 +3685,24 @@ var Composition = function () {
     var _this = this;
 
     (0, _classCallCheck3.default)(this, Composition);
-    this.updating = false;
+    this.composing = false;
+    this.inputting = false;
 
     this.onUpdate = function () {
-      _this.updating = true;
+      _this.composing = true;
     };
 
     this.onEnd = function () {
-      _this.updating = false;
+      _this.composing = false;
+    };
+
+    this.onInput = function () {
+      _this.inputting = true;
+      if (_this.inputTimer) clearTimeout(_this.inputTimer);
+      _this.inputTimer = setTimeout(function () {
+        _this.inputting = false;
+        _this.inputTimer = null;
+      }, 0);
     };
 
     this.enable();
@@ -3704,7 +3714,7 @@ var Composition = function () {
 var composition = new Composition();
 
 AutoRun.prototype.isSync = function () {
-  return composition.updating;
+  return composition.composing || composition.inputting;
 };
 
 module.exports = composition;
@@ -3713,7 +3723,7 @@ module.exports = composition;
 /* 89 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.3.0"}
+module.exports = {"name":"mota","version":"0.3.1"}
 
 /***/ })
 /******/ ]);

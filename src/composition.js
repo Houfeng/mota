@@ -2,17 +2,28 @@ const AutoRun = require('mokit/src/observer/autorun');
 
 const UPDATE_EVENT = 'compositionupdate';
 const END_EVENT = 'compositionend';
+const INPUT_EVENT = 'input';
 
 class Composition {
 
-  updating = false;
+  composing = false;
+  inputting = false;
 
   onUpdate = () => {
-    this.updating = true;
+    this.composing = true;
   };
 
   onEnd = () => {
-    this.updating = false;
+    this.composing = false;
+  };
+
+  onInput = () => {
+    this.inputting = true;
+    if (this.inputTimer) clearTimeout(this.inputTimer);
+    this.inputTimer = setTimeout(() => {
+      this.inputting = false;
+      this.inputTimer = null;
+    }, 0);
   };
 
   on(event, handler) {
@@ -26,6 +37,7 @@ class Composition {
   enable() {
     this.on(UPDATE_EVENT, this.onUpdate);
     this.on(END_EVENT, this.onEnd);
+    this.on(INPUT_EVENT, this.onInput);
   }
 
   disable() {
@@ -42,7 +54,7 @@ class Composition {
 const composition = new Composition();
 
 AutoRun.prototype.isSync = function () {
-  return composition.updating;
+  return composition.composing || composition.inputting;
 };
 
 module.exports = composition;

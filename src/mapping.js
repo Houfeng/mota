@@ -21,11 +21,9 @@ function mapping(map) {
       throw new Error('`mapping` must be enabled before `model`');
     }
     registerMountHandler(proto, function () {
-      console.log('mapping mount');
       assign(this.model, this.props);
     });
     registerReceivePropsHandler(proto, function (nextProps) {
-      console.log('mapping ReceiveProps');
       assign(this.model, nextProps);
     });
   };
