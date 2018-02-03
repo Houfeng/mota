@@ -5,7 +5,8 @@
   "main": "./dist/mota.js",
   "scripts": {
     "config": "dn config registry https://registry.npmjs.com/",
-    "test": "npm run config && dn test && dn build -e prod"
+    "test": "npm run config && dn test && dn build -e prod",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "author": {
     "name": "Houfeng",
@@ -15,9 +16,11 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^9.4.0",
+    "coveralls": "^3.0.0",
     "dawn": "^0.10.0",
     "jquery": "^3.3.1",
     "ntils": "^4.0.0",
+    "nyc": "^11.4.1",
     "ober": "^1.0.5",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
