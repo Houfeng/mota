@@ -1,6 +1,6 @@
 ![logo](./docs/logo.jpg)
 
-<div style="text-align:center;">
+<div align="center">
 
 [![npm](https://img.shields.io/npm/l/mota.svg)](LICENSE.md)
 [![NPM Version](https://img.shields.io/npm/v/mota.svg)](https://www.npmjs.com/package/mota)
