@@ -13,6 +13,8 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^9.4.0",
+    "jquery": "^3.3.1",
     "ntils": "^4.0.0",
     "ober": "^1.0.5",
     "react": "^15.6.1",

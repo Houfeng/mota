@@ -3340,6 +3340,7 @@ function elementHandler(element, model, key, children) {
   return React.cloneElement(element, (0, _extends4.default)({
     key: key
   }, props, (_extends2 = {
+    'data-scope': undefined,
     'data-bind': undefined,
     children: children
   }, _extends2[bindProp] = bindPropHandler(context, props), _extends2[bindEvent] = bindEventHandler, _extends2)));

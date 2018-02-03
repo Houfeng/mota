@@ -43,6 +43,7 @@ function elementHandler(element, model, key, children) {
   return React.cloneElement(element, {
     key,
     ...props,
+    'data-scope': undefined,
     'data-bind': undefined,
     children: children,
     [bindProp]: bindPropHandler(context, props),
