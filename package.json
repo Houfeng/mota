@@ -14,7 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^9.4.0",
-    "dawn": "^0.9.9",
+    "dawn": "^0.10.0",
     "jquery": "^3.3.1",
     "ntils": "^4.0.0",
     "ober": "^1.0.5",
