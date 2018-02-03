@@ -1,5 +1,11 @@
 # mota
 
+[![npm](https://img.shields.io/npm/l/mota.svg)](LICENSE.md)
+[![NPM Version](https://img.shields.io/npm/v/mota.svg)](https://www.npmjs.com/package/mota)
+[![Build Status](https://www.travis-ci.org/alibaba/mota.svg?branch=master)](https://www.travis-ci.org/alibaba/mota)
+[![Coverage Status](https://coveralls.io/repos/github/alibaba/mota/badge.svg?branch=dev)](https://coveralls.io/github/alibaba/mota?branch=dev)
+[![npm](https://img.shields.io/npm/dt/mota.svg)](https://www.npmjs.com/package/mota)
+
 mota 是一个主张「面向对象」的、支持「双向绑定」的 React 状态管理库，它不同于 Redux/flux，
 和 MobX 稍像，但也并不相同且更易用。
 
