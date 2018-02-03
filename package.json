@@ -4,7 +4,8 @@
   "description": "",
   "main": "./dist/mota.js",
   "scripts": {
-    "test": "dn test && dn build -e prod"
+    "config": "dn config registry https://registry.npmjs.com/",
+    "test": "npm run config && dn test && dn build -e prod"
   },
   "author": {
     "name": "Houfeng",
