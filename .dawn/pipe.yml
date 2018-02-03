@@ -50,7 +50,7 @@ build:
   - name: doc
   - name: copy
     files:
-      ./docs/logo.png: ./design/logo.png
+      ./docs/logo.jpg: ./design/logo.jpg
 
 test:
   - name: lint

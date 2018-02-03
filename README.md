@@ -1,4 +1,4 @@
-![logo](./docs/logo.png)
+![logo](./docs/logo.jpg)
 
 # mota
 
