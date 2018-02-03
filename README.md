@@ -1,12 +1,12 @@
 ![logo](./docs/logo.jpg)
 
-# mota
-
 [![npm](https://img.shields.io/npm/l/mota.svg)](LICENSE.md)
 [![NPM Version](https://img.shields.io/npm/v/mota.svg)](https://www.npmjs.com/package/mota)
 [![Build Status](https://www.travis-ci.org/Houfeng/mota.svg?branch=master)](https://www.travis-ci.org/Houfeng/mota)
 [![Coverage Status](https://coveralls.io/repos/github/Houfeng/mota/badge.svg?branch=dev)](https://coveralls.io/github/Houfeng/mota?branch=dev)
 [![npm](https://img.shields.io/npm/dt/mota.svg)](https://www.npmjs.com/package/mota)
+
+# mota
 
 React 是一个「视图层」的 UI 框架，以常见的 MVC 来讲 React 仅是 View，而我们在编写应用时，通常还需要关注更加重要的 model，对于 React 来讲，我们常常需要一个「状态管理」库。然而，目前大多数针对 React 的状态管理库都需要对其「强依赖」，用其编写的代码并不能轻易在其它地方重用，通过这些框架还具有「排它性」，但是「业务模型」应该是没有过多依赖，应该是无关框架的，它应该随时可以被用在任何合适的 JavaScript 环境中，使用 mota 你可以用原生的普通的 JavaScript 代码编写你的「业务模型」，并让你的「业务模型」轻易在不同框架、不同运行环境下重用。
 
