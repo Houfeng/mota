@@ -10,4 +10,5 @@ export default class Info {
     name: 'opts'
   };
   ok = true;
+  nextTickTest = 0;
 }

@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "",
   "main": "./dist/mota.js",
   "scripts": {
@@ -13,8 +13,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "mokit": "^4.0.0-beta19",
-    "ntils": "^3.1.9",
+    "ntils": "^4.0.0",
+    "ober": "^1.0.5",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   }

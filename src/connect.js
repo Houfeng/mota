@@ -1,4 +1,4 @@
-const Observer = require('mokit/src/observer');
+const Observer = require('ober');
 const React = require('react');
 const { final, isObject, isFunction } = require('ntils');
 const {

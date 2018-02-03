@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../assets/logo.svg';
 import './app.css';
-import { model, binding, autorun, watch, deep } from '../../src';
+import { model, binding, autorun, watch, deep, nextTick } from '../../src';
 import Info from '../model/info';
 import List from './List';
 import List2 from './List2';
@@ -33,9 +33,19 @@ class App extends Component {
     console.log('keyCode', event.keyCode);
   };
 
+  test(event) {
+    this.model.nextTickTest = 1;
+    this.model.nextTickTest = 2;
+    nextTick(() => {
+      this.model.nextTickTest = 3;
+    });
+  };
+
   render() {
+    console.log('render');
     return (
       <div className="app">
+        {this.model.nextTickTest}<br />
         {this.state.time}<br />
         {String(this.model.name)}<br />
         <input onKeyDown={this.onKeyDown} data-bind="name" data-scope={this.model} /><br />
@@ -55,7 +65,7 @@ class App extends Component {
         <hr />
         <List key={'listKey1'} name="from mapping" ref="listRef" opts={this.model.opts} />
         <List2 key={'listKey2'} opts={this.model.opts} />
-
+        <button onClick={() => this.test()}>test</button>
       </div>
     );
   }

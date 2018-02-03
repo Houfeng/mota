@@ -1,4 +1,4 @@
-const AutoRun = require('mokit/src/observer/autorun');
+const { AutoRun } = require('ober');
 
 const UPDATE_EVENT = 'compositionupdate';
 const END_EVENT = 'compositionend';

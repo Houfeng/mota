@@ -1,6 +1,6 @@
 const React = require('react');
 const bindable = require('./bindable');
-const { expression } = require('mokit/src/template/expression');
+const { expression } = require('ober');
 const { registerElementHandler } = require('./utils');
 
 function compileExpr(expr) {

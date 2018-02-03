@@ -7,7 +7,7 @@
 		exports["mota"] = factory(require("react"));
 	else
 		root["mota"] = factory(root["React"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_8__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_3__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 42);
+/******/ 	return __webpack_require__(__webpack_require__.s = 39);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -95,16 +95,16 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof2 = __webpack_require__(14);
+var _typeof2 = __webpack_require__(13);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var React = __webpack_require__(8);
+var React = __webpack_require__(3);
 var Component = React.Component;
 
-var _require = __webpack_require__(3),
+var _require = __webpack_require__(2),
     final = _require.final;
 
 function registerMountHandler(proto, handler) {
@@ -196,38 +196,21 @@ module.exports = {
 
 "use strict";
 
-
-exports.__esModule = true;
-
-exports.default = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * 空函数
  */
 function noop() { }
-
+exports.noop = noop;
 function toString(obj) {
-  return Object.prototype.toString.call(obj);
+    return Object.prototype.toString.call(obj);
 }
-
+exports.toString = toString;
 function getType(obj) {
-  var str = toString(obj);
-  return (/^\[object (.+)\]$/i.exec(str))[1];
+    var str = toString(obj);
+    return (/^\[object (.+)\]$/i.exec(str))[1];
 }
-
+exports.getType = getType;
 /**
  * 验证一个对象是否为NULL
  * @method isNull
@@ -236,9 +219,9 @@ function getType(obj) {
  * @static
  */
 function isNull(obj) {
-  return obj === undefined || obj === null;
+    return obj === undefined || obj === null;
 }
-
+exports.isNull = isNull;
 /**
  * 除去字符串两端的空格
  * @method trim
@@ -247,14 +230,16 @@ function isNull(obj) {
  * @static
  */
 function trim(str) {
-  if (isNull(str)) return str;
-  if (str.trim) {
-    return str.trim();
-  } else {
-    return str.replace(/(^[\\s]*)|([\\s]*$)/g, "");
-  }
+    if (isNull(str))
+        return str;
+    if (str.trim) {
+        return str.trim();
+    }
+    else {
+        return str.replace(/(^[\\s]*)|([\\s]*$)/g, '');
+    }
 }
-
+exports.trim = trim;
 /**
  * 替换所有
  * @method replace
@@ -264,10 +249,11 @@ function trim(str) {
  * @static
  */
 function replace(str, str1, str2) {
-  if (isNull(str)) return str;
-  return str.replace(new RegExp(str1, 'g'), str2);
+    if (isNull(str))
+        return str;
+    return str.replace(new RegExp(str1, 'g'), str2);
 }
-
+exports.replace = replace;
 /**
  * 从字符串开头匹配
  * @method startWith
@@ -277,10 +263,11 @@ function replace(str, str1, str2) {
  * @static
  */
 function startWith(str1, str2) {
-  if (isNull(str1) || isNull(str2)) return false;
-  return str1.indexOf(str2) === 0;
+    if (isNull(str1) || isNull(str2))
+        return false;
+    return str1.indexOf(str2) === 0;
 }
-
+exports.startWith = startWith;
 /**
  * 是否包含
  * @method contains
@@ -290,10 +277,11 @@ function startWith(str1, str2) {
  * @static
  */
 function contains(str1, str2) {
-  if (isNull(str1) || isNull(str2)) return false;
-  return str1.indexOf(str2) > -1;
+    if (isNull(str1) || isNull(str2))
+        return false;
+    return str1.indexOf(str2) > -1;
 }
-
+exports.contains = contains;
 /**
  * 从字符串结束匹配
  * @method endWidth
@@ -303,10 +291,11 @@ function contains(str1, str2) {
  * @static
  */
 function endWith(str1, str2) {
-  if (isNull(str1) || isNull(str2)) return false;
-  return str1.indexOf(str2) === (str1.length - str2.length);
+    if (isNull(str1) || isNull(str2))
+        return false;
+    return str1.indexOf(str2) === (str1.length - str2.length);
 }
-
+exports.endWith = endWith;
 /**
  * 是否包含属性
  * @method hasProperty
@@ -316,11 +305,12 @@ function endWith(str1, str2) {
  * @static
  */
 function has(obj, name) {
-  if (isNull(obj) || isNull(name)) return false;
-  return (name in obj) || (obj.hasOwnProperty(name));
+    if (isNull(obj) || isNull(name))
+        return false;
+    return (name in obj) || (obj.hasOwnProperty(name));
 }
-var hasProperty = has;
-
+exports.has = has;
+exports.hasProperty = has;
 /**
  * 验证一个对象是否为Function
  * @method isFunction
@@ -329,10 +319,11 @@ var hasProperty = has;
  * @static
  */
 function isFunction(obj) {
-  if (isNull(obj)) return false;
-  return typeof obj === "function";
+    if (isNull(obj))
+        return false;
+    return typeof obj === 'function';
 }
-
+exports.isFunction = isFunction;
 /**
  * 验证一个对象是否为 AsyncFunction
  * @method isAsyncFunction
@@ -341,10 +332,11 @@ function isFunction(obj) {
  * @static
  */
 function isAsyncFunction(obj) {
-  if (isNull(obj)) return false;
-  return getType(obj) === "AsyncFunction";
+    if (isNull(obj))
+        return false;
+    return getType(obj) === 'AsyncFunction';
 }
-
+exports.isAsyncFunction = isAsyncFunction;
 /**
  * 验证一个对象是否为 GeneratorFunction
  * @method isGeneratorFunction
@@ -353,11 +345,11 @@ function isAsyncFunction(obj) {
  * @static
  */
 function isGeneratorFunction(obj) {
-  if (isNull(obj)) return false;
-  return getType(obj) === "GeneratorFunction";
+    if (isNull(obj))
+        return false;
+    return getType(obj) === 'GeneratorFunction';
 }
-
-
+exports.isGeneratorFunction = isGeneratorFunction;
 /**
  * 验证一个对象是否为String
  * @method isString
@@ -366,10 +358,11 @@ function isGeneratorFunction(obj) {
  * @static
  */
 function isString(obj) {
-  if (isNull(obj)) return false;
-  return getType(obj) === 'String';
+    if (isNull(obj))
+        return false;
+    return getType(obj) === 'String';
 }
-
+exports.isString = isString;
 /**
  * 验证一个对象是否为Number
  * @method isNumber
@@ -378,10 +371,11 @@ function isString(obj) {
  * @static
  */
 function isNumber(obj) {
-  if (isNull(obj)) return false;
-  return getType(obj) === 'Number';
+    if (isNull(obj))
+        return false;
+    return getType(obj) === 'Number';
 }
-
+exports.isNumber = isNumber;
 /**
  * 验证一个对象是否为Boolean
  * @method isBoolean
@@ -390,10 +384,11 @@ function isNumber(obj) {
  * @static
  */
 function isBoolean(obj) {
-  if (isNull(obj)) return false;
-  return getType(obj) === 'Boolean';
+    if (isNull(obj))
+        return false;
+    return getType(obj) === 'Boolean';
 }
-
+exports.isBoolean = isBoolean;
 /**
  * 验证一个对象是否为HTML Element
  * @method isElement
@@ -402,16 +397,18 @@ function isBoolean(obj) {
  * @static
  */
 function isElement(obj) {
-  if (isNull(obj)) return false;
-  if (win.Element) {
-    return obj instanceof Element;
-  } else {
-    return (obj.tagName && obj.nodeType &&
-      obj.nodeName && obj.attributes &&
-      obj.ownerDocument);
-  }
+    if (isNull(obj))
+        return false;
+    if (window.Element) {
+        return obj instanceof Element;
+    }
+    else {
+        return (obj.tagName && obj.nodeType &&
+            obj.nodeName && obj.attributes &&
+            obj.ownerDocument);
+    }
 }
-
+exports.isElement = isElement;
 /**
  * 验证一个对象是否为HTML Text Element
  * @method isText
@@ -420,10 +417,11 @@ function isElement(obj) {
  * @static
  */
 function isText(obj) {
-  if (isNull(obj)) return false;
-  return obj instanceof Text;
+    if (isNull(obj))
+        return false;
+    return obj instanceof Text;
 }
-
+exports.isText = isText;
 /**
  * 验证一个对象是否为Object
  * @method isObject
@@ -432,11 +430,12 @@ function isText(obj) {
  * @static
  */
 function isObject(obj) {
-  if (isNull(obj)) return false;
-  var type = getType(obj);
-  return type === 'Object' || type === 'Array';
+    if (isNull(obj))
+        return false;
+    var type = getType(obj);
+    return type === 'Object' || type === 'Array';
 }
-
+exports.isObject = isObject;
 /**
  * 验证一个对象是否为Array或伪Array
  * @method isArray
@@ -445,14 +444,15 @@ function isObject(obj) {
  * @static
  */
 function isArray(obj) {
-  if (isNull(obj)) return false;
-  var v1 = getType(obj) === 'Array';
-  var v2 = obj instanceof Array;
-  var v3 = !isString(obj) && isNumber(obj.length) && isFunction(obj.splice);
-  var v4 = !isString(obj) && isNumber(obj.length) && obj[0];
-  return v1 || v2 || v3 || v4;
+    if (isNull(obj))
+        return false;
+    var v1 = getType(obj) === 'Array';
+    var v2 = obj instanceof Array;
+    var v3 = !isString(obj) && isNumber(obj.length) && isFunction(obj.splice);
+    var v4 = !isString(obj) && isNumber(obj.length) && obj[0];
+    return v1 || v2 || v3 || v4;
 }
-
+exports.isArray = isArray;
 /**
  * 验证是不是一个日期对象
  * @method isDate
@@ -461,10 +461,11 @@ function isArray(obj) {
  * @static
  */
 function isDate(val) {
-  if (isNull(val)) return false;
-  return val instanceof Date;
+    if (isNull(val))
+        return false;
+    return val instanceof Date;
 }
-
+exports.isDate = isDate;
 /**
  * 验证是不是一个正则对象
  * @method isDate
@@ -473,9 +474,9 @@ function isDate(val) {
  * @static
  */
 function isRegexp(val) {
-  return val instanceof RegExp;
+    return val instanceof RegExp;
 }
-
+exports.isRegexp = isRegexp;
 /**
  * 转换为数组
  * @method toArray
@@ -484,10 +485,11 @@ function isRegexp(val) {
  * @static
  */
 function toArray(array) {
-  if (isNull(array)) return [];
-  return Array.prototype.slice.call(array);
+    if (isNull(array))
+        return [];
+    return Array.prototype.slice.call(array);
 }
-
+exports.toArray = toArray;
 /**
  * 转为日期格式
  * @method toDate
@@ -496,16 +498,16 @@ function toArray(array) {
  * @static
  */
 function toDate(val) {
-  if (isNumber(val))
-    return new Date(val);
-  else if (isString(val))
-    return new Date(replace(replace(val, '-', '/'), 'T', ' '));
-  else if (isDate(val))
-    return val;
-  else
-    return null;
+    if (isNumber(val))
+        return new Date(val);
+    else if (isString(val))
+        return new Date(replace(replace(val, '-', '/'), 'T', ' '));
+    else if (isDate(val))
+        return val;
+    else
+        return null;
 }
-
+exports.toDate = toDate;
 /**
  * 遍历一个对像或数组
  * @method each
@@ -515,21 +517,25 @@ function toDate(val) {
  * @static
  */
 function each(list, handler, scope) {
-  if (isNull(list) || isNull(handler)) return;
-  if (isArray(list)) {
-    var listLength = list.length;
-    for (var i = 0; i < listLength; i++) {
-      var rs = handler.call(scope || list[i], i, list[i]);
-      if (!isNull(rs)) return rs;
+    if (isNull(list) || isNull(handler))
+        return;
+    if (isArray(list)) {
+        var listLength = list.length;
+        for (var i = 0; i < listLength; i++) {
+            var rs = handler.call(scope || list[i], i, list[i]);
+            if (!isNull(rs))
+                return rs;
+        }
     }
-  } else {
-    for (var key in list) {
-      var rs = handler.call(scope || list[key], key, list[key]);
-      if (!isNull(rs)) return rs;
+    else {
+        for (var key in list) {
+            var rs = handler.call(scope || list[key], key, list[key]);
+            if (!isNull(rs))
+                return rs;
+        }
     }
-  }
 }
-
+exports.each = each;
 /**
  * 格式化日期
  * @method formatDate
@@ -540,36 +546,34 @@ function each(list, handler, scope) {
  * @static
  */
 function formatDate(date, format, dict) {
-  if (isNull(format) || isNull(date)) return date;
-  date = toDate(date);
-  dict = dict || {};
-  var placeholder = {
-    "M+": date.getMonth() + 1, //month
-    "d+": date.getDate(), //day
-    "h+": date.getHours(), //hour
-    "m+": date.getMinutes(), //minute
-    "s+": date.getSeconds(), //second
-    "w+": date.getDay(), //week
-    "q+": Math.floor((date.getMonth() + 3) / 3), //quarter
-    "S": date.getMilliseconds() //millisecond
-  };
-  if (/(y+)/.test(format)) {
-    format = format.replace(
-      RegExp.$1,
-      (date.getFullYear() + "").substr(4 - RegExp.$1.length)
-    );
-  }
-  for (var key in placeholder) {
-    if (new RegExp("(" + key + ")").test(format)) {
-      var value = placeholder[key];
-      value = dict[value] || value;
-      format = format.replace(RegExp.$1, RegExp.$1.length == 1
-        ? value : ("00" + value).substr(("" + value).length));
+    if (isNull(format) || isNull(date))
+        return date;
+    date = toDate(date);
+    dict = dict || {};
+    var placeholder = {
+        'M+': date.getMonth() + 1,
+        'd+': date.getDate(),
+        'h+': date.getHours(),
+        'm+': date.getMinutes(),
+        's+': date.getSeconds(),
+        'w+': date.getDay(),
+        'q+': Math.floor((date.getMonth() + 3) / 3),
+        'S': date.getMilliseconds() //millisecond
+    };
+    if (/(y+)/.test(format)) {
+        format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
     }
-  }
-  return format;
+    for (var key in placeholder) {
+        if (new RegExp('(' + key + ')').test(format)) {
+            var value = placeholder[key];
+            value = dict[value] || value;
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1
+                ? value : ('00' + value).substr(('' + value).length));
+        }
+    }
+    return format;
 }
-
+exports.formatDate = formatDate;
 /**
  * 拷贝对象
  * @method copy
@@ -578,24 +582,26 @@ function formatDate(date, format, dict) {
  * @static
  */
 function copy(src, dst, igonres) {
-  dst = dst || (isArray(src) ? [] : {});
-  each(src, function (key) {
-    if (igonres && igonres.indexOf(key) > -1) return;
-    delete dst[key];
-    if (Object.getOwnPropertyDescriptor) {
-      try {
-        Object.defineProperty(dst, key,
-          Object.getOwnPropertyDescriptor(src, key));
-      } catch (ex) {
-        dst[key] = src[key];
-      }
-    } else {
-      dst[key] = src[key];
-    }
-  });
-  return dst;
+    dst = dst || (isArray(src) ? [] : {});
+    each(src, function (key) {
+        if (igonres && igonres.indexOf(key) > -1)
+            return;
+        delete dst[key];
+        if (Object.getOwnPropertyDescriptor) {
+            try {
+                Object.defineProperty(dst, key, Object.getOwnPropertyDescriptor(src, key));
+            }
+            catch (ex) {
+                dst[key] = src[key];
+            }
+        }
+        else {
+            dst[key] = src[key];
+        }
+    });
+    return dst;
 }
-
+exports.copy = copy;
 /**
  * 深度克隆对象
  * @method clone
@@ -604,33 +610,36 @@ function copy(src, dst, igonres) {
  * @static
  */
 function clone(src, igonres) {
-  if (isNull(src) ||
-    isString(src) ||
-    isNumber(src) ||
-    isBoolean(src) ||
-    isDate(src)) {
-    return src;
-  }
-  var objClone = src;
-  try {
-    objClone = new src.constructor();
-  } catch (ex) { }
-  each(src, function (key, value) {
-    if (objClone[key] != value && !contains(igonres, key)) {
-      if (isObject(value)) {
-        objClone[key] = clone(value, igonres);
-      } else {
-        objClone[key] = value;
-      }
+    if (isNull(src) ||
+        isString(src) ||
+        isNumber(src) ||
+        isBoolean(src) ||
+        isDate(src)) {
+        return src;
     }
-  });
-  ['toString', 'valueOf'].forEach(function (key) {
-    if (contains(igonres, key)) return;
-    final(objClone, key, src[key]);
-  });
-  return objClone;
+    var objClone = src;
+    try {
+        objClone = new src.constructor();
+    }
+    catch (ex) { }
+    each(src, function (key, value) {
+        if (objClone[key] != value && !contains(igonres, key)) {
+            if (isObject(value)) {
+                objClone[key] = clone(value, igonres);
+            }
+            else {
+                objClone[key] = value;
+            }
+        }
+    });
+    ['toString', 'valueOf'].forEach(function (key) {
+        if (contains(igonres, key))
+            return;
+        final(objClone, key, src[key]);
+    });
+    return objClone;
 }
-
+exports.clone = clone;
 /**
  * 合并对象
  * @method mix
@@ -641,133 +650,152 @@ function clone(src, igonres) {
  * @param {Number} mode 模式
  */
 function mix(dst, src, igonres, mode, igonreNull) {
-  //根据模式来判断，默认是Obj to Obj的  
-  if (mode) {
-    switch (mode) {
-      case 1: // proto to proto  
-        return mix(dst.prototype, src.prototype, igonres, 0);
-      case 2: // object to object and proto to proto  
-        mix(dst.prototype, src.prototype, igonres, 0);
-        break; // pass through  
-      case 3: // proto to static  
-        return mix(dst, src.prototype, igonres, 0);
-      case 4: // static to proto  
-        return mix(dst.prototype, src, igonres, 0);
-      default: // object to object is what happens below  
+    //根据模式来判断，默认是Obj to Obj的  
+    if (mode) {
+        switch (mode) {
+            case 1:// proto to proto  
+                return mix(dst.prototype, src.prototype, igonres, 0);
+            case 2:// object to object and proto to proto  
+                mix(dst.prototype, src.prototype, igonres, 0);
+                break; // pass through  
+            case 3:// proto to static  
+                return mix(dst, src.prototype, igonres, 0);
+            case 4:// static to proto  
+                return mix(dst.prototype, src, igonres, 0);
+            default: // object to object is what happens below  
+        }
     }
-  }
-  //---
-  src = src || {};
-  dst = dst || (isArray(src) ? [] : {});
-  keys(src).forEach(function (key) {
-    if (contains(igonres, key)) return;
-    if (igonreNull && isNull(src[key])) return;
-    if (isObject(src[key]) &&
-      (src[key].constructor == Object ||
-        src[key].constructor == Array ||
-        src[key].constructor == null)) {
-      dst[key] = mix(dst[key], src[key], igonres, 0, igonreNull);
-    } else {
-      dst[key] = src[key];
-    }
-  });
-  return dst;
+    //---
+    src = src || {};
+    dst = dst || (isArray(src) ? [] : {});
+    keys(src).forEach(function (key) {
+        if (contains(igonres, key))
+            return;
+        if (igonreNull && isNull(src[key]))
+            return;
+        if (isObject(src[key]) &&
+            (src[key].constructor == Object ||
+                src[key].constructor == Array ||
+                src[key].constructor == null)) {
+            dst[key] = mix(dst[key], src[key], igonres, 0, igonreNull);
+        }
+        else {
+            dst[key] = src[key];
+        }
+    });
+    return dst;
 }
-
+exports.mix = mix;
 /**
  * 定义不可遍历的属性
  **/
 function final(obj, name, value) {
-  if (arguments.length < 1) throw new Error('Parameter missing');
-  if (arguments.length < 2) {
-    return each(obj, function (name, value) {
-      final(obj, name, value);
-    });
-  }
-  if (arguments.length < 3) return final(obj, name, obj[name]);
-  try {
-    Object.defineProperty(obj, name, {
-      get: function () {
-        return value;
-      },
-      set: function () {
-        throw new Error('Cannot assign to final property:' + name);
-      },
-      enumerable: false, //不能枚举
-      configurable: false, //不能重写定义
-    });
-  } catch (err) {
-    obj[name] = value;
-  }
+    if (arguments.length < 1)
+        throw new Error('Parameter missing');
+    if (arguments.length < 2) {
+        return each(obj, function (name, value) {
+            final(obj, name, value);
+        });
+    }
+    if (arguments.length < 3)
+        return final(obj, name, obj[name]);
+    try {
+        Object.defineProperty(obj, name, {
+            get: function () {
+                return value;
+            },
+            set: function () {
+                throw new Error('Cannot assign to final property:' + name);
+            },
+            enumerable: false,
+            configurable: false //不能重写定义
+        });
+    }
+    catch (err) {
+        obj[name] = value;
+    }
 }
-
+exports.final = final;
 /**
- * 获取所有 key 
+ * 获取所有 key
  */
 function keys(obj) {
-  if (Object.keys) return Object.keys(obj);
-  var keys = [];
-  each(obj, function (key) {
-    keys.push(key);
-  });
-  return keys;
+    if (Object.keys)
+        return Object.keys(obj);
+    var keys = [];
+    each(obj, function (key) {
+        keys.push(key);
+    });
+    return keys;
 }
-
+exports.keys = keys;
 /**
  * 创建一个对象
  */
 function create(proto, props) {
-  if (Object.create) return Object.create(proto, props);
-  function Cotr() { }
-  Cotr.prototype = proto;
-  var obj = new Cotr();
-  if (props) copy(props, obj);
-  return obj;
+    if (Object.create)
+        return Object.create(proto, props);
+    function Cotr() { }
+    Cotr.prototype = proto;
+    var obj = new Cotr();
+    if (props)
+        copy(props, obj);
+    return obj;
 }
-
+exports.create = create;
 /**
  * 设置 proto
  * 在不支持 setPrototypeOf 也不支持 __proto__ 的浏览器
  * 中，会采用 copy 方式
  */
 function setPrototypeOf(obj, proto) {
-  if (Object.setPrototypeOf) {
-    return Object.setPrototypeOf(obj, proto || create(null));
-  } else {
-    if (!('__proto__' in Object)) copy(proto, obj);
-    obj.__proto__ = proto;
-  }
+    if (Object.setPrototypeOf) {
+        return Object.setPrototypeOf(obj, proto || create(null));
+    }
+    else {
+        if (!('__proto__' in Object))
+            copy(proto, obj);
+        obj.__proto__ = proto;
+    }
 }
-
+exports.setPrototypeOf = setPrototypeOf;
 /**
  * 获取 proto
  */
 function getPrototypeOf(obj) {
-  if (obj.__proto__) return obj.__proto__;
-  if (Object.getPrototypeOf) return Object.getPrototypeOf(obj);
-  if (obj.constructor) return obj.constructor.prototype;
+    if (obj.__proto__)
+        return obj.__proto__;
+    if (Object.getPrototypeOf)
+        return Object.getPrototypeOf(obj);
+    if (obj.constructor)
+        return obj.constructor.prototype;
 }
-
+exports.getPrototypeOf = getPrototypeOf;
 /**
  * 是否深度相等
  */
 function deepEqual(a, b) {
-  if (a === b) return true;
-  if (!isObject(a) || !isObject(b)) return false;
-  var aKeys = keys(a);
-  var bKeys = keys(b);
-  if (aKeys.length !== bKeys.length) return false;
-  var allKeys = aKeys.concat(bKeys);
-  var checkedMap = create(null);
-  var result = true;
-  each(allKeys, function (i, key) {
-    if (checkedMap[key]) return;
-    if (!deepEqual(a[key], b[key])) result = false;
-    checkedMap[key] = true;
-  });
-  return result;
+    if (a === b)
+        return true;
+    if (!isObject(a) || !isObject(b))
+        return false;
+    var aKeys = keys(a);
+    var bKeys = keys(b);
+    if (aKeys.length !== bKeys.length)
+        return false;
+    var allKeys = aKeys.concat(bKeys);
+    var checkedMap = create(null);
+    var result = true;
+    each(allKeys, function (i, key) {
+        if (checkedMap[key])
+            return;
+        if (!deepEqual(a[key], b[key]))
+            result = false;
+        checkedMap[key] = true;
+    });
+    return result;
 }
-
+exports.deepEqual = deepEqual;
 /**
  * 从一个数值循环到别一个数
  * @param {number} fromNum 开始数值
@@ -777,15 +805,19 @@ function deepEqual(a, b) {
  * @returns {void} 无返回
  */
 function fromTo(fromNum, toNum, step, handler) {
-  if (!handler) handler = [step, step = handler][0];
-  step = Math.abs(step || 1);
-  if (fromNum < toNum) {
-    for (var i = fromNum; i <= toNum; i += step) handler(i);
-  } else {
-    for (var i = fromNum; i >= toNum; i -= step) handler(i);
-  }
+    if (!handler)
+        handler = [step, step = handler][0];
+    step = Math.abs(step || 1);
+    if (fromNum < toNum) {
+        for (var i = fromNum; i <= toNum; i += step)
+            handler(i);
+    }
+    else {
+        for (var i = fromNum; i >= toNum; i -= step)
+            handler(i);
+    }
 }
-
+exports.fromTo = fromTo;
 /**
  * 生成一个Guid
  * @method newGuid
@@ -793,118 +825,128 @@ function fromTo(fromNum, toNum, step, handler) {
  * @static
  */
 function newGuid() {
-  function s4() {
-    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-  }
-  return (s4() + s4() + "-" + s4() + "-" + s4() + "-" +
-    s4() + "-" + s4() + s4() + s4());
+    function s4() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    }
+    return (s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4());
 }
-
+exports.newGuid = newGuid;
 /**
  * 对象变换
  **/
 function map(list, fn) {
-  var buffer = isArray(list) ? [] : {};
-  each(list, function (name, value) {
-    buffer[name] = fn(name, value);
-  });
-  return buffer;
+    var buffer = isArray(list) ? [] : {};
+    each(list, function (name, value) {
+        buffer[name] = fn(name, value);
+    });
+    return buffer;
 }
-
+exports.map = map;
 /**
  * 通过路径设置属性值
  */
 function setByPath(obj, path, value) {
-  if (isNull(obj) || isNull(path) || path === '') {
-    return;
-  }
-  if (!isArray(path)) {
-    path = path.replace(/\[/, '.').replace(/\]/, '.').split('.');
-  }
-  each(path, function (index, name) {
-    if (isNull(name) || name.length < 1) return;
-    if (index === path.length - 1) {
-      obj[name] = value;
-    } else {
-      obj[name] = obj[name] || {};
-      obj = obj[name];
+    if (isNull(obj) || isNull(path) || path === '') {
+        return;
     }
-  });
+    if (!isArray(path)) {
+        path = path.replace(/\[/, '.').replace(/\]/, '.').split('.');
+    }
+    each(path, function (index, name) {
+        if (isNull(name) || name.length < 1)
+            return;
+        if (index === path.length - 1) {
+            obj[name] = value;
+        }
+        else {
+            obj[name] = obj[name] || {};
+            obj = obj[name];
+        }
+    });
 }
-
+exports.setByPath = setByPath;
 /**
  * 通过路径获取属性值
  */
 function getByPath(obj, path) {
-  if (isNull(obj) || isNull(path) || path === '') {
+    if (isNull(obj) || isNull(path) || path === '') {
+        return obj;
+    }
+    if (!isArray(path)) {
+        path = path.replace(/\[/, '.').replace(/\]/, '.').split('.');
+    }
+    each(path, function (index, name) {
+        if (isNull(name) || name.length < 1)
+            return;
+        if (!isNull(obj))
+            obj = obj[name];
+    });
     return obj;
-  }
-  if (!isArray(path)) {
-    path = path.replace(/\[/, '.').replace(/\]/, '.').split('.');
-  }
-  each(path, function (index, name) {
-    if (isNull(name) || name.length < 1) return;
-    if (!isNull(obj)) obj = obj[name];
-  });
-  return obj;
 }
-
+exports.getByPath = getByPath;
 /**
  * 数组去重
  **/
 function unique(array) {
-  if (isNull(array)) return array;
-  var newArray = [];
-  each(array, function (i, value) {
-    if (newArray.indexOf(value) > -1) return;
-    newArray.push(value);
-  });
-  return newArray;
+    if (isNull(array))
+        return array;
+    var newArray = [];
+    each(array, function (i, value) {
+        if (newArray.indexOf(value) > -1)
+            return;
+        newArray.push(value);
+    });
+    return newArray;
 }
-
+exports.unique = unique;
 /**
  * 解析 function 的参数列表
  **/
 function getFunctionArgumentNames(fn) {
-  if (!fn) return [];
-  var src = fn.toString();
-  var parts = src.split(')')[0].split('=>')[0].split('(');
-  return (parts[1] || parts[0]).split(',').map(function (name) {
-    return trim(name);
-  }).filter(function (name) {
-    return name != 'function';
-  });
+    if (!fn)
+        return [];
+    var src = fn.toString();
+    var parts = src.split(')')[0].split('=>')[0].split('(');
+    return (parts[1] || parts[0]).split(',').map(function (name) {
+        return trim(name);
+    }).filter(function (name) {
+        return name != 'function';
+    });
 }
-
+exports.getFunctionArgumentNames = getFunctionArgumentNames;
 /**
  * 缩短字符串
  */
 function short(str, maxLength) {
-  if (!str) return str;
-  maxLength = maxLength || 40;
-  var strLength = str.length;
-  var trimLength = maxLength / 2;
-  return strLength > maxLength ?
-    str.substr(0, trimLength) + '...' + str.substr(strLength - trimLength) :
-    str;
+    if (!str)
+        return str;
+    maxLength = maxLength || 40;
+    var strLength = str.length;
+    var trimLength = maxLength / 2;
+    return strLength > maxLength ?
+        str.substr(0, trimLength) + '...' + str.substr(strLength - trimLength) :
+        str;
 }
-
+exports.short = short;
 /**
  * 首字母大写
  */
 function firstUpper(str) {
-  if (!isString(str)) return '';
-  return str.substring(0, 1).toUpperCase() + str.substring(1);
+    if (!isString(str))
+        return '';
+    return str.substring(0, 1).toUpperCase() + str.substring(1);
 }
-
+exports.firstUpper = firstUpper;
 /**
  * 编码正则字符串
  */
 function escapeRegExp(str) {
-  if (!isString(str)) return '';
-  return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    if (!isString(str))
+        return '';
+    return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
-
+exports.escapeRegExp = escapeRegExp;
 /**
   * 将字符串转成「驼峰」式
   * @param {string} str 原始字符串
@@ -912,123 +954,87 @@ function escapeRegExp(str) {
   * @return {string} 转换后的字符串
   */
 function toCamelCase(str, mode) {
-  if (!isString(str)) return '';
-  if (str) {
-    str = str.replace(/\-[a-z0-9]/g, function ($1) {
-      return $1.slice(1).toUpperCase()
-    });
-    str = str.replace(/^[a-z]/i, function ($1) {
-      return mode ? $1.toUpperCase() : $1.toLowerCase();
-    });
-  }
-  return str;
+    if (!isString(str))
+        return '';
+    if (str) {
+        str = str.replace(/\-[a-z0-9]/g, function ($1) {
+            return $1.slice(1).toUpperCase();
+        });
+        str = str.replace(/^[a-z]/i, function ($1) {
+            return mode ? $1.toUpperCase() : $1.toLowerCase();
+        });
+    }
+    return str;
 }
-
+exports.toCamelCase = toCamelCase;
 /**
  * 将字符串转成分隔形式
  * @param {string} str 原始字符串
  * @return {string} 转换后的字符串
  */
 function toSplitCase(str) {
-  if (!isString(str)) return '';
-  if (str) {
-    str = str.replace(/([A-Z])/g, '-$1');
-    if (str[0] == '-') str = str.slice(1);
-  }
-  return str.toLowerCase();
+    if (!isString(str))
+        return '';
+    if (str) {
+        str = str.replace(/([A-Z])/g, '-$1');
+        if (str[0] == '-')
+            str = str.slice(1);
+    }
+    return str.toLowerCase();
 }
-
+exports.toSplitCase = toSplitCase;
 function htmlPrefilter(html) {
-  var rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
-  return html.replace(rxhtmlTag, "<$1></$2>");
+    var rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
+    return html.replace(rxhtmlTag, '<$1></$2>');
 }
-
+exports.htmlPrefilter = htmlPrefilter;
 /**
- * 解析字符串为 dom 
+ * 解析字符串为 dom
  * @param {string} str 字符串
- * @returns {HTMLNode} 解析后的 DOM 
+ * @returns {HTMLNode} 解析后的 DOM
  */
 function parseHTML(str) {
-  str = str || ' ';
-  var parent = document.createElement('div');
-  parent.innerHTML = htmlPrefilter(trim(str));
-  var childNodes = toArray(parent.childNodes);
-  //先 clone 一份再通过 innerHTML 清空
-  //否则 IE9 下，清空时会导不通过返回的 DOM 没有子结点
-  // if (firstNode) firstNode = firstNode.cloneNode(true);
-  // win._NPH_.innerHTML = '';
-  each(childNodes, function (index, childNode) {
-    parent.removeChild(childNode);
-  });
-  return childNodes;
+    str = str || ' ';
+    var parent = document.createElement('div');
+    parent.innerHTML = htmlPrefilter(trim(str));
+    var childNodes = toArray(parent.childNodes);
+    //先 clone 一份再通过 innerHTML 清空
+    //否则 IE9 下，清空时会导不通过返回的 DOM 没有子结点
+    // if (firstNode) firstNode = firstNode.cloneNode(true);
+    // window._NPH_.innerHTML = '';
+    each(childNodes, function (index, childNode) {
+        parent.removeChild(childNode);
+    });
+    return childNodes;
 }
-
-exports.noop = noop;
-exports.toString = toString;
-exports.getType = getType;
-exports.isNull = isNull;
-exports.trim = trim;
-exports.replace = replace;
-exports.startWith = startWith;
-exports.contains = contains;
-exports.endWith = endWith;
-exports.has = has;
-exports.hasProperty = hasProperty;
-exports.isFunction = isFunction;
-exports.isAsyncFunction = isAsyncFunction;
-exports.isGeneratorFunction = isGeneratorFunction;
-exports.isString = isString;
-exports.isNumber = isNumber;
-exports.isBoolean = isBoolean;
-exports.isElement = isElement;
-exports.isText = isText;
-exports.isObject = isObject;
-exports.isArray = isArray;
-exports.isDate = isDate;
-exports.isRegexp = isRegexp;
-exports.toArray = toArray;
-exports.toDate = toDate;
-exports.each = each;
-exports.formatDate = formatDate;
-exports.copy = copy;
-exports.clone = clone;
-exports.mix = mix;
-exports.final = final;
-exports.keys = keys;
-exports.create = create;
-exports.setPrototypeOf = setPrototypeOf;
-exports.getPrototypeOf = getPrototypeOf;
-exports.deepEqual = deepEqual;
-exports.fromTo = fromTo;
-exports.newGuid = newGuid;
-exports.map = map;
-exports.setByPath = setByPath;
-exports.getByPath = getByPath;
-exports.unique = unique;
-exports.getFunctionArgumentNames = getFunctionArgumentNames;
-exports.short = short;
-exports.firstUpper = firstUpper;
-exports.escapeRegExp = escapeRegExp;
-exports.toCamelCase = toCamelCase;
-exports.toSplitCase = toSplitCase;
-exports.htmlPrefilter = htmlPrefilter;
 exports.parseHTML = parseHTML;
+//# sourceMappingURL=index.js.map
 
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-var core = module.exports = {version: '1.2.6'};
-if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+var store  = __webpack_require__(31)('wks')
+  , uid    = __webpack_require__(32)
+  , Symbol = __webpack_require__(6).Symbol;
+module.exports = function(name){
+  return store[name] || (store[name] =
+    Symbol && Symbol[name] || (Symbol || uid)('Symbol.' + name));
+};
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global    = __webpack_require__(9)
-  , core      = __webpack_require__(4)
-  , ctx       = __webpack_require__(23)
+var global    = __webpack_require__(6)
+  , core      = __webpack_require__(7)
+  , ctx       = __webpack_require__(20)
   , PROTOTYPE = 'prototype';
 
 var $export = function(type, name, source){
@@ -1075,35 +1081,6 @@ module.exports = $export;
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(25)
-  , defined = __webpack_require__(12);
-module.exports = function(it){
-  return IObject(defined(it));
-};
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store  = __webpack_require__(34)('wks')
-  , uid    = __webpack_require__(35)
-  , Symbol = __webpack_require__(9).Symbol;
-module.exports = function(name){
-  return store[name] || (store[name] =
-    Symbol && Symbol[name] || (Symbol || uid)('Symbol.' + name));
-};
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_8__;
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
@@ -1112,19 +1089,42 @@ var global = module.exports = typeof window != 'undefined' && window.Math == Mat
 if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
 
 /***/ }),
-/* 10 */
+/* 7 */
 /***/ (function(module, exports) {
 
-module.exports = function(exec){
-  try {
-    return !!exec();
-  } catch(e){
-    return true;
-  }
+var core = module.exports = {version: '1.2.6'};
+if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Observer = __webpack_require__(46);
+var AutoRun = __webpack_require__(24);
+var Watcher = __webpack_require__(26);
+var expression = __webpack_require__(48);
+var nextTick = __webpack_require__(25);
+Observer.AutoRun = AutoRun;
+Observer.Watcher = Watcher;
+Observer.expression = expression;
+Observer.nextTick = nextTick;
+Observer.Observer = Observer;
+module.exports = Observer;
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = __webpack_require__(21)
+  , defined = __webpack_require__(11);
+module.exports = function(it){
+  return IObject(defined(it));
 };
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1132,7 +1132,7 @@ module.exports = function(exec){
 
 exports.__esModule = true;
 
-var _assign = __webpack_require__(22);
+var _assign = __webpack_require__(19);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -1153,13 +1153,25 @@ exports.default = _assign2.default || function (target) {
 };
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports) {
 
 // 7.2.1 RequireObjectCoercible(argument)
 module.exports = function(it){
   if(it == undefined)throw TypeError("Can't call method on  " + it);
   return it;
+};
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+module.exports = function(exec){
+  try {
+    return !!exec();
+  } catch(e){
+    return true;
+  }
 };
 
 /***/ }),
@@ -1171,34 +1183,11 @@ module.exports = function(it){
 
 exports.__esModule = true;
 
-var _typeof2 = __webpack_require__(14);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
-};
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _iterator = __webpack_require__(56);
+var _iterator = __webpack_require__(49);
 
 var _iterator2 = _interopRequireDefault(_iterator);
 
-var _symbol = __webpack_require__(66);
+var _symbol = __webpack_require__(59);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
@@ -1213,12 +1202,12 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 };
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $          = __webpack_require__(0)
-  , createDesc = __webpack_require__(16);
-module.exports = __webpack_require__(33) ? function(object, key, value){
+  , createDesc = __webpack_require__(15);
+module.exports = __webpack_require__(30) ? function(object, key, value){
   return $.setDesc(object, key, createDesc(1, value));
 } : function(object, key, value){
   object[key] = value;
@@ -1226,7 +1215,7 @@ module.exports = __webpack_require__(33) ? function(object, key, value){
 };
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = function(bitmap, value){
@@ -1239,7 +1228,7 @@ module.exports = function(bitmap, value){
 };
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports) {
 
 var hasOwnProperty = {}.hasOwnProperty;
@@ -1248,115 +1237,35 @@ module.exports = function(it, key){
 };
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = {};
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(0).setDesc
-  , has = __webpack_require__(17)
-  , TAG = __webpack_require__(7)('toStringTag');
+  , has = __webpack_require__(16)
+  , TAG = __webpack_require__(4)('toStringTag');
 
 module.exports = function(it, tag, stat){
   if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
 };
 
 /***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(41), __esModule: true };
+
+/***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-exports.__esModule = true;
-
-var _setPrototypeOf = __webpack_require__(74);
-
-var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
-
-var _create = __webpack_require__(38);
-
-var _create2 = _interopRequireDefault(_create);
-
-var _typeof2 = __webpack_require__(14);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
-  }
-
-  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _classCallCheck2 = __webpack_require__(2);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _possibleConstructorReturn2 = __webpack_require__(13);
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = __webpack_require__(20);
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-var _class, _temp;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var InternalError = (_temp = _class = function (_Error) {
-  (0, _inherits3.default)(InternalError, _Error);
-
-  function InternalError(message) {
-    (0, _classCallCheck3.default)(this, InternalError);
-
-    var prefix = InternalError.prefix;
-
-    for (var _len = arguments.length, other = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      other[_key - 1] = arguments[_key];
-    }
-
-    return (0, _possibleConstructorReturn3.default)(this, _Error.call.apply(_Error, [this, prefix ? "[" + prefix + "] " + message : message].concat(other)));
-  }
-
-  return InternalError;
-}(Error), _class.prefix = null, _temp);
-
-
-module.exports = InternalError;
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(44), __esModule: true };
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
 // optional / simple context binding
-var aFunction = __webpack_require__(46);
+var aFunction = __webpack_require__(43);
 module.exports = function(fn, that, length){
   aFunction(fn);
   if(that === undefined)return fn;
@@ -1377,27 +1286,17 @@ module.exports = function(fn, that, length){
 };
 
 /***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.13 ToObject(argument)
-var defined = __webpack_require__(12);
-module.exports = function(it){
-  return Object(defined(it));
-};
-
-/***/ }),
-/* 25 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(26);
+var cof = __webpack_require__(22);
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
 
 /***/ }),
-/* 26 */
+/* 22 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -1407,19 +1306,19 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 27 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _extends2 = __webpack_require__(11);
+var _extends2 = __webpack_require__(10);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Observer = __webpack_require__(48);
-var React = __webpack_require__(8);
+var Observer = __webpack_require__(8);
+var React = __webpack_require__(3);
 
-var _require = __webpack_require__(3),
+var _require = __webpack_require__(2),
     final = _require.final,
     isObject = _require.isObject,
     isFunction = _require.isFunction;
@@ -1429,7 +1328,7 @@ var _require2 = __webpack_require__(1),
     convertElement = _require2.convertElement,
     registerElementHandler = _require2.registerElementHandler;
 
-var stateful = __webpack_require__(40);
+var stateful = __webpack_require__(35);
 
 function trigger() {
   if (!this._mounted_) return;
@@ -1567,42 +1466,189 @@ function connect(model, component) {
 module.exports = connect;
 
 /***/ }),
-/* 28 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(49), __esModule: true };
+var nextTick = __webpack_require__(25);
+module.exports = /** @class */ (function () {
+    function AutoRun(handler, context, trigger, deep) {
+        var _this = this;
+        this.onGet = function (event) {
+            if (!_this.runing || !event || !_this.dependencies)
+                return;
+            _this.dependencies[event.path] = true;
+        };
+        this.isDependent = function (path) {
+            if (!path)
+                return false;
+            if (!_this.dependencies || _this.dependencies[path])
+                return true;
+            if (!_this.deep)
+                return false;
+            var paths = path.split('.');
+            paths.pop();
+            return _this.isDependent(paths.join('.'));
+        };
+        this.onChange = function (event) {
+            if (_this.runing || !event || !_this.isDependent(event.path))
+                return;
+            if (_this.isSync()) {
+                return _this.trigger.call(_this.context);
+            }
+            var pending = nextTick(_this.trigger, _this.context, true);
+            if (pending)
+                pending.catch(function (err) {
+                    throw err;
+                });
+        };
+        this.run = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            _this.dependencies = {};
+            _this.runing = true;
+            var result = (_a = _this.handler).call.apply(_a, [_this.context].concat(args));
+            _this.runing = false;
+            return result;
+            var _a;
+        };
+        this.handler = handler;
+        this.context = context || this;
+        this.trigger = trigger || this.run;
+        this.deep = deep || false;
+    }
+    AutoRun.prototype.isSync = function () {
+        return false;
+    };
+    return AutoRun;
+}());
+//# sourceMappingURL=autorun.js.map
 
 /***/ }),
-/* 29 */
+/* 25 */
+/***/ (function(module, exports) {
+
+var handlers = [];
+var pending = false;
+function execHandlers() {
+    pending = false;
+    var copies = handlers.slice(0);
+    handlers.length = 0;
+    copies.forEach(function (callback) { return callback(); });
+}
+function createTimer() {
+    if (typeof Promise !== 'undefined') {
+        var promise_1 = Promise.resolve();
+        return function () {
+            promise_1.then(execHandlers).catch(function (err) { return console.error(err); });
+        };
+    }
+    else if (typeof MutationObserver !== 'undefined' ||
+        // PhantomJS and iOS 7.x
+        MutationObserver.toString() === '[object MutationObserverConstructor]') {
+        // use MutationObserver where native Promise is not available,
+        // e.g. PhantomJS IE11, iOS7, Android 4.4
+        var counter_1 = 1;
+        var observer = new MutationObserver(execHandlers);
+        var textNode_1 = document.createTextNode(String(counter_1));
+        observer.observe(textNode_1, { characterData: true });
+        return function () {
+            counter_1 = (counter_1 + 1) % 2;
+            textNode_1.data = String(counter_1);
+        };
+    }
+    else {
+        // fallback to setTimeout
+        /* istanbul ignore next */
+        return function () {
+            setTimeout(execHandlers, 0);
+        };
+    }
+}
+var timer = createTimer();
+function nextTick(callback, ctx, unique) {
+    if (unique === true) {
+        var exists = handlers.find(function (h) { return h.callback === callback; });
+        if (exists)
+            return exists.promise;
+    }
+    var resolve, reject;
+    var handler = function () {
+        try {
+            var result = callback ? callback.call(ctx) : null;
+            if (resolve)
+                resolve(result);
+        }
+        catch (err) {
+            if (reject)
+                reject(err);
+        }
+    };
+    handler.callback = callback;
+    handler.promise = typeof Promise !== 'undefined' ?
+        new Promise(function (_resolve, _reject) {
+            resolve = _resolve;
+            reject = _reject;
+        }) : null;
+    handlers.push(handler);
+    if (!pending) {
+        pending = true;
+        timer();
+    }
+    return handler.promise;
+}
+module.exports = nextTick;
+//# sourceMappingURL=next-tick.js.map
+
+/***/ }),
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// most Object methods by ES6 should accept primitives
-var $export = __webpack_require__(5)
-  , core    = __webpack_require__(4)
-  , fails   = __webpack_require__(10);
-module.exports = function(KEY, exec){
-  var fn  = (core.Object || {})[KEY] || Object[KEY]
-    , exp = {};
-  exp[KEY] = exec(fn);
-  $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
-};
+var _a = __webpack_require__(2), isFunction = _a.isFunction, isBoolean = _a.isBoolean, getByPath = _a.getByPath, deepEqual = _a.deepEqual, clone = _a.clone;
+var Watcher = /** @class */ (function () {
+    function Watcher(calculator, handler, context) {
+        var _this = this;
+        //force: true 强制执行，false 强制不执行，无参数根据计算结果决定
+        this.calc = function (force) {
+            var newValue = _this.calculator.call(_this.context);
+            var willExecute = isBoolean(force) ? force :
+                !deepEqual(newValue, _this.value);
+            if (willExecute) {
+                _this.handler.call(_this.context, newValue, _this.value);
+            }
+            _this.value = clone(newValue);
+        };
+        if (!isFunction(calculator) || !isFunction(handler)) {
+            throw new Error('Invalid parameters');
+        }
+        this.context = context || this;
+        this.calculator = isFunction(calculator) ? calculator : function () {
+            return getByPath(_this.context, calculator);
+        };
+        this.handler = handler;
+    }
+    return Watcher;
+}());
+module.exports = Watcher;
+//# sourceMappingURL=watcher.js.map
 
 /***/ }),
-/* 30 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var LIBRARY        = __webpack_require__(31)
+var LIBRARY        = __webpack_require__(28)
   , $export        = __webpack_require__(5)
-  , redefine       = __webpack_require__(32)
-  , hide           = __webpack_require__(15)
-  , has            = __webpack_require__(17)
-  , Iterators      = __webpack_require__(18)
-  , $iterCreate    = __webpack_require__(61)
-  , setToStringTag = __webpack_require__(19)
+  , redefine       = __webpack_require__(29)
+  , hide           = __webpack_require__(14)
+  , has            = __webpack_require__(16)
+  , Iterators      = __webpack_require__(17)
+  , $iterCreate    = __webpack_require__(54)
+  , setToStringTag = __webpack_require__(18)
   , getProto       = __webpack_require__(0).getProto
-  , ITERATOR       = __webpack_require__(7)('iterator')
+  , ITERATOR       = __webpack_require__(4)('iterator')
   , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
   , FF_ITERATOR    = '@@iterator'
   , KEYS           = 'keys'
@@ -1660,31 +1706,31 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED
 };
 
 /***/ }),
-/* 31 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = true;
 
 /***/ }),
-/* 32 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(15);
+module.exports = __webpack_require__(14);
 
 /***/ }),
-/* 33 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(10)(function(){
+module.exports = !__webpack_require__(12)(function(){
   return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
 });
 
 /***/ }),
-/* 34 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(9)
+var global = __webpack_require__(6)
   , SHARED = '__core-js_shared__'
   , store  = global[SHARED] || (global[SHARED] = {});
 module.exports = function(key){
@@ -1692,7 +1738,7 @@ module.exports = function(key){
 };
 
 /***/ }),
-/* 35 */
+/* 32 */
 /***/ (function(module, exports) {
 
 var id = 0
@@ -1702,17 +1748,17 @@ module.exports = function(key){
 };
 
 /***/ }),
-/* 36 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(37);
+var isObject = __webpack_require__(34);
 module.exports = function(it){
   if(!isObject(it))throw TypeError(it + ' is not an object!');
   return it;
 };
 
 /***/ }),
-/* 37 */
+/* 34 */
 /***/ (function(module, exports) {
 
 module.exports = function(it){
@@ -1720,104 +1766,24 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 38 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(78), __esModule: true };
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _classCallCheck2 = __webpack_require__(2);
+var _classCallCheck2 = __webpack_require__(36);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var TIMER_DELAY = 0;
-
-module.exports = function () {
-  function AutoRun(handler, context, trigger, deep) {
-    var _this = this;
-
-    (0, _classCallCheck3.default)(this, AutoRun);
-
-    this.onGet = function (event) {
-      if (!_this.runing || !event || !_this.dependencies) return;
-      _this.dependencies[event.path] = true;
-    };
-
-    this.isDependent = function (path) {
-      if (!path) return false;
-      if (!_this.dependencies || _this.dependencies[path]) return true;
-      if (!_this.deep) return false;
-      var paths = path.split('.');
-      paths.pop();
-      return _this.isDependent(paths.join('.'));
-    };
-
-    this.onChange = function (event) {
-      if (_this.runing || !event || !_this.isDependent(event.path)) return;
-      if (_this.isSync()) {
-        return _this.trigger.call(_this.context);
-      }
-      if (_this.timer) {
-        clearTimeout(_this.timer);
-        _this.timer = null;
-      }
-      _this.timer = setTimeout(function () {
-        if (!_this.timer) return;
-        _this.trigger.call(_this.context);
-      }, TIMER_DELAY);
-    };
-
-    this.run = function () {
-      var _handler;
-
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      _this.dependencies = {};
-      _this.runing = true;
-      var result = (_handler = _this.handler).call.apply(_handler, [_this.context].concat(args));
-      _this.runing = false;
-      return result;
-    };
-
-    this.handler = handler;
-    this.context = context || this;
-    this.trigger = trigger || this.run;
-    this.deep = deep || false;
-  }
-
-  AutoRun.prototype.isSync = function isSync() {
-    return false;
-  };
-
-  return AutoRun;
-}();
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _classCallCheck2 = __webpack_require__(2);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _possibleConstructorReturn2 = __webpack_require__(13);
+var _possibleConstructorReturn2 = __webpack_require__(67);
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = __webpack_require__(20);
+var _inherits2 = __webpack_require__(68);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _require = __webpack_require__(8),
+var _require = __webpack_require__(3),
     Component = _require.Component;
 
 module.exports = function (stateless) {
@@ -1843,10 +1809,31 @@ module.exports = function (stateless) {
 };
 
 /***/ }),
-/* 41 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _assign = __webpack_require__(22);
+"use strict";
+
+
+exports.__esModule = true;
+
+exports.default = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(73), __esModule: true };
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _assign = __webpack_require__(19);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -1959,57 +1946,63 @@ bindable.getOptions = getOptions;
 module.exports = bindable;
 
 /***/ }),
-/* 42 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(43);
+module.exports = __webpack_require__(40);
 
 
 /***/ }),
-/* 43 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _extends2 = __webpack_require__(11);
+var _extends2 = __webpack_require__(10);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var connect = __webpack_require__(27);
-var model = __webpack_require__(81);
-var binding = __webpack_require__(82);
-var bindable = __webpack_require__(41);
-var autorun = __webpack_require__(84);
-var watch = __webpack_require__(85);
-var deep = __webpack_require__(86);
-var mapping = __webpack_require__(87);
+var connect = __webpack_require__(23);
+var model = __webpack_require__(74);
+var binding = __webpack_require__(75);
+var bindable = __webpack_require__(38);
+var autorun = __webpack_require__(76);
+var watch = __webpack_require__(77);
+var deep = __webpack_require__(78);
+var mapping = __webpack_require__(79);
 var utils = __webpack_require__(1);
-var stateful = __webpack_require__(40);
-var composition = __webpack_require__(88);
-var info = __webpack_require__(89);
+var stateful = __webpack_require__(35);
+var composition = __webpack_require__(80);
+
+var _require = __webpack_require__(8),
+    Observer = _require.Observer,
+    expression = _require.expression,
+    nextTick = _require.nextTick;
+
+var info = __webpack_require__(81);
 
 module.exports = (0, _extends3.default)({
   connect: connect, model: model, binding: binding, bindable: bindable, watch: watch, mapping: mapping, autorun: autorun, deep: deep, stateful: stateful,
-  composition: composition, utils: utils }, info);
+  composition: composition, Observer: Observer, expression: expression, nextTick: nextTick, utils: utils }, info);
 
 /***/ }),
-/* 44 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(45);
-module.exports = __webpack_require__(4).Object.assign;
+__webpack_require__(42);
+module.exports = __webpack_require__(7).Object.assign;
 
 /***/ }),
-/* 45 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.1 Object.assign(target, source)
 var $export = __webpack_require__(5);
 
-$export($export.S + $export.F, 'Object', {assign: __webpack_require__(47)});
+$export($export.S + $export.F, 'Object', {assign: __webpack_require__(44)});
 
 /***/ }),
-/* 46 */
+/* 43 */
 /***/ (function(module, exports) {
 
 module.exports = function(it){
@@ -2018,16 +2011,16 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 47 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.1 Object.assign(target, source, ...)
 var $        = __webpack_require__(0)
-  , toObject = __webpack_require__(24)
-  , IObject  = __webpack_require__(25);
+  , toObject = __webpack_require__(45)
+  , IObject  = __webpack_require__(21);
 
 // should work with symbols and should have deterministic property order (V8 bug)
-module.exports = __webpack_require__(10)(function(){
+module.exports = __webpack_require__(12)(function(){
   var a = Object.assign
     , A = {}
     , B = {}
@@ -2056,55 +2049,38 @@ module.exports = __webpack_require__(10)(function(){
 } : Object.assign;
 
 /***/ }),
-/* 48 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _keys = __webpack_require__(28);
+// 7.1.13 ToObject(argument)
+var defined = __webpack_require__(11);
+module.exports = function(it){
+  return Object(defined(it));
+};
 
-var _keys2 = _interopRequireDefault(_keys);
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
 
-var _getOwnPropertyDescriptor = __webpack_require__(51);
-
-var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
-
-var _defineProperty = __webpack_require__(54);
-
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-var _classCallCheck2 = __webpack_require__(2);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _possibleConstructorReturn2 = __webpack_require__(13);
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = __webpack_require__(20);
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _require = __webpack_require__(3),
-    isArray = _require.isArray,
-    isFunction = _require.isFunction,
-    isNull = _require.isNull,
-    isObject = _require.isObject,
-    copy = _require.copy,
-    final = _require.final,
-    each = _require.each;
-
-var EventEmitter = __webpack_require__(79);
-var Error = __webpack_require__(21);
-var AutoRun = __webpack_require__(39);
-var Watcher = __webpack_require__(80);
-
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var _a = __webpack_require__(2), isArray = _a.isArray, isFunction = _a.isFunction, isNull = _a.isNull, isObject = _a.isObject, copy = _a.copy, final = _a.final, each = _a.each;
+var EventEmitter = __webpack_require__(47);
+var AutoRun = __webpack_require__(24);
+var Watcher = __webpack_require__(26);
 var OBSERVER_PROP_NAME = '_observer_';
 var CHANGE_EVENT_NAME = 'change';
 var GET_EVENT_NAME = 'get';
 var EVENT_MAX_DISPATCH_LAYER = 10;
 var IGNORE_REGEXPS = [/^\_(.*)\_$/, /^\_\_/, /^\$/];
-
 /**
  * 对象观察类，可以监控对象变化
  * 目前方案问题:
@@ -2113,453 +2089,593 @@ var IGNORE_REGEXPS = [/^\_(.*)\_$/, /^\_\_/, /^\$/];
  * 其它方法一:
  *   将「关系」放入全局数组中，然后将 ob.parents 变成一个「属性」从全局数组件中 filter 出来，
  *   基本和目前方法类似，但是关系在外部存领教，所以 clearReference 可清除。
- * 其它方案二: 
+ * 其它方案二:
  *   构造时添加到全局数组，每一个 observer change 时都让放到全局的 observer 遍历自身的，
  *   检果事件源是不是自已的子对象，如果是则触发自身 change 事件，这样 ob 对象本身没有相关引用
  *   clearReference 时只从全局清除掉就行了，并且 delete 操作也不会影响，但效率稍差。
- * 其它方案三: 
+ * 其它方案三:
  *   给构造函数添加一个 deep 属性，只有 deep 的 ob 对象，才放入到全局数组中，检查时逻辑同方案二
  *   但是因为要检查的对象会少很多，效率会更高一点。
  */
-
-var Observer = function (_EventEmitter) {
-  (0, _inherits3.default)(Observer, _EventEmitter);
-
-  /**
-   * 通过目标对象构造一个观察对象
-   * @param {Object} target 目标对象
-   * @param {Object} options 选项
-   * @returns {void} 无返回
-   */
-  function Observer(target, options) {
-    (0, _classCallCheck3.default)(this, Observer);
-
-    var _this = (0, _possibleConstructorReturn3.default)(this, _EventEmitter.call(this));
-
-    if (isNull(target)) {
-      throw new Error('Invalid target');
-    }
-    options = options || {};
-    var observer = target[OBSERVER_PROP_NAME];
-    if (observer) {
-      var _ret;
-
-      copy(options, observer.options);
-      //当时一个组件 A 的为组件 B 的 prop 时，A 更新不会触发 B 更新
-      //所在暂注释这里，另一种方法是更新 prop 指令，重写 excute 方法，而不是现在的 update 方法
-      // if (observer.options.root) {
-      //   observer.parents.length = 0;
-      // }
-      observer.apply();
-      return _ret = observer, (0, _possibleConstructorReturn3.default)(_this, _ret);
-    }
-    final(_this, 'options', options);
-    final(_this, 'shadow', {});
-    final(_this, 'target', target);
-    final(_this, 'parents', []);
-    final(target, OBSERVER_PROP_NAME, _this);
-    _this.apply();
-    return _this;
-  }
-
-  /**
-   * 添加一个属性，动态添中的属性，无法被观察，
-   * 但是通过 set 方法添加的属性可能被观察。
-   * @param {string} name 名称
-   * @param {Object} value 值
-   * @returns {void} 无返回
-   */
-
-
-  Observer.prototype.set = function set(name, value) {
-    if (isFunction(value) || Observer.isIgnore(name)) {
-      return;
-    }
-    (0, _defineProperty2.default)(this.target, name, {
-      get: function get() {
-        var observer = this[OBSERVER_PROP_NAME];
-        observer.emitGet({ name: name, value: value });
-        return observer.shadow[name];
-      },
-      set: function set(value) {
-        var observer = this[OBSERVER_PROP_NAME];
-        var oldValue = observer.shadow[name];
-        if (oldValue === value) return;
-        if (isObject(value)) {
-          var childObserver = new Observer(value);
-          observer.addChild(childObserver, name);
+var Observer = /** @class */ (function (_super) {
+    __extends(Observer, _super);
+    /**
+     * 通过目标对象构造一个观察对象
+     * @param {Object} target 目标对象
+     * @param {Object} options 选项
+     * @returns {void} 无返回
+     */
+    function Observer(target, options) {
+        var _this = _super.call(this) || this;
+        if (isNull(target)) {
+            throw new Error('Invalid target');
         }
-        //移除旧值的父引用
-        //如果用 delete 删除属性将无法移除父子引用
-        if (oldValue && oldValue[OBSERVER_PROP_NAME]) {
-          observer.removeChild(oldValue[OBSERVER_PROP_NAME], name);
+        options = options || {};
+        var observer = target[OBSERVER_PROP_NAME];
+        if (observer) {
+            copy(options, observer.options);
+            //当时一个组件 A 的为组件 B 的 prop 时，A 更新不会触发 B 更新
+            //所在暂注释这里，另一种方法是更新 prop 指令，重写 excute 方法，而不是现在的 update 方法
+            // if (observer.options.root) {
+            //   observer.parents.length = 0;
+            // }
+            observer.apply();
+            return observer;
         }
-        observer.shadow[name] = value;
-        observer.emitChange({ name: name, value: value });
-      },
-
-      configurable: true,
-      enumerable: true
-    });
-    this.target[name] = value;
-  };
-
-  /**
-   * 自动应用所有动态添加的属性
-   * @returns {void} 无返回
-   */
-
-
-  Observer.prototype.apply = function apply() {
-    if (isArray(this.target)) {
-      this._wrapArray(this.target);
+        final(_this, 'options', options);
+        final(_this, 'shadow', {});
+        final(_this, 'target', target);
+        final(_this, 'parents', []);
+        final(target, OBSERVER_PROP_NAME, _this);
+        _this.apply();
+        return _this;
     }
-    var names = this._getPropertyNames(this.target);
-    names.forEach(function (name) {
-      var desc = (0, _getOwnPropertyDescriptor2.default)(this.target, name);
-      if (!('value' in desc)) return;
-      this.set(name, this.target[name]);
-    }, this);
-  };
-
-  /**
-   * 添子观察者对象
-   * @param {Object} child 父对象
-   * @param {String} name 属性名
-   * @returns {void} 无返回
-   */
-
-
-  Observer.prototype.addChild = function addChild(child, name) {
-    if (isNull(child) || isNull(name)) {
-      throw new Error('Invalid paramaters');
-    }
-    if (child.options.root) return;
-    child.parents.push({ parent: this, name: name });
-  };
-
-  /**
-   * 移除子对象
-   * @param {Object} child 父对象
-   * @param {String} name 属性名
-   * @returns {void} 无返回
-   */
-
-
-  Observer.prototype.removeChild = function removeChild(child, name) {
-    if (isNull(child)) {
-      throw new Error('Invalid paramaters');
-    }
-    var foundIndex = -1;
-    child.parents.forEach(function (item, index) {
-      if (item.parent === this && item.name === name) {
-        foundIndex = index;
-      }
-    }, this);
-    if (foundIndex > -1) {
-      child.parents.splice(foundIndex, 1);
-    }
-  };
-
-  /**
-   * 清除所有父子引用
-   * @returns {void} 无返回
-   */
-
-
-  Observer.prototype.clearReference = function clearReference() {
-    each(this.target, function (name, value) {
-      if (isNull(value)) return;
-      var child = value[OBSERVER_PROP_NAME];
-      if (child) this.removeChild(child);
-    }, this);
-  };
-
-  /**
-   * 触发 change 事件
-   * @param {Object} event 事件对象
-   * @returns {void} 无返回
-   */
-
-
-  Observer.prototype.emitChange = function emitChange(event) {
-    event.path = event.name;
-    this.dispatch(CHANGE_EVENT_NAME, event);
-  };
-
-  /**
-   * 触发 change 事件
-   * @param {Object} event 事件对象
-   * @returns {void} 无返回
-   */
-
-
-  Observer.prototype.emitGet = function emitGet(event) {
-    event.path = event.name;
-    this.dispatch(GET_EVENT_NAME, event);
-  };
-
-  /**
-   * 派发一个事件，事件会向父级对象冒泡
-   * @param {string} eventName 事件名称
-   * @param {Object} event 事件对象
-   * @returns {void} 无返回
-   */
-
-
-  Observer.prototype.dispatch = function dispatch(eventName, event) {
-    if (event._src_ === this) return;
-    event._src_ = event._src_ || this;
-    event._layer_ = event._layer_ || 0;
-    if (event._layer_++ >= EVENT_MAX_DISPATCH_LAYER) return;
-    this.emit(eventName, event);
-    if (!this.parents || this.parents.length < 1) return;
-    this.parents.forEach(function (item) {
-      if (!(item.name in item.parent.target)) {
-        return item.parent.removeChild(this);
-      }
-      var parentEvent = copy(event);
-      parentEvent.path = isNull(event.path) ? item.name : item.name + '.' + event.path;
-      item.parent.dispatch(eventName, parentEvent);
-    }, this);
-  };
-
-  /**
-   * 获取所有成员名称列表
-   * @returns {Array} 所有成员名称列表
-   */
-
-
-  Observer.prototype._getPropertyNames = function _getPropertyNames() {
-    var names = isArray(this.target) ? this.target.map(function (item, index) {
-      return index;
-    }) : (0, _keys2.default)(this.target);
-    return names.filter(function (name) {
-      return name !== OBSERVER_PROP_NAME;
-    });
-  };
-
-  /**
-   * 包裹数组
-   * @param {array} array 源数组
-   * @returns {array} 处理后的数组
-   */
-
-
-  Observer.prototype._wrapArray = function _wrapArray(array) {
-    if (array._wrapped_) return;
-    final(array, '_wrapped_', true);
-    final(array, 'push', function () {
-      var items = [].slice.call(arguments);
-      var observer = this[OBSERVER_PROP_NAME];
-      items.forEach(function (item) {
-        //这里也会触发对应 index 的 change 事件
-        observer.set(array.length, item);
-      }, this);
-      observer.emitChange({ name: 'length', value: this.length });
-      observer.emitChange({ value: this.length });
-    });
-    final(array, 'pop', function () {
-      var item = [].pop.apply(this, arguments);
-      var observer = this[OBSERVER_PROP_NAME];
-      observer.emitChange({ name: this.length, value: item });
-      observer.emitChange({ name: 'length', value: this.length });
-      observer.emitChange({ value: this.length });
-      return item;
-    });
-    final(array, 'unshift', function () {
-      var items = [].slice.call(arguments);
-      var observer = this[OBSERVER_PROP_NAME];
-      items.forEach(function (item) {
-        //这里也会触发对应 index 的 change 事件
-        observer.set(0, item);
-      }, this);
-      observer.emitChange({ name: 'length', value: this.length });
-      observer.emitChange({ value: this.length });
-    });
-    final(array, 'shift', function () {
-      var item = [].shift.apply(this, arguments);
-      var observer = this[OBSERVER_PROP_NAME];
-      observer.emitChange({ name: 0, value: item });
-      observer.emitChange({ name: 'length', value: this.length });
-      observer.emitChange({ value: this.length });
-      return item;
-    });
-    final(array, 'splice', function () {
-      var startIndex = arguments[0];
-      var endIndex = isNull(arguments[1]) ? startIndex + arguments[1] : this.length - 1;
-      var observer = this[OBSERVER_PROP_NAME];
-      var items = [].splice.apply(this, arguments);
-      for (var i = startIndex; i <= endIndex; i++) {
-        observer.emitChange({ name: i, value: items[i - startIndex] });
-      }
-      observer.emitChange({ name: 'length', value: this.length });
-      observer.emitChange({ value: this.length });
-      return items;
-    });
-    final(array, 'set', function (index, value) {
-      var observer = this[OBSERVER_PROP_NAME];
-      if (index >= this.length) {
-        observer.emitChange({ name: 'length', value: this.length });
-        observer.emitChange({ value: this.length });
-      }
-      observer.set(index, value);
-    });
-  };
-
-  Observer.prototype.run = function run(handler, options) {
-    options = options || {};
-    var _options = options,
-        context = _options.context,
-        trigger = _options.trigger,
-        immed = _options.immed,
-        deep = _options.deep;
-
-    context = context || this.target;
-    var auto = new AutoRun(handler, context, trigger, deep);
-    this.on('get', auto.onGet);
-    this.on('change', auto.onChange);
-    if (immed) auto.run();
-    return auto;
-  };
-
-  Observer.prototype.stop = function stop(autoRef) {
-    if (!autoRef) return;
-    this.off('get', autoRef.onGet);
-    this.off('change', autoRef.onChange);
-  };
-
-  Observer.prototype.watch = function watch(calculator, handler, options) {
-    options = options || {};
-    var _options2 = options,
-        context = _options2.context;
-
-    context = context || this.target;
-    var watcher = new Watcher(calculator, handler, context);
-    watcher.autoRef = this.run(watcher.calc, options);
-    return watcher;
-  };
-
-  Observer.prototype.unWatch = function unWatch(watcher) {
-    if (!watcher) return;
-    this.stop(watcher.autoRef);
-  };
-
-  return Observer;
-}(EventEmitter);
-
+    /**
+     * 添加一个属性，动态添中的属性，无法被观察，
+     * 但是通过 set 方法添加的属性可能被观察。
+     * @param {string} name 名称
+     * @param {Object} value 值
+     * @returns {void} 无返回
+     */
+    Observer.prototype.set = function (name, value) {
+        if (isFunction(value) || Observer.isIgnore(name)) {
+            return;
+        }
+        Object.defineProperty(this.target, name, {
+            get: function () {
+                var observer = this[OBSERVER_PROP_NAME];
+                observer.emitGet({ name: name, value: value });
+                return observer.shadow[name];
+            },
+            set: function (value) {
+                var observer = this[OBSERVER_PROP_NAME];
+                var oldValue = observer.shadow[name];
+                if (oldValue === value)
+                    return;
+                if (isObject(value)) {
+                    var childObserver = new Observer(value);
+                    observer.addChild(childObserver, name);
+                }
+                //移除旧值的父引用
+                //如果用 delete 删除属性将无法移除父子引用
+                if (oldValue && oldValue[OBSERVER_PROP_NAME]) {
+                    observer.removeChild(oldValue[OBSERVER_PROP_NAME], name);
+                }
+                observer.shadow[name] = value;
+                observer.emitChange({ name: name, value: value });
+            },
+            configurable: true,
+            enumerable: true
+        });
+        this.target[name] = value;
+    };
+    /**
+     * 自动应用所有动态添加的属性
+     * @returns {void} 无返回
+     */
+    Observer.prototype.apply = function () {
+        if (isArray(this.target)) {
+            this._wrapArray(this.target);
+        }
+        var names = this._getPropertyNames(this.target);
+        names.forEach(function (name) {
+            var desc = Object.getOwnPropertyDescriptor(this.target, name);
+            if (!('value' in desc))
+                return;
+            this.set(name, this.target[name]);
+        }, this);
+    };
+    /**
+     * 添子观察者对象
+     * @param {Object} child 父对象
+     * @param {String} name 属性名
+     * @returns {void} 无返回
+     */
+    Observer.prototype.addChild = function (child, name) {
+        if (isNull(child) || isNull(name)) {
+            throw new Error('Invalid paramaters');
+        }
+        if (child.options.root)
+            return;
+        child.parents.push({ parent: this, name: name });
+    };
+    /**
+     * 移除子对象
+     * @param {Object} child 父对象
+     * @param {String} name 属性名
+     * @returns {void} 无返回
+     */
+    Observer.prototype.removeChild = function (child, name) {
+        if (isNull(child)) {
+            throw new Error('Invalid paramaters');
+        }
+        var foundIndex = -1;
+        child.parents.forEach(function (item, index) {
+            if (item.parent === this && item.name === name) {
+                foundIndex = index;
+            }
+        }, this);
+        if (foundIndex > -1) {
+            child.parents.splice(foundIndex, 1);
+        }
+    };
+    /**
+     * 清除所有父子引用
+     * @returns {void} 无返回
+     */
+    Observer.prototype.clearReference = function () {
+        each(this.target, function (name, value) {
+            if (isNull(value))
+                return;
+            var child = value[OBSERVER_PROP_NAME];
+            if (child)
+                this.removeChild(child);
+        }, this);
+    };
+    /**
+     * 触发 change 事件
+     * @param {Object} event 事件对象
+     * @returns {void} 无返回
+     */
+    Observer.prototype.emitChange = function (event) {
+        event.path = event.name;
+        this.dispatch(CHANGE_EVENT_NAME, event);
+    };
+    /**
+     * 触发 change 事件
+     * @param {Object} event 事件对象
+     * @returns {void} 无返回
+     */
+    Observer.prototype.emitGet = function (event) {
+        event.path = event.name;
+        this.dispatch(GET_EVENT_NAME, event);
+    };
+    /**
+     * 派发一个事件，事件会向父级对象冒泡
+     * @param {string} eventName 事件名称
+     * @param {Object} event 事件对象
+     * @returns {void} 无返回
+     */
+    Observer.prototype.dispatch = function (eventName, event) {
+        if (event._src_ === this)
+            return;
+        event._src_ = event._src_ || this;
+        event._layer_ = event._layer_ || 0;
+        if ((event._layer_++) >= EVENT_MAX_DISPATCH_LAYER)
+            return;
+        this.emit(eventName, event);
+        if (!this.parents || this.parents.length < 1)
+            return;
+        this.parents.forEach(function (item) {
+            if (!(item.name in item.parent.target)) {
+                return item.parent.removeChild(this);
+            }
+            var parentEvent = copy(event);
+            parentEvent.path = isNull(event.path) ? item.name :
+                item.name + '.' + event.path;
+            item.parent.dispatch(eventName, parentEvent);
+        }, this);
+    };
+    /**
+     * 获取所有成员名称列表
+     * @returns {Array} 所有成员名称列表
+     */
+    Observer.prototype._getPropertyNames = function () {
+        var names = isArray(this.target) ?
+            this.target.map(function (item, index) {
+                return index;
+            }) : Object.keys(this.target);
+        return names.filter(function (name) {
+            return name !== OBSERVER_PROP_NAME;
+        });
+    };
+    /**
+     * 包裹数组
+     * @param {array} array 源数组
+     * @returns {array} 处理后的数组
+     */
+    Observer.prototype._wrapArray = function (array) {
+        if (array._wrapped_)
+            return;
+        final(array, '_wrapped_', true);
+        final(array, 'push', function () {
+            var items = [].slice.call(arguments);
+            var observer = this[OBSERVER_PROP_NAME];
+            items.forEach(function (item) {
+                //这里也会触发对应 index 的 change 事件
+                observer.set(array.length, item);
+            }, this);
+            observer.emitChange({ name: 'length', value: this.length });
+            observer.emitChange({ value: this.length });
+        });
+        final(array, 'pop', function () {
+            var item = [].pop.apply(this, arguments);
+            var observer = this[OBSERVER_PROP_NAME];
+            observer.emitChange({ name: this.length, value: item });
+            observer.emitChange({ name: 'length', value: this.length });
+            observer.emitChange({ value: this.length });
+            return item;
+        });
+        final(array, 'unshift', function () {
+            var items = [].slice.call(arguments);
+            var observer = this[OBSERVER_PROP_NAME];
+            items.forEach(function (item) {
+                //这里也会触发对应 index 的 change 事件
+                observer.set(0, item);
+            }, this);
+            observer.emitChange({ name: 'length', value: this.length });
+            observer.emitChange({ value: this.length });
+        });
+        final(array, 'shift', function () {
+            var item = [].shift.apply(this, arguments);
+            var observer = this[OBSERVER_PROP_NAME];
+            observer.emitChange({ name: 0, value: item });
+            observer.emitChange({ name: 'length', value: this.length });
+            observer.emitChange({ value: this.length });
+            return item;
+        });
+        final(array, 'splice', function () {
+            var startIndex = arguments[0];
+            var endIndex = isNull(arguments[1])
+                ? startIndex + arguments[1]
+                : this.length - 1;
+            var observer = this[OBSERVER_PROP_NAME];
+            var items = [].splice.apply(this, arguments);
+            for (var i = startIndex; i <= endIndex; i++) {
+                observer.emitChange({ name: i, value: items[i - startIndex] });
+            }
+            observer.emitChange({ name: 'length', value: this.length });
+            observer.emitChange({ value: this.length });
+            return items;
+        });
+        final(array, 'set', function (index, value) {
+            var observer = this[OBSERVER_PROP_NAME];
+            if (index >= this.length) {
+                observer.emitChange({ name: 'length', value: this.length });
+                observer.emitChange({ value: this.length });
+            }
+            observer.set(index, value);
+        });
+    };
+    Observer.prototype.run = function (handler, options) {
+        options = options || {};
+        var context = options.context, trigger = options.trigger, immed = options.immed, deep = options.deep;
+        context = context || this.target;
+        var auto = new AutoRun(handler, context, trigger, deep);
+        this.on('get', auto.onGet);
+        this.on('change', auto.onChange);
+        if (immed)
+            auto.run();
+        return auto;
+    };
+    Observer.prototype.stop = function (autoRef) {
+        if (!autoRef)
+            return;
+        this.off('get', autoRef.onGet);
+        this.off('change', autoRef.onChange);
+    };
+    Observer.prototype.watch = function (calculator, handler, options) {
+        options = options || {};
+        var context = options.context;
+        context = context || this.target;
+        var watcher = new Watcher(calculator, handler, context);
+        watcher.autoRef = this.run(watcher.calc, options);
+        return watcher;
+    };
+    Observer.prototype.unWatch = function (watcher) {
+        if (!watcher)
+            return;
+        this.stop(watcher.autoRef);
+    };
+    return Observer;
+}(EventEmitter));
 /**
  * 观察一个对象
  * @param {Object} target 目标对象
  * @return {Observer} 观察者对象
  */
-
-
 Observer.observe = function (target) {
-  return new Observer(target);
+    return new Observer(target);
 };
-
 /**
  * 检查是不是忽略的属性名
  * @param {string} word 待检查的字符串
  * @returns {void} 无返回
  */
 Observer.isIgnore = function (word) {
-  return IGNORE_REGEXPS.some(function (re) {
-    return re.test(word);
-  });
+    return IGNORE_REGEXPS.some(function (re) { return re.test(word); });
 };
-
 module.exports = Observer;
+//# sourceMappingURL=observer.js.map
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _a = __webpack_require__(2), final = _a.final, isArray = _a.isArray, copy = _a.copy, each = _a.each;
+/**
+ * 事件触发器基类
+ */
+var EventEmitter = /** @class */ (function () {
+    /**
+     * 构建一个一个事修的触发器对象
+     * @param {object} target 将代理的目标对象可以省略
+     * @returns {void} 无返回
+     */
+    function EventEmitter(target) {
+        target = target || this;
+        var emitter = target._emitter_;
+        if (emitter)
+            return emitter;
+        final(this, '_target_', target);
+        final(target, '_emitter_', this);
+        this._isNative_ = this._isNativeObject(this._target_);
+        this._listeners_ = this._listeners_ || {};
+        this.on = this.$on = this.$addListener = this.addListener;
+        this.off = this.$off = this.$removeListener = this.removeListener;
+        this.$emit = this.emit;
+    }
+    /**
+     * 检查是否原生支持事件
+     * @param {object} obj 对象
+     * @returns {void} 检查结果
+     */
+    EventEmitter.prototype._isNativeObject = function (obj) {
+        return obj.addEventListener && obj.removeEventListener && obj.dispatchEvent;
+    };
+    /**
+     * 添加一个事件监听函数
+     * @param {string} name 事件名称
+     * @param {function} listener 事件处理函数
+     * @param {capture} capture 是否是捕获阶段事件(只在代理 dom 对象时有效)
+     * @returns {void} 无返回
+     */
+    EventEmitter.prototype.addListener = function (name, listener, capture) {
+        if (this._isNative_) {
+            this._addNativeEventListener(name, listener, capture);
+        }
+        this._listeners_[name] = this._listeners_[name] || [];
+        this._listeners_[name].push(listener);
+        var maxListeners = EventEmitter._maxListeners;
+        if (this._listeners_[name].length > maxListeners) {
+            throw new Error("The '" + name + "' event listener is not more than " + maxListeners);
+        }
+    };
+    /**
+     * 移除「一个/一组/所有」事件监听函数
+     * @param {string} name 事件名称
+     * @param {function} listener 事件处理函数
+     * @param {capture} capture 是否是捕获阶段事件(只在代理 dom 对象时有效)
+     * @returns {void} 无返回
+     */
+    EventEmitter.prototype.removeListener = function (name, listener, capture) {
+        if (name && listener) {
+            if (this._isNative_) {
+                this._removeNativeEventListener(name, listener, capture);
+            }
+            if (!this._listeners_[name])
+                return;
+            var index = this._listeners_[name].indexOf(listener);
+            this._listeners_[name].splice(index, 1);
+        }
+        else if (name) {
+            if (this._isNative_ && this._listeners_[name]) {
+                this._listeners_[name].forEach(function (_listener) {
+                    this.removeListener(name, _listener, capture);
+                }, this);
+            }
+            delete this._listeners_[name];
+        }
+        else {
+            each(this._listeners_, function (name) {
+                this.removeListener(name, null, capture);
+            }, this);
+            this._listeners_ = {};
+        }
+    };
+    /**
+     * 触发自身的一个事件
+     * @param {string} name 事件名称
+     * @param {object} data 传递的对象
+     * @param {string} canBubble 能否冒泡(只在代理 dom 对象时有效)
+     * @param {object} cancelAble 能否取消(只在代理 dom 对象时有效)
+     * @returns {void} 无返回
+     */
+    EventEmitter.prototype.emit = function (name, data, canBubble, cancelAble) {
+        if (this._isNative_) {
+            return this._emitNativeEvent(name, data, canBubble, cancelAble);
+        }
+        if (!this._listeners_[name])
+            return;
+        var stopPropagation = false;
+        this._listeners_[name].forEach(function (handler) {
+            var rs = handler.call(this._target_, data);
+            if (rs === false)
+                stopPropagation = true;
+        }, this);
+        return stopPropagation;
+    };
+    /**
+     * 添加 DOM 元素事件
+     * @param {string} name 事件名称
+     * @param {function} listener 事件处理函数
+     * @param {capture} capture 是否是捕获阶段事件
+     * @returns {void} 无返回
+     */
+    EventEmitter.prototype._addNativeEventListener = function (name, listener, capture) {
+        this._target_.addEventListener(name, listener, capture);
+        //如果存在已注册的自定义 “组合事件”
+        var descriptor = EventEmitter._events[name];
+        if (descriptor) {
+            descriptor.addListener = descriptor.addListener || descriptor.on;
+            descriptor.addListener(this, name, listener, capture);
+        }
+    };
+    /**
+     * 移除 DOM 元素事件
+     * @param {string} name 事件名称
+     * @param {function} listener 事件处理函数
+     * @param {capture} capture 是否是捕获阶段事件
+     * @returns {void} 无返回
+     */
+    EventEmitter.prototype._removeNativeEventListener = function (name, listener, capture) {
+        this._target_.removeEventListener(name, listener, capture);
+        //如果存在已注册的自定义 “组合事件”
+        var descriptor = EventEmitter._events[name];
+        if (descriptor) {
+            descriptor.removeListener = descriptor.removeListener || descriptor.off;
+            descriptor.removeListener(this, name, listener, capture);
+        }
+    };
+    /**
+     * 触发 DOM 元素事件
+     * @param {string} name 事件名称
+     * @param {object} data 传递的对象
+     * @param {string} canBubble 能否冒泡
+     * @param {object} cancelAble 能否取消
+     * @returns {void} 无返回
+     */
+    EventEmitter.prototype._emitNativeEvent = function (name, data, canBubble, cancelAble) {
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent(name, canBubble, cancelAble);
+        copy(data, event, ['data']);
+        event.data = data;
+        return this._target_.dispatchEvent(event);
+    };
+    return EventEmitter;
+}());
+//最多添加多少个 listener
+EventEmitter._maxListeners = 1024;
+//所有自定义事件
+EventEmitter._events = [];
+/**
+ * 注册自定义事件(只在代理 dom 对象时有效)
+ * @param {object} descriptor 事件定义
+ * @returns {void} 无返回
+ */
+EventEmitter.register = function (descriptor) {
+    var names = descriptor.name;
+    if (!names)
+        return;
+    if (!isArray(names))
+        names = names.split(',');
+    names.forEach(function (name) {
+        this._events[name] = descriptor;
+    }, this);
+};
+module.exports = EventEmitter;
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports) {
+
+var VARIABLE_FILTER = /(\(|\[|\{|\+|\-|\*|\/|\>|\<|\=|\!|\,|\;|\?|\:|\&|\|)\s*([a-z\_0-9\$]+)/ig;
+var VARIABLE_NAME = /^[a-z\$\_]/i;
+var ALLOWED_WORD = /(\$scope|true|false|null|undefined|Date|Number|String|Object|Boolean|Array|RegExp|Math|JSON|parseInt|parseFloat|isNaN|isFinite)/; //eslint-disable-line
+var EXPRESSION_BLOCK = /\{\{([\s\S]+?)\}\}/;
+var EXPRESSION_CACHE = {};
+var TEMPLATE_CACHE = {};
+function findVariables(expr) {
+    expr = "(" + expr + ")";
+    VARIABLE_FILTER.lastIndex = 0;
+    var variables = {};
+    var info;
+    while (info = VARIABLE_FILTER.exec(expr)) {
+        var name_1 = info[2];
+        if (VARIABLE_NAME.test(name_1) && !ALLOWED_WORD.test(name_1)) {
+            variables[name_1] = true;
+        }
+    }
+    return Object.keys(variables);
+}
+function getValue(scope, name) {
+    var value = scope[name];
+    return (value instanceof Function) ? value.bind(scope) : value;
+}
+function expression(expr) {
+    var cacheItem = EXPRESSION_CACHE[expr];
+    if (cacheItem)
+        return cacheItem;
+    var keys = findVariables(expr);
+    var func = new (Function.bind.apply(Function, [void 0, '$scope'].concat(keys, ["return(" + expr + ")"])))();
+    function exec(scope) {
+        var values = keys.map(function (name) { return getValue(scope, name); });
+        return func.apply(void 0, [scope].concat(values));
+    }
+    EXPRESSION_CACHE[expr] = exec;
+    return exec;
+}
+function template(str) {
+    var cacheItem = TEMPLATE_CACHE[str];
+    if (cacheItem)
+        return cacheItem;
+    var blocks = str.split(EXPRESSION_BLOCK);
+    for (var i = 1; i < blocks.length; i += 2) {
+        blocks[i] = expression(blocks[i]);
+    }
+    function exec(scope) {
+        var result = '';
+        blocks.forEach(function (block) {
+            result += (block instanceof Function) ? block(scope) : block;
+        });
+        return result;
+    }
+    TEMPLATE_CACHE[str] = exec;
+    return exec;
+}
+function compile(str, mixed) {
+    return mixed ? template(str) : expression(str);
+}
+compile.expression = expression;
+compile.template = template;
+module.exports = compile;
+//# sourceMappingURL=expression.js.map
 
 /***/ }),
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(50);
-module.exports = __webpack_require__(4).Object.keys;
+module.exports = { "default": __webpack_require__(50), __esModule: true };
 
 /***/ }),
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 19.1.2.14 Object.keys(O)
-var toObject = __webpack_require__(24);
-
-__webpack_require__(29)('keys', function($keys){
-  return function keys(it){
-    return $keys(toObject(it));
-  };
-});
+__webpack_require__(51);
+__webpack_require__(55);
+module.exports = __webpack_require__(4)('iterator');
 
 /***/ }),
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(52), __esModule: true };
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(0);
-__webpack_require__(53);
-module.exports = function getOwnPropertyDescriptor(it, key){
-  return $.getDesc(it, key);
-};
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
-var toIObject = __webpack_require__(6);
-
-__webpack_require__(29)('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor){
-  return function getOwnPropertyDescriptor(it, key){
-    return $getOwnPropertyDescriptor(toIObject(it), key);
-  };
-});
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(55), __esModule: true };
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(0);
-module.exports = function defineProperty(it, key, desc){
-  return $.setDesc(it, key, desc);
-};
-
-/***/ }),
-/* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(57), __esModule: true };
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(58);
-__webpack_require__(62);
-module.exports = __webpack_require__(7)('iterator');
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
-var $at  = __webpack_require__(59)(true);
+var $at  = __webpack_require__(52)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(30)(String, 'String', function(iterated){
+__webpack_require__(27)(String, 'String', function(iterated){
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -2574,11 +2690,11 @@ __webpack_require__(30)(String, 'String', function(iterated){
 });
 
 /***/ }),
-/* 59 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(60)
-  , defined   = __webpack_require__(12);
+var toInteger = __webpack_require__(53)
+  , defined   = __webpack_require__(11);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function(TO_STRING){
@@ -2596,7 +2712,7 @@ module.exports = function(TO_STRING){
 };
 
 /***/ }),
-/* 60 */
+/* 53 */
 /***/ (function(module, exports) {
 
 // 7.1.4 ToInteger
@@ -2607,18 +2723,18 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 61 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $              = __webpack_require__(0)
-  , descriptor     = __webpack_require__(16)
-  , setToStringTag = __webpack_require__(19)
+  , descriptor     = __webpack_require__(15)
+  , setToStringTag = __webpack_require__(18)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(15)(IteratorPrototype, __webpack_require__(7)('iterator'), function(){ return this; });
+__webpack_require__(14)(IteratorPrototype, __webpack_require__(4)('iterator'), function(){ return this; });
 
 module.exports = function(Constructor, NAME, next){
   Constructor.prototype = $.create(IteratorPrototype, {next: descriptor(1, next)});
@@ -2626,29 +2742,29 @@ module.exports = function(Constructor, NAME, next){
 };
 
 /***/ }),
-/* 62 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(63);
-var Iterators = __webpack_require__(18);
+__webpack_require__(56);
+var Iterators = __webpack_require__(17);
 Iterators.NodeList = Iterators.HTMLCollection = Iterators.Array;
 
 /***/ }),
-/* 63 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(64)
-  , step             = __webpack_require__(65)
-  , Iterators        = __webpack_require__(18)
-  , toIObject        = __webpack_require__(6);
+var addToUnscopables = __webpack_require__(57)
+  , step             = __webpack_require__(58)
+  , Iterators        = __webpack_require__(17)
+  , toIObject        = __webpack_require__(9);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(30)(Array, 'Array', function(iterated, kind){
+module.exports = __webpack_require__(27)(Array, 'Array', function(iterated, kind){
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -2674,13 +2790,13 @@ addToUnscopables('values');
 addToUnscopables('entries');
 
 /***/ }),
-/* 64 */
+/* 57 */
 /***/ (function(module, exports) {
 
 module.exports = function(){ /* empty */ };
 
 /***/ }),
-/* 65 */
+/* 58 */
 /***/ (function(module, exports) {
 
 module.exports = function(done, value){
@@ -2688,44 +2804,44 @@ module.exports = function(done, value){
 };
 
 /***/ }),
-/* 66 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(67), __esModule: true };
+module.exports = { "default": __webpack_require__(60), __esModule: true };
 
 /***/ }),
-/* 67 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(68);
-__webpack_require__(73);
-module.exports = __webpack_require__(4).Symbol;
+__webpack_require__(61);
+__webpack_require__(66);
+module.exports = __webpack_require__(7).Symbol;
 
 /***/ }),
-/* 68 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // ECMAScript 6 symbols shim
 var $              = __webpack_require__(0)
-  , global         = __webpack_require__(9)
-  , has            = __webpack_require__(17)
-  , DESCRIPTORS    = __webpack_require__(33)
+  , global         = __webpack_require__(6)
+  , has            = __webpack_require__(16)
+  , DESCRIPTORS    = __webpack_require__(30)
   , $export        = __webpack_require__(5)
-  , redefine       = __webpack_require__(32)
-  , $fails         = __webpack_require__(10)
-  , shared         = __webpack_require__(34)
-  , setToStringTag = __webpack_require__(19)
-  , uid            = __webpack_require__(35)
-  , wks            = __webpack_require__(7)
-  , keyOf          = __webpack_require__(69)
-  , $names         = __webpack_require__(70)
-  , enumKeys       = __webpack_require__(71)
-  , isArray        = __webpack_require__(72)
-  , anObject       = __webpack_require__(36)
-  , toIObject      = __webpack_require__(6)
-  , createDesc     = __webpack_require__(16)
+  , redefine       = __webpack_require__(29)
+  , $fails         = __webpack_require__(12)
+  , shared         = __webpack_require__(31)
+  , setToStringTag = __webpack_require__(18)
+  , uid            = __webpack_require__(32)
+  , wks            = __webpack_require__(4)
+  , keyOf          = __webpack_require__(62)
+  , $names         = __webpack_require__(63)
+  , enumKeys       = __webpack_require__(64)
+  , isArray        = __webpack_require__(65)
+  , anObject       = __webpack_require__(33)
+  , toIObject      = __webpack_require__(9)
+  , createDesc     = __webpack_require__(15)
   , getDesc        = $.getDesc
   , setDesc        = $.setDesc
   , _create        = $.create
@@ -2865,7 +2981,7 @@ if(!useNative){
   $.getNames   = $names.get = $getOwnPropertyNames;
   $.getSymbols = $getOwnPropertySymbols;
 
-  if(DESCRIPTORS && !__webpack_require__(31)){
+  if(DESCRIPTORS && !__webpack_require__(28)){
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 }
@@ -2935,11 +3051,11 @@ setToStringTag(Math, 'Math', true);
 setToStringTag(global.JSON, 'JSON', true);
 
 /***/ }),
-/* 69 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $         = __webpack_require__(0)
-  , toIObject = __webpack_require__(6);
+  , toIObject = __webpack_require__(9);
 module.exports = function(object, el){
   var O      = toIObject(object)
     , keys   = $.getKeys(O)
@@ -2950,11 +3066,11 @@ module.exports = function(object, el){
 };
 
 /***/ }),
-/* 70 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(6)
+var toIObject = __webpack_require__(9)
   , getNames  = __webpack_require__(0).getNames
   , toString  = {}.toString;
 
@@ -2975,7 +3091,7 @@ module.exports.get = function getOwnPropertyNames(it){
 };
 
 /***/ }),
-/* 71 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
@@ -2994,51 +3110,113 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 72 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(26);
+var cof = __webpack_require__(22);
 module.exports = Array.isArray || function(arg){
   return cof(arg) == 'Array';
 };
 
 /***/ }),
-/* 73 */
+/* 66 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
-/* 74 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(75), __esModule: true };
+"use strict";
+
+
+exports.__esModule = true;
+
+var _typeof2 = __webpack_require__(13);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
+};
 
 /***/ }),
-/* 75 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(76);
-module.exports = __webpack_require__(4).Object.setPrototypeOf;
+"use strict";
+
+
+exports.__esModule = true;
+
+var _setPrototypeOf = __webpack_require__(69);
+
+var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
+
+var _create = __webpack_require__(37);
+
+var _create2 = _interopRequireDefault(_create);
+
+var _typeof2 = __webpack_require__(13);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
+  }
+
+  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
+};
 
 /***/ }),
-/* 76 */
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(70), __esModule: true };
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(71);
+module.exports = __webpack_require__(7).Object.setPrototypeOf;
+
+/***/ }),
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
 var $export = __webpack_require__(5);
-$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(77).set});
+$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(72).set});
 
 /***/ }),
-/* 77 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
 var getDesc  = __webpack_require__(0).getDesc
-  , isObject = __webpack_require__(37)
-  , anObject = __webpack_require__(36);
+  , isObject = __webpack_require__(34)
+  , anObject = __webpack_require__(33);
 var check = function(O, proto){
   anObject(O);
   if(!isObject(proto) && proto !== null)throw TypeError(proto + ": can't set as prototype!");
@@ -3047,7 +3225,7 @@ module.exports = {
   set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
     function(test, buggy, set){
       try {
-        set = __webpack_require__(23)(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+        set = __webpack_require__(20)(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch(e){ buggy = true; }
@@ -3062,7 +3240,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 78 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(0);
@@ -3071,273 +3249,11 @@ module.exports = function create(P, D){
 };
 
 /***/ }),
-/* 79 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _classCallCheck2 = __webpack_require__(2);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _require = __webpack_require__(3),
-    final = _require.final,
-    isArray = _require.isArray,
-    copy = _require.copy,
-    each = _require.each;
-
-var Error = __webpack_require__(21);
-
-/**
- * 事件触发器基类
- */
-
-var EventEmitter = function () {
-
-  /**
-   * 构建一个一个事修的触发器对象
-   * @param {object} target 将代理的目标对象可以省略
-   * @returns {void} 无返回
-   */
-  function EventEmitter(target) {
-    (0, _classCallCheck3.default)(this, EventEmitter);
-
-    target = target || this;
-    var emitter = target._emitter_;
-    if (emitter) return emitter;
-    final(this, '_target_', target);
-    final(target, '_emitter_', this);
-    this._isNative_ = this._isNativeObject(this._target_);
-    this._listeners_ = this._listeners_ || {};
-    this.on = this.$on = this.$addListener = this.addListener;
-    this.off = this.$off = this.$removeListener = this.removeListener;
-    this.$emit = this.emit;
-  }
-
-  /**
-   * 检查是否原生支持事件
-   * @param {object} obj 对象
-   * @returns {void} 检查结果
-   */
-
-
-  EventEmitter.prototype._isNativeObject = function _isNativeObject(obj) {
-    return obj.addEventListener && obj.removeEventListener && obj.dispatchEvent;
-  };
-
-  /**
-   * 添加一个事件监听函数
-   * @param {string} name 事件名称
-   * @param {function} listener 事件处理函数
-   * @param {capture} capture 是否是捕获阶段事件(只在代理 dom 对象时有效)
-   * @returns {void} 无返回
-   */
-
-
-  EventEmitter.prototype.addListener = function addListener(name, listener, capture) {
-    if (this._isNative_) {
-      this._addNativeEventListener(name, listener, capture);
-    }
-    this._listeners_[name] = this._listeners_[name] || [];
-    this._listeners_[name].push(listener);
-    var maxListeners = EventEmitter._maxListeners;
-    if (this._listeners_[name].length > maxListeners) {
-      throw new Error('The \'' + name + '\' event listener is not more than ' + maxListeners);
-    }
-  };
-
-  /**
-   * 移除「一个/一组/所有」事件监听函数
-   * @param {string} name 事件名称
-   * @param {function} listener 事件处理函数
-   * @param {capture} capture 是否是捕获阶段事件(只在代理 dom 对象时有效)
-   * @returns {void} 无返回
-   */
-
-
-  EventEmitter.prototype.removeListener = function removeListener(name, listener, capture) {
-    if (name && listener) {
-      if (this._isNative_) {
-        this._removeNativeEventListener(name, listener, capture);
-      }
-      if (!this._listeners_[name]) return;
-      var index = this._listeners_[name].indexOf(listener);
-      this._listeners_[name].splice(index, 1);
-    } else if (name) {
-      if (this._isNative_ && this._listeners_[name]) {
-        this._listeners_[name].forEach(function (_listener) {
-          this.removeListener(name, _listener, capture);
-        }, this);
-      }
-      delete this._listeners_[name];
-    } else {
-      each(this._listeners_, function (name) {
-        this.removeListener(name, null, capture);
-      }, this);
-      this._listeners_ = {};
-    }
-  };
-
-  /**
-   * 触发自身的一个事件
-   * @param {string} name 事件名称
-   * @param {object} data 传递的对象
-   * @param {string} canBubble 能否冒泡(只在代理 dom 对象时有效)
-   * @param {object} cancelAble 能否取消(只在代理 dom 对象时有效)
-   * @returns {void} 无返回
-   */
-
-
-  EventEmitter.prototype.emit = function emit(name, data, canBubble, cancelAble) {
-    if (this._isNative_) {
-      return this._emitNativeEvent(name, data, canBubble, cancelAble);
-    }
-    if (!this._listeners_[name]) return;
-    var stopPropagation = false;
-    this._listeners_[name].forEach(function (handler) {
-      var rs = handler.call(this._target_, data);
-      if (rs === false) stopPropagation = true;
-    }, this);
-    return stopPropagation;
-  };
-
-  /**
-   * 添加 DOM 元素事件
-   * @param {string} name 事件名称
-   * @param {function} listener 事件处理函数
-   * @param {capture} capture 是否是捕获阶段事件
-   * @returns {void} 无返回
-   */
-
-
-  EventEmitter.prototype._addNativeEventListener = function _addNativeEventListener(name, listener, capture) {
-    this._target_.addEventListener(name, listener, capture);
-    //如果存在已注册的自定义 “组合事件”
-    var descriptor = EventEmitter._events[name];
-    if (descriptor) {
-      descriptor.addListener = descriptor.addListener || descriptor.on;
-      descriptor.addListener(this, name, listener, capture);
-    }
-  };
-
-  /**
-   * 移除 DOM 元素事件
-   * @param {string} name 事件名称
-   * @param {function} listener 事件处理函数
-   * @param {capture} capture 是否是捕获阶段事件
-   * @returns {void} 无返回
-   */
-
-
-  EventEmitter.prototype._removeNativeEventListener = function _removeNativeEventListener(name, listener, capture) {
-    this._target_.removeEventListener(name, listener, capture);
-    //如果存在已注册的自定义 “组合事件”
-    var descriptor = EventEmitter._events[name];
-    if (descriptor) {
-      descriptor.removeListener = descriptor.removeListener || descriptor.off;
-      descriptor.removeListener(this, name, listener, capture);
-    }
-  };
-
-  /**
-   * 触发 DOM 元素事件
-   * @param {string} name 事件名称
-   * @param {object} data 传递的对象
-   * @param {string} canBubble 能否冒泡
-   * @param {object} cancelAble 能否取消
-   * @returns {void} 无返回
-   */
-
-
-  EventEmitter.prototype._emitNativeEvent = function _emitNativeEvent(name, data, canBubble, cancelAble) {
-    var event = document.createEvent('HTMLEvents');
-    event.initEvent(name, canBubble, cancelAble);
-    copy(data, event, ['data']);
-    event.data = data;
-    return this._target_.dispatchEvent(event);
-  };
-
-  return EventEmitter;
-}();
-
-//最多添加多少个 listener
-
-
-EventEmitter._maxListeners = 1024;
-
-//所有自定义事件
-EventEmitter._events = [];
-
-/**
- * 注册自定义事件(只在代理 dom 对象时有效)
- * @param {object} descriptor 事件定义
- * @returns {void} 无返回
- */
-EventEmitter.register = function (descriptor) {
-  var names = descriptor.name;
-  if (!names) return;
-  if (!isArray(names)) names = names.split(',');
-  names.forEach(function (name) {
-    this._events[name] = descriptor;
-  }, this);
-};
-
-module.exports = EventEmitter;
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _classCallCheck2 = __webpack_require__(2);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _require = __webpack_require__(3),
-    isFunction = _require.isFunction,
-    isBoolean = _require.isBoolean,
-    getByPath = _require.getByPath,
-    deepEqual = _require.deepEqual,
-    clone = _require.clone;
-
-var Error = __webpack_require__(21);
-
-var Watcher = function Watcher(calculator, handler, context) {
-  var _this = this;
-
-  (0, _classCallCheck3.default)(this, Watcher);
-
-  this.calc = function (force) {
-    var newValue = _this.calculator.call(_this.context);
-    var willExecute = isBoolean(force) ? force : !deepEqual(newValue, _this.value);
-    if (willExecute) {
-      _this.handler.call(_this.context, newValue, _this.value);
-    }
-    _this.value = clone(newValue);
-  };
-
-  if (!isFunction(calculator) || !isFunction(handler)) {
-    throw new Error('Invalid parameters');
-  }
-  this.context = context || this;
-  this.calculator = isFunction(calculator) ? calculator : function () {
-    return getByPath(_this.context, calculator);
-  };
-  this.handler = handler;
-}
-
-//force: true 强制执行，false 强制不执行，无参数根据计算结果决定
-;
-
-module.exports = Watcher;
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var connect = __webpack_require__(27);
-var React = __webpack_require__(8);
+var connect = __webpack_require__(23);
+var React = __webpack_require__(3);
 
 module.exports = function model(model) {
   if (model && model.prototype instanceof React.Component) {
@@ -3350,23 +3266,23 @@ module.exports = function model(model) {
 };
 
 /***/ }),
-/* 82 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _create = __webpack_require__(38);
+var _create = __webpack_require__(37);
 
 var _create2 = _interopRequireDefault(_create);
 
-var _extends3 = __webpack_require__(11);
+var _extends3 = __webpack_require__(10);
 
 var _extends4 = _interopRequireDefault(_extends3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var React = __webpack_require__(8);
-var bindable = __webpack_require__(41);
+var React = __webpack_require__(3);
+var bindable = __webpack_require__(38);
 
-var _require = __webpack_require__(83),
+var _require = __webpack_require__(8),
     expression = _require.expression;
 
 var _require2 = __webpack_require__(1),
@@ -3442,86 +3358,7 @@ function binding(component) {
 module.exports = binding;
 
 /***/ }),
-/* 83 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _keys = __webpack_require__(28);
-
-var _keys2 = _interopRequireDefault(_keys);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var VARIABLE_FILTER = /(\(|\[|\{|\+|\-|\*|\/|\>|\<|\=|\!|\,|\;|\?|\:|\&|\|)\s*([a-z\_0-9\$]+)/ig;
-var VARIABLE_NAME = /^[a-z\$\_]/i;
-var ALLOWED_WORD = /(\$scope|true|false|null|undefined|Date|Number|String|Object|Boolean|Array|RegExp|Math|JSON|parseInt|parseFloat|isNaN|isFinite)/; //eslint-disable-line
-var EXPRESSION_BLOCK = /\{\{([\s\S]+?)\}\}/;
-var EXPRESSION_CACHE = {};
-var TEMPLATE_CACHE = {};
-
-function findVariables(expr) {
-  expr = '(' + expr + ')';
-  VARIABLE_FILTER.lastIndex = 0;
-  var variables = {};
-  var info = void 0;
-  while (info = VARIABLE_FILTER.exec(expr)) {
-    //eslint-disable-line
-    var name = info[2];
-    if (VARIABLE_NAME.test(name) && !ALLOWED_WORD.test(name)) {
-      variables[name] = true;
-    }
-  }
-  return (0, _keys2.default)(variables);
-}
-
-function getValue(scope, name) {
-  var value = scope[name];
-  return value instanceof Function ? value.bind(scope) : value;
-}
-
-function expression(expr) {
-  var cacheItem = EXPRESSION_CACHE[expr];
-  if (cacheItem) return cacheItem;
-  var keys = findVariables(expr);
-  var func = new (Function.prototype.bind.apply(Function, [null].concat(['$scope'], keys, ['return(' + expr + ')'])))();
-  function exec(scope) {
-    var values = keys.map(function (name) {
-      return getValue(scope, name);
-    });
-    return func.apply(undefined, [scope].concat(values));
-  }
-  EXPRESSION_CACHE[expr] = exec;
-  return exec;
-}
-
-function template(str) {
-  var cacheItem = TEMPLATE_CACHE[str];
-  if (cacheItem) return cacheItem;
-  var blocks = str.split(EXPRESSION_BLOCK);
-  for (var i = 1; i < blocks.length; i += 2) {
-    blocks[i] = expression(blocks[i]);
-  }
-  function exec(scope) {
-    var result = '';
-    blocks.forEach(function (block) {
-      result += block instanceof Function ? block(scope) : block;
-    });
-    return result;
-  }
-  TEMPLATE_CACHE[str] = exec;
-  return exec;
-}
-
-function compile(str, mixed) {
-  return mixed ? template(str) : expression(str);
-}
-
-compile.expression = expression;
-compile.template = template;
-
-module.exports = compile;
-
-/***/ }),
-/* 84 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _require = __webpack_require__(1),
@@ -3547,10 +3384,10 @@ function autorun(target, method) {
 module.exports = autorun;
 
 /***/ }),
-/* 85 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _require = __webpack_require__(3),
+var _require = __webpack_require__(2),
     isFunction = _require.isFunction;
 
 var _require2 = __webpack_require__(1),
@@ -3582,7 +3419,7 @@ function watch(calculator, immed) {
 module.exports = watch;
 
 /***/ }),
-/* 86 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _require = __webpack_require__(1),
@@ -3605,14 +3442,14 @@ function deep(target, method) {
 module.exports = deep;
 
 /***/ }),
-/* 87 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _require = __webpack_require__(1),
     registerReceivePropsHandler = _require.registerReceivePropsHandler,
     registerMountHandler = _require.registerMountHandler;
 
-var _require2 = __webpack_require__(3),
+var _require2 = __webpack_require__(2),
     isObject = _require2.isObject,
     each = _require2.each,
     isString = _require2.isString;
@@ -3646,16 +3483,17 @@ function mapping(map) {
 module.exports = mapping;
 
 /***/ }),
-/* 88 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _classCallCheck2 = __webpack_require__(2);
+var _classCallCheck2 = __webpack_require__(36);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var AutoRun = __webpack_require__(39);
+var _require = __webpack_require__(8),
+    AutoRun = _require.AutoRun;
 
 var UPDATE_EVENT = 'compositionupdate';
 var END_EVENT = 'compositionend';
@@ -3720,10 +3558,10 @@ AutoRun.prototype.isSync = function () {
 module.exports = composition;
 
 /***/ }),
-/* 89 */
+/* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.3.1"}
+module.exports = {"name":"mota","version":"0.4.0"}
 
 /***/ })
 /******/ ]);
