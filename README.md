@@ -1,3 +1,5 @@
+![logo](./docs/logo.png)
+
 # mota
 
 [![npm](https://img.shields.io/npm/l/mota.svg)](LICENSE.md)
@@ -26,7 +28,7 @@ export default class User {
   get fullName(){
     reutrn `${this.firstName} ${this.lastName}`;
   }
-  popup=()=>{
+  popup = () => {
     alert(this.fullName);
   }
 }
@@ -100,10 +102,8 @@ ReactDOM.render(<App/>, mountNode);
 
 注意一下，默认情况下，所有的「原生表单组件」，比如 `input`、`textarea`、`select` 都可以直接进行绑定，但是对于一些「组件库」中的「部分表单组件」不能直接绑定，请阅读 [绑定原生表单组件](./markdowns/binding-builtin.md) 和 [绑定自定义表单组件](./markdowns/binding-custom.md)
 
-## 文档
-- [模型定义说明](./markdowns/model.md)
-- [双向绑定说明](./markdowns/binding.md)
 
 ## 其它
+- [文档](http://houfeng.net/mota/)
 - [版本发布日志](https://github.com/Houfeng/mota/releases)
 - [mota 基于 MIT 协议开源](https://tldrlegal.com/license/mit-license)

@@ -48,6 +48,9 @@ build:
       libraryTarget: 'umd'
       umdNamedDefine: true
   - name: doc
+  - name: copy
+    files:
+      ./docs/logo.png: ./design/logo.png
 
 test:
   - name: lint
