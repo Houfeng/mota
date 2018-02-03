@@ -1,12 +1,14 @@
 ![logo](./docs/logo.jpg)
 
-<div style="text-align:center">
+<p align="center">
+
 [![npm](https://img.shields.io/npm/l/mota.svg)](LICENSE.md)
 [![NPM Version](https://img.shields.io/npm/v/mota.svg)](https://www.npmjs.com/package/mota)
 [![Build Status](https://www.travis-ci.org/Houfeng/mota.svg?branch=master)](https://www.travis-ci.org/Houfeng/mota)
 [![Coverage Status](https://coveralls.io/repos/github/Houfeng/mota/badge.svg?branch=dev)](https://coveralls.io/github/Houfeng/mota?branch=dev)
 [![npm](https://img.shields.io/npm/dt/mota.svg)](https://www.npmjs.com/package/mota)
-</div>
+
+</p>
 
 # mota
 
