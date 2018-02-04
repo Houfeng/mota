@@ -7,10 +7,13 @@ locales:
     groups:
       - name: guide
         text: 使用指南
-      - name: model
-        text: 定义模型
-      - name: binding
-        text: 双向绑定
+    links:
+      - text: 文档
+        url: //houfeng.net/mota/
+      - text: GitHub
+        url: //github.com/Houfeng/mota
+      - text: 示例
+        url: //houfeng.net/dn-template-mota/example/
 
     docs:
       - ./**/*.md

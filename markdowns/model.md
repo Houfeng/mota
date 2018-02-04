@@ -1,14 +1,15 @@
 ---
-group: model
+group: guide
 name: model
-title: 如何编写模型
-index: 1
+title: 编写业务模型
+index: 2
 ---
 
-# 如何编写模型
+# 编写业务模型
 
-在 mota 中模 model 通常是一个 `class`，如下
+在 mota 中「模型」如同其它 OOP 语言中的已有的「面向对象」的知识几首一模一样，是由一个或多个 `class` 或普通的的 `Object` 组成的。
 
+如下示例通过编写一个名为 `User` 的 `class`，创建了一个「用户模型」
 ```js
 export default class User {
   firstName = 'Jack';
@@ -19,7 +20,7 @@ export default class User {
 }
 ```
 
-也可以是一个 `Object`，如下
+也可以是一个 `Object`，通过这个模型需要是「单例」时，可采用这种方式，如下
 
 ```js
 export default {
@@ -31,7 +32,8 @@ export default {
 };
 ```
 
-无论哪种形式的 `model` 都能通过 `@model` 关联到组件，使组件具备 `this.model` 这个「可响应」成员，如下
+在「业务模型」编写完成后，可以通过 `@model` 将某个「类」或某个「类的实例」关联到指定组件，关联后便可以在组件中使用 `this.model` 访问关联的「模型」，mota 会自动「收集组件依赖」，在组件「依赖的属性」发生变化时，自动响应变化并驱动「组件渲染」，如下
+
 ```js
 import { model,binding } from 'mota';
 import React from 'react';
@@ -60,27 +62,4 @@ class App extends React.Component {
 ReactDOM.render(<App/>, mountNode);
 ```
 
-
-值得注意的是，在使用 `@model` 时如果传入的是一个 `class` 最终每个组件实例都会自动创建一个 `新实例`，
-如果需要「单例」，那么需要已经创建好的实例，比如
-
-```js
-class User{
-  ...
-}
-
-export default new User();
-```
-
-
-同样，我们关联到组件
-```js
-import user from './user';
-
-@model(user);
-class App extends React.Component{
-  ...
-}
-```
-
-或者直接使用 `object` 风格的「模型」
+值得注意的是，在使用 `@model` 时如果传入的是一个 `class` 最终每个组件实例都会自动创建一个 `新实例`。

@@ -1,109 +1,46 @@
 ---
 group: guide
-name: readme
+name: quick
 title: 快速开始
+index: 1
 ---
 
 # 快速开始
 
-mota 是一个主张「面向对象」的、支持「双向绑定」的 React 状态管理库，它不同于 Redux/flux，
-和 MobX 稍像，但也并不相同且更易用。
+## 简述
 
-## 安装
+React 是一个「视图层」的 UI 框架，以常见的 MVC 来讲 React 仅是 View，而我们在编写应用时，通常还需要关注更加重要的 model，对于 React 来讲，我们常常需要一个「状态管理」库。然而，目前大多数针对 React 的状态管理库都需要对其「强依赖」，用其编写的代码并不能轻易在其它地方重用，通过这些框架还具有「排它性」，但是「业务模型」应该是没有过多依赖，应该是无关框架的，它应该随时可以被用在任何合适的 JavaScript 环境中，使用 mota 你可以用原生的普通的 JavaScript 代码编写你的「业务模型」，并让你的「业务模型」轻易在不同框架、不同运行环境下重用。
 
-```sh
-npm i mota --save
-```
+mota 是一个主张「面向对象」的、支持「双向绑定」的 React 应用辅助库，基于 mota 你可以用纯 JavaScript 为应用编写完全面向对象的「业务模型」，还可以将现有「业务模型」关联到 React 应用中。
 
 ## 示例
 
-### 第一步，定义模型
+[在线 TodoList 示例](http://houfeng.net/dn-template-mota/example/)
+([示例源码](https://github.com/Houfeng/dn-template-mota))
 
-```js
-export default class User {
-  firstName = 'jack';
-  lastName = 'hou';
-  get fullName(){
-    reutrn `${this.firstName} ${this.lastName}`;
-  }
-  popup=()=>{
-    alert(this.fullName);
-  }
-}
+## 安装
+
+通过 npm 安装，如下
+```sh
+$ npm i mota --save
 ```
 
-在 mota 中「模型」是一个或多个「类」，按照你已有的「面向对象」的知识设计你的「业务模型」就行了。
+或通过 `dawn` 脚手脚加创建工程，如下
 
-
-### 第二步，关联到组件
-```js
-import { model } from 'mota';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import User from './user';
-
-@model(User)
-class App extends React.Component {
-  onFilstNameChange = event=>{
-    this.model.firstName= event.target.value;
-  };
-  render(){
-    return <div>
-      <p>{this.model.fullName}</p>
-      <p>
-        <input onChange={this.onFilstNameChange}/>
-      </p>
-      <p>
-        <button onClick={this.model.popup}></button>
-      </p>
-    </div>;
-  }
-}
-ReactDOM.render(<App/>, mountNode);
+```sh
+$ dn init -t mota
 ```
 
-在「模型」编写完成后，可以通过 `@model` 将某个「类」或某个「类的实例」关联到指定组件，关联后便可以在组件中使用 `this.model` 访问关联的「模型」，mota 会自动「收集组件依赖」，在组件「依赖的属性」发生变化时，自动响应变化并驱动「组件渲染」，请阅读 [模型定义说明](./markdowns/model.md)
-
-
-> 到这里，已经介绍了的 mota 主要用法，你的应用已经基本上有类似使用 mobx 的响应用能力了，但这还不够。
-
-
-### 第三步，双向绑定
-
-不要惊诧，就是「双向绑定」。`mota` 主张「面向对象」，同样也不排斥「双向绑定」，使用 mota 能够实现类似 `ng` 或 `vue` 的绑定效果。还是刚刚的模型，我们来稍微改动一下组件的代码
-
-```js
-import { model,binding } from 'mota';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import User from './user';
-
-@model(User)
-@binding
-class App extends React.Component {
-  render(){
-    return <div>
-      <p>{this.model.fullName}</p>
-      <p>
-        <input data-bind="name"/>
-      </p>
-      <p>
-        <button onClick={this.model.popup}></button>
-      </p>
-    </div>;
-  }
-}
-ReactDOM.render(<App/>, mountNode);
-```
-
-其中的「关键」就是 `@binding`，使用 `@binding` 后，组件便具备了「双向绑定」的能力，在 `jsx` 中便可以通过名为 `data-bind` 的 `attribute` 进行「绑定表达式」的声明，绑定表达式的 `scope` 是 `model` 而不是 `this`，也就是只能与 `model` 进行绑定。
-
-注意一下，默认情况下，所有的「原生表单组件」，比如 `input`、`textarea`、`select` 都可以直接进行绑定，但是对于一些「组件库」中的「部分表单组件」不能直接绑定，请阅读 [双向绑定说明](./markdowns/binding.md)
+需要先安装 dawn（[参考文档](https://alibaba.github.io/dawn/docs/)）
 
 ## 文档
-- [模型定义说明](./markdowns/model.md)
-- [双向绑定说明](./markdowns/binding.md)
+- 快速开始 (http://houfeng.net/mota/#!/zh/guide/quick)
+- 编写业务模型 (http://houfeng.net/mota/#!/zh/guide/model)
+- 属性映射 (http://houfeng.net/mota/#!/zh/guide/mapping)
+- 自执行函数 (http://houfeng.net/mota/#!/zh/guide/autorun)
+- 监听模型变化 (http://houfeng.net/mota/#!/zh/guide/watch)
+- 数据绑定 (http://houfeng.net/mota/#!/zh/guide/binding)
 
-## 其它
+## 链接
 - [版本发布日志](https://github.com/Houfeng/mota/releases)
-- [mota 基于 MIT 协议开源](https://tldrlegal.com/license/mit-license)
+- [MIT 开源协议](https://tldrlegal.com/license/mit-license)
