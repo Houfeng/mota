@@ -19,7 +19,7 @@ mota 是一个主张「面向对象」的、支持「双向绑定」的 React �
 ## 示例
 
 [在线 TodoList 示例](http://houfeng.net/dn-template-mota/example/)
-[示例源码](https://github.com/Houfeng/dn-template-mota)
+([示例源码](https://github.com/Houfeng/dn-template-mota))
 
 ## 安装
 
