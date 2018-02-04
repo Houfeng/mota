@@ -31,18 +31,21 @@ $ npm i mota --save
 或通过 `dawn` 脚手脚加创建工程，如下
 
 ```sh
+$ mkdir your_path
+$ cd your_path
 $ dn init -t mota
+$ dn dev
 ```
 
 需要先安装 dawn（[参考文档](https://alibaba.github.io/dawn/docs/)）
 
 ## 文档
-- 快速开始 (http://houfeng.net/mota/#!/zh/guide/quick)
-- 编写业务模型 (http://houfeng.net/mota/#!/zh/guide/model)
-- 属性映射 (http://houfeng.net/mota/#!/zh/guide/mapping)
-- 自执行函数 (http://houfeng.net/mota/#!/zh/guide/autorun)
-- 监听模型变化 (http://houfeng.net/mota/#!/zh/guide/watch)
-- 数据绑定 (http://houfeng.net/mota/#!/zh/guide/binding)
+- [快速开始] (http://houfeng.net/mota/#!/zh/guide/quick)
+- [编写业务模型] (http://houfeng.net/mota/#!/zh/guide/model)
+- [将组件属性映射到模型] (http://houfeng.net/mota/#!/zh/guide/mapping)
+- [自执行函数] (http://houfeng.net/mota/#!/zh/guide/autorun)
+- [监听模型变化] (http://houfeng.net/mota/#!/zh/guide/watch)
+- [将模型数据与表单绑定] (http://houfeng.net/mota/#!/zh/guide/binding)
 
 ## 链接
 - [版本发布日志](https://github.com/Houfeng/mota/releases)
