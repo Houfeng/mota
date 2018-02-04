@@ -6,12 +6,6 @@ const {
 } = require('./utils');
 const stateful = require('./stateful');
 
-function trigger() {
-  if (!this._mounted_) return;
-  //this.setState({ _model_: this.model });
-  this.forceUpdate();
-}
-
 function createRender(proto) {
   const initailRender = proto.render;
   const convertRender = function () {
@@ -22,10 +16,15 @@ function createRender(proto) {
   return function () {
     if (!this._run_) {
       final(this, '_observer_', new Observer(this.model));
-      const context = this;
-      const deep = !!this.constructor._deep_;
-      final(this, '_run_',
-        this._observer_.run(convertRender, { trigger, context, deep }));
+      final(this, '_trigger_', function () {
+        if (!this._mounted_) return;
+        this.forceUpdate();
+      });
+      final(this, '_run_', this._observer_.run(convertRender, {
+        context: this,
+        trigger: this._trigger_,
+        deep: !!this.constructor._deep_
+      }));
     }
     return this._run_.run();
   };

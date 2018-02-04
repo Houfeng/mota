@@ -1330,12 +1330,6 @@ var _require2 = __webpack_require__(1),
 
 var stateful = __webpack_require__(35);
 
-function trigger() {
-  if (!this._mounted_) return;
-  //this.setState({ _model_: this.model });
-  this.forceUpdate();
-}
-
 function createRender(proto) {
   var initailRender = proto.render;
   var convertRender = function convertRender() {
@@ -1345,9 +1339,15 @@ function createRender(proto) {
   return function () {
     if (!this._run_) {
       final(this, '_observer_', new Observer(this.model));
-      var context = this;
-      var deep = !!this.constructor._deep_;
-      final(this, '_run_', this._observer_.run(convertRender, { trigger: trigger, context: context, deep: deep }));
+      final(this, '_trigger_', function () {
+        if (!this._mounted_) return;
+        this.forceUpdate();
+      });
+      final(this, '_run_', this._observer_.run(convertRender, {
+        context: this,
+        trigger: this._trigger_,
+        deep: !!this.constructor._deep_
+      }));
     }
     return this._run_.run();
   };
@@ -3562,7 +3562,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.4.0"}
+module.exports = {"name":"mota","version":"0.4.1"}
 
 /***/ })
 /******/ ]);
