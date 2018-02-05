@@ -7,7 +7,7 @@ index: 3
 
 # 属性映射
 
-当你基于 `model` 编程时，你的「视图层」就会更干净，只关注「显示」相关的问题，在 React 中通常会将应用折分为多个组件重用它们，并在用时传递给它「属性」，mota 提供了将组件属性「映射到 model」的能力，如下
+在 React 中通常会将应用折分为多个组件重用它们，并在用时传递给它「属性」，mota 提供了将「组件属性」映射到「模型数据」的能力，基于 `model` 编程会让「视图层」更单一，专注于 UI 的呈现，，如下
 
 ```js
 @model({ value: 'demo' })
@@ -19,9 +19,9 @@ class Demo extends React.Component {
 }
 ```
 
-上边的代码通过 `mapping` 将，`Demo` 这个组件的 `value` 这个属性映射到了 `model.value`，在属性 `value` 发生变化时，会自动同步到 `model.value` 中。
+上边的代码通过 `mapping` 将 `Demo` 这个组件的 `value` 属性映射到了 `model.value` 上，在组件的属性 `value` 发生变化时，会自动同步到 `model.value` 中。
 
-组件属性的模型中的成员变量，还可以不同名，通过一个 map 即可完成，如下:
+通过一个 map 进行映射，还可以让「组件属性」和「模型的成员」使用不同名称，如下:
 
 ```js
 @model({ value: 'demo' })
@@ -33,4 +33,4 @@ class Demo extends React.Component {
 }
 ```
 
-如上边的代码，即可将组件 demo 的 `content` 属性映射到了 `model.value` 上了。
+上边的代码，将组件 demo 的 `content` 属性映射到了 `model.value` 上。
