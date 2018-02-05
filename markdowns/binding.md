@@ -16,7 +16,7 @@ index: 6
 import { model,binding } from 'mota';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import User from './user';
+import User from './models/user';
 
 @model(User)
 @binding

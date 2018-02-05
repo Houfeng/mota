@@ -34,7 +34,30 @@ $ dn init -t mota
 $ dn dev
 ```
 
-需要先安装 dawn（[参考文档](https://alibaba.github.io/dawn/docs/)）
+需要先安装 dawn（[Dawn 安装及使用文档](https://alibaba.github.io/dawn/docs/)）
+
+## 结构
+
+一个 `mota` 工程的通常结构如下
+
+```sh
+.
+├── README.md
+├── package.json
+└── src
+    ├── assets
+    │   ├── common.less
+    │   ├── favicon.ico
+    │   └── index.html
+    ├── components
+    │   ├── todoApp.js
+    │   └── todoItem.js
+    ├── index.js
+    └── models
+        ├── TodoItem.js
+        ├── TodoList.js
+        └── index.js
+```
 
 ## 文档
 - [快速开始](http://houfeng.net/mota/#!/zh/guide/quick)

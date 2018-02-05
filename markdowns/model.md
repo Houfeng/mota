@@ -39,7 +39,7 @@ export default {
 import { model,binding } from 'mota';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import User from './user';
+import User from './models/user';
 
 @model(User)
 class App extends React.Component {
