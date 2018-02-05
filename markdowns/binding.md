@@ -138,4 +138,87 @@ class App extends React.Component {
 
 ### 自定义组件
 
-但是对于一些「组件库」中的「部分表单组件」不能直接绑定。
+但是对于一些「组件库」中的「部分表单组件」不能直接绑定，因为 mota 并没有什么依据可以判断这是一个什么组件。所以 mota 提供了一个名为 `bindable` 的函数，用将任意组件包装成「可绑定组件」。
+
+bindable 有两种个参数，用于分别指定「原始组件」和「包装选项」
+
+```js
+//可以这样
+const MyComponent = bindable(opts, Component);
+//也可这样
+const MyCompoent = bindable(Component, opts);
+```
+
+关建是 `bindable` 需要的 `opts`，通过 `opts` 我们可以造诉 mota 如何绑定这个组件，`opts` 中有两个重要的成员，它的结构如下
+
+```js
+{
+  value: ['value 对应的属性名'],
+  event: ['value 改变的事件名']
+}
+```
+
+所以，我们可以这样包装一个自定义文本输入框
+
+```js
+const MyInput = bindable(Input,{
+  value: ['value'],
+  event: ['onChange']
+});
+```
+
+对这种「value 不需要转换，change 能通过 event 或 event.target.value 拿到值」的组件，通过如上的代码就能完成包装了。
+
+对于有 `onChange` 和 `value` 的这类文本输入组件，因为 opts 的默认值就是
+
+```js
+{
+  value: ['value'],
+  event: ['onChange']
+}
+```
+
+所以，可以更简单，这样就行，
+```js
+const MyInput = bindable(Input);
+```
+
+而对于 checkbox 和 radio 来讲，如上边讲到的它「根据不同的数据型有不同的绑定形式」，这就需要指定处理函数了，如下
+
+```js
+const radioOpts = {
+  prop: ['checked', (ctx, props) => {
+    const mValue = ctx.getValue();
+    if (typeof mValue == 'boolean') {
+      return !!mValue;
+    } else {
+      return mValue == props.value;
+    }
+  }],
+  event: ['onChange', (ctx, event) => {
+    const { value, checked } = event.target;
+    const mValue = ctx.getValue();
+    if (typeof mValue == 'boolean') {
+      ctx.setValue(checked);
+    } else if (checked) ctx.setValue(value);
+  }]
+};
+```
+
+通过 `prop` 的第二个值，能指定「属性处理函数」，event 的第二个值能指取「事件处理函数」，处理函数的 `ctx` 是个特殊的对象 
+
+- `ctx.getValue` 能获取「当前绑定的模型数据」
+- `ctx.setValue` 能设置「当前绑定的模型数据」
+
+上边是 `radio` 的配置，首先，在「属性处理函数」中通过绑定的「模型数据的类型」决定 `checked` 最终的状态是什么，并在函数中返回。再次，在「事件处理函数」中通过绑定的「模型数据的类型」决定将什么值回写到模型中。
+
+通过「属性处理函数」和「事件处理函数」几乎就能将任意的自定义组件转换为「可绑定组件」了。
+
+另外，对于常见的 `CheckBox` 和 `Radio` 类型的组件 mota 也提供了内建的 `opts` 配置支持，如果一个自定义组件拥有和「原生 checkbox 一致的属性和事件模型」，那边可以直接用简单的方式去包装，如下
+
+```js
+const MyCheckBox = bindable('checkbox',CheckBox);
+const MyRadio = bindable('radio',Radio);
+```
+
+好了，关于绑定就这些了。
