@@ -1414,16 +1414,16 @@ function createReceiveProps(proto) {
 function createModelGetter(model) {
   return function () {
     if (this._model_) return this._model_;
-    model = this.props.model || model || {};
+    var componentModel = this.props.model || model || {};
     var isNewModelInstance = false;
-    if (!isObject(model) && !isFunction(model)) {
+    if (!isObject(componentModel) && !isFunction(componentModel)) {
       throw new Error('Invalid Model');
     }
-    if (model instanceof Function) {
-      model = new model();
+    if (componentModel instanceof Function) {
+      componentModel = new componentModel();
       isNewModelInstance = true;
     }
-    final(this, '_model_', model);
+    final(this, '_model_', componentModel);
     final(this, '_isNewModelInstance_', isNewModelInstance);
     return this._model_;
   };
@@ -2592,7 +2592,7 @@ module.exports = EventEmitter;
 
 var VARIABLE_FILTER = /(\(|\[|\{|\+|\-|\*|\/|\>|\<|\=|\!|\,|\;|\?|\:|\&|\|)\s*([a-z\_0-9\$]+)/ig;
 var VARIABLE_NAME = /^[a-z\$\_]/i;
-var ALLOWED_WORD = /(\$scope|true|false|null|undefined|Date|Number|String|Object|Boolean|Array|RegExp|Math|JSON|parseInt|parseFloat|isNaN|isFinite)/; //eslint-disable-line
+var ALLOWED_WORD = /^(\$scope|true|false|null|undefined|Date|Number|String|Object|Boolean|Array|RegExp|Math|JSON|parseInt|parseFloat|isNaN|isFinite)$/; //eslint-disable-line
 var EXPRESSION_BLOCK = /\{\{([\s\S]+?)\}\}/;
 var EXPRESSION_CACHE = {};
 var TEMPLATE_CACHE = {};
@@ -3562,7 +3562,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.4.2"}
+module.exports = {"name":"mota","version":"0.4.3"}
 
 /***/ })
 /******/ ]);

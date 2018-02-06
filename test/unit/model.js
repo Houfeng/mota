@@ -26,6 +26,16 @@ class App extends Component {
   }
 }
 
+const comModels = {};
+@model(Demo)
+class Com extends Component {
+  render() {
+    comModels[this.props.name] = this.model;
+    const { value } = this.model;
+    return <div>{value}</div>;
+  }
+}
+
 describe('model', () => {
 
   it('响应模型变化，并合并多次更新减少渲染', (done) => {
@@ -47,6 +57,20 @@ describe('model', () => {
     demo.name = 'test';
     setTimeout(() => {
       assert.equal(App.renderCount, 0);
+      done();
+    });
+  });
+
+  it('同一组件的多个实例间可以互不影响', (done) => {
+    ReactDOM.render(<div>
+      <Com name="demo1" />
+      <Com name="demo2" />
+    </div>, root);
+    comModels.demo1.name = 'demo1';
+    setTimeout(() => {
+      assert.notEqual(comModels.demo1, comModels.demo2);
+      assert.equal(comModels.demo1.name, 'demo1');
+      assert.equal(comModels.demo2.name, 'demo');
       done();
     });
   });

@@ -76,16 +76,16 @@ function createReceiveProps(proto) {
 function createModelGetter(model) {
   return function () {
     if (this._model_) return this._model_;
-    model = this.props.model || model || {};
+    let componentModel = this.props.model || model || {};
     let isNewModelInstance = false;
-    if (!isObject(model) && !isFunction(model)) {
+    if (!isObject(componentModel) && !isFunction(componentModel)) {
       throw new Error('Invalid Model');
     }
-    if (model instanceof Function) {
-      model = new model();
+    if (componentModel instanceof Function) {
+      componentModel = new componentModel();
       isNewModelInstance = true;
     }
-    final(this, '_model_', model);
+    final(this, '_model_', componentModel);
     final(this, '_isNewModelInstance_', isNewModelInstance);
     return this._model_;
   };
