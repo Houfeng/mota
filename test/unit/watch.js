@@ -11,6 +11,10 @@ class Demo {
   name2 = 'demo2';
   message1 = 'hello1';
   message2 = 'hello2';
+  info = {
+    num1: 1,
+    num2: 2
+  };
 }
 
 const demo = new Demo();
@@ -61,6 +65,23 @@ describe('watch', () => {
         done();
       });
     });
+  });
+
+  it('检查 watch 错误用法', () => {
+    try {
+      @model({})
+      class Text extends Component {
+        @watch
+        test() { }
+        render() {
+          const { value } = this.model;
+          return <div id="value">{value}</div>;
+        }
+      }
+      assert.fail('没有检查到错误的 watch 用法');
+    } catch (err) {
+      assert.equal(err.message, 'Watch needs to specify a calculation function');
+    }
   });
 
 });

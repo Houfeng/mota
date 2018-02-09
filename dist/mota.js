@@ -3467,7 +3467,7 @@ function mapping(map) {
     });
   }
   return function (component) {
-    if (!component) return mapping;
+    if (!component) throw new Error('Invaild Component');
     var proto = component.prototype;
     if (proto._contented_) {
       throw new Error('`mapping` must be enabled before `model`');
@@ -3562,7 +3562,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.4.5"}
+module.exports = {"name":"mota","version":"0.4.6"}
 
 /***/ })
 /******/ ]);

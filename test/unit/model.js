@@ -2,6 +2,7 @@ import assert from 'assert';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import model from '../../src/model';
+import connect from '../../src/connect';
 
 const root = document.querySelector('.root');
 
@@ -73,6 +74,85 @@ describe('model', () => {
       assert.equal(comModels.demo2.name, 'demo');
       done();
     });
+  });
+
+  it('组件 componentDidMount && componentDidUmount', (done) => {
+    let mounted = false;
+    @model(Demo)
+    class App extends Component {
+      componentDidMount() {
+        mounted = true;
+      }
+      componentWillUnmount() {
+        mounted = false;
+      }
+      render() {
+        const { value } = this.model;
+        return <Show value={value} />;
+      }
+    }
+    ReactDOM.render(<App />, root);
+    setTimeout(() => {
+      assert.equal(mounted, true);
+      ReactDOM.unmountComponentAtNode(root)
+      setTimeout(() => {
+        assert.equal(mounted, false);
+        done();
+      });
+    });
+  });
+
+  it('检查不合法的 model', (done) => {
+    let result = false;
+    try {
+      @model('demo')
+      class App extends Component {
+        render() {
+          result = true
+          return <div>{this.model.name}</div>;
+        }
+      }
+      ReactDOM.render(<App />, root);
+    } catch (err) { }
+    console.log('检查不合法的 model:', '在执行测试时会看到 error 信息，看到说明检查成功了，代表测试通过');
+    setTimeout(() => {
+      assert.equal(result, false);
+      done();
+    })
+  });
+
+  it('由外部传入 model', (done) => {
+    @model
+    class App extends Component {
+      render() {
+        return <div id="name">{this.model.name}</div>;
+      }
+    }
+    const demo = new Demo();
+    ReactDOM.render(<App model={demo} />, root);
+    assert.equal(root.querySelector("#name").innerHTML, 'demo');
+    demo.name = "123";
+    setTimeout(() => {
+      assert.equal(root.querySelector("#name").innerHTML, '123');
+      done();
+    })
+  });
+
+  it('直接通过 connect', (done) => {
+    class MyApp extends Component {
+      render() {
+        return <div id="name">{this.model.name}</div>;
+      }
+    }
+    const demo = new Demo();
+    const App = connect(demo)(MyApp);
+    ReactDOM.render(<App model={demo} />, root);
+    assert.equal(root.querySelector("#name").innerHTML, 'demo');
+    demo.name = "123";
+    setTimeout(() => {
+      assert.equal(root.querySelector("#name").innerHTML, '123');
+      done();
+    })
   });
 
 });

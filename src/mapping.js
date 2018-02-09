@@ -1,6 +1,6 @@
 const {
   registerReceivePropsHandler, registerMountHandler
- } = require('./utils');
+} = require('./utils');
 const { isObject, each, isString } = require('ntils');
 
 function mapping(map) {
@@ -15,7 +15,7 @@ function mapping(map) {
     });
   }
   return function (component) {
-    if (!component) return mapping;
+    if (!component) throw new Error('Invaild Component');
     const proto = component.prototype;
     if (proto._contented_) {
       throw new Error('`mapping` must be enabled before `model`');
