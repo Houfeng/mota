@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "0.4.3",
+  "version": "0.4.5",
   "description": "",
   "main": "./dist/mota.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "ntils": "^4.0.0",
     "nyc": "^11.4.1",
     "ober": "^1.0.6",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   }
 }
