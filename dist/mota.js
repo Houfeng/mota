@@ -2458,7 +2458,7 @@ var EventEmitter = /** @class */ (function () {
         this._listeners_[name].push(listener);
         var maxListeners = EventEmitter._maxListeners;
         if (this._listeners_[name].length > maxListeners) {
-            throw new Error("The '" + name + "' event listener is not more than " + maxListeners);
+            console.warn("The '" + name + "' event listener is not more than " + maxListeners);
         }
     };
     /**
@@ -3562,7 +3562,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.4.6"}
+module.exports = {"name":"mota","version":"0.4.7"}
 
 /***/ })
 /******/ ]);
