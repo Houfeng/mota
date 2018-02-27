@@ -1787,8 +1787,7 @@ var _require = __webpack_require__(3),
     Component = _require.Component;
 
 module.exports = function (stateless) {
-  var OriginCom = stateless;
-  if (!OriginCom._stateful_) {
+  if (!stateless._stateful_) {
     var StatelessWrapper = function (_Component) {
       (0, _inherits3.default)(StatelessWrapper, _Component);
 
@@ -1798,23 +1797,15 @@ module.exports = function (stateless) {
       }
 
       StatelessWrapper.prototype.render = function render() {
-        try {
-          return OriginCom(this.props);
-        } catch (err) {
-          return React.createElement(
-            OriginCom,
-            this.props,
-            this.props.children
-          );
-        }
+        return stateless(this.props);
       };
 
       return StatelessWrapper;
     }(Component);
 
-    OriginCom._stateful_ = StatelessWrapper;
+    stateless._stateful_ = StatelessWrapper;
   }
-  return OriginCom._stateful_;
+  return stateless._stateful_;
 };
 
 /***/ }),
@@ -3571,7 +3562,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.4.8"}
+module.exports = {"name":"mota","version":"0.4.9"}
 
 /***/ })
 /******/ ]);
