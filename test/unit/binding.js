@@ -32,6 +32,9 @@ const MyCheckBox = bindable('checkbox', CheckBox);
 @model(demo)
 @binding
 class App extends Component {
+  onNameChange = event => {
+    this.name = event.target.value;
+  }
   render() {
     return <div>
       <div>
@@ -39,7 +42,7 @@ class App extends Component {
       </div>
       <div>
         <input id="name" type="text"
-          data-bind="name" />
+          data-bind="name" onChange={this.onNameChange} />
       </div>
       <div>
         <input id="male" type="radio"
@@ -67,7 +70,8 @@ class App extends Component {
 describe('binding', () => {
 
   it('表单组件双向绑定', (done) => {
-    ReactDOM.render(<App />, root);
+    let app;
+    ReactDOM.render(<App ref={ref => app = ref} />, root);
     const $ = id => root.querySelector('#' + id);
     const trigger = (id, op) => {
       const node = $(id);
@@ -107,6 +111,7 @@ describe('binding', () => {
         trigger('adulthood', node => node.checked = true);
         setTimeout(() => {
           assert.equal(demo.name, 'demo');
+          assert.equal(app.name, 'demo');
           assert.equal(demo.gender, 'male');
           assert.equal(demo.interest.toString(), 'basketball');
           assert.equal(demo.adulthood, true);

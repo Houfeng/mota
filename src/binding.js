@@ -36,7 +36,7 @@ function elementHandler(element, model, key, children) {
     } else {
       setValue(expression(String(handler))(event));
     }
-    if (initailChange) return initailChange(event);
+    if (initailChange) return initailChange(event, ...args);
   };
   const bindProp = bindOpts.prop[0];
   const bindPropHandler = bindOpts.prop[1] || (ctx => ctx.getValue());

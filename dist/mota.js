@@ -3331,7 +3331,7 @@ function elementHandler(element, model, key, children) {
     } else {
       setValue(expression(String(handler))(event));
     }
-    if (initailChange) return initailChange(event);
+    if (initailChange) return initailChange.apply(undefined, [event].concat(args));
   };
   var bindProp = bindOpts.prop[0];
   var bindPropHandler = bindOpts.prop[1] || function (ctx) {
@@ -3562,7 +3562,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.4.9"}
+module.exports = {"name":"mota","version":"0.5.0"}
 
 /***/ })
 /******/ ]);
