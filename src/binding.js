@@ -18,7 +18,6 @@ function elementHandler(element, model, key, children) {
     return React.cloneElement(element, { key, ...props, children });
   }
   const dataScope = props['data-scope'] || model;
-  const initailChange = props[bindOpts.change];
   const bindExpr = compileExpr(dataBind);
   const setValue = value => bindExpr.set(Object.create(dataScope, {
     $value: { value }
@@ -26,6 +25,7 @@ function elementHandler(element, model, key, children) {
   const getValue = () => bindExpr.get(dataScope);
   const context = { getValue, setValue };
   const bindEvent = bindOpts.event[0];
+  const initailChange = props[bindEvent];
   const bindEventHandler = (event, ...args) => {
     const handler = bindOpts.event[1];
     if (handler instanceof Function) {

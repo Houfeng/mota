@@ -1787,7 +1787,8 @@ var _require = __webpack_require__(3),
     Component = _require.Component;
 
 module.exports = function (stateless) {
-  if (!stateless._stateful_) {
+  var OriginCom = stateless;
+  if (!OriginCom._stateful_) {
     var StatelessWrapper = function (_Component) {
       (0, _inherits3.default)(StatelessWrapper, _Component);
 
@@ -1797,15 +1798,23 @@ module.exports = function (stateless) {
       }
 
       StatelessWrapper.prototype.render = function render() {
-        return stateless(this.props);
+        try {
+          return OriginCom(this.props);
+        } catch (err) {
+          return React.createElement(
+            OriginCom,
+            this.props,
+            this.props.children
+          );
+        }
       };
 
       return StatelessWrapper;
     }(Component);
 
-    stateless._stateful_ = StatelessWrapper;
+    OriginCom._stateful_ = StatelessWrapper;
   }
-  return stateless._stateful_;
+  return OriginCom._stateful_;
 };
 
 /***/ }),
@@ -3305,7 +3314,6 @@ function elementHandler(element, model, key, children) {
     return React.cloneElement(element, (0, _extends4.default)({ key: key }, props, { children: children }));
   }
   var dataScope = props['data-scope'] || model;
-  var initailChange = props[bindOpts.change];
   var bindExpr = compileExpr(dataBind);
   var setValue = function setValue(value) {
     return bindExpr.set((0, _create2.default)(dataScope, {
@@ -3317,6 +3325,7 @@ function elementHandler(element, model, key, children) {
   };
   var context = { getValue: getValue, setValue: setValue };
   var bindEvent = bindOpts.event[0];
+  var initailChange = props[bindEvent];
   var bindEventHandler = function bindEventHandler(event) {
     for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       args[_key - 1] = arguments[_key];
@@ -3562,7 +3571,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.4.7"}
+module.exports = {"name":"mota","version":"0.4.8"}
 
 /***/ })
 /******/ ]);

@@ -1,13 +1,20 @@
 const { Component } = require('react');
 
 module.exports = function (stateless) {
-  if (!stateless._stateful_) {
+  const OriginCom = stateless;
+  if (!OriginCom._stateful_) {
     class StatelessWrapper extends Component {
       render() {
-        return stateless(this.props);
+        try {
+          return OriginCom(this.props);
+        } catch (err) {
+          return <OriginCom {...this.props}>
+            {this.props.children}
+          </OriginCom>;
+        }
       }
     }
-    stateless._stateful_ = StatelessWrapper;
+    OriginCom._stateful_ = StatelessWrapper;
   }
-  return stateless._stateful_;
+  return OriginCom._stateful_;
 };
