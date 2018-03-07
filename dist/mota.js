@@ -95,105 +95,6 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof2 = __webpack_require__(13);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var React = __webpack_require__(3);
-var Component = React.Component;
-
-var _require = __webpack_require__(2),
-    final = _require.final;
-
-function registerMountHandler(proto, handler) {
-  if (!proto._mountHandlers_) final(proto, '_mountHandlers_', []);
-  proto._mountHandlers_.push(handler);
-}
-
-function registerUnmountHandler(proto, handler) {
-  if (!proto._unmountHandlers_) final(proto, '_unmountHandlers_', []);
-  proto._unmountHandlers_.push(handler);
-}
-
-function registerReceivePropsHandler(proto, handler) {
-  if (!proto._receivePropsHandlers_) final(proto, '_receivePropsHandlers_', []);
-  proto._receivePropsHandlers_.push(handler);
-}
-
-function registerElementHandler(proto, handler) {
-  if (!proto._elementHandlers_) final(proto, '_elementHandlers_', []);
-  proto._elementHandlers_.push(handler);
-}
-
-function childrenToArray(children) {
-  var result = [];
-  React.Children.forEach(children, function (child) {
-    result.push(child);
-  });
-  return result;
-}
-
-function convertElement(element, model, key, handlers) {
-  if (!element || (typeof element === 'undefined' ? 'undefined' : (0, _typeof3.default)(element)) !== 'object' || !handlers || handlers.length < 1) {
-    return element;
-  }
-  var props = element.props || {};
-  key = element.key || key;
-  var initailChildren = childrenToArray(props.children);
-  var covertedChildren = initailChildren.length > 0 ? initailChildren.map(function (child, index) {
-    return convertElement(child, model, index, handlers);
-  }) : undefined;
-  var children = covertedChildren && covertedChildren.length == 1 ? covertedChildren[0] : covertedChildren;
-  if (handlers) {
-    handlers.forEach(function (handler) {
-      element = handler(element, model, key, children);
-    });
-  }
-  return element;
-}
-
-function isComponentInstance(instance) {
-  return instance && instance instanceof Component;
-}
-
-function isComponentClass(com) {
-  return isComponentInstance(com.prototype);
-}
-
-function markAsDeep(target, name) {
-  if (!target._deep_) final(target, '_deep_', {});
-  if (name) target._deep_[name] = true;
-}
-
-function markAsWatch(target, name) {
-  if (!target._watch_) final(target, '_watch_', {});
-  if (name) target._watch_[name] = true;
-}
-
-function markAsAutorun(target, name) {
-  if (!target._autorun_) final(target, '_autorun_', {});
-  if (name) target._autorun_[name] = true;
-}
-
-module.exports = {
-  convertElement: convertElement,
-  isComponentClass: isComponentClass,
-  isComponentInstance: isComponentInstance,
-  markAsDeep: markAsDeep,
-  markAsAutorun: markAsAutorun,
-  markAsWatch: markAsWatch,
-  registerElementHandler: registerElementHandler,
-  registerMountHandler: registerMountHandler,
-  registerUnmountHandler: registerUnmountHandler,
-  registerReceivePropsHandler: registerReceivePropsHandler
-};
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -1011,6 +912,105 @@ exports.parseHTML = parseHTML;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof2 = __webpack_require__(13);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var React = __webpack_require__(3);
+var Component = React.Component;
+
+var _require = __webpack_require__(1),
+    final = _require.final;
+
+function registerMountHandler(proto, handler) {
+  if (!proto._mountHandlers_) final(proto, '_mountHandlers_', []);
+  proto._mountHandlers_.push(handler);
+}
+
+function registerUnmountHandler(proto, handler) {
+  if (!proto._unmountHandlers_) final(proto, '_unmountHandlers_', []);
+  proto._unmountHandlers_.push(handler);
+}
+
+function registerReceivePropsHandler(proto, handler) {
+  if (!proto._receivePropsHandlers_) final(proto, '_receivePropsHandlers_', []);
+  proto._receivePropsHandlers_.push(handler);
+}
+
+function registerElementHandler(proto, handler) {
+  if (!proto._elementHandlers_) final(proto, '_elementHandlers_', []);
+  proto._elementHandlers_.push(handler);
+}
+
+function childrenToArray(children) {
+  var result = [];
+  React.Children.forEach(children, function (child) {
+    result.push(child);
+  });
+  return result;
+}
+
+function convertElement(element, model, key, handlers) {
+  if (!element || (typeof element === 'undefined' ? 'undefined' : (0, _typeof3.default)(element)) !== 'object' || !handlers || handlers.length < 1) {
+    return element;
+  }
+  var props = element.props || {};
+  key = element.key || key;
+  var initailChildren = childrenToArray(props.children);
+  var covertedChildren = initailChildren.length > 0 ? initailChildren.map(function (child, index) {
+    return convertElement(child, model, index, handlers);
+  }) : undefined;
+  var children = covertedChildren && covertedChildren.length == 1 ? covertedChildren[0] : covertedChildren;
+  if (handlers) {
+    handlers.forEach(function (handler) {
+      element = handler(element, model, key, children);
+    });
+  }
+  return element;
+}
+
+function isComponentInstance(instance) {
+  return instance && instance instanceof Component;
+}
+
+function isComponentClass(com) {
+  return isComponentInstance(com.prototype);
+}
+
+function markAsDeep(target, name) {
+  if (!target._deep_) final(target, '_deep_', {});
+  if (name) target._deep_[name] = true;
+}
+
+function markAsWatch(target, name) {
+  if (!target._watch_) final(target, '_watch_', {});
+  if (name) target._watch_[name] = true;
+}
+
+function markAsAutorun(target, name) {
+  if (!target._autorun_) final(target, '_autorun_', {});
+  if (name) target._autorun_[name] = true;
+}
+
+module.exports = {
+  convertElement: convertElement,
+  isComponentClass: isComponentClass,
+  isComponentInstance: isComponentInstance,
+  markAsDeep: markAsDeep,
+  markAsAutorun: markAsAutorun,
+  markAsWatch: markAsWatch,
+  registerElementHandler: registerElementHandler,
+  registerMountHandler: registerMountHandler,
+  registerUnmountHandler: registerUnmountHandler,
+  registerReceivePropsHandler: registerReceivePropsHandler
+};
+
+/***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
@@ -1318,12 +1318,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Observer = __webpack_require__(8);
 var React = __webpack_require__(3);
 
-var _require = __webpack_require__(2),
+var _require = __webpack_require__(1),
     final = _require.final,
     isObject = _require.isObject,
     isFunction = _require.isFunction;
 
-var _require2 = __webpack_require__(1),
+var _require2 = __webpack_require__(2),
     isComponentClass = _require2.isComponentClass,
     convertElement = _require2.convertElement,
     registerElementHandler = _require2.registerElementHandler;
@@ -1605,7 +1605,7 @@ module.exports = nextTick;
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _a = __webpack_require__(2), isFunction = _a.isFunction, isBoolean = _a.isBoolean, getByPath = _a.getByPath, deepEqual = _a.deepEqual, clone = _a.clone;
+var _a = __webpack_require__(1), isFunction = _a.isFunction, isBoolean = _a.isBoolean, getByPath = _a.getByPath, deepEqual = _a.deepEqual, clone = _a.clone;
 var Watcher = /** @class */ (function () {
     function Watcher(calculator, handler, context) {
         var _this = this;
@@ -1839,7 +1839,7 @@ var _assign2 = _interopRequireDefault(_assign);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _require = __webpack_require__(1),
+var _require = __webpack_require__(2),
     isComponentClass = _require.isComponentClass;
 
 var defaultOpts = {
@@ -1970,7 +1970,7 @@ var autorun = __webpack_require__(76);
 var watch = __webpack_require__(77);
 var deep = __webpack_require__(78);
 var mapping = __webpack_require__(79);
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(2);
 var stateful = __webpack_require__(35);
 var composition = __webpack_require__(80);
 
@@ -2072,7 +2072,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var _a = __webpack_require__(2), isArray = _a.isArray, isFunction = _a.isFunction, isNull = _a.isNull, isObject = _a.isObject, copy = _a.copy, final = _a.final, each = _a.each;
+var _a = __webpack_require__(1), isArray = _a.isArray, isFunction = _a.isFunction, isNull = _a.isNull, isObject = _a.isObject, copy = _a.copy, final = _a.final, each = _a.each;
 var EventEmitter = __webpack_require__(47);
 var AutoRun = __webpack_require__(24);
 var Watcher = __webpack_require__(26);
@@ -2412,7 +2412,7 @@ module.exports = Observer;
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _a = __webpack_require__(2), final = _a.final, isArray = _a.isArray, copy = _a.copy, each = _a.each;
+var _a = __webpack_require__(1), final = _a.final, isArray = _a.isArray, copy = _a.copy, each = _a.each;
 /**
  * 事件触发器基类
  */
@@ -3285,8 +3285,11 @@ var bindable = __webpack_require__(38);
 var _require = __webpack_require__(8),
     expression = _require.expression;
 
-var _require2 = __webpack_require__(1),
+var _require2 = __webpack_require__(2),
     registerElementHandler = _require2.registerElementHandler;
+
+var _require3 = __webpack_require__(1),
+    isObject = _require3.isObject;
 
 function compileExpr(expr) {
   return {
@@ -3326,7 +3329,7 @@ function elementHandler(element, model, key, children) {
     if (handler instanceof Function) {
       handler.apply(undefined, [context, event].concat(args));
     } else if (!handler) {
-      var value = 'target' in event ? event.target.value : event;
+      var value = isObject(event) && 'target' in event ? event.target.value : event;
       setValue(value);
     } else {
       setValue(expression(String(handler))(event));
@@ -3362,7 +3365,7 @@ module.exports = binding;
 /* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _require = __webpack_require__(1),
+var _require = __webpack_require__(2),
     registerMountHandler = _require.registerMountHandler,
     registerUnmountHandler = _require.registerUnmountHandler,
     markAsAutorun = _require.markAsAutorun;
@@ -3388,10 +3391,10 @@ module.exports = autorun;
 /* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _require = __webpack_require__(2),
+var _require = __webpack_require__(1),
     isFunction = _require.isFunction;
 
-var _require2 = __webpack_require__(1),
+var _require2 = __webpack_require__(2),
     registerMountHandler = _require2.registerMountHandler,
     registerUnmountHandler = _require2.registerUnmountHandler,
     markAsWatch = _require2.markAsWatch;
@@ -3423,7 +3426,7 @@ module.exports = watch;
 /* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _require = __webpack_require__(1),
+var _require = __webpack_require__(2),
     markAsDeep = _require.markAsDeep;
 
 function deep(target, method) {
@@ -3446,11 +3449,11 @@ module.exports = deep;
 /* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _require = __webpack_require__(1),
+var _require = __webpack_require__(2),
     registerReceivePropsHandler = _require.registerReceivePropsHandler,
     registerMountHandler = _require.registerMountHandler;
 
-var _require2 = __webpack_require__(2),
+var _require2 = __webpack_require__(1),
     isObject = _require2.isObject,
     each = _require2.each,
     isString = _require2.isString;
@@ -3562,7 +3565,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.5.0"}
+module.exports = {"name":"mota","version":"0.5.1"}
 
 /***/ })
 /******/ ]);

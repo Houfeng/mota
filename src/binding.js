@@ -2,6 +2,7 @@ const React = require('react');
 const bindable = require('./bindable');
 const { expression } = require('ober');
 const { registerElementHandler } = require('./utils');
+const { isObject } = require('ntils');
 
 function compileExpr(expr) {
   return {
@@ -31,7 +32,8 @@ function elementHandler(element, model, key, children) {
     if (handler instanceof Function) {
       handler(context, event, ...args);
     } else if (!handler) {
-      const value = 'target' in event ? event.target.value : event;
+      const value = isObject(event) && 'target' in event ?
+        event.target.value : event;
       setValue(value);
     } else {
       setValue(expression(String(handler))(event));
