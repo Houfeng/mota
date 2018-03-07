@@ -1333,10 +1333,16 @@ var stateful = __webpack_require__(35);
 function createRender(proto) {
   var initailRender = proto.render;
   var convertRender = function convertRender() {
-    var element = initailRender.call(this);
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var element = initailRender.call.apply(initailRender, [this].concat(args));
     return convertElement(element, this.model, null, this._elementHandlers_);
   };
   return function () {
+    var _run_;
+
     if (!this._run_) {
       final(this, '_observer_', new Observer(this.model));
       final(this, '_trigger_', function () {
@@ -1349,7 +1355,7 @@ function createRender(proto) {
         deep: !!this.constructor._deep_
       }));
     }
-    return this._run_.run();
+    return (_run_ = this._run_).run.apply(_run_, arguments);
   };
 }
 
@@ -1358,14 +1364,18 @@ function createUnmount(proto) {
   return function () {
     var _this = this;
 
+    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
     this._mounted_ = false;
     var result = null;
     if (initailUnmount) {
-      result = initailUnmount.call(this);
+      result = initailUnmount.call.apply(initailUnmount, [this].concat(args));
     }
     if (this._unmountHandlers_) {
       this._unmountHandlers_.forEach(function (handler) {
-        return handler.call(_this);
+        return handler.call.apply(handler, [_this].concat(args));
       });
     }
     if (this._run_) {
@@ -1383,13 +1393,17 @@ function createMount(proto) {
   return function () {
     var _this2 = this;
 
+    for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      args[_key3] = arguments[_key3];
+    }
+
     this._mounted_ = true;
     if (this._mountHandlers_) {
       this._mountHandlers_.forEach(function (handler) {
-        return handler.call(_this2);
+        return handler.call.apply(handler, [_this2].concat(args));
       });
     }
-    if (initailMount) initailMount.call(this);
+    if (initailMount) initailMount.call.apply(initailMount, [this].concat(args));
   };
 }
 
@@ -1398,8 +1412,8 @@ function createReceiveProps(proto) {
   return function () {
     var _this3 = this;
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
+    for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+      args[_key4] = arguments[_key4];
     }
 
     if (this._receivePropsHandlers_) {
@@ -3565,7 +3579,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.5.1"}
+module.exports = {"name":"mota","version":"0.5.2"}
 
 /***/ })
 /******/ ]);

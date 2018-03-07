@@ -8,12 +8,12 @@ const stateful = require('./stateful');
 
 function createRender(proto) {
   const initailRender = proto.render;
-  const convertRender = function () {
-    const element = initailRender.call(this);
+  const convertRender = function (...args) {
+    const element = initailRender.call(this, ...args);
     return convertElement(element,
       this.model, null, this._elementHandlers_);
   };
-  return function () {
+  return function (...args) {
     if (!this._run_) {
       final(this, '_observer_', new Observer(this.model));
       final(this, '_trigger_', function () {
@@ -26,20 +26,20 @@ function createRender(proto) {
         deep: !!this.constructor._deep_
       }));
     }
-    return this._run_.run();
+    return this._run_.run(...args);
   };
 }
 
 function createUnmount(proto) {
   const initailUnmount = proto.componentWillUnmount;
-  return function () {
+  return function (...args) {
     this._mounted_ = false;
     let result = null;
     if (initailUnmount) {
-      result = initailUnmount.call(this);
+      result = initailUnmount.call(this, ...args);
     }
     if (this._unmountHandlers_) {
-      this._unmountHandlers_.forEach(handler => handler.call(this));
+      this._unmountHandlers_.forEach(handler => handler.call(this, ...args));
     }
     if (this._run_) {
       this._observer_.stop(this._run_);
@@ -53,12 +53,12 @@ function createUnmount(proto) {
 
 function createMount(proto) {
   const initailMount = proto.componentDidMount;
-  return function () {
+  return function (...args) {
     this._mounted_ = true;
     if (this._mountHandlers_) {
-      this._mountHandlers_.forEach(handler => handler.call(this));
+      this._mountHandlers_.forEach(handler => handler.call(this, ...args));
     }
-    if (initailMount) initailMount.call(this);
+    if (initailMount) initailMount.call(this, ...args);
   };
 }
 
