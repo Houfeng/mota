@@ -1444,6 +1444,7 @@ function createModelGetter(model) {
 }
 
 function deepConnect(element, model, key, children) {
+  if (!element || !element.type) return element;
   var InitailCom = element.type;
   if (typeof InitailCom == 'string') return element;
   if (InitailCom.prototype._contented_) return element;
@@ -3579,7 +3580,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.5.2"}
+module.exports = {"name":"mota","version":"0.5.3"}
 
 /***/ })
 /******/ ]);
