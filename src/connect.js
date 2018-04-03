@@ -95,6 +95,7 @@ function deepConnect(element, model, key, children) {
   if (!element || !element.type) return element;
   const InitailCom = element.type;
   if (typeof InitailCom == 'string') return element;
+  if (!InitailCom.prototype) return element;
   if (InitailCom.prototype._contented_) return element;
   const WrapedCom = connect(model, InitailCom);
   const props = element.props || {};

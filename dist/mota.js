@@ -1447,6 +1447,7 @@ function deepConnect(element, model, key, children) {
   if (!element || !element.type) return element;
   var InitailCom = element.type;
   if (typeof InitailCom == 'string') return element;
+  if (!InitailCom.prototype) return element;
   if (InitailCom.prototype._contented_) return element;
   var WrapedCom = connect(model, InitailCom);
   var props = element.props || {};
@@ -3580,7 +3581,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.5.3"}
+module.exports = {"name":"mota","version":"0.5.4"}
 
 /***/ })
 /******/ ]);
