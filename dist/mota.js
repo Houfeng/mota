@@ -977,7 +977,7 @@ function convertElement(element, model, key, handlers) {
 }
 
 function isComponentInstance(instance) {
-  return instance && instance instanceof Component;
+  return instance && instance instanceof Component || 'render' in instance && '__reactAutoBindPairs' in instance;
 }
 
 function isComponentClass(com) {
@@ -1334,7 +1334,7 @@ var stateful = __webpack_require__(35);
 
 function createRender(proto) {
   var initailRender = proto.render;
-  var convertRender = function convertRender() {
+  var convertedRender = function convertedRender() {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
@@ -1351,7 +1351,7 @@ function createRender(proto) {
         if (!this._mounted_) return;
         this.forceUpdate();
       });
-      final(this, '_run_', this._observer_.run(convertRender, {
+      final(this, '_run_', this._observer_.run(convertedRender, {
         context: this,
         trigger: this._trigger_,
         deep: !!this.constructor._deep_
@@ -1801,25 +1801,32 @@ var _inherits3 = _interopRequireDefault(_inherits2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _require = __webpack_require__(3),
-    Component = _require.Component;
+var React = __webpack_require__(3);
 
 module.exports = function (stateless) {
   if (!stateless._stateful_) {
-    var StatelessWrapper = function (_Component) {
-      (0, _inherits3.default)(StatelessWrapper, _Component);
+    var StatelessWrapper = function (_React$Component) {
+      (0, _inherits3.default)(StatelessWrapper, _React$Component);
 
       function StatelessWrapper() {
         (0, _classCallCheck3.default)(this, StatelessWrapper);
-        return (0, _possibleConstructorReturn3.default)(this, _Component.apply(this, arguments));
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        var _this = (0, _possibleConstructorReturn3.default)(this, _React$Component.call.apply(_React$Component, [this].concat(args)));
+
+        _this.__args = args;
+        return _this;
       }
 
       StatelessWrapper.prototype.render = function render() {
-        return stateless(this.props);
+        return stateless.apply(undefined, this.__args);
       };
 
       return StatelessWrapper;
-    }(Component);
+    }(React.Component);
 
     stateless._stateful_ = StatelessWrapper;
   }
@@ -3583,7 +3590,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.5.5"}
+module.exports = {"name":"mota","version":"0.5.6"}
 
 /***/ })
 /******/ ]);

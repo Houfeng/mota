@@ -8,7 +8,7 @@ const stateful = require('./stateful');
 
 function createRender(proto) {
   const initailRender = proto.render;
-  const convertRender = function (...args) {
+  const convertedRender = function (...args) {
     const element = initailRender.call(this, ...args);
     return convertElement(element,
       this.model, null, this._elementHandlers_);
@@ -20,7 +20,7 @@ function createRender(proto) {
         if (!this._mounted_) return;
         this.forceUpdate();
       });
-      final(this, '_run_', this._observer_.run(convertRender, {
+      final(this, '_run_', this._observer_.run(convertedRender, {
         context: this,
         trigger: this._trigger_,
         deep: !!this.constructor._deep_

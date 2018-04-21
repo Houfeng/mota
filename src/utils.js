@@ -53,7 +53,8 @@ function convertElement(element, model, key, handlers) {
 }
 
 function isComponentInstance(instance) {
-  return instance && instance instanceof Component;
+  return (instance && instance instanceof Component) ||
+    ('render' in instance && '__reactAutoBindPairs' in instance);
 }
 
 function isComponentClass(com) {
