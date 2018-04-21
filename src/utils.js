@@ -1,6 +1,6 @@
 const React = require('react');
 const { Component } = React;
-const { final } = require('ntils');
+const { final, isFunction } = require('ntils');
 
 function registerMountHandler(proto, handler) {
   if (!proto._mountHandlers_) final(proto, '_mountHandlers_', []);
@@ -23,6 +23,7 @@ function registerElementHandler(proto, handler) {
 }
 
 function childrenToArray(children) {
+  if (isFunction(children)) return [children];
   const result = [];
   React.Children.forEach(children, child => {
     result.push(child);

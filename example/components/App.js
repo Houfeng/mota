@@ -5,6 +5,7 @@ import { model, binding, autorun, watch, deep, nextTick } from '../../src';
 import Info from '../model/info';
 import List from './List';
 import List2 from './List2';
+import Table from './table';
 
 // import { Input, DatePicker } from 'antd';
 
@@ -45,7 +46,12 @@ class App extends Component {
     console.log('render');
     return (
       <div className="app">
-        {this.model.nextTickTest}<br />
+        <Table>
+          {function () {
+            return <div>你好</div>
+          }}
+        </Table>
+        {/* {this.model.nextTickTest}<br />
         {this.state.time}<br />
         {String(this.model.name)}<br />
         <input onKeyDown={this.onKeyDown} data-bind="name" data-scope={this.model} /><br />
@@ -65,7 +71,7 @@ class App extends Component {
         <hr />
         <List key={'listKey1'} name="from mapping" ref="listRef" opts={this.model.opts} />
         <List2 key={'listKey2'} opts={this.model.opts} />
-        <button onClick={() => this.test()}>test</button>
+        <button onClick={() => this.test()}>test</button> */}
       </div>
     );
   }

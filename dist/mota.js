@@ -925,7 +925,8 @@ var React = __webpack_require__(3);
 var Component = React.Component;
 
 var _require = __webpack_require__(1),
-    final = _require.final;
+    final = _require.final,
+    isFunction = _require.isFunction;
 
 function registerMountHandler(proto, handler) {
   if (!proto._mountHandlers_) final(proto, '_mountHandlers_', []);
@@ -948,6 +949,7 @@ function registerElementHandler(proto, handler) {
 }
 
 function childrenToArray(children) {
+  if (isFunction(children)) return [children];
   var result = [];
   React.Children.forEach(children, function (child) {
     result.push(child);
@@ -3581,7 +3583,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.5.4"}
+module.exports = {"name":"mota","version":"0.5.5"}
 
 /***/ })
 /******/ ]);
