@@ -926,7 +926,8 @@ var Component = React.Component;
 
 var _require = __webpack_require__(1),
     final = _require.final,
-    isFunction = _require.isFunction;
+    isFunction = _require.isFunction,
+    isObject = _require.isObject;
 
 function registerMountHandler(proto, handler) {
   if (!proto._mountHandlers_) final(proto, '_mountHandlers_', []);
@@ -977,10 +978,12 @@ function convertElement(element, model, key, handlers) {
 }
 
 function isComponentInstance(instance) {
-  return instance && instance instanceof Component || 'render' in instance && '__reactAutoBindPairs' in instance;
+  if (!instance) return false;
+  return instance && instance instanceof Component || isObject(instance) && 'render' in instance && '__reactAutoBindPairs' in instance;
 }
 
 function isComponentClass(com) {
+  if (!com) return false;
   return isComponentInstance(com.prototype);
 }
 
@@ -3590,7 +3593,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.5.6"}
+module.exports = {"name":"mota","version":"0.5.7"}
 
 /***/ })
 /******/ ]);

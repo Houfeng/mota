@@ -1,6 +1,6 @@
 const React = require('react');
 const { Component } = React;
-const { final, isFunction } = require('ntils');
+const { final, isFunction, isObject } = require('ntils');
 
 function registerMountHandler(proto, handler) {
   if (!proto._mountHandlers_) final(proto, '_mountHandlers_', []);
@@ -53,11 +53,14 @@ function convertElement(element, model, key, handlers) {
 }
 
 function isComponentInstance(instance) {
+  if (!instance) return false;
   return (instance && instance instanceof Component) ||
-    ('render' in instance && '__reactAutoBindPairs' in instance);
+    (isObject(instance) && 'render' in instance &&
+      '__reactAutoBindPairs' in instance);
 }
 
 function isComponentClass(com) {
+  if (!com) return false;
   return isComponentInstance(com.prototype);
 }
 
