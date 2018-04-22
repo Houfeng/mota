@@ -1813,19 +1813,11 @@ module.exports = function (stateless) {
 
       function StatelessWrapper() {
         (0, _classCallCheck3.default)(this, StatelessWrapper);
-
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        var _this = (0, _possibleConstructorReturn3.default)(this, _React$Component.call.apply(_React$Component, [this].concat(args)));
-
-        _this.__args = args;
-        return _this;
+        return (0, _possibleConstructorReturn3.default)(this, _React$Component.apply(this, arguments));
       }
 
       StatelessWrapper.prototype.render = function render() {
-        return stateless.apply(undefined, this.__args);
+        return stateless(this.props, this.context);
       };
 
       return StatelessWrapper;
@@ -3593,7 +3585,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.5.7"}
+module.exports = {"name":"mota","version":"0.5.8"}
 
 /***/ })
 /******/ ]);
