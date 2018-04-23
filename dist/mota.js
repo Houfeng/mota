@@ -2337,11 +2337,12 @@ var Observer = /** @class */ (function (_super) {
             return item;
         });
         final(array, 'unshift', function () {
+            [].unshift.apply(this, arguments);
             var items = [].slice.call(arguments);
             var observer = this[OBSERVER_PROP_NAME];
-            items.forEach(function (item) {
+            items.forEach(function (item, index) {
                 //这里也会触发对应 index 的 change 事件
-                observer.set(0, item);
+                observer.set(index, item);
             }, this);
             observer.emitChange({ name: 'length', value: this.length });
             observer.emitChange({ value: this.length });
@@ -2621,7 +2622,7 @@ function findVariables(expr) {
     VARIABLE_FILTER.lastIndex = 0;
     var variables = {};
     var info;
-    while (info = VARIABLE_FILTER.exec(expr)) {
+    while (info = VARIABLE_FILTER.exec(expr)) { //eslint-disable-line
         var name_1 = info[2];
         if (VARIABLE_NAME.test(name_1) && !ALLOWED_WORD.test(name_1)) {
             variables[name_1] = true;
@@ -3585,7 +3586,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.5.8"}
+module.exports = {"name":"mota","version":"0.5.9"}
 
 /***/ })
 /******/ ]);

@@ -17,6 +17,7 @@ class App extends Component {
 
   constructor(...args) {
     super(...args);
+    window.app = this;
   }
 
   @watch(model => model.name, true)
@@ -51,7 +52,7 @@ class App extends Component {
             return <div>你好</div>
           }}
         </Table>
-        {/* {this.model.nextTickTest}<br />
+        {this.model.nextTickTest}<br />
         {this.state.time}<br />
         {String(this.model.name)}<br />
         <input onKeyDown={this.onKeyDown} data-bind="name" data-scope={this.model} /><br />
@@ -71,7 +72,7 @@ class App extends Component {
         <hr />
         <List key={'listKey1'} name="from mapping" ref="listRef" opts={this.model.opts} />
         <List2 key={'listKey2'} opts={this.model.opts} />
-        <button onClick={() => this.test()}>test</button> */}
+        <button onClick={() => this.test()}>test</button>
       </div>
     );
   }
