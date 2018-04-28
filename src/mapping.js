@@ -1,7 +1,7 @@
+const { isObject, each, isString, getByPath, setByPath } = require('ntils');
 const {
   registerReceivePropsHandler, registerMountHandler
 } = require('./utils');
-const { isObject, each, isString } = require('ntils');
 
 function mapping(map) {
   if (!isObject(map)) {
@@ -10,8 +10,10 @@ function mapping(map) {
   function assign(model, props) {
     each(map, (propName, modelField) => {
       if (!isString(propName)) propName = modelField;
-      if (model[modelField] === props[propName]) return;
-      model[modelField] = props[propName];
+      const propValue = getByPath(props, propName);
+      const modelValue = getByPath(model, modelField);
+      if (modelValue === propValue) return;
+      setByPath(model, modelField, propValue);
     });
   }
   return function (component) {

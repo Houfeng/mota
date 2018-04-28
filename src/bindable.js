@@ -49,9 +49,8 @@ const radioOpts = {
 };
 
 const builtIn = {
-  input: function (element) {
-    const { type } = element.props;
-    switch (type) {
+  input: function (type, props) {
+    switch (props.type) {
       case 'checkbox':
         return checkboxOpts;
       case 'radio':
@@ -66,10 +65,9 @@ const builtIn = {
   textarea: defaultOpts
 };
 
-function getOptions(element) {
-  const type = element.type;
+function getOptions(type, props) {
   let opts = (typeof type === 'string') ? builtIn[type] : type.bindOpts;
-  if (opts instanceof Function) opts = opts(element);
+  if (opts instanceof Function) opts = opts(type, props);
   opts = opts || defaultOpts;
   if (opts && typeof opts.event === 'string') {
     opts.event = opts.event.split(',');

@@ -1,4 +1,3 @@
-const React = require('react');
 const bindable = require('./bindable');
 const { expression } = require('ober');
 const { registerElementHandler } = require('./utils');
@@ -11,14 +10,12 @@ function compileExpr(expr) {
   };
 }
 
-function elementHandler(element, model, key, children) {
-  const props = element.props || {};
+function elementHandler(type, props) {
+  if (!type || !props) return;
   const dataBind = props['data-bind'];
-  const bindOpts = dataBind && bindable.getOptions(element);
-  if (!dataBind || !bindOpts) {
-    return React.cloneElement(element, { key, ...props, children });
-  }
-  const dataScope = props['data-scope'] || model;
+  const bindOpts = dataBind && bindable.getOptions(type, props);
+  if (!dataBind || !bindOpts) return;
+  const dataScope = props['data-scope'] || this.model;
   const bindExpr = compileExpr(dataBind);
   const setValue = value => bindExpr.set(Object.create(dataScope, {
     $value: { value }
@@ -42,15 +39,11 @@ function elementHandler(element, model, key, children) {
   };
   const bindProp = bindOpts.prop[0];
   const bindPropHandler = bindOpts.prop[1] || (ctx => ctx.getValue());
-  return React.cloneElement(element, {
-    key,
-    ...props,
-    'data-scope': undefined,
-    'data-bind': undefined,
-    children: children,
-    [bindProp]: bindPropHandler(context, props),
-    [bindEvent]: bindEventHandler
-  });
+  //--
+  props[bindProp] = bindPropHandler(context, props);
+  props[bindEvent] = bindEventHandler;
+  props['data-scope'] = undefined;
+  props['data-bind'] = undefined;
 }
 
 function binding(component) {

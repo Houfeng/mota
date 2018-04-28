@@ -1,17 +1,22 @@
-const Observer = require('ober');
 const React = require('react');
-const { final, isObject, isFunction } = require('ntils');
-const {
-  isComponentClass, convertElement, registerElementHandler
-} = require('./utils');
+const Observer = require('ober');
+const { final, isObject, isFunction, isString } = require('ntils');
+const { isComponentClass, registerElementHandler } = require('./utils');
 const stateful = require('./stateful');
+
+const initailCreateElement = React.createElement;
 
 function createRender(proto) {
   const initailRender = proto.render;
-  const convertedRender = function (...args) {
-    const element = initailRender.call(this, ...args);
-    return convertElement(element,
-      this.model, null, this._elementHandlers_);
+  const overrideRender = function (...args) {
+    const component = this;
+    React.createElement = function (...args) {
+      component.componentWhillCreateElement(...args);
+      return initailCreateElement.call(this, ...args);
+    };
+    const element = initailRender.call(component, ...args);
+    React.createElement = initailCreateElement;
+    return element;
   };
   return function (...args) {
     if (!this._run_) {
@@ -20,7 +25,7 @@ function createRender(proto) {
         if (!this._mounted_) return;
         this.forceUpdate();
       });
-      final(this, '_run_', this._observer_.run(convertedRender, {
+      final(this, '_run_', this._observer_.run(overrideRender, {
         context: this,
         trigger: this._trigger_,
         deep: !!this.constructor._deep_
@@ -73,6 +78,17 @@ function createReceiveProps(proto) {
   };
 }
 
+function createCreateElement(proto) {
+  const initailCreateElement = proto.componentWhillCreateElement;
+  return function (...args) {
+    if (initailCreateElement) initailCreateElement.call(this, ...args);
+    if (this._elementHandlers_) {
+      this._elementHandlers_.forEach(handler => handler.call(this, ...args));
+    }
+    return args;
+  };
+}
+
 function createModelGetter(model) {
   return function () {
     if (this._model_) return this._model_;
@@ -91,26 +107,16 @@ function createModelGetter(model) {
   };
 }
 
-function deepConnect(element, model, key, children) {
-  if (!element || !element.type) return element;
-  const InitailCom = element.type;
-  if (typeof InitailCom == 'string') return element;
-  if (!InitailCom.prototype) return element;
-  if (InitailCom.prototype._contented_) return element;
-  const WrapedCom = connect(model, InitailCom);
-  const props = element.props || {};
-  const ref = element.ref;
-  return <WrapedCom {...props} key={key} ref={ref}>
-    {children}
-  </WrapedCom>;
+function deepConnect(type) {
+  connect(this.model, type);
 }
 
 function connect(model, component) {
   if (!component) return component => connect(model, component);
+  if (isString(component)) return component;
   if (!isComponentClass(component)) component = stateful(component);
   const proto = component.prototype;
   if (proto._contented_) return component;
-  registerElementHandler(proto, deepConnect);
   Object.defineProperty(proto, 'model', {
     enumerable: false,
     get: createModelGetter(model)
@@ -119,6 +125,8 @@ function connect(model, component) {
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
   proto.componentWillReceiveProps = createReceiveProps(proto);
+  proto.componentWhillCreateElement = createCreateElement(proto);
+  registerElementHandler(proto, deepConnect);
   final(proto, '_contented_', true);
   return component;
 }

@@ -1,6 +1,6 @@
 const React = require('react');
-const { Component } = React;
-const { final, isFunction, isObject } = require('ntils');
+const { Component, PureComponent } = React;
+const { final, isObject } = require('ntils');
 
 function registerMountHandler(proto, handler) {
   if (!proto._mountHandlers_) final(proto, '_mountHandlers_', []);
@@ -22,41 +22,11 @@ function registerElementHandler(proto, handler) {
   proto._elementHandlers_.push(handler);
 }
 
-function childrenToArray(children) {
-  if (isFunction(children)) return [children];
-  const result = [];
-  React.Children.forEach(children, child => {
-    result.push(child);
-  });
-  return result;
-}
-
-function convertElement(element, model, key, handlers) {
-  if (!element || typeof element !== 'object' ||
-    !handlers || handlers.length < 1) {
-    return element;
-  }
-  const props = element.props || {};
-  key = element.key || key;
-  const initailChildren = childrenToArray(props.children);
-  const covertedChildren = initailChildren.length > 0 ? initailChildren
-    .map((child, index) => convertElement(child, model, index, handlers))
-    : undefined;
-  const children = covertedChildren && covertedChildren.length == 1
-    ? covertedChildren[0] : covertedChildren;
-  if (handlers) {
-    handlers.forEach(handler => {
-      element = handler(element, model, key, children);
-    });
-  }
-  return element;
-}
-
 function isComponentInstance(instance) {
-  if (!instance) return false;
-  return (instance && instance instanceof Component) ||
-    (isObject(instance) && 'render' in instance &&
-      '__reactAutoBindPairs' in instance);
+  if (!instance || !isObject(instance)) return false;
+  return (instance instanceof Component) ||
+    (instance instanceof PureComponent) ||
+    ('render' in instance && '__reactAutoBindPairs' in instance);
 }
 
 function isComponentClass(com) {
@@ -80,7 +50,6 @@ function markAsAutorun(target, name) {
 }
 
 module.exports = {
-  convertElement,
   isComponentClass,
   isComponentInstance,
   markAsDeep,
