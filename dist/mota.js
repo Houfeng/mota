@@ -1884,7 +1884,7 @@ var builtIn = {
   textarea: defaultOpts
 };
 
-function getOptions(type) {
+function getOptions(type, props) {
   var opts = typeof type === 'string' ? builtIn[type] : type.bindOpts;
   if (opts instanceof Function) opts = opts(type, props);
   opts = opts || defaultOpts;
@@ -3294,7 +3294,7 @@ function compileExpr(expr) {
 function elementHandler(type, props) {
   if (!type || !props) return;
   var dataBind = props['data-bind'];
-  var bindOpts = dataBind && bindable.getOptions(type);
+  var bindOpts = dataBind && bindable.getOptions(type, props);
   if (!dataBind || !bindOpts) return;
   var dataScope = props['data-scope'] || this.model;
   var bindExpr = compileExpr(dataBind);
