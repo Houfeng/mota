@@ -1248,13 +1248,13 @@ function createRender(proto) {
     }
 
     var component = this;
-    React.createElement = function () {
-      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
+    React.createElement = function (type) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        args[_key2 - 1] = arguments[_key2];
       }
 
-      component.componentWhillCreateElement.apply(component, args);
-      return initailCreateElement.call.apply(initailCreateElement, [this].concat(args));
+      var newType = component.componentWhillCreateElement.apply(component, [type].concat(args));
+      return initailCreateElement.call.apply(initailCreateElement, [this, newType || type].concat(args));
     };
     var element = initailRender.call.apply(initailRender, [component].concat(args));
     React.createElement = initailCreateElement;
@@ -1290,20 +1290,14 @@ function createUnmount(proto) {
 
     this._mounted_ = false;
     var result = null;
-    if (initailUnmount) {
-      result = initailUnmount.call.apply(initailUnmount, [this].concat(args));
-    }
+    if (initailUnmount) result = initailUnmount.call.apply(initailUnmount, [this].concat(args));
     if (this._unmountHandlers_) {
       this._unmountHandlers_.forEach(function (handler) {
         return handler.call.apply(handler, [_this].concat(args));
       });
     }
-    if (this._run_) {
-      this._observer_.stop(this._run_);
-    }
-    if (this._isNewModelInstance_) {
-      this._observer_.clearReference();
-    }
+    if (this._run_) this._observer_.stop(this._run_);
+    if (this._isNewModelInstance_) this._observer_.clearReference();
     return result;
   };
 }
@@ -1323,7 +1317,7 @@ function createMount(proto) {
         return handler.call.apply(handler, [_this2].concat(args));
       });
     }
-    if (initailMount) initailMount.call.apply(initailMount, [this].concat(args));
+    if (initailMount) return initailMount.call.apply(initailMount, [this].concat(args));
   };
 }
 
@@ -1341,7 +1335,7 @@ function createReceiveProps(proto) {
         return handler.call.apply(handler, [_this3].concat(args));
       });
     }
-    if (initailReceiveProps) initailReceiveProps.call.apply(initailReceiveProps, [this].concat(args));
+    if (initailReceiveProps) return initailReceiveProps.call.apply(initailReceiveProps, [this].concat(args));
   };
 }
 
@@ -1354,13 +1348,16 @@ function createCreateElement(proto) {
       args[_key6] = arguments[_key6];
     }
 
-    if (initailCreateElement) initailCreateElement.call.apply(initailCreateElement, [this].concat(args));
+    var newType = null;
+    if (initailCreateElement) {
+      newType = initailCreateElement.call.apply(initailCreateElement, [this].concat(args));
+    }
     if (this._elementHandlers_) {
       this._elementHandlers_.forEach(function (handler) {
-        return handler.call.apply(handler, [_this4].concat(args));
+        return newType = handler.call.apply(handler, [_this4].concat(args));
       });
     }
-    return args;
+    return newType;
   };
 }
 
@@ -1383,7 +1380,7 @@ function createModelGetter(model) {
 }
 
 function deepConnect(type) {
-  connect(this.model, type);
+  return connect(this.model, type);
 }
 
 function connect(model, component) {
@@ -1395,8 +1392,7 @@ function connect(model, component) {
   var proto = component.prototype;
   if (proto._contented_) return component;
   Object.defineProperty(proto, 'model', {
-    enumerable: false,
-    get: createModelGetter(model)
+    enumerable: false, get: createModelGetter(model)
   });
   proto.render = createRender(proto);
   proto.componentDidMount = createMount(proto);

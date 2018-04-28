@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-class Message extends Component {
-  shouldComponentUpdate() {
-    return false;
-  }
+class Message extends PureComponent {
   render() {
     console.log('message render');
-    return <div className="app">
+    return <div>
       {this.props.opts.name}
     </div>;
   }

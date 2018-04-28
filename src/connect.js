@@ -10,9 +10,9 @@ function createRender(proto) {
   const initailRender = proto.render;
   const overrideRender = function (...args) {
     const component = this;
-    React.createElement = function (...args) {
-      component.componentWhillCreateElement(...args);
-      return initailCreateElement.call(this, ...args);
+    React.createElement = function (type, ...args) {
+      const newType = component.componentWhillCreateElement(type, ...args);
+      return initailCreateElement.call(this, newType || type, ...args);
     };
     const element = initailRender.call(component, ...args);
     React.createElement = initailCreateElement;
@@ -40,18 +40,12 @@ function createUnmount(proto) {
   return function (...args) {
     this._mounted_ = false;
     let result = null;
-    if (initailUnmount) {
-      result = initailUnmount.call(this, ...args);
-    }
+    if (initailUnmount) result = initailUnmount.call(this, ...args);
     if (this._unmountHandlers_) {
       this._unmountHandlers_.forEach(handler => handler.call(this, ...args));
     }
-    if (this._run_) {
-      this._observer_.stop(this._run_);
-    }
-    if (this._isNewModelInstance_) {
-      this._observer_.clearReference();
-    }
+    if (this._run_) this._observer_.stop(this._run_);
+    if (this._isNewModelInstance_) this._observer_.clearReference();
     return result;
   };
 }
@@ -63,7 +57,7 @@ function createMount(proto) {
     if (this._mountHandlers_) {
       this._mountHandlers_.forEach(handler => handler.call(this, ...args));
     }
-    if (initailMount) initailMount.call(this, ...args);
+    if (initailMount) return initailMount.call(this, ...args);
   };
 }
 
@@ -74,18 +68,22 @@ function createReceiveProps(proto) {
       this._receivePropsHandlers_
         .forEach(handler => handler.call(this, ...args));
     }
-    if (initailReceiveProps) initailReceiveProps.call(this, ...args);
+    if (initailReceiveProps) return initailReceiveProps.call(this, ...args);
   };
 }
 
 function createCreateElement(proto) {
   const initailCreateElement = proto.componentWhillCreateElement;
   return function (...args) {
-    if (initailCreateElement) initailCreateElement.call(this, ...args);
-    if (this._elementHandlers_) {
-      this._elementHandlers_.forEach(handler => handler.call(this, ...args));
+    let newType = null;
+    if (initailCreateElement) {
+      newType = initailCreateElement.call(this, ...args);
     }
-    return args;
+    if (this._elementHandlers_) {
+      this._elementHandlers_
+        .forEach(handler => newType = handler.call(this, ...args));
+    }
+    return newType;
   };
 }
 
@@ -108,7 +106,7 @@ function createModelGetter(model) {
 }
 
 function deepConnect(type) {
-  connect(this.model, type);
+  return connect(this.model, type);
 }
 
 function connect(model, component) {
@@ -118,8 +116,7 @@ function connect(model, component) {
   const proto = component.prototype;
   if (proto._contented_) return component;
   Object.defineProperty(proto, 'model', {
-    enumerable: false,
-    get: createModelGetter(model)
+    enumerable: false, get: createModelGetter(model)
   });
   proto.render = createRender(proto);
   proto.componentDidMount = createMount(proto);

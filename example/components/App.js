@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { model, binding, autorun, watch, deep, nextTick } from '../../src';
-import Message from './Message';
+import Message from './func';
 import Info from '../model/info';
 
 import './app.css';
@@ -44,7 +44,9 @@ class App extends Component {
     const { welcome } = this.model;
     return <div className="app">
       {welcome} to
-      <Message opts={this.model} />
+      <Message opts={this.model} >
+        函数组件的子组件
+      </Message>
       <div>
         <input data-bind="welcome" />
       </div>
