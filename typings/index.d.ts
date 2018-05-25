@@ -11,3 +11,4 @@ declare namespace mota {
   function nextTick(callback: Function, ctx?: any): any;
   function watch(calculator: Function, immed?: boolean): any;
 }
+export = mota;
