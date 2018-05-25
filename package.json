@@ -1,8 +1,9 @@
 {
   "name": "mota",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "",
   "main": "./dist/mota.js",
+  "typings": "./typings/index.d.ts",
   "scripts": {
     "config": "dn config registry https://registry.npmjs.com/",
     "test": "npm run config && dn test && dn build -e prod",
