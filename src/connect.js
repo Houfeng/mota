@@ -1,6 +1,6 @@
 const React = require('react');
 const Observer = require('ober');
-const { final, isObject, isFunction, isString } = require('ntils');
+const { final, isObject, isFunction } = require('ntils');
 const { isComponentClass, registerElementHandler } = require('./utils');
 const stateful = require('./stateful');
 
@@ -111,7 +111,7 @@ function deepConnect(type) {
 
 function connect(model, component) {
   if (!component) return component => connect(model, component);
-  if (isString(component)) return component;
+  if (!isFunction(component)) return component;
   if (!isComponentClass(component)) component = stateful(component);
   const proto = component.prototype;
   if (proto._contented_) return component;

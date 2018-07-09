@@ -5,6 +5,9 @@ import Info from '../model/info';
 
 import './app.css';
 
+const ThemeContext = React.createContext("light");
+
+
 @model(Info)
 @binding
 class App extends Component {
@@ -39,6 +42,10 @@ class App extends Component {
     });
   };
 
+  toggleTheme = () => {
+    this.model.theme = this.model.theme == "light" ? "dark" : "light";
+  }
+
   render() {
     console.log('app render');
     const { welcome } = this.model;
@@ -50,6 +57,14 @@ class App extends Component {
       <div>
         <input data-bind="welcome" />
       </div>
+      <ThemeContext.Provider value={this.model.theme}>
+        <button onClick={this.toggleTheme} >ToggleTheme</button>
+        <ThemeContext.Consumer>
+          {theme => (
+            <span >{theme}</span>
+          )}
+        </ThemeContext.Consumer>
+      </ThemeContext.Provider>
     </div>;
   }
 }

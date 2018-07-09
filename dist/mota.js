@@ -1229,8 +1229,7 @@ var Observer = __webpack_require__(8);
 var _require = __webpack_require__(1),
     final = _require.final,
     isObject = _require.isObject,
-    isFunction = _require.isFunction,
-    isString = _require.isString;
+    isFunction = _require.isFunction;
 
 var _require2 = __webpack_require__(2),
     isComponentClass = _require2.isComponentClass,
@@ -1387,7 +1386,7 @@ function connect(model, component) {
   if (!component) return function (component) {
     return connect(model, component);
   };
-  if (isString(component)) return component;
+  if (!isFunction(component)) return component;
   if (!isComponentClass(component)) component = stateful(component);
   var proto = component.prototype;
   if (proto._contented_) return component;
@@ -3552,7 +3551,7 @@ module.exports = composition;
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.6.3"}
+module.exports = {"name":"mota","version":"0.7.0"}
 
 /***/ })
 /******/ ]);
