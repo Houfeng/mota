@@ -105,8 +105,8 @@ function createModelGetter(model) {
   };
 }
 
-function deepConnect(type) {
-  return connect(this.model, type);
+function recursiveConnect(component) {
+  return connect(this.model, component);
 }
 
 function connect(model, component) {
@@ -123,7 +123,7 @@ function connect(model, component) {
   proto.componentWillUnmount = createUnmount(proto);
   proto.componentWillReceiveProps = createReceiveProps(proto);
   proto.componentWhillCreateElement = createCreateElement(proto);
-  registerElementHandler(proto, deepConnect);
+  registerElementHandler(proto, recursiveConnect);
   final(proto, '_contented_', true);
   return component;
 }
