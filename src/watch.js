@@ -15,6 +15,7 @@ function watch(calculator, immed) {
       watcher = this._observer_.watch(function () {
         return calculator.call(this, this.model);
       }, target[method], { context, deep });
+      //immed 通过 autorun.run 方法会传递给 watcher.calc 方法
       watcher.autoRef.run(immed || false);
     });
     registerUnmountHandler(target, function () {
