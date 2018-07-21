@@ -68,6 +68,11 @@ declare namespace mota {
    */
   function deep(target: any, method?: any): any;
 
+  /**
+   * 包含一组件工具方法
+   */
+  const utils: any;
+
 }
 
 export = mota;
