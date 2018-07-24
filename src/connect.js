@@ -1,21 +1,15 @@
-const React = require('react');
+const hook = require('./hook');
 const Observer = require('ober');
 const { final, isObject, isFunction } = require('ntils');
 const { isComponentClass, registerElementHandler } = require('./utils');
 const stateful = require('./stateful');
 
-const initailCreateElement = React.createElement;
-
 function createRender(proto) {
   const initailRender = proto.render;
   const overrideRender = function (...args) {
-    const component = this;
-    React.createElement = function (type, ...args) {
-      const newType = component.componentWhillCreateElement(type, ...args);
-      return initailCreateElement.call(this, newType || type, ...args);
-    };
-    const element = initailRender.call(component, ...args);
-    React.createElement = initailCreateElement;
+    hook.on(this);
+    const element = initailRender.call(this, ...args);
+    hook.off(this);
     return element;
   };
   return function (...args) {

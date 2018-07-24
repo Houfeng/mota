@@ -1,4 +1,6 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
+
+window.React2 = React;
 
 function Message(props) {
   console.log('message render');

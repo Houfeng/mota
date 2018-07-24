@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { model, binding, autorun, watch, deep, nextTick } from '../../src';
+import { Component } from 'react';
 import Message from './func';
 import Info from '../model/info';
 
 import './app.css';
 
-const ThemeContext = React.createContext("light");
+window.React1 = React;
 
+const ThemeContext = React.createContext("light");
 
 @model(Info)
 @binding
@@ -47,7 +49,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('app render');
     const { welcome } = this.model;
     return <div className="app">
       {welcome} to
