@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { model, binding, autorun, watch, deep, nextTick } from '../../src';
 import { Component } from 'react';
 import Message from './func';

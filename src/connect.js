@@ -6,12 +6,7 @@ const stateful = require('./stateful');
 
 function createRender(proto) {
   const initailRender = proto.render;
-  const overrideRender = function (...args) {
-    hook.on(this);
-    const element = initailRender.call(this, ...args);
-    hook.off(this);
-    return element;
-  };
+  const overrideRender = hook.wrapRender(initailRender);
   return function (...args) {
     if (!this._run_) {
       final(this, '_observer_', new Observer(this.model));
@@ -66,21 +61,6 @@ function createReceiveProps(proto) {
   };
 }
 
-function createCreateElement(proto) {
-  const initailCreateElement = proto.componentWhillCreateElement;
-  return function (...args) {
-    let newType = null;
-    if (initailCreateElement) {
-      newType = initailCreateElement.call(this, ...args);
-    }
-    if (this._elementHandlers_) {
-      this._elementHandlers_
-        .forEach(handler => newType = handler.call(this, ...args));
-    }
-    return newType;
-  };
-}
-
 function createModelGetter(model) {
   return function () {
     if (this._model_) return this._model_;
@@ -100,7 +80,7 @@ function createModelGetter(model) {
 }
 
 function recursiveConnect(component) {
-  return connect(this.model, component);
+  connect(this.model, component);
 }
 
 function connect(model, component) {
@@ -116,7 +96,6 @@ function connect(model, component) {
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
   proto.componentWillReceiveProps = createReceiveProps(proto);
-  proto.componentWhillCreateElement = createCreateElement(proto);
   registerElementHandler(proto, recursiveConnect);
   final(proto, '_contented_', true);
   return component;
