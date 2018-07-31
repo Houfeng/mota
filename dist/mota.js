@@ -2068,6 +2068,7 @@ function beforeCreateElement(type) {
 }
 
 function afterCreateElement(element) {
+  if (!element) return element;
   if (isArray(element)) return element.map(afterCreateElement);
   if (element.type && element.props) {
     if ((0, _isFrozen2.default)(element)) element = (0, _assign2.default)({}, element);
@@ -3640,7 +3641,7 @@ module.exports = composition;
 /* 86 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.7.5"}
+module.exports = {"name":"mota","version":"0.7.6"}
 
 /***/ })
 /******/ ]);

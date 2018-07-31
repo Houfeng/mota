@@ -29,6 +29,7 @@ function beforeCreateElement(type, ...args) {
 }
 
 function afterCreateElement(element) {
+  if (!element) return element;
   if (isArray(element)) return element.map(afterCreateElement);
   if (element.type && element.props) {
     if (Object.isFrozen(element)) element = Object.assign({}, element);
