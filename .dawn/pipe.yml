@@ -12,6 +12,7 @@ dev:
     template: ./example/assets/index.html
     output: ./dist/example/
     watch: true
+    env: development
   - name: server
     public: ./dist/example/
     port: 6008
@@ -29,6 +30,7 @@ build:
     common:
       disabled: true
     library: true
+    env: production
     umd:
       library: '${project.name}'
       libraryTarget: 'umd'
@@ -43,6 +45,7 @@ build:
       disabled: true
     compress: false
     library: true
+    env: production
     umd:
       library: '${project.name}'
       libraryTarget: 'umd'
