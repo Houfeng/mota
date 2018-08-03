@@ -3447,7 +3447,7 @@ function autorun(target, method) {
   registerMountHandler(target, function () {
     var context = this;
     var deep = target._deep_ && target._deep_[method];
-    autoRef = this._observer_.run(target[method], { context: context, deep: deep });
+    autoRef = this._observer_.run(this[method], { context: context, deep: deep });
     autoRef.run();
   });
   registerUnmountHandler(target, function () {
@@ -3481,7 +3481,7 @@ function watch(calculator, immed) {
       var deep = target._deep_ && target._deep_[method];
       watcher = this._observer_.watch(function () {
         return calculator.call(this, this.model);
-      }, target[method], { context: context, deep: deep });
+      }, this[method], { context: context, deep: deep });
       //immed 通过 autorun.run 方法会传递给 watcher.calc 方法
       watcher.autoRef.run(immed || false);
     });
@@ -3641,7 +3641,7 @@ module.exports = composition;
 /* 86 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.7.6"}
+module.exports = {"name":"mota","version":"0.7.7"}
 
 /***/ })
 /******/ ]);

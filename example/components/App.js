@@ -36,6 +36,11 @@ class App extends Component {
     console.log('keyCode', event.keyCode);
   };
 
+  @watch(m => m)
+  say = () => {
+    console.log('say');
+  }
+
   test(event) {
     this.model.nextTickTest = 1;
     this.model.nextTickTest = 2;

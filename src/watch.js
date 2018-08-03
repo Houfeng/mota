@@ -14,7 +14,7 @@ function watch(calculator, immed) {
       const deep = target._deep_ && target._deep_[method];
       watcher = this._observer_.watch(function () {
         return calculator.call(this, this.model);
-      }, target[method], { context, deep });
+      }, this[method], { context, deep });
       //immed 通过 autorun.run 方法会传递给 watcher.calc 方法
       watcher.autoRef.run(immed || false);
     });

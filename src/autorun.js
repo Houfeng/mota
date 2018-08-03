@@ -8,7 +8,7 @@ function autorun(target, method) {
   registerMountHandler(target, function () {
     const context = this;
     const deep = target._deep_ && target._deep_[method];
-    autoRef = this._observer_.run(target[method], { context, deep });
+    autoRef = this._observer_.run(this[method], { context, deep });
     autoRef.run();
   });
   registerUnmountHandler(target, function () {
