@@ -1247,6 +1247,7 @@ var stateful = __webpack_require__(26);
 
 function createRender(proto) {
   var initailRender = proto.render;
+  if (!initailRender) return initailRender;
   var overrideRender = hook.wrapRender(initailRender);
   return function () {
     var _run_;
@@ -3641,7 +3642,7 @@ module.exports = composition;
 /* 86 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.8.0"}
+module.exports = {"name":"mota","version":"0.8.1"}
 
 /***/ })
 /******/ ]);

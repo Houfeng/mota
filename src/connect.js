@@ -6,6 +6,7 @@ const stateful = require('./stateful');
 
 function createRender(proto) {
   const initailRender = proto.render;
+  if (!initailRender) return initailRender;
   const overrideRender = hook.wrapRender(initailRender);
   return function (...args) {
     if (!this._run_) {
