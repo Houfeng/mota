@@ -933,9 +933,9 @@ function registerUnmountHandler(proto, handler) {
   proto._unmountHandlers_.push(handler);
 }
 
-function registerReceivePropsHandler(proto, handler) {
-  if (!proto._receivePropsHandlers_) final(proto, '_receivePropsHandlers_', []);
-  proto._receivePropsHandlers_.push(handler);
+function registerDidUpdateHandler(proto, handler) {
+  if (!proto._didUpdateHandlers_) final(proto, '_didUpdateHandlers_', []);
+  proto._didUpdateHandlers_.push(handler);
 }
 
 function registerElementHandler(proto, handler) {
@@ -977,7 +977,7 @@ module.exports = {
   registerElementHandler: registerElementHandler,
   registerMountHandler: registerMountHandler,
   registerUnmountHandler: registerUnmountHandler,
-  registerReceivePropsHandler: registerReceivePropsHandler
+  registerDidUpdateHandler: registerDidUpdateHandler
 };
 
 /***/ }),
@@ -1309,8 +1309,8 @@ function createMount(proto) {
   };
 }
 
-function createReceiveProps(proto) {
-  var initailReceiveProps = proto.componentWillReceiveProps;
+function createDidUpdate(proto) {
+  var initailDidUpdate = proto.componentDidUpdate;
   return function () {
     var _this3 = this;
 
@@ -1318,12 +1318,12 @@ function createReceiveProps(proto) {
       args[_key3] = arguments[_key3];
     }
 
-    if (this._receivePropsHandlers_) {
-      this._receivePropsHandlers_.forEach(function (handler) {
+    if (this._didUpdateHandlers_) {
+      this._didUpdateHandlers_.forEach(function (handler) {
         return handler.call.apply(handler, [_this3].concat(args));
       });
     }
-    if (initailReceiveProps) return initailReceiveProps.call.apply(initailReceiveProps, [this].concat(args));
+    if (initailDidUpdate) return initailDidUpdate.call.apply(initailDidUpdate, [this].concat(args));
   };
 }
 
@@ -1363,7 +1363,7 @@ function connect(model, component) {
   proto.render = createRender(proto);
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
-  proto.componentWillReceiveProps = createReceiveProps(proto);
+  proto.componentDidUpdate = createDidUpdate(proto);
   registerElementHandler(proto, recursiveConnect);
   final(proto, '_contented_', true);
   return component;
@@ -3529,7 +3529,7 @@ var _require = __webpack_require__(1),
     setByPath = _require.setByPath;
 
 var _require2 = __webpack_require__(2),
-    registerReceivePropsHandler = _require2.registerReceivePropsHandler,
+    registerDidUpdateHandler = _require2.registerDidUpdateHandler,
     registerMountHandler = _require2.registerMountHandler;
 
 function mapping(map) {
@@ -3554,8 +3554,8 @@ function mapping(map) {
     registerMountHandler(proto, function () {
       assign(this.model, this.props);
     });
-    registerReceivePropsHandler(proto, function (nextProps) {
-      assign(this.model, nextProps);
+    registerDidUpdateHandler(proto, function () {
+      assign(this.model, this.props);
     });
   };
 }
@@ -3641,7 +3641,7 @@ module.exports = composition;
 /* 86 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.7.7"}
+module.exports = {"name":"mota","version":"0.8.0"}
 
 /***/ })
 /******/ ]);

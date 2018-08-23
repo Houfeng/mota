@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { model, binding, autorun, watch, deep, nextTick } from '../../src';
 import { Component } from 'react';
-import Message from './func';
+import Message from './message';
 import Info from '../model/info';
 
 import './app.css';
@@ -56,21 +56,21 @@ class App extends Component {
   render() {
     const { welcome } = this.model;
     return <div className="app">
-      {welcome} to
-      <Message opts={this.model} >
-        函数组件的子组件
-      </Message>
-      <div>
-        <input data-bind="welcome" />
-      </div>
-      <ThemeContext.Provider value={this.model.theme}>
-        <button onClick={this.toggleTheme} >ToggleTheme</button>
-        <ThemeContext.Consumer>
-          {theme => (
-            <span >{theme}</span>
-          )}
-        </ThemeContext.Consumer>
-      </ThemeContext.Provider>
+      <React.StrictMode>
+        {welcome} to
+      <Message opts={this.model} theme={this.model.theme} />
+        <div>
+          <input data-bind="welcome" />
+        </div>
+        <ThemeContext.Provider value={this.model.theme}>
+          <button onClick={this.toggleTheme} >ToggleTheme</button>
+          <ThemeContext.Consumer>
+            {theme => (
+              <span >{theme}</span>
+            )}
+          </ThemeContext.Consumer>
+        </ThemeContext.Provider>
+      </React.StrictMode>
     </div>;
   }
 }

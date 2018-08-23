@@ -12,9 +12,9 @@ function registerUnmountHandler(proto, handler) {
   proto._unmountHandlers_.push(handler);
 }
 
-function registerReceivePropsHandler(proto, handler) {
-  if (!proto._receivePropsHandlers_) final(proto, '_receivePropsHandlers_', []);
-  proto._receivePropsHandlers_.push(handler);
+function registerDidUpdateHandler(proto, handler) {
+  if (!proto._didUpdateHandlers_) final(proto, '_didUpdateHandlers_', []);
+  proto._didUpdateHandlers_.push(handler);
 }
 
 function registerElementHandler(proto, handler) {
@@ -58,5 +58,5 @@ module.exports = {
   registerElementHandler,
   registerMountHandler,
   registerUnmountHandler,
-  registerReceivePropsHandler
+  registerDidUpdateHandler
 };

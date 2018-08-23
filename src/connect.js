@@ -50,14 +50,14 @@ function createMount(proto) {
   };
 }
 
-function createReceiveProps(proto) {
-  const initailReceiveProps = proto.componentWillReceiveProps;
+function createDidUpdate(proto) {
+  const initailDidUpdate = proto.componentDidUpdate;
   return function (...args) {
-    if (this._receivePropsHandlers_) {
-      this._receivePropsHandlers_
+    if (this._didUpdateHandlers_) {
+      this._didUpdateHandlers_
         .forEach(handler => handler.call(this, ...args));
     }
-    if (initailReceiveProps) return initailReceiveProps.call(this, ...args);
+    if (initailDidUpdate) return initailDidUpdate.call(this, ...args);
   };
 }
 
@@ -95,7 +95,7 @@ function connect(model, component) {
   proto.render = createRender(proto);
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
-  proto.componentWillReceiveProps = createReceiveProps(proto);
+  proto.componentDidUpdate = createDidUpdate(proto);
   registerElementHandler(proto, recursiveConnect);
   final(proto, '_contented_', true);
   return component;

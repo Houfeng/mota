@@ -1,6 +1,6 @@
 const { isObject, each, isString, getByPath, setByPath } = require('ntils');
 const {
-  registerReceivePropsHandler, registerMountHandler
+  registerDidUpdateHandler, registerMountHandler
 } = require('./utils');
 
 function mapping(map) {
@@ -25,8 +25,8 @@ function mapping(map) {
     registerMountHandler(proto, function () {
       assign(this.model, this.props);
     });
-    registerReceivePropsHandler(proto, function (nextProps) {
-      assign(this.model, nextProps);
+    registerDidUpdateHandler(proto, function () {
+      assign(this.model, this.props);
     });
   };
 }
