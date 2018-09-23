@@ -1901,7 +1901,7 @@ var _require = __webpack_require__(9),
     expression = _require.expression,
     nextTick = _require.nextTick;
 
-var info = __webpack_require__(86);
+var info = __webpack_require__(87);
 
 module.exports = (0, _extends3.default)({
   connect: connect, model: model, binding: binding, bindable: bindable, watch: watch, mapping: mapping, autorun: autorun, deep: deep, stateful: stateful,
@@ -3567,7 +3567,7 @@ module.exports = mapping;
 /* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _classCallCheck2 = __webpack_require__(27);
+/* WEBPACK VAR INJECTION */(function(global) {var _classCallCheck2 = __webpack_require__(27);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -3582,11 +3582,13 @@ var INPUT_EVENT = 'input';
 
 var Composition = function () {
   Composition.prototype.on = function on(event, handler) {
-    document.addEventListener(event, handler, true);
+    if (!global.document) return;
+    global.document.addEventListener(event, handler, true);
   };
 
   Composition.prototype.off = function off(event, handler) {
-    document.removeEventListener(event, handler, true);
+    if (!global.document) return;
+    global.document.removeEventListener(event, handler, true);
   };
 
   Composition.prototype.enable = function enable() {
@@ -3633,16 +3635,44 @@ var Composition = function () {
 var composition = new Composition();
 
 AutoRun.prototype.isSync = function () {
-  return composition.composing || composition.inputting;
+  return !global.document || composition.composing || composition.inputting;
 };
 
 module.exports = composition;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(86)))
 
 /***/ }),
 /* 86 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.8.1"}
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports) {
+
+module.exports = {"name":"mota","version":"0.9.0"}
 
 /***/ })
 /******/ ]);

@@ -27,11 +27,13 @@ class Composition {
   };
 
   on(event, handler) {
-    document.addEventListener(event, handler, true);
+    if (!global.document) return;
+    global.document.addEventListener(event, handler, true);
   }
 
   off(event, handler) {
-    document.removeEventListener(event, handler, true);
+    if (!global.document) return;
+    global.document.removeEventListener(event, handler, true);
   }
 
   enable() {
@@ -54,7 +56,7 @@ class Composition {
 const composition = new Composition();
 
 AutoRun.prototype.isSync = function () {
-  return composition.composing || composition.inputting;
+  return !global.document || composition.composing || composition.inputting;
 };
 
 module.exports = composition;
