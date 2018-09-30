@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>编写业务模型 - Mota</title>
+  <meta name="keywords" content="编写业务模型" />
+  <meta name="description" content="编写业务模型" />
+  <meta name="author" content="doczilla">
+  <base href="../../" route="%7B%22lang%22%3A%22zh%22%2C%22group%22%3A%22guide%22%2C%22doc%22%3A%22model%22%7D" />
+  <link href="./assets/index.css" rel="stylesheet">
+  <link href="./plugins/doczilla-card/index.css" rel="stylesheet" /><link href="./plugins/doczilla-details/index.css" rel="stylesheet" /><link href="./plugins/doczilla-highlight/index.css" rel="stylesheet" /></head>
+</head>
+
+<body>
+  <div id="root"><div data-reactroot=""><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="./"><i class="icon fa fa-graduation-cap" aria-hidden="true"></i><span class="name">Mota</span></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><form class="navbar-form navbar-left"><div class="form-group search"><span class="separator"></span><input type="text" class="form-control" placeholder="Search by keyword ..." value=""/></div></form><ul class="nav navbar-nav navbar-right"><li><a href="//houfeng.net/mota/">文档</a></li><li><a href="//github.com/Houfeng/mota">GitHub</a></li><li><a href="//houfeng.net/dn-template-mota/example/">示例</a></li><li class="dropdown locales"><a class="dropdown-toggle" data-toggle="dropdown" role="button">中文<!-- --> <span class="caret"></span></a><ul class="dropdown-menu"><li><a href="zh/guide/model.html">中文</a></li></ul></li></ul></div></div></nav><div class="container"><div class="panel panel-default"><div class="panel-body"><div class="row"><div class="col-md-3 col-side"><div class="catalog"><ul class="group"><li class="group-item"><a><i class="fa fa-th-large" aria-hidden="true"></i>使用指南</a><ul class="doc"><li class="doc-item"><a class="" href="zh/guide/quick.html">快速开始</a></li><li class="doc-item"><a class="active" href="zh/guide/model.html">编写业务模型</a></li><li class="doc-item"><a class="" href="zh/guide/mapping.html">属性映射</a></li><li class="doc-item"><a class="" href="zh/guide/autorun.html">自执行函数</a></li><li class="doc-item"><a class="" href="zh/guide/watch.html">监听模型变化</a></li><li class="doc-item"><a class="" href="zh/guide/binding.html">数据绑定</a></li></ul></li></ul></div></div><div class="col-md-9 col-main"><div class="article markdown-body"><h1>编写业务模型</h1>
+<p>在你编写模型之前，先放下 React 也放下 mota，就用单纯的 JavaScript 去编写你的业务模型，或有一个或多个类、或就是几个 Object，依它们应有的、自然的关系去抽像就行了，业务模型不依赖于 UI、也不依赖于某个框架，它易于测试，你可以针对它做单元测试。它易于重用，你可以将它用在合适的地方。最后， mota 只是出场把它关联到 react。</p>
+<p>在 mota 中「模型」可以是由一个 <code>class</code> 或普通的的 <code>Object</code>，整个「业务模型层」会由多个 <code>class</code> 和多个 <code>Object</code> 组成，而编写模型所需要的知识就是 JavaScript 固有的面向对象编程的知识。</p>
+<p>如下示例通过编写一个名为 <code>User</code> 的 <code>class</code> 创建了一个「用户模型」</p>
+<pre><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+  firstName <span class="token operator">=</span> <span class="token string">'Jack'</span><span class="token punctuation">;</span>
+  lastName <span class="token operator">=</span> <span class="token string">'Hou'</span><span class="token punctuation">;</span>
+  <span class="token keyword">get</span> <span class="token function">fullName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    reutrn <span class="token template-string"><span class="token string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>firstName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>lastName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>也可以是一个 <code>Object</code>，通常这个模型需要是「单例」时，可采用这种方式，如下</p>
+<pre><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  firstName<span class="token punctuation">:</span> <span class="token string">'Jack'</span><span class="token punctuation">,</span>
+  lastName<span class="token punctuation">:</span> <span class="token string">'Hou'</span><span class="token punctuation">,</span>
+  <span class="token keyword">get</span> <span class="token function">fullName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    reutrn <span class="token template-string"><span class="token string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>firstName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>lastName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>在「业务模型」编写完成后，可以通过 <code>@model</code> 将某个「类」或「类的实例」关联到指定组件，关联后便可以在组件中使用 <code>this.model</code> 访问「模型的成员变量或方法」了，mota 还会自动「收集组件依赖」，在组件「依赖的模型数据」发生变化时，自动响应变化并「驱动组件重新渲染」，如下</p>
+<pre><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span> model<span class="token punctuation">,</span>binding <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'mota'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> ReactDOM <span class="token keyword">from</span> <span class="token string">'react-dom'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> User <span class="token keyword">from</span> <span class="token string">'./models/user'</span><span class="token punctuation">;</span>
+
+@<span class="token function">model</span><span class="token punctuation">(</span>User<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
+
+  <span class="token function">onChange</span><span class="token punctuation">(</span>field<span class="token punctuation">,</span>event<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>model<span class="token punctuation">[</span>field<span class="token punctuation">]</span> <span class="token operator">=</span> event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token operator">&lt;</span>div<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>model<span class="token punctuation">.</span>fullName<span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>
+        <span class="token operator">&lt;</span>input onChange<span class="token operator">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>onChange<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span><span class="token string">'firstName'</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token operator">/</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span>br<span class="token operator">/</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span>input onChange<span class="token operator">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>onChange<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span><span class="token string">'lastName'</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token operator">/</span><span class="token operator">></span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>App<span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">,</span> mountNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>值得注意的是，在使用 <code>@model</code> 时如果传入的是一个 <code>class</code> 最终每个组件实例都会自动创建一个 <code>独立的实例</code>，这样带来的好处是「当一个页面中有同一个组件的多个实例时，不会相互影响」。</p>
+</div></div></div></div></div></div><footer class="footer">Powered By <!-- -->doczilla<!-- --> v<!-- -->3.2.1</footer></div></div>
+  <script src="./data.js"></script>
+  <script src="./assets/index.js"></script>
+  <script src="./plugins/doczilla-highlight/index.js"></script></body>
+</body>
+
+</html>

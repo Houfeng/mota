@@ -1,5 +1,7 @@
 output: ./docs
 
+mode: static
+
 locales:
   - name: zh
     text: 中文

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>监听模型变化 - Mota</title>
+  <meta name="keywords" content="监听模型变化" />
+  <meta name="description" content="监听模型变化" />
+  <meta name="author" content="doczilla">
+  <base href="../../" route="%7B%22lang%22%3A%22zh%22%2C%22group%22%3A%22guide%22%2C%22doc%22%3A%22watch%22%7D" />
+  <link href="./assets/index.css" rel="stylesheet">
+  <link href="./plugins/doczilla-card/index.css" rel="stylesheet" /><link href="./plugins/doczilla-details/index.css" rel="stylesheet" /><link href="./plugins/doczilla-highlight/index.css" rel="stylesheet" /></head>
+</head>
+
+<body>
+  <div id="root"><div data-reactroot=""><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="./"><i class="icon fa fa-graduation-cap" aria-hidden="true"></i><span class="name">Mota</span></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><form class="navbar-form navbar-left"><div class="form-group search"><span class="separator"></span><input type="text" class="form-control" placeholder="Search by keyword ..." value=""/></div></form><ul class="nav navbar-nav navbar-right"><li><a href="//houfeng.net/mota/">文档</a></li><li><a href="//github.com/Houfeng/mota">GitHub</a></li><li><a href="//houfeng.net/dn-template-mota/example/">示例</a></li><li class="dropdown locales"><a class="dropdown-toggle" data-toggle="dropdown" role="button">中文<!-- --> <span class="caret"></span></a><ul class="dropdown-menu"><li><a href="zh/guide/watch.html">中文</a></li></ul></li></ul></div></div></nav><div class="container"><div class="panel panel-default"><div class="panel-body"><div class="row"><div class="col-md-3 col-side"><div class="catalog"><ul class="group"><li class="group-item"><a><i class="fa fa-th-large" aria-hidden="true"></i>使用指南</a><ul class="doc"><li class="doc-item"><a class="" href="zh/guide/quick.html">快速开始</a></li><li class="doc-item"><a class="" href="zh/guide/model.html">编写业务模型</a></li><li class="doc-item"><a class="" href="zh/guide/mapping.html">属性映射</a></li><li class="doc-item"><a class="" href="zh/guide/autorun.html">自执行函数</a></li><li class="doc-item"><a class="active" href="zh/guide/watch.html">监听模型变化</a></li><li class="doc-item"><a class="" href="zh/guide/binding.html">数据绑定</a></li></ul></li></ul></div></div><div class="col-md-9 col-main"><div class="article markdown-body"><h1>监听模型变化</h1>
+<p>mota 中提供了一个 <code>watch</code> 函数，可用于装饰 React 组件的成员方法，<code>watch</code> 可以指定要观察的「模型数据」，在模型数据发变化时，就会自动执行「被装饰的组件方法」，<code>watch</code> 还可以像 <code>autorun</code> 一样自动执行一次，但它和 <code>autorun</code> 还是不尽相同，主要有如下区别</p>
+<ul>
+<li><code>autorun</code> 会自动收集依赖，而 <code>watch</code> 不会关心组件方法中有何依赖，需要手动指定依赖的模型数据</li>
+<li><code>watch</code> 默认不会「自动执行」，需显式的指定「立即执行参数为 true」，才会自动执行首次。</li>
+<li><code>autorun</code> 依赖的是「模型数据」本身，而 <code>watch</code> 依赖的是「计算函数」每次的「计算结果」</li>
+</ul>
+<p>示例</p>
+<pre><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span> Component <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> model<span class="token punctuation">,</span> autorun <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'mota'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> DemoModel <span class="token keyword">from</span> <span class="token string">'./models/demo'</span><span class="token punctuation">;</span>
+
+@<span class="token function">model</span><span class="token punctuation">(</span>DemoModel<span class="token punctuation">)</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> Demo <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+
+  @<span class="token function">watch</span><span class="token punctuation">(</span>model<span class="token operator">=></span>model<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+  <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'name 发生了变化'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p>上边的代码，通过 <code>watch</code> 装饰了 <code>test</code> 方法，并指定了观察的模型数据 <code>model.name</code>，那么每当 <code>model.name</code> 发生变化时，都会打印 <code>name 发生了变化</code>.</p>
+<p><code>watch</code> 是否重新执行，取决于 <code>watch</code> 的作为第一个参数传给它的「计算函数」的计算结果，每当依赖的模型数据发生变化时 <code>watch</code> 都会重执行计算函数，当计算结果有变化时，才会执行被装饰的「组件方法」，示例</p>
+<pre><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">default</span> Demo <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+
+  @<span class="token function">watch</span><span class="token punctuation">(</span>model<span class="token operator">=></span>model<span class="token punctuation">.</span>name<span class="token operator">+</span>model<span class="token punctuation">.</span>age<span class="token punctuation">)</span>
+  <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'name 发生变化'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p>有时，我们希望 <code>watch</code> 能首先自动执行一次，那么可通过向第二个参数传一个 <code>true</code> 声明这个 <code>watch</code> 要自动执行一次。</p>
+<pre><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">default</span> Demo <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+
+  @<span class="token function">watch</span><span class="token punctuation">(</span>model<span class="token operator">=></span>model<span class="token punctuation">.</span>name<span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+  <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'name 发生变化'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p>上边的 <code>test</code> 方法，将会在「组件挂载之后自动执行」，之后在 <code>model.name</code> 发生变化时也将自动重新执行。</p>
+</div></div></div></div></div></div><footer class="footer">Powered By <!-- -->doczilla<!-- --> v<!-- -->3.2.1</footer></div></div>
+  <script src="./data.js"></script>
+  <script src="./assets/index.js"></script>
+  <script src="./plugins/doczilla-highlight/index.js"></script></body>
+</body>
+
+</html>
