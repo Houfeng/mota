@@ -22,6 +22,16 @@ function registerElementHandler(proto, handler) {
   proto._elementHandlers_.push(handler);
 }
 
+function registerRenderHandler(proto, handler) {
+  if (!proto._renderHandlers_) final(proto, '_renderHandlers_', []);
+  proto._renderHandlers_.push(handler);
+}
+
+function registerModelHandler(proto, handler) {
+  if (!proto._modelHandlers_) final(proto, '_modelHandlers_', []);
+  proto._modelHandlers_.push(handler);
+}
+
 function isComponentInstance(instance) {
   if (!instance || !isObject(instance)) return false;
   return (instance instanceof Component) ||
@@ -58,5 +68,7 @@ module.exports = {
   registerElementHandler,
   registerMountHandler,
   registerUnmountHandler,
-  registerDidUpdateHandler
+  registerDidUpdateHandler,
+  registerRenderHandler,
+  registerModelHandler
 };

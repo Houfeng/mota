@@ -1,7 +1,5 @@
 const { isObject, each, isString, getByPath, setByPath } = require('ntils');
-const {
-  registerDidUpdateHandler, registerMountHandler
-} = require('./utils');
+const { registerModelHandler, registerDidUpdateHandler } = require('./utils');
 
 function mapping(map) {
   if (!isObject(map)) {
@@ -22,7 +20,7 @@ function mapping(map) {
     if (proto._contented_) {
       throw new Error('`mapping` must be enabled before `model`');
     }
-    registerMountHandler(proto, function () {
+    registerModelHandler(proto, function () {
       assign(this.model, this.props);
     });
     registerDidUpdateHandler(proto, function () {

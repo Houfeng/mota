@@ -76,6 +76,9 @@ function createModelGetter(model) {
     }
     final(this, '_model_', componentModel);
     final(this, '_isNewModelInstance_', isNewModelInstance);
+    if (this._modelHandlers_) {
+      this._modelHandlers_.forEach(handler => handler.call(this));
+    }
     return this._model_;
   };
 }

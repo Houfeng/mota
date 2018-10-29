@@ -45,6 +45,9 @@ function afterCreateElement(element) {
 
 function wrapRender(initailRender) {
   return function (...args) {
+    if (this._renderHandlers_) {
+      this._renderHandlers_.forEach(handler => handler.call(this, ...args));
+    }
     beginIntercept(this);
     let element = initailRender.call(this, ...args);
     if (!intercepted) element = afterCreateElement(element);

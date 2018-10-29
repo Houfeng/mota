@@ -943,6 +943,16 @@ function registerElementHandler(proto, handler) {
   proto._elementHandlers_.push(handler);
 }
 
+function registerRenderHandler(proto, handler) {
+  if (!proto._renderHandlers_) final(proto, '_renderHandlers_', []);
+  proto._renderHandlers_.push(handler);
+}
+
+function registerModelHandler(proto, handler) {
+  if (!proto._modelHandlers_) final(proto, '_modelHandlers_', []);
+  proto._modelHandlers_.push(handler);
+}
+
 function isComponentInstance(instance) {
   if (!instance || !isObject(instance)) return false;
   return instance instanceof Component || instance instanceof PureComponent || 'render' in instance && '__reactAutoBindPairs' in instance;
@@ -977,7 +987,9 @@ module.exports = {
   registerElementHandler: registerElementHandler,
   registerMountHandler: registerMountHandler,
   registerUnmountHandler: registerUnmountHandler,
-  registerDidUpdateHandler: registerDidUpdateHandler
+  registerDidUpdateHandler: registerDidUpdateHandler,
+  registerRenderHandler: registerRenderHandler,
+  registerModelHandler: registerModelHandler
 };
 
 /***/ }),
@@ -1330,6 +1342,8 @@ function createDidUpdate(proto) {
 
 function createModelGetter(model) {
   return function () {
+    var _this4 = this;
+
     if (this._model_) return this._model_;
     var componentModel = this.props.model || model || {};
     var isNewModelInstance = false;
@@ -1342,6 +1356,11 @@ function createModelGetter(model) {
     }
     final(this, '_model_', componentModel);
     final(this, '_isNewModelInstance_', isNewModelInstance);
+    if (this._modelHandlers_) {
+      this._modelHandlers_.forEach(function (handler) {
+        return handler.call(_this4);
+      });
+    }
     return this._model_;
   };
 }
@@ -2084,12 +2103,18 @@ function afterCreateElement(element) {
 
 function wrapRender(initailRender) {
   return function () {
-    beginIntercept(this);
+    var _this = this;
 
     for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
       args[_key3] = arguments[_key3];
     }
 
+    if (this._renderHandlers_) {
+      this._renderHandlers_.forEach(function (handler) {
+        return handler.call.apply(handler, [_this].concat(args));
+      });
+    }
+    beginIntercept(this);
     var element = initailRender.call.apply(initailRender, [this].concat(args));
     if (!intercepted) element = afterCreateElement(element);
     endIntercept(this);
@@ -3530,8 +3555,8 @@ var _require = __webpack_require__(1),
     setByPath = _require.setByPath;
 
 var _require2 = __webpack_require__(2),
-    registerDidUpdateHandler = _require2.registerDidUpdateHandler,
-    registerMountHandler = _require2.registerMountHandler;
+    registerModelHandler = _require2.registerModelHandler,
+    registerDidUpdateHandler = _require2.registerDidUpdateHandler;
 
 function mapping(map) {
   if (!isObject(map)) {
@@ -3552,7 +3577,7 @@ function mapping(map) {
     if (proto._contented_) {
       throw new Error('`mapping` must be enabled before `model`');
     }
-    registerMountHandler(proto, function () {
+    registerModelHandler(proto, function () {
       assign(this.model, this.props);
     });
     registerDidUpdateHandler(proto, function () {
@@ -3672,7 +3697,7 @@ module.exports = g;
 /* 87 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.9.0"}
+module.exports = {"name":"mota","version":"0.10.0"}
 
 /***/ })
 /******/ ]);
