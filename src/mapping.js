@@ -5,12 +5,15 @@ function mapping(map) {
   if (!isObject(map)) {
     throw new Error('Mapping needs to specify a object or array');
   }
-  function assign(model, props) {
+  function assign(model, props, prevProps) {
     each(map, (propName, modelField) => {
       if (!isString(propName)) propName = modelField;
       const propValue = getByPath(props, propName);
       const modelValue = getByPath(model, modelField);
-      if (modelValue === propValue) return;
+      if (modelValue === propValue ||
+        (prevProps && getByPath(prevProps, propName) === propValue)) {
+        return;
+      }
       setByPath(model, modelField, propValue);
     });
   }
@@ -23,8 +26,8 @@ function mapping(map) {
     registerModelHandler(proto, function () {
       assign(this.model, this.props);
     });
-    registerDidUpdateHandler(proto, function () {
-      assign(this.model, this.props);
+    registerDidUpdateHandler(proto, function (prevProps) {
+      assign(this.model, this.props, prevProps);
     });
   };
 }

@@ -3562,12 +3562,14 @@ function mapping(map) {
   if (!isObject(map)) {
     throw new Error('Mapping needs to specify a object or array');
   }
-  function assign(model, props) {
+  function assign(model, props, prevProps) {
     each(map, function (propName, modelField) {
       if (!isString(propName)) propName = modelField;
       var propValue = getByPath(props, propName);
       var modelValue = getByPath(model, modelField);
-      if (modelValue === propValue) return;
+      if (modelValue === propValue || prevProps && getByPath(prevProps, propName) === propValue) {
+        return;
+      }
       setByPath(model, modelField, propValue);
     });
   }
@@ -3580,8 +3582,8 @@ function mapping(map) {
     registerModelHandler(proto, function () {
       assign(this.model, this.props);
     });
-    registerDidUpdateHandler(proto, function () {
-      assign(this.model, this.props);
+    registerDidUpdateHandler(proto, function (prevProps) {
+      assign(this.model, this.props, prevProps);
     });
   };
 }
@@ -3697,7 +3699,7 @@ module.exports = g;
 /* 87 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.10.0"}
+module.exports = {"name":"mota","version":"0.11.0"}
 
 /***/ })
 /******/ ]);
