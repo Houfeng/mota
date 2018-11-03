@@ -15,8 +15,8 @@
 </head>
 
 <body>
-  <div id="root"><div data-reactroot=""><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="./"><i class="icon fa fa-graduation-cap" aria-hidden="true"></i><span class="name">Mota</span></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><form class="navbar-form navbar-left"><div class="form-group search"><span class="separator"></span><input type="text" class="form-control" placeholder="Search by keyword ..." value=""/></div></form><ul class="nav navbar-nav navbar-right"><li><a href="//houfeng.net/mota/">文档</a></li><li><a href="//github.com/Houfeng/mota">GitHub</a></li><li><a href="//houfeng.net/dn-template-mota/example/">示例</a></li><li class="dropdown locales"><a class="dropdown-toggle" data-toggle="dropdown" role="button">中文<!-- --> <span class="caret"></span></a><ul class="dropdown-menu"><li><a href="zh/guide/binding.html">中文</a></li></ul></li></ul></div></div></nav><div class="container"><div class="panel panel-default"><div class="panel-body"><div class="row"><div class="col-md-3 col-side"><div class="catalog"><ul class="group"><li class="group-item"><a><i class="fa fa-th-large" aria-hidden="true"></i>使用指南</a><ul class="doc"><li class="doc-item"><a class="" href="zh/guide/quick.html">快速开始</a></li><li class="doc-item"><a class="" href="zh/guide/model.html">编写业务模型</a></li><li class="doc-item"><a class="" href="zh/guide/mapping.html">属性映射</a></li><li class="doc-item"><a class="" href="zh/guide/autorun.html">自执行函数</a></li><li class="doc-item"><a class="" href="zh/guide/watch.html">监听模型变化</a></li><li class="doc-item"><a class="active" href="zh/guide/binding.html">数据绑定</a></li></ul></li></ul></div></div><div class="col-md-9 col-main"><div class="article markdown-body"><h1>数据绑定</h1>
-<h3>基本用法</h3>
+  <div id="root"><div data-reactroot=""><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="./"><i class="icon fa fa-graduation-cap" aria-hidden="true"></i><span class="name">Mota</span></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><form class="navbar-form navbar-left"><div class="form-group search"><span class="separator"></span><input type="text" class="form-control" placeholder="Search by keyword ..." value=""/></div></form><ul class="nav navbar-nav navbar-right"><li><a href="//houfeng.net/mota/">文档</a></li><li><a href="//github.com/Houfeng/mota">GitHub</a></li><li><a href="//houfeng.net/dn-template-mota/example/">示例</a></li><li class="dropdown locales"><a class="dropdown-toggle" data-toggle="dropdown" role="button">中文<!-- --> <span class="caret"></span></a><ul class="dropdown-menu"><li><a href="zh/guide/binding.html">中文</a></li></ul></li></ul></div></div></nav><div class="container"><div class="panel panel-default"><div class="panel-body"><div class="row"><div class="col-md-3 col-side"><div class="catalog"><ul class="group"><li class="group-item"><a><i class="fa fa-bookmark" aria-hidden="true"></i>使用指南</a><ul class="doc"><li class="doc-item"><a class="" href="zh/guide/quick.html">快速开始</a></li><li class="doc-item"><a class="" href="zh/guide/model.html">编写业务模型</a></li><li class="doc-item"><a class="" href="zh/guide/mapping.html">属性映射</a></li><li class="doc-item"><a class="" href="zh/guide/autorun.html">自执行函数</a></li><li class="doc-item"><a class="" href="zh/guide/watch.html">监听模型变化</a></li><li class="doc-item"><a class="active" href="zh/guide/binding.html">数据绑定</a></li></ul></li></ul></div></div><div class="col-md-9 col-main"><div class="article markdown-body"><h1 id="%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A">数据绑定</h1>
+<h3 id="%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95">基本用法</h3>
 <p>不要惊诧，就是「双向绑定」。<code>mota</code> 主张「面向对象」，同样也不排斥「双向绑定」，使用 mota 能够实现类似 <code>ng</code> 或 <code>vue</code> 的绑定效果。还是前边小节中的模型，我们来稍微改动一下组件的代码</p>
 <pre><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span> model<span class="token punctuation">,</span>binding <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'mota'</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
@@ -75,7 +75,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
 <span class="token punctuation">}</span>
 </code></pre>
 <p>通过 <code>data-scope</code> 将 <code>input</code> 的绑定上下文对象声明为当前循环变量 <code>user</code>，这样就可以用 <code>data-bind</code> 直接绑定到对应 <code>user</code> 的属性上了。</p>
-<h3>原生表单控件</h3>
+<h3 id="%E5%8E%9F%E7%94%9F%E8%A1%A8%E5%8D%95%E6%8E%A7%E4%BB%B6">原生表单控件</h3>
 <p>所有的原生表单控件，比如「普通 input、checkbox、radio、textarea、select」都可以直接进行绑定。其中，「普通 input 和 textrea」比较简单，将一个字符类型的模型数据与控件绑定就行了，而对于「checkbox 和 radio」 有多种不同的绑定形式。</p>
 <p>将「checkbox 或 radio」绑定到一个 <code>boolean</code> 值，此时会将 checkbox 或 radio 的 checked 属性和模型数据建立绑定，checked 反应了 <code>boolean</code> 变量的值，参考如下示例</p>
 <pre><code class="language-js">@<span class="token function">model</span><span class="token punctuation">(</span><span class="token punctuation">{</span> selected<span class="token punctuation">:</span><span class="token boolean">false</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -116,7 +116,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
 <span class="token punctuation">}</span>
 </code></pre>
 <p>通过 <code>this.model.selected</code> 就能拿到当前选中的 radio 的 value</p>
-<h3>自定义组件</h3>
+<h3 id="%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6">自定义组件</h3>
 <p>但是对于一些「组件库」中的「部分表单组件」不能直接绑定，因为 mota 并没有什么依据可以判断这是一个什么组件。所以 mota 提供了一个名为 <code>bindable</code> 的函数，用将任意组件包装成「可绑定组件」。</p>
 <p>bindable 有两种个参数，用于分别指定「原始组件」和「包装选项」</p>
 <pre><code class="language-js"><span class="token comment">//可以这样</span>
@@ -177,7 +177,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
 <span class="token keyword">const</span> MyRadio <span class="token operator">=</span> <span class="token function">bindable</span><span class="token punctuation">(</span><span class="token string">'radio'</span><span class="token punctuation">,</span>Radio<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <p>好了，关于绑定就这些了。</p>
-</div></div></div></div></div></div><footer class="footer">Powered By <!-- -->doczilla<!-- --> v<!-- -->3.2.1</footer></div></div>
+</div></div></div></div></div></div><footer class="footer">Powered By <!-- -->doczilla<!-- --> v<!-- -->3.2.2</footer></div></div>
   <script src="./data.js"></script>
   <script src="./assets/index.js"></script>
   <script src="./plugins/doczilla-highlight/index.js"></script></body>

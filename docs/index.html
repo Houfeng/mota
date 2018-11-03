@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mota</title>
+  <meta name="keywords" content="Mota" />
+  <meta name="description" content="Mota" />
+  <meta name="author" content="doczilla">
+  <base href="." route="" />
+  <link href="./assets/index.css" rel="stylesheet">
+  <link href="./plugins/doczilla-card/index.css" rel="stylesheet" /><link href="./plugins/doczilla-details/index.css" rel="stylesheet" /><link href="./plugins/doczilla-highlight/index.css" rel="stylesheet" /></head>
+</head>
+
+<body>
+  <div id="root"><div data-reactroot=""><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="./"><i class="icon fa fa-graduation-cap" aria-hidden="true"></i><span class="name">Mota</span></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><form class="navbar-form navbar-left"><div class="form-group search"><span class="separator"></span><input type="text" class="form-control" placeholder="Search by keyword ..." value=""/></div></form><ul class="nav navbar-nav navbar-right"><li><a href="//houfeng.net/mota/">文档</a></li><li><a href="//github.com/Houfeng/mota">GitHub</a></li><li><a href="//houfeng.net/dn-template-mota/example/">示例</a></li><li class="dropdown locales"><a class="dropdown-toggle" data-toggle="dropdown" role="button">中文<!-- --> <span class="caret"></span></a><ul class="dropdown-menu"><li><a href="guide/quick.html">中文</a></li></ul></li></ul></div></div></nav><div class="container"><div class="panel panel-default"><div class="panel-body"><div class="row"><div class="col-md-3 col-side"><div class="catalog"><ul class="group"><li class="group-item"><a><i class="fa fa-bookmark" aria-hidden="true"></i>使用指南</a><ul class="doc"><li class="doc-item"><a class="active" href="zh/guide/quick.html">快速开始</a></li><li class="doc-item"><a class="" href="zh/guide/model.html">编写业务模型</a></li><li class="doc-item"><a class="" href="zh/guide/mapping.html">属性映射</a></li><li class="doc-item"><a class="" href="zh/guide/autorun.html">自执行函数</a></li><li class="doc-item"><a class="" href="zh/guide/watch.html">监听模型变化</a></li><li class="doc-item"><a class="" href="zh/guide/binding.html">数据绑定</a></li></ul></li></ul></div></div><div class="col-md-9 col-main"><div class="article markdown-body"><h1 id="%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B">快速开始</h1>
+<h2 id="%E7%AE%80%E8%BF%B0">简述</h2>
+<p>React 是一个「视图层」的 UI 框架，以常见的 MVC 来讲 React 仅是 View，而我们在编写应用时，通常还需要关注更加重要的 model，对于 React 来讲，我们常常需要一个「状态管理」库。然而，目前大多数针对 React 的状态管理库都是「强依赖」过多的侵入本应该独立的业务模型中，导致「业务逻辑」对应的代码并不能轻易在其它地方重用，往往这些框架还具有「强排它性」，但是「业务模型」应该是没有过多依赖，应该是无关框架的，它应该随时可以被用在任何合适的 JavaScript 环境中，使用 mota 你可以用原生的普通的 JavaScript 代码编写你的「业务模型」，并让你的「业务模型」在不同框架、不同运行环境下重用更为容易。</p>
+<p>mota 是一个主张「面向对象」的、支持「双向绑定」的 React 应用辅助库，基于 mota 你可以用纯 JavaScript 为应用编写完全面向对象的「业务模型」，并轻易的将「业务模型」关联到 React 应用中。</p>
+<h2 id="%E7%A4%BA%E4%BE%8B">示例</h2>
+<p><a href="http://houfeng.net/dn-template-mota/example/">在线 TodoList 示例</a>
+(<a href="https://github.com/Houfeng/dn-template-mota">示例源码</a>)</p>
+<h2 id="%E5%AE%89%E8%A3%85">安装</h2>
+<p>通过 npm 安装，如下</p>
+<pre><code class="language-sh">$ npm i mota --save
+</code></pre>
+<p>或通过 <code>dawn</code> 脚手脚加创建工程，如下</p>
+<pre><code class="language-sh">$ mkdir your_path
+$ cd your_path
+$ dn init -t mota
+$ dn dev
+</code></pre>
+<p>需要先安装 dawn（<a href="https://alibaba.github.io/dawn/docs/">Dawn 安装及使用文档</a>）</p>
+<h2 id="%E7%BB%93%E6%9E%84">结构</h2>
+<p>一个 <code>mota</code> 工程的通常结构如下</p>
+<pre><code class="language-sh">.
+├── README.md
+├── package.json
+└── src
+    ├── assets
+    │   ├── common.less
+    │   ├── favicon.ico
+    │   └── index.html
+    ├── components
+    │   ├── todoApp.js
+    │   └── todoItem.js
+    ├── index.js
+    └── models
+        ├── TodoItem.js
+        ├── TodoList.js
+        └── index.js
+</code></pre>
+<h2 id="%E6%96%87%E6%A1%A3">文档</h2>
+<ul>
+<li><a href="http://houfeng.net/mota/#!/zh/guide/quick">快速开始</a></li>
+<li><a href="http://houfeng.net/mota/#!/zh/guide/model">编写业务模型</a></li>
+<li><a href="http://houfeng.net/mota/#!/zh/guide/mapping">将组件属性映射到模型</a></li>
+<li><a href="http://houfeng.net/mota/#!/zh/guide/autorun">自执行函数</a></li>
+<li><a href="http://houfeng.net/mota/#!/zh/guide/watch">监听模型变化</a></li>
+<li><a href="http://houfeng.net/mota/#!/zh/guide/binding">将模型数据与表单绑定</a></li>
+</ul>
+<h2 id="%E9%93%BE%E6%8E%A5">链接</h2>
+<ul>
+<li><a href="https://github.com/Houfeng/mota/releases">版本发布日志</a></li>
+<li><a href="https://tldrlegal.com/license/mit-license">MIT 开源协议</a></li>
+</ul>
+</div></div></div></div></div></div><footer class="footer">Powered By <!-- -->doczilla<!-- --> v<!-- -->3.2.2</footer></div></div>
+  <script src="./data.js"></script>
+  <script src="./assets/index.js"></script>
+  <script src="./plugins/doczilla-highlight/index.js"></script></body>
+</body>
+
+</html>
