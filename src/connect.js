@@ -6,9 +6,9 @@ const stateful = require('./stateful');
 
 function createRender(proto) {
   const initailRender = proto.render;
-  if (!initailRender) return initailRender;
+  if (!initailRender || initailRender._override_) return initailRender;
   const overrideRender = hook.wrapRender(initailRender);
-  return function (...args) {
+  const render = function (...args) {
     if (!this._run_) {
       final(this, '_observer_', new Observer(this.model));
       final(this, '_trigger_', function () {
@@ -23,6 +23,8 @@ function createRender(proto) {
     }
     return this._run_.run(...args);
   };
+  final(render, '_override_', true);
+  return render;
 }
 
 function createUnmount(proto) {
@@ -92,6 +94,7 @@ function connect(model, component) {
   if (!isFunction(component)) return component;
   if (!isComponentClass(component)) component = stateful(component);
   const proto = component.prototype;
+  //通过 hasOwnProperty 才能保证父类装饰过了，子类可重新装饰
   if (proto.hasOwnProperty('_contented_')) return component;
   Object.defineProperty(proto, 'model', {
     enumerable: false, get: createModelGetter(model)

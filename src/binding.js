@@ -49,7 +49,7 @@ function elementHandler(type, props) {
 function binding(component) {
   if (!component) return binding;
   const proto = component.prototype;
-  if (proto._contented_) {
+  if (proto.hasOwnProperty('_contented_')) {
     throw new Error('`binding` must be enabled before `model`');
   }
   registerElementHandler(proto, elementHandler);

@@ -1560,9 +1560,9 @@ var stateful = __webpack_require__(45);
 
 function createRender(proto) {
   var initailRender = proto.render;
-  if (!initailRender) return initailRender;
+  if (!initailRender || initailRender._override_) return initailRender;
   var overrideRender = hook.wrapRender(initailRender);
-  return function () {
+  var render = function render() {
     var _run_;
 
     if (!this._run_) {
@@ -1579,6 +1579,8 @@ function createRender(proto) {
     }
     return (_run_ = this._run_).run.apply(_run_, arguments);
   };
+  final(render, '_override_', true);
+  return render;
 }
 
 function createUnmount(proto) {
@@ -1677,6 +1679,7 @@ function connect(model, component) {
   if (!isFunction(component)) return component;
   if (!isComponentClass(component)) component = stateful(component);
   var proto = component.prototype;
+  //通过 hasOwnProperty 才能保证父类装饰过了，子类可重新装饰
   if (proto.hasOwnProperty('_contented_')) return component;
   Object.defineProperty(proto, 'model', {
     enumerable: false, get: createModelGetter(model)
@@ -3941,7 +3944,7 @@ function elementHandler(type, props) {
 function binding(component) {
   if (!component) return binding;
   var proto = component.prototype;
-  if (proto._contented_) {
+  if (proto.hasOwnProperty('_contented_')) {
     throw new Error('`binding` must be enabled before `model`');
   }
   registerElementHandler(proto, elementHandler);
@@ -4191,7 +4194,7 @@ module.exports = g;
 /* 110 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.11.1"}
+module.exports = {"name":"mota","version":"0.11.2"}
 
 /***/ })
 /******/ ]);
