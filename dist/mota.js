@@ -1677,7 +1677,7 @@ function connect(model, component) {
   if (!isFunction(component)) return component;
   if (!isComponentClass(component)) component = stateful(component);
   var proto = component.prototype;
-  if (proto._contented_) return component;
+  if (proto.hasOwnProperty('_contented_')) return component;
   Object.defineProperty(proto, 'model', {
     enumerable: false, get: createModelGetter(model)
   });
@@ -4191,7 +4191,7 @@ module.exports = g;
 /* 110 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"0.11.0"}
+module.exports = {"name":"mota","version":"0.11.1"}
 
 /***/ })
 /******/ ]);

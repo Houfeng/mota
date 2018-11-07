@@ -92,7 +92,7 @@ function connect(model, component) {
   if (!isFunction(component)) return component;
   if (!isComponentClass(component)) component = stateful(component);
   const proto = component.prototype;
-  if (proto._contented_) return component;
+  if (proto.hasOwnProperty('_contented_')) return component;
   Object.defineProperty(proto, 'model', {
     enumerable: false, get: createModelGetter(model)
   });
