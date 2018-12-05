@@ -3,6 +3,7 @@ const Observer = require('ober');
 const { final, isObject, isFunction } = require('ntils');
 const { isComponentClass, registerElementHandler } = require('./utils');
 const stateful = require('./stateful');
+const binding = require('./binding');
 
 function createRender(proto) {
   const initailRender = proto.render;
@@ -103,6 +104,7 @@ function connect(model, component) {
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
   proto.componentDidUpdate = createDidUpdate(proto);
+  registerElementHandler(proto, binding.elementHandler);
   registerElementHandler(proto, recursiveConnect);
   final(proto, '_contented_', true);
   return component;

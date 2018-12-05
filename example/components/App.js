@@ -7,8 +7,6 @@ import './app.css';
 
 class InfoNew extends Info { }
 
-@model(Info)
-@binding
 class AppBase extends Component {
 
   render() {
@@ -20,12 +18,15 @@ class AppBase extends Component {
 }
 
 @model(InfoNew)
-@binding
 class App extends AppBase {
 
   render() {
     return <div>
+      <div>
+        {this.model.name}
+      </div>
       <input data-bind="name" />
+      <AppBase />
     </div>;
   }
 

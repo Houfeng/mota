@@ -39,7 +39,7 @@
 <span class="token punctuation">}</span>
 ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>App<span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">,</span> mountNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<p>其中的「关键」就是 <code>@binding</code>，使用 <code>@binding</code> 后，组件便具备了「双向绑定」的能力，在 <code>jsx</code> 中便可以通过名为 <code>data-bind</code> 的自定义 <code>attribute</code> 进行绑定了，<code>data-bind</code> 的值是一个「绑定表达式字符串」，绑定表达式执行的 <code>scope</code> 是 <code>model</code> 而不是 <code>this</code>，也就是只能与 <code>模型的成员</code> 进行绑定。</p>
+<p><s>其中的「关键」就是 <code>@binding</code>，使用 <code>@binding</code> 后</s> (&gt;=1.2.0 的版本将会自动处理，不必显示的启用)，组件便具备了「双向绑定」的能力，在 <code>jsx</code> 中便可以通过名为 <code>data-bind</code> 的自定义 <code>attribute</code> 进行绑定了，<code>data-bind</code> 的值是一个「绑定表达式字符串」，绑定表达式执行的 <code>scope</code> 是 <code>model</code> 而不是 <code>this</code>，也就是只能与 <code>模型的成员</code> 进行绑定。</p>
 <p>会有一种情况是当要绑定的数据是一个循环变量时，「绑定表达式」写起会较麻烦也稍显长，比如</p>
 <pre><code class="language-js">@<span class="token function">model</span><span class="token punctuation">(</span>userModel<span class="token punctuation">)</span>
 @binding

@@ -13,8 +13,9 @@ function compileExpr(expr) {
 function elementHandler(type, props) {
   if (!type || !props) return;
   const dataBind = props['data-bind'];
+  if (!dataBind) return;
   const bindOpts = dataBind && bindable.getOptions(type, props);
-  if (!dataBind || !bindOpts) return;
+  if (!bindOpts) return;
   const dataScope = props['data-scope'] || this.model;
   const bindExpr = compileExpr(dataBind);
   const setValue = value => bindExpr.set(Object.create(dataScope, {
@@ -46,14 +47,21 @@ function elementHandler(type, props) {
   props['data-bind'] = undefined;
 }
 
+/**
+ * @deprecated
+ * @param {*} component React Component
+ */
 function binding(component) {
-  if (!component) return binding;
-  const proto = component.prototype;
-  if (proto.hasOwnProperty('_contented_')) {
-    throw new Error('`binding` must be enabled before `model`');
-  }
-  registerElementHandler(proto, elementHandler);
+  // if (!component) return binding;
+  // const proto = component.prototype;
+  // if (proto.hasOwnProperty('_contented_')) {
+  //   throw new Error('`binding` must be enabled before `model`');
+  // }
+  // registerElementHandler(proto, elementHandler);
+  console.warn('binding is deprecated and will be automatic');
   return component;
 }
+
+binding.elementHandler = elementHandler;
 
 module.exports = binding;

@@ -35,7 +35,7 @@ class App extends React.Component {
 ReactDOM.render(<App/>, mountNode);
 ```
 
-其中的「关键」就是 `@binding`，使用 `@binding` 后，组件便具备了「双向绑定」的能力，在 `jsx` 中便可以通过名为 `data-bind` 的自定义 `attribute` 进行绑定了，`data-bind` 的值是一个「绑定表达式字符串」，绑定表达式执行的 `scope` 是 `model` 而不是 `this`，也就是只能与 `模型的成员` 进行绑定。
+~~其中的「关键」就是 `@binding`，使用 `@binding` 后~~ (>=1.2.0 的版本将会自动处理，不必显示的启用)，组件便具备了「双向绑定」的能力，在 `jsx` 中便可以通过名为 `data-bind` 的自定义 `attribute` 进行绑定了，`data-bind` 的值是一个「绑定表达式字符串」，绑定表达式执行的 `scope` 是 `model` 而不是 `this`，也就是只能与 `模型的成员` 进行绑定。
 
 会有一种情况是当要绑定的数据是一个循环变量时，「绑定表达式」写起会较麻烦也稍显长，比如
 
