@@ -82,6 +82,7 @@ function createModelGetter(model) {
     if (this._modelHandlers_) {
       this._modelHandlers_.forEach(handler => handler.call(this));
     }
+    if (this.modelDidCreate) this.modelDidCreate();
     return this._model_;
   };
 }

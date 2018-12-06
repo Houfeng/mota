@@ -1,6 +1,5 @@
 const bindable = require('./bindable');
 const { expression } = require('ober');
-const { registerElementHandler } = require('./utils');
 const { isObject } = require('ntils');
 
 function compileExpr(expr) {
@@ -49,7 +48,8 @@ function elementHandler(type, props) {
 
 /**
  * @deprecated
- * @param {*} component React Component
+ * @param {React.Component} component React Component
+ * @returns {void}
  */
 function binding(component) {
   // if (!component) return binding;
