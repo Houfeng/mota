@@ -4246,8 +4246,7 @@ function createModel(factory) {
   var observer = new Observer(model);
   if (!observer.id) observer.id = '_observer_:' + owner.uuid++;
   function setter(info) {
-    var dependencies = state[2];
-    if (dependencies.indexOf(this.id + '.' + info.path) < 0) return;
+    if (state[2].indexOf(this.id + '.' + info.path) < 0) return;
     update(state);
   }
   function distory() {
@@ -4424,7 +4423,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /* 114 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"1.3.0"}
+module.exports = {"name":"mota","version":"1.3.1"}
 
 /***/ })
 /******/ ]);

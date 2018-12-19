@@ -23,8 +23,7 @@ function createModel(factory) {
   const observer = new Observer(model);
   if (!observer.id) observer.id = '_observer_:' + owner.uuid++;
   function setter(info) {
-    const dependencies = state[2];
-    if (dependencies.indexOf(`${this.id}.${info.path}`) < 0) return;
+    if (state[2].indexOf(`${this.id}.${info.path}`) < 0) return;
     update(state);
   }
   function distory() {
