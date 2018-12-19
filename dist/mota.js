@@ -7,7 +7,7 @@
 		exports["mota"] = factory(require("react"));
 	else
 		root["mota"] = factory(root["React"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_20__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_21__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -934,7 +934,7 @@ module.exports = function (it, key) {
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var React = __webpack_require__(20);
+var React = __webpack_require__(21);
 var Component = React.Component,
     PureComponent = React.PureComponent;
 
@@ -1084,7 +1084,7 @@ module.exports = $export;
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(8);
-var createDesc = __webpack_require__(15);
+var createDesc = __webpack_require__(16);
 module.exports = __webpack_require__(9) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
@@ -1155,7 +1155,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var store = __webpack_require__(26)('wks');
-var uid = __webpack_require__(18);
+var uid = __webpack_require__(19);
 var Symbol = __webpack_require__(2).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
@@ -1197,6 +1197,12 @@ module.exports = Observer;
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(58), __esModule: true };
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -1210,7 +1216,7 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
@@ -1223,14 +1229,14 @@ module.exports = Object.keys || function keys(O) {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = true;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 var id = 0;
@@ -1241,23 +1247,17 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_20__;
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(58), __esModule: true };
+module.exports = __WEBPACK_EXTERNAL_MODULE_21__;
 
 /***/ }),
 /* 22 */
@@ -1305,7 +1305,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(26)('keys');
-var uid = __webpack_require__(18);
+var uid = __webpack_require__(19);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
@@ -1324,7 +1324,7 @@ var store = global[SHARED] || (global[SHARED] = {});
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
   version: core.version,
-  mode: __webpack_require__(17) ? 'pure' : 'global',
+  mode: __webpack_require__(18) ? 'pure' : 'global',
   copyright: '© 2018 Denis Pushkarev (zloirock.ru)'
 });
 
@@ -1426,7 +1426,7 @@ exports.f = __webpack_require__(12);
 
 var global = __webpack_require__(2);
 var core = __webpack_require__(0);
-var LIBRARY = __webpack_require__(17);
+var LIBRARY = __webpack_require__(18);
 var wksExt = __webpack_require__(32);
 var defineProperty = __webpack_require__(8).f;
 module.exports = function (name) {
@@ -1886,7 +1886,7 @@ var _inherits3 = _interopRequireDefault(_inherits2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var React = __webpack_require__(20);
+var React = __webpack_require__(21);
 
 module.exports = function (stateless) {
   if (!stateless._stateful_) {
@@ -1958,7 +1958,7 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 
 "use strict";
 
-var LIBRARY = __webpack_require__(17);
+var LIBRARY = __webpack_require__(18);
 var $export = __webpack_require__(6);
 var redefine = __webpack_require__(49);
 var hide = __webpack_require__(7);
@@ -2052,8 +2052,8 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(19);
-var createDesc = __webpack_require__(15);
+var pIE = __webpack_require__(20);
+var createDesc = __webpack_require__(16);
 var toIObject = __webpack_require__(11);
 var toPrimitive = __webpack_require__(22);
 var has = __webpack_require__(4);
@@ -2171,7 +2171,7 @@ module.exports = binding;
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _assign = __webpack_require__(21);
+var _assign = __webpack_require__(15);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -2332,7 +2332,7 @@ module.exports = (0, _extends3.default)({
 
 exports.__esModule = true;
 
-var _assign = __webpack_require__(21);
+var _assign = __webpack_require__(15);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -2387,9 +2387,9 @@ module.exports = function (it) {
 "use strict";
 
 // 19.1.2.1 Object.assign(target, source, ...)
-var getKeys = __webpack_require__(16);
+var getKeys = __webpack_require__(17);
 var gOPS = __webpack_require__(28);
-var pIE = __webpack_require__(19);
+var pIE = __webpack_require__(20);
 var toObject = __webpack_require__(40);
 var IObject = __webpack_require__(38);
 var $assign = Object.assign;
@@ -3074,7 +3074,7 @@ module.exports = compile;
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _assign = __webpack_require__(21);
+var _assign = __webpack_require__(15);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -3084,7 +3084,7 @@ var _isFrozen2 = _interopRequireDefault(_isFrozen);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var React = __webpack_require__(20);
+var React = __webpack_require__(21);
 
 var _require = __webpack_require__(1),
     isArray = _require.isArray;
@@ -3302,7 +3302,7 @@ module.exports = function (TO_STRING) {
 "use strict";
 
 var create = __webpack_require__(30);
-var descriptor = __webpack_require__(15);
+var descriptor = __webpack_require__(16);
 var setToStringTag = __webpack_require__(31);
 var IteratorPrototype = {};
 
@@ -3321,7 +3321,7 @@ module.exports = function (Constructor, NAME, next) {
 
 var dP = __webpack_require__(8);
 var anObject = __webpack_require__(13);
-var getKeys = __webpack_require__(16);
+var getKeys = __webpack_require__(17);
 
 module.exports = __webpack_require__(9) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
@@ -3476,7 +3476,7 @@ var META = __webpack_require__(89).KEY;
 var $fails = __webpack_require__(10);
 var shared = __webpack_require__(26);
 var setToStringTag = __webpack_require__(31);
-var uid = __webpack_require__(18);
+var uid = __webpack_require__(19);
 var wks = __webpack_require__(12);
 var wksExt = __webpack_require__(32);
 var wksDefine = __webpack_require__(33);
@@ -3486,12 +3486,12 @@ var anObject = __webpack_require__(13);
 var isObject = __webpack_require__(3);
 var toIObject = __webpack_require__(11);
 var toPrimitive = __webpack_require__(22);
-var createDesc = __webpack_require__(15);
+var createDesc = __webpack_require__(16);
 var _create = __webpack_require__(30);
 var gOPNExt = __webpack_require__(92);
 var $GOPD = __webpack_require__(51);
 var $DP = __webpack_require__(8);
-var $keys = __webpack_require__(16);
+var $keys = __webpack_require__(17);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
 var gOPN = gOPNExt.f;
@@ -3615,10 +3615,10 @@ if (!USE_NATIVE) {
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
   __webpack_require__(50).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(19).f = $propertyIsEnumerable;
+  __webpack_require__(20).f = $propertyIsEnumerable;
   __webpack_require__(28).f = $getOwnPropertySymbols;
 
-  if (DESCRIPTORS && !__webpack_require__(17)) {
+  if (DESCRIPTORS && !__webpack_require__(18)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -3705,7 +3705,7 @@ setToStringTag(global.JSON, 'JSON', true);
 /* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META = __webpack_require__(18)('meta');
+var META = __webpack_require__(19)('meta');
 var isObject = __webpack_require__(3);
 var has = __webpack_require__(4);
 var setDesc = __webpack_require__(8).f;
@@ -3765,9 +3765,9 @@ var meta = module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(16);
+var getKeys = __webpack_require__(17);
 var gOPS = __webpack_require__(28);
-var pIE = __webpack_require__(19);
+var pIE = __webpack_require__(20);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -3955,7 +3955,7 @@ $export($export.S, 'Object', { create: __webpack_require__(30) });
 /***/ (function(module, exports, __webpack_require__) {
 
 var connect = __webpack_require__(41);
-var React = __webpack_require__(20);
+var React = __webpack_require__(21);
 
 module.exports = function model(model) {
   if (model && model.prototype instanceof React.Component) {
@@ -4208,22 +4208,29 @@ module.exports = g;
 /* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var _assign = __webpack_require__(15);
+
+var _assign2 = _interopRequireDefault(_assign);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var _require = __webpack_require__(111),
     useState = _require.useState,
-    useEffect = _require.useEffect;
+    useEffect = _require.useEffect,
+    useLayoutEffect = _require.useLayoutEffect;
 
 var Observer = __webpack_require__(14);
 
-var owner = { buffer: [], state: null, total: 0 };
+var owner = { buffer: [], state: null, uuid: 0 };
 
 function getter(info) {
-  if (owner.buffer.indexOf(info.path) > -1) return;
-  owner.buffer.push(info.path);
+  if (!owner.state || owner.buffer.indexOf(info.path) > -1) return;
+  owner.buffer.push(this.id + '.' + info.path);
 }
 
 function collect(nextState) {
-  if (owner.state) owner.state[2] = owner.buffer.slice(0);
-  owner.buffer.length = 0;
+  if (owner.state) owner.state[2] = owner.buffer;
+  owner.buffer = [];
   owner.state = nextState;
   return nextState;
 }
@@ -4231,28 +4238,27 @@ function collect(nextState) {
 function createModel(factory) {
   var _useState = useState([]),
       state = _useState[0],
-      dispatch = _useState[1];
+      update = _useState[1];
 
   if (state.length > 0) return collect(state);
   var isNew = factory instanceof Function;
   var model = isNew ? new factory() : factory;
   var observer = new Observer(model);
-  var attachedState = void 0;
-  var setter = function setter(info) {
-    if (attachedState[3] === owner.total) collect();
-    var dependencies = attachedState[2];
-    if (dependencies.indexOf(info.path) < 0) return;
-    dispatch([].concat(attachedState));
-  };
-  var distory = function distory() {
+  if (!observer.id) observer.id = '_observer_:' + owner.uuid++;
+  function setter(info) {
+    var dependencies = state[2];
+    if (dependencies.indexOf(this.id + '.' + info.path) < 0) return;
+    update(state);
+  }
+  function distory() {
     observer.off('change', setter);
     if (isNew) observer.clearReference();
-  };
-  attachedState = [model, distory, [], ++owner.total];
+  }
+  (0, _assign2.default)(state, [model, distory, []]);
   observer.off('get', getter);
   observer.on('get', getter);
   observer.on('change', setter);
-  return collect(attachedState);
+  return collect(state);
 }
 
 function useModel(factory) {
@@ -4263,6 +4269,9 @@ function useModel(factory) {
   useEffect(function () {
     return distory;
   }, []);
+  useLayoutEffect(function () {
+    return collect();
+  });
   return model;
 }
 
@@ -4415,7 +4424,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /* 114 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"1.2.2"}
+module.exports = {"name":"mota","version":"1.3.0"}
 
 /***/ })
 /******/ ]);

@@ -59,7 +59,7 @@ function Demo1() {
 function Demo2() {
   const model = useModel(viewModel);
   console.log('demo2')
-  return <div>{model.count}</div>
+  return <div>{model.count}{model.count > 3 ? model.name : ''}</div>
 }
 
 function Demo3() {
