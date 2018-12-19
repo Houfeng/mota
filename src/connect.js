@@ -1,14 +1,14 @@
-const hook = require('./hook');
 const Observer = require('ober');
 const { final, isObject, isFunction } = require('ntils');
 const { isComponentClass, registerElementHandler } = require('./utils');
+const { wrapRender } = require('./render');
 const stateful = require('./stateful');
 const binding = require('./binding');
 
 function createRender(proto) {
   const initailRender = proto.render;
   if (!initailRender || initailRender._override_) return initailRender;
-  const overrideRender = hook.wrapRender(initailRender);
+  const overrideRender = wrapRender(initailRender);
   const render = function (...args) {
     if (!this._run_) {
       final(this, '_observer_', new Observer(this.model));

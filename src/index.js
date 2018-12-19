@@ -10,9 +10,10 @@ const utils = require('./utils');
 const stateful = require('./stateful');
 const composition = require('./composition');
 const { Observer, expression, nextTick } = require('ober');
+const { useModel } = require('./hook');
 const info = require('$info');
 
 module.exports = {
   connect, model, binding, bindable, watch, mapping, autorun, deep, stateful,
-  composition, Observer, expression, nextTick, utils, ...info
+  composition, Observer, expression, nextTick, utils, useModel, ...info
 };

@@ -1,59 +1,48 @@
-const React = require('react');
-const { isArray } = require('ntils');
+const { useState, useEffect } = require('React');
+const Observer = require('ober');
 
-if (!Object.isFrozen) Object.isFrozen = () => false;
+const owner = { buffer: [], state: null, total: 0 };
 
-const initailCreateElement = React.createElement;
-React.createElement = function (type, ...args) {
-  intercepted = true;
-  beforeCreateElement(type, ...args);
-  return initailCreateElement.call(this, type, ...args);
-};
-
-let component = null, intercepted = false;
-
-function beginIntercept(com) {
-  intercepted = false;
-  component = com;
+function getter(info) {
+  if (owner.buffer.indexOf(info.path) > -1) return;
+  owner.buffer.push(info.path);
 }
 
-function endIntercept() {
-  intercepted = false;
-  component = null;
+function collect(nextState) {
+  if (owner.state) owner.state[2] = owner.buffer.slice(0);
+  owner.buffer.length = 0;
+  owner.state = nextState;
+  return nextState;
 }
 
-function beforeCreateElement(type, ...args) {
-  if (!component || !component._elementHandlers_) return;
-  component._elementHandlers_.
-    forEach(handler => handler.call(component, type, ...args));
-}
-
-function afterCreateElement(element) {
-  if (!element) return element;
-  if (isArray(element)) return element.map(afterCreateElement);
-  if (element.type && element.props) {
-    if (Object.isFrozen(element)) element = Object.assign({}, element);
-    if (Object.isFrozen(element.props)) element.props = Object.assign({},
-      element.props);
-    beforeCreateElement(element.type, element.props);
-  }
-  if (element.props && element.props.children) {
-    element.props.children = afterCreateElement(element.props.children);
-  }
-  return element;
-}
-
-function wrapRender(initailRender) {
-  return function (...args) {
-    if (this._renderHandlers_) {
-      this._renderHandlers_.forEach(handler => handler.call(this, ...args));
-    }
-    beginIntercept(this);
-    let element = initailRender.call(this, ...args);
-    if (!intercepted) element = afterCreateElement(element);
-    endIntercept(this);
-    return element;
+function createModel(factory) {
+  const [state, dispatch] = useState([]);
+  if (state.length > 0) return collect(state);
+  const isNew = factory instanceof Function;
+  const model = isNew ? new factory() : factory;
+  const observer = new Observer(model);
+  let attachedState;
+  const setter = (info) => {
+    if (attachedState[3] === owner.total) collect();
+    const dependencies = attachedState[2];
+    if (dependencies.indexOf(info.path) < 0) return;
+    dispatch([...attachedState]);
   };
+  const distory = () => {
+    observer.off('change', setter);
+    if (isNew) observer.clearReference();
+  };
+  attachedState = [model, distory, [], ++owner.total];
+  observer.off('get', getter);
+  observer.on('get', getter);
+  observer.on('change', setter);
+  return collect(attachedState);
 }
 
-module.exports = { wrapRender };
+function useModel(factory) {
+  const [model, distory] = createModel(factory);
+  useEffect(() => distory, []);
+  return model;
+}
+
+module.exports = { useModel };

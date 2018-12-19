@@ -19,6 +19,12 @@ declare namespace mota {
   function model(model?: any): any;
 
   /**
+   * 用于函数式组件的模型 hook
+   * @param model 参数 model 可是以模型类或实例，如果是一个类将自动创建一个实例
+   */
+  function useModel(model?: any): any;
+
+  /**
    * 自动执行方法装饰器，通过 @autorun 可声明一个组件方法，在依赖的模型数据方法发生变化时，
    * 自动生新执行，依赖的模型数据将从方法自动收集
    * @param target 组件 
