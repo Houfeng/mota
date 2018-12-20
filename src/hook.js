@@ -1,4 +1,4 @@
-const { useState, useEffect, useLayoutEffect } = require('React');
+const { useState, useEffect, useLayoutEffect } = require('react');
 const Observer = require('ober');
 
 const owner = { buffer: [], state: null, uuid: 0 };
