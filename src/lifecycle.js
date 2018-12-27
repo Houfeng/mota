@@ -11,7 +11,11 @@ class Lifecycle {
   }
 
   get(target) {
-    return get(this.key, target);
+    const base = Object.getPrototypeOf(target);
+    const baseList = base ? this.get(base) : null;
+    const list = get(this.key, target);
+    if (!list) return baseList;
+    return baseList ? [].concat(baseList, list) : list;
   }
 
 }

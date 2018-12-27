@@ -1,19 +1,7 @@
 const { isArray } = require('ntils');
+const { has, define } = require('./utils');
 
 const STORE_KEY = '_annotations_';
-
-function has(owner, key, ownOnly) {
-  if (ownOnly === false) return !!(owner && owner[key]);
-  return owner && owner.hasOwnProperty(key);
-}
-
-function define(owner, key, value) {
-  Object.defineProperty(owner, key, {
-    configurable: true,
-    enumerable: false,
-    get() { return value; }
-  });
-}
 
 function getStore(target, member, ownOnly) {
   if (!target) return {};

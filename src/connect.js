@@ -1,6 +1,6 @@
 const Observer = require('ober');
 const { final, isObject, isFunction } = require('ntils');
-const { isComponentClass } = require('./utils');
+const { isComponentClass, define } = require('./utils');
 const { wrapRender } = require('./render');
 const annotation = require('./annotation');
 const lifecycle = require('./lifecycle');
@@ -101,9 +101,7 @@ function connect(model, component) {
   const proto = component.prototype;
   //通过 hasOwnProperty 才能保证父类装饰过了，子类可重新装饰
   if (proto.hasOwnProperty('_contented_')) return component;
-  Object.defineProperty(proto, 'model', {
-    enumerable: false, get: createModelGetter(model)
-  });
+  define(proto, 'model', createModelGetter(model));
   proto.render = createRender(proto);
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);

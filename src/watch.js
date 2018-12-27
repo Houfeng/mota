@@ -1,6 +1,6 @@
 const { isFunction } = require('ntils');
 const lifecycle = require('./lifecycle');
-const { get, set } = require('./annotation');
+const { get, set, push } = require('./annotation');
 
 function watch(calculator, immed) {
   if (!isFunction(calculator)) {
@@ -9,6 +9,10 @@ function watch(calculator, immed) {
   return function (target, method) {
     let watcher;
     lifecycle.didMount.add(target, function () {
+      if (!this._observer_) return;
+      const calcs = get('watch_calcs', target, method);
+      if (calcs && calcs.indexOf(calculator) > -1) return;
+      push('watch_calcs', calculator, target, method);
       const context = this;
       const deep = get('deep', target, method);
       watcher = this._observer_.watch(function () {

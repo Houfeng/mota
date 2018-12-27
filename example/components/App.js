@@ -79,7 +79,7 @@ const viewModel = {
 //   return <div>demo5</div>
 // }
 
-@model(viewModel)
+// @model(viewModel)
 class App extends React.Component {
   render() {
     return <div>
