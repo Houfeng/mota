@@ -1,7 +1,6 @@
 const { isFunction } = require('ntils');
-const {
-  registerMountHandler, registerUnmountHandler, markAsWatch
-} = require('./utils');
+const lifecycle = require('./lifecycle');
+const { get, set } = require('./annotation');
 
 function watch(calculator, immed) {
   if (!isFunction(calculator)) {
@@ -9,19 +8,19 @@ function watch(calculator, immed) {
   }
   return function (target, method) {
     let watcher;
-    registerMountHandler(target, function () {
+    lifecycle.didMount.add(target, function () {
       const context = this;
-      const deep = target._deep_ && target._deep_[method];
+      const deep = get('deep', target, method);
       watcher = this._observer_.watch(function () {
         return calculator.call(this, this.model);
       }, this[method], { context, deep });
       //immed 通过 autorun.run 方法会传递给 watcher.calc 方法
       watcher.autoRef.run(immed || false);
     });
-    registerUnmountHandler(target, function () {
+    lifecycle.unmount.add(target, function () {
       this._observer_.unWatch(watcher);
     });
-    markAsWatch(target, method);
+    set('watch', true, target, method);
   };
 }
 

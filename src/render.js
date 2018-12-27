@@ -1,5 +1,6 @@
 const React = require('react');
 const { isArray } = require('ntils');
+const lifecycle = require('./lifecycle');
 
 if (!Object.isFrozen) Object.isFrozen = () => false;
 
@@ -23,9 +24,10 @@ function endIntercept() {
 }
 
 function beforeCreateElement(type, ...args) {
-  if (!component || !component._elementHandlers_) return;
-  component._elementHandlers_.
-    forEach(handler => handler.call(component, type, ...args));
+  if (!component) return;
+  const handlers = lifecycle.element.get(component);
+  if (!handlers) return;
+  handlers.forEach(handler => handler.call(component, type, ...args));
 }
 
 function afterCreateElement(element) {
@@ -45,9 +47,8 @@ function afterCreateElement(element) {
 
 function wrapRender(initailRender) {
   return function (...args) {
-    if (this._renderHandlers_) {
-      this._renderHandlers_.forEach(handler => handler.call(this, ...args));
-    }
+    const handlers = lifecycle.render.get(this);
+    if (handlers) handlers.forEach(handler => handler.call(this, ...args));
     beginIntercept(this);
     let element = initailRender.call(this, ...args);
     if (!intercepted) element = afterCreateElement(element);

@@ -9,10 +9,11 @@ export class DemoModel {
 @model(DemoModel)
 export class DemoBase extends React.Component {
 
-  @watch(m => m.name)
-  test() {
-    this.model.message = this.model.name;
-  }
+  // @watch(m => m.name)
+  // test() {
+  //   console.log('demo')
+  //   this.model.message = this.model.name;
+  // }
 
   render() {
     window.demo = this;
@@ -24,7 +25,8 @@ export class DemoBase extends React.Component {
 export class Demo1 extends DemoBase {
   @watch(m => m.name)
   test1() {
-    this.model.message = this.model.name;
+    console.log('demo1')
+    //this.model.message = this.model.name;
   }
   render() {
     window.demo1 = this;
@@ -36,6 +38,7 @@ export class Demo1 extends DemoBase {
 export class Demo2 extends DemoBase {
   @watch(m => m.name)
   test2() {
+    console.log('demo2')
     this.model.message = this.model.name;
   }
   render() {

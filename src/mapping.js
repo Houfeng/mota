@@ -1,5 +1,5 @@
 const { isObject, each, isString, getByPath, setByPath } = require('ntils');
-const { registerModelHandler, registerDidUpdateHandler } = require('./utils');
+const lifecycle = require('./lifecycle');
 
 function mapping(map) {
   if (!isObject(map)) {
@@ -23,10 +23,10 @@ function mapping(map) {
     if (proto._contented_) {
       throw new Error('`mapping` must be enabled before `model`');
     }
-    registerModelHandler(proto, function () {
+    lifecycle.model.add(proto, function () {
       assign(this.model, this.props);
     });
-    registerDidUpdateHandler(proto, function (prevProps) {
+    lifecycle.didUpdate.add(proto, function (prevProps) {
       assign(this.model, this.props, prevProps);
     });
   };

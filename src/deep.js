@@ -1,18 +1,14 @@
-const { markAsDeep } = require('./utils');
+const { get, set } = require('./annotation');
 
 function deep(target, method) {
   if (!target) return deep;
-  let invalid = false;
-  if (method) {
-    invalid = (target._autorun_ && target._autorun_[method]) || (
-      target._watch_ && target._watch_[method]);
-  } else {
-    invalid = target && target.prototype && target.prototype._contented_;
-  }
-  if (invalid) {
+  const error = method ?
+    get('autorun', target, method) || get('watch', target, method) :
+    target && target.prototype && target.prototype._contented_;
+  if (error) {
     throw new Error('`deep` must be enabled before `model/autorun/watch`');
   }
-  markAsDeep(target, method);
+  set('deep', true, target, method);
 }
 
 module.exports = deep;

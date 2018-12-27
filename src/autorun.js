@@ -1,20 +1,19 @@
-const {
-  registerMountHandler, registerUnmountHandler, markAsAutorun
-} = require('./utils');
+const lifecycle = require('./lifecycle');
+const { get, set } = require('./annotation');
 
 function autorun(target, method) {
   if (!target) return autorun;
   let autoRef;
-  registerMountHandler(target, function () {
+  lifecycle.didMount.add(target, function () {
     const context = this;
-    const deep = target._deep_ && target._deep_[method];
+    const deep = get('deep', target, method);
     autoRef = this._observer_.run(this[method], { context, deep });
     autoRef.run();
   });
-  registerUnmountHandler(target, function () {
+  lifecycle.unmount.add(target, function () {
     this._observer_.stop(autoRef);
   });
-  markAsAutorun(target, method);
+  set('autorun', true, target, method);
 }
 
 module.exports = autorun;

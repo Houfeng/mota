@@ -1,7 +1,9 @@
 const Observer = require('ober');
 const { final, isObject, isFunction } = require('ntils');
-const { isComponentClass, registerElementHandler } = require('./utils');
+const { isComponentClass } = require('./utils');
 const { wrapRender } = require('./render');
+const annotation = require('./annotation');
+const lifecycle = require('./lifecycle');
 const stateful = require('./stateful');
 const binding = require('./binding');
 
@@ -19,7 +21,7 @@ function createRender(proto) {
       final(this, '_run_', this._observer_.run(overrideRender, {
         context: this,
         trigger: this._trigger_,
-        deep: !!this.constructor._deep_
+        deep: annotation.get('deep', this)
       }));
     }
     return this._run_.run(...args);
@@ -34,8 +36,9 @@ function createUnmount(proto) {
     this._mounted_ = false;
     let result = null;
     if (initailUnmount) result = initailUnmount.call(this, ...args);
-    if (this._unmountHandlers_) {
-      this._unmountHandlers_.forEach(handler => handler.call(this, ...args));
+    const handlers = lifecycle.unmount.get(this);
+    if (handlers) {
+      handlers.forEach(handler => handler.call(this, ...args));
     }
     if (this._run_) this._observer_.stop(this._run_);
     if (this._isNewModelInstance_) this._observer_.clearReference();
@@ -47,8 +50,9 @@ function createMount(proto) {
   const initailMount = proto.componentDidMount;
   return function (...args) {
     this._mounted_ = true;
-    if (this._mountHandlers_) {
-      this._mountHandlers_.forEach(handler => handler.call(this, ...args));
+    const handlers = lifecycle.didMount.get(this);
+    if (handlers) {
+      handlers.forEach(handler => handler.call(this, ...args));
     }
     if (initailMount) return initailMount.call(this, ...args);
   };
@@ -57,9 +61,9 @@ function createMount(proto) {
 function createDidUpdate(proto) {
   const initailDidUpdate = proto.componentDidUpdate;
   return function (...args) {
-    if (this._didUpdateHandlers_) {
-      this._didUpdateHandlers_
-        .forEach(handler => handler.call(this, ...args));
+    const handlers = lifecycle.didUpdate.get(this);
+    if (handlers) {
+      handlers.forEach(handler => handler.call(this, ...args));
     }
     if (initailDidUpdate) return initailDidUpdate.call(this, ...args);
   };
@@ -79,9 +83,8 @@ function createModelGetter(model) {
     }
     final(this, '_model_', componentModel);
     final(this, '_isNewModelInstance_', isNewModelInstance);
-    if (this._modelHandlers_) {
-      this._modelHandlers_.forEach(handler => handler.call(this));
-    }
+    const handlers = lifecycle.model.get(this);
+    if (handlers) handlers.forEach(handler => handler.call(this));
     if (this.modelDidCreate) this.modelDidCreate();
     return this._model_;
   };
@@ -105,8 +108,8 @@ function connect(model, component) {
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
   proto.componentDidUpdate = createDidUpdate(proto);
-  registerElementHandler(proto, binding.elementHandler);
-  registerElementHandler(proto, recursiveConnect);
+  lifecycle.element.add(proto, binding.elementHandler);
+  lifecycle.element.add(proto, recursiveConnect);
   final(proto, '_contented_', true);
   return component;
 }
