@@ -79,7 +79,7 @@ const viewModel = {
 //   return <div>demo5</div>
 // }
 
-@model(viewModel)
+// @model(viewModel)
 class App extends React.Component {
   render() {
     return <div>
@@ -88,9 +88,9 @@ class App extends React.Component {
       <Demo3 />
       <Demo4 />
       <Demo5 /> */}
-      <DemoBase />
+      {/* <DemoBase /> */}
       <Demo1 />
-      <Demo2 />
+      {/* <Demo2 /> */}
     </div>
   }
 }
