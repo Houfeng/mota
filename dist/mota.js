@@ -4522,7 +4522,7 @@ module.exports = { useModel: useModel };
 /* 119 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"1.3.4"}
+module.exports = {"name":"mota","version":"2.0.0"}
 
 /***/ })
 /******/ ]);

@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "1.3.4",
+  "version": "2.0.0",
   "description": "mota 是一个面向 React 的 MVVM 辅助库（http://houfeng.net/mota）",
   "main": "./dist/mota.js",
   "typings": "./typings/index.d.ts",
