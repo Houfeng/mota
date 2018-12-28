@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
+
 const { get, set } = require('./annotation');
 
 function deep(target, method) {

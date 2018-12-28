@@ -1083,6 +1083,12 @@ var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
+
 var _require = __webpack_require__(12),
     push = _require.push,
     _get = _require.get;
@@ -1132,6 +1138,12 @@ var _getPrototypeOf = __webpack_require__(51);
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
 
 var _require = __webpack_require__(1),
     isArray = _require.isArray;
@@ -1324,6 +1336,12 @@ var _defineProperty = __webpack_require__(74);
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
 
 var React = __webpack_require__(16);
 var Component = React.Component,
@@ -1671,6 +1689,12 @@ module.exports = function (it) {
 /***/ }),
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
 
 var Observer = __webpack_require__(15);
 
@@ -2084,6 +2108,12 @@ var _inherits3 = _interopRequireDefault(_inherits2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
+
 var React = __webpack_require__(16);
 
 module.exports = function (stateless) {
@@ -2263,6 +2293,12 @@ var _create2 = _interopRequireDefault(_create);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
+
 var bindable = __webpack_require__(60);
 
 var _require = __webpack_require__(15),
@@ -2353,6 +2389,12 @@ var _assign = __webpack_require__(17);
 var _assign2 = _interopRequireDefault(_assign);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
 
 var _require = __webpack_require__(23),
     isComponentClass = _require.isComponentClass;
@@ -2473,6 +2515,12 @@ var _extends2 = __webpack_require__(63);
 var _extends3 = _interopRequireDefault(_extends2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
 
 var connect = __webpack_require__(45);
 var model = __webpack_require__(112);
@@ -3358,6 +3406,12 @@ var _isFrozen2 = _interopRequireDefault(_isFrozen);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
+
 var React = __webpack_require__(16);
 
 var _require = __webpack_require__(1),
@@ -4219,6 +4273,12 @@ module.exports = {
 /* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
+
 var connect = __webpack_require__(45);
 var React = __webpack_require__(16);
 
@@ -4235,6 +4295,12 @@ module.exports = function model(model) {
 /***/ }),
 /* 113 */
 /***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
 
 var lifecycle = __webpack_require__(11);
 
@@ -4265,6 +4331,12 @@ module.exports = autorun;
 /***/ }),
 /* 114 */
 /***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
 
 var _require = __webpack_require__(1),
     isFunction = _require.isFunction;
@@ -4308,6 +4380,12 @@ module.exports = watch;
 /* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
+
 var _require = __webpack_require__(12),
     get = _require.get,
     set = _require.set;
@@ -4326,6 +4404,12 @@ module.exports = deep;
 /***/ }),
 /* 116 */
 /***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
 
 var _require = __webpack_require__(1),
     isObject = _require.isObject,
@@ -4377,6 +4461,12 @@ module.exports = mapping;
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
 
 var _require = __webpack_require__(15),
     AutoRun = _require.AutoRun;
@@ -4456,6 +4546,12 @@ var _assign2 = _interopRequireDefault(_assign);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
+
 var _require = __webpack_require__(16),
     useState = _require.useState,
     useEffect = _require.useEffect,
@@ -4522,7 +4618,7 @@ module.exports = { useModel: useModel };
 /* 119 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"2.0.0"}
+module.exports = {"name":"mota","version":"2.0.1"}
 
 /***/ })
 /******/ ]);

@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
+
 const { isFunction } = require('ntils');
 const lifecycle = require('./lifecycle');
 const { get, set, push } = require('./annotation');

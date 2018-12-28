@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
+
 const Observer = require('ober');
 const { final, isObject, isFunction } = require('ntils');
 const { isComponentClass, define } = require('./utils');
