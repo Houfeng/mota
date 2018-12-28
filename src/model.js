@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2012-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <admin@xhou.net>
+ */
+
 const connect = require('./connect');
 const React = require('react');
 

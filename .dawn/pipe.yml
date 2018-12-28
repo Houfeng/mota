@@ -21,6 +21,11 @@ dev:
 build:
   - name: clean
     target: ./dist/
+  - name: file-header
+    text: 
+      - 'Copyright (c) 2012-present Houfeng'
+      - '@homepage https://github.com/Houfeng/mota'
+      - '@author Houfeng <admin@xhou.net>'
   - name: webpack
     entry:
       mota-min: ./src/index.js
