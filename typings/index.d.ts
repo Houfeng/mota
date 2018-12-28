@@ -75,9 +75,20 @@ declare namespace mota {
   function deep(target: any, method?: any): any;
 
   /**
-   * 包含一组件工具方法
+   * 将一个函数组件转换为具备状态的类组件
+   * @param fn 函数组件
+   */
+  function stateful(fn: Function): any;
+
+  /**
+   * 包含一组工具方法
    */
   const utils: any;
+
+  /**
+   * 生命周期 hook 工具
+   */
+  const lifecycle: any;
 
 }
 

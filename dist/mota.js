@@ -4618,7 +4618,7 @@ module.exports = { useModel: useModel };
 /* 119 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"2.0.1"}
+module.exports = {"name":"mota","version":"2.0.2"}
 
 /***/ })
 /******/ ]);
