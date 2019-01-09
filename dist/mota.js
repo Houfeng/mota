@@ -1922,12 +1922,12 @@ module.exports = /** @class */ (function () {
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];
             }
+            var _a;
             _this.dependencies = {};
             _this.runing = true;
             var result = (_a = _this.handler).call.apply(_a, [_this.context].concat(args));
             _this.runing = false;
             return result;
-            var _a;
         };
         this.handler = handler;
         this.context = context || this;
@@ -2708,9 +2708,12 @@ module.exports = function (index, length) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -2937,7 +2940,6 @@ var Observer = /** @class */ (function (_super) {
     /**
      * 包裹数组
      * @param {array} array 源数组
-     * @returns {array} 处理后的数组
      */
     Observer.prototype._wrapArray = function (array) {
         if (array._wrapped_)
@@ -3104,7 +3106,7 @@ var EventEmitter = /** @class */ (function () {
         this._listeners_[name].push(listener);
         var maxListeners = EventEmitter._maxListeners;
         if (this._listeners_[name].length > maxListeners) {
-            console.warn("The '" + name + "' event listener is not more than " + maxListeners);
+            console.warn("The '" + name + "' event listener is not more than " + maxListeners, this);
         }
     };
     /**
@@ -4618,7 +4620,7 @@ module.exports = { useModel: useModel };
 /* 119 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"2.0.2"}
+module.exports = {"name":"mota","version":"2.0.4"}
 
 /***/ })
 /******/ ]);

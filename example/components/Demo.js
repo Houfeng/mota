@@ -33,7 +33,7 @@ export class Demo1 extends DemoBase {
   @watch(m => m.name)
   test1() {
     console.log('demo1')
-    //this.model.message = this.model.name;
+    this.model.message = this.model.name;
   }
   
   render() {

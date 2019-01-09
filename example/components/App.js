@@ -5,7 +5,6 @@ import {
 } from '../../src';
 import { Component } from 'react';
 import Info from '../model/info';
-import { DemoBase, Demo1, Demo2 } from './Demo';
 
 import './app.css';
 
@@ -44,53 +43,49 @@ const viewModel = {
   }
 }
 
-// function Demo1() {
-//   const model = useModel(viewModel);
-//   console.log('demo1')
-//   return <div>
-//     <button onClick={() => model.add()}>
-//       {model.name}
-//     </button>
-//     <button onClick={() => model.name += '.'}>
-//       {model.name}
-//     </button>
-//   </div>
-// }
+function Demo1() {
+  const model = useModel(viewModel);
+  console.log('demo1')
+  return <div>
+    <button onClick={() => model.add()}>
+      {model.name}
+    </button>
+    <button onClick={() => model.name += '.'}>
+      {model.name}
+    </button>
+  </div>
+}
 
-// function Demo2() {
-//   const model = useModel(viewModel);
-//   console.log('demo2')
-//   return <div>{model.count}{model.count > 3 ? model.name : ''}</div>
-// }
+function Demo2() {
+  const model = useModel(viewModel);
+  console.log('demo2')
+  return <div>{model.count}{model.count > 3 ? model.name : ''}</div>
+}
 
-// function Demo3() {
-//   const model = useModel(viewModel);
-//   console.log('demo3')
-//   return <div>{model.name}</div>
-// }
+function Demo3() {
+  const model = useModel(viewModel);
+  console.log('demo3')
+  return <div>{model.name}</div>
+}
 
-// function Demo4() {
-//   const model = useModel(viewModel);
-//   console.log('demo4')
-//   return <div>{model.count}</div>
-// }
+function Demo4() {
+  const model = useModel(viewModel);
+  console.log('demo4')
+  return <div>{model.count}</div>
+}
 
-// function Demo5() {
-//   return <div>demo5</div>
-// }
+function Demo5() {
+  return <div>demo5</div>
+}
 
-// @model(viewModel)
 class App extends React.Component {
   render() {
     return <div>
-      {/* <Demo1 />
+      <Demo1 />
       <Demo2 />
       <Demo3 />
       <Demo4 />
-      <Demo5 /> */}
-      {/* <DemoBase /> */}
-      <Demo1 />
-      {/* <Demo2 /> */}
+      <Demo5 />
     </div>
   }
 }
