@@ -10,7 +10,7 @@ export class A extends React.Component {
     return m.name;
   })
   execA() {
-    console.log('exec A', m.name);
+    console.log('exec A', this.model.name);
   }
 
   @autorun
@@ -23,6 +23,9 @@ export class A extends React.Component {
   }
 
   render() {
-    return <div>A</div>;
+    return <div>A
+      <input data-bind="name" />
+      {this.model.name}
+    </div>;
   }
 }

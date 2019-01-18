@@ -13,7 +13,7 @@ if (!Object.isFrozen) Object.isFrozen = () => false;
 const initailCreateElement = React.createElement;
 React.createElement = function (type, ...args) {
   intercepted = true;
-  beforeCreateElement(type, ...args);
+  onCreateElement(type, ...args);
   return initailCreateElement.call(this, type, ...args);
 };
 
@@ -29,24 +29,24 @@ function endIntercept() {
   component = null;
 }
 
-function beforeCreateElement(type, ...args) {
+function onCreateElement(type, ...args) {
   if (!component) return;
   const handlers = lifecycle.element.get(component);
   if (!handlers) return;
   handlers.forEach(handler => handler.call(component, type, ...args));
 }
 
-function afterCreateElement(element) {
+function convertElement(element) {
   if (!element) return element;
-  if (isArray(element)) return element.map(afterCreateElement);
+  if (isArray(element)) return element.map(convertElement);
   if (element.type && element.props) {
     if (Object.isFrozen(element)) element = Object.assign({}, element);
     if (Object.isFrozen(element.props)) element.props = Object.assign({},
       element.props);
-    beforeCreateElement(element.type, element.props);
+    onCreateElement(element.type, element.props);
   }
   if (element.props && element.props.children) {
-    element.props.children = afterCreateElement(element.props.children);
+    element.props.children = convertElement(element.props.children);
   }
   return element;
 }
@@ -57,10 +57,10 @@ function wrapRender(initailRender) {
     if (handlers) handlers.forEach(handler => handler.call(this, ...args));
     beginIntercept(this);
     let element = initailRender.call(this, ...args);
-    if (!intercepted) element = afterCreateElement(element);
+    if (!intercepted) element = convertElement(element);
     endIntercept(this);
     return element;
   };
 }
 
-module.exports = { wrapRender };
+module.exports = { wrapRender, convertElement };

@@ -3433,7 +3433,7 @@ React.createElement = function (type) {
     args[_key - 1] = arguments[_key];
   }
 
-  beforeCreateElement.apply(undefined, [type].concat(args));
+  onCreateElement.apply(undefined, [type].concat(args));
   return initailCreateElement.call.apply(initailCreateElement, [this, type].concat(args));
 };
 
@@ -3450,7 +3450,7 @@ function endIntercept() {
   component = null;
 }
 
-function beforeCreateElement(type) {
+function onCreateElement(type) {
   for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
     args[_key2 - 1] = arguments[_key2];
   }
@@ -3463,16 +3463,16 @@ function beforeCreateElement(type) {
   });
 }
 
-function afterCreateElement(element) {
+function convertElement(element) {
   if (!element) return element;
-  if (isArray(element)) return element.map(afterCreateElement);
+  if (isArray(element)) return element.map(convertElement);
   if (element.type && element.props) {
     if ((0, _isFrozen2.default)(element)) element = (0, _assign2.default)({}, element);
     if ((0, _isFrozen2.default)(element.props)) element.props = (0, _assign2.default)({}, element.props);
-    beforeCreateElement(element.type, element.props);
+    onCreateElement(element.type, element.props);
   }
   if (element.props && element.props.children) {
-    element.props.children = afterCreateElement(element.props.children);
+    element.props.children = convertElement(element.props.children);
   }
   return element;
 }
@@ -3491,13 +3491,13 @@ function wrapRender(initailRender) {
     });
     beginIntercept(this);
     var element = initailRender.call.apply(initailRender, [this].concat(args));
-    if (!intercepted) element = afterCreateElement(element);
+    if (!intercepted) element = convertElement(element);
     endIntercept(this);
     return element;
   };
 }
 
-module.exports = { wrapRender: wrapRender };
+module.exports = { wrapRender: wrapRender, convertElement: convertElement };
 
 /***/ }),
 /* 78 */
@@ -4311,7 +4311,10 @@ var _require = __webpack_require__(12),
     set = _require.set;
 
 function autorun(target, method) {
-  if (!target) return autorun;
+  if (!target || !method) return autorun;
+  //autorun 如果已经存在，比如父类声明了，都不再重复处理
+  var exist = get('autorun', target, method);
+  if (exist) return;
   var autoRef = void 0;
   lifecycle.didMount.add(target, function () {
     var context = this;
@@ -4353,6 +4356,8 @@ function watch(calculator, immed) {
   }
   return function (target, method) {
     var watcher = void 0;
+    //watch 如果已经存在，比如父类声明了，calc 函数可能不同，子类也要添加
+    //可能多个 calc 都想执行同一个方法
     lifecycle.didMount.add(target, function () {
       var context = this;
       if (!context._observer_) return;
@@ -4614,7 +4619,7 @@ module.exports = { useModel: useModel };
 /* 119 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"2.0.5"}
+module.exports = {"name":"mota","version":"2.0.6"}
 
 /***/ })
 /******/ ]);

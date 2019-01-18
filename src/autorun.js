@@ -8,7 +8,10 @@ const lifecycle = require('./lifecycle');
 const { get, set } = require('./annotation');
 
 function autorun(target, method) {
-  if (!target) return autorun;
+  if (!target || !method) return autorun;
+  //autorun 如果已经存在，比如父类声明了，都不再重复处理
+  const exist = get('autorun', target, method);
+  if (exist) return;
   let autoRef;
   lifecycle.didMount.add(target, function () {
     const context = this;
