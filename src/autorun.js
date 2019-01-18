@@ -11,12 +11,10 @@ function autorun(target, method) {
   if (!target) return autorun;
   let autoRef;
   lifecycle.didMount.add(target, function () {
-    if (!this._observer_) return;
-    if (get('autorun_started', target, method)) return;
-    set('autorun_started', true, target, method);
     const context = this;
-    const deep = get('deep', target, method);
-    autoRef = this._observer_.run(this[method], { context, deep });
+    if (!context._observer_) return;
+    const deep = get('deep', context, method);
+    autoRef = context._observer_.run(context[method], { context, deep });
     autoRef.run();
   });
   lifecycle.unmount.add(target, function () {

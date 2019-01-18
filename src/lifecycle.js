@@ -19,7 +19,7 @@ class Lifecycle {
   get(target) {
     const base = Object.getPrototypeOf(target);
     const baseList = base ? this.get(base) : null;
-    const list = get(this.key, target);
+    const list = get(this.key, target, null, true);
     if (!list) return baseList;
     return baseList ? [].concat(baseList, list) : list;
   }

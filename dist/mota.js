@@ -1107,7 +1107,7 @@ var Lifecycle = function () {
   Lifecycle.prototype.get = function get(target) {
     var base = (0, _getPrototypeOf2.default)(target);
     var baseList = base ? this.get(base) : null;
-    var list = _get(this.key, target);
+    var list = _get(this.key, target, null, true);
     if (!list) return baseList;
     return baseList ? [].concat(baseList, list) : list;
   };
@@ -4314,12 +4314,10 @@ function autorun(target, method) {
   if (!target) return autorun;
   var autoRef = void 0;
   lifecycle.didMount.add(target, function () {
-    if (!this._observer_) return;
-    if (get('autorun_started', target, method)) return;
-    set('autorun_started', true, target, method);
     var context = this;
-    var deep = get('deep', target, method);
-    autoRef = this._observer_.run(this[method], { context: context, deep: deep });
+    if (!context._observer_) return;
+    var deep = get('deep', context, method);
+    autoRef = context._observer_.run(context[method], { context: context, deep: deep });
     autoRef.run();
   });
   lifecycle.unmount.add(target, function () {
@@ -4347,8 +4345,7 @@ var lifecycle = __webpack_require__(11);
 
 var _require2 = __webpack_require__(12),
     get = _require2.get,
-    set = _require2.set,
-    push = _require2.push;
+    set = _require2.set;
 
 function watch(calculator, immed) {
   if (!isFunction(calculator)) {
@@ -4357,15 +4354,12 @@ function watch(calculator, immed) {
   return function (target, method) {
     var watcher = void 0;
     lifecycle.didMount.add(target, function () {
-      if (!this._observer_) return;
-      var calcs = get('watch_calcs', target, method);
-      if (calcs && calcs.indexOf(calculator) > -1) return;
-      push('watch_calcs', calculator, target, method);
       var context = this;
-      var deep = get('deep', target, method);
-      watcher = this._observer_.watch(function () {
-        return calculator.call(this, this.model);
-      }, this[method], { context: context, deep: deep });
+      if (!context._observer_) return;
+      var deep = get('deep', context, method);
+      watcher = context._observer_.watch(function () {
+        return calculator.call(context, context.model);
+      }, context[method], { context: context, deep: deep });
       //immed 通过 autorun.run 方法会传递给 watcher.calc 方法
       watcher.autoRef.run(immed || false);
     });
@@ -4620,7 +4614,7 @@ module.exports = { useModel: useModel };
 /* 119 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"2.0.4"}
+module.exports = {"name":"mota","version":"2.0.5"}
 
 /***/ })
 /******/ ]);

@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "mota 是一个面向 React 的状态管理库（http://houfeng.net/mota）",
   "main": "./dist/mota.js",
   "typings": "./typings/index.d.ts",
@@ -29,10 +29,11 @@
     "dn-middleware-unit": "^0.1.18",
     "dn-middleware-webpack": "^1.11.1",
     "eslint-config-dawn": "^1.0.7",
+    "ntils": "^4.0.4",
     "nyc": "^11.4.1",
+    "ober": "^1.0.9",
     "react": "16.7.0-alpha.2",
     "react-dom": "16.7.0-alpha.2",
-    "ntils": "^4.0.4",
-    "ober": "^1.0.9"
+    "react-router-dom": "^4.3.1"
   }
 }
