@@ -4,6 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
+const { Observer, expression, nextTick } = require('ober');
 const connect = require('./connect');
 const model = require('./model');
 const binding = require('./binding');
@@ -17,12 +18,12 @@ const stateful = require('./stateful');
 const composition = require('./composition');
 const annotation = require('./annotation');
 const lifecycle = require('./lifecycle');
-const { Observer, expression, nextTick } = require('ober');
+const recursive = require('./recursive');
 const { useModel } = require('./hook');
 const info = require('$info');
 
 module.exports = {
   connect, model, binding, bindable, watch, mapping, autorun, deep, stateful,
   composition, Observer, expression, nextTick, annotation, lifecycle, useModel,
-  utils, ...info
+  recursive, utils, ...info
 };

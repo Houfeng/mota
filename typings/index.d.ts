@@ -81,6 +81,14 @@ declare namespace mota {
   function stateful(fn: Function): any;
 
   /**
+   * 递归 connect 子组件装饰器，用于在声明一个组件，对模型数据的依赖响应为深度观察
+   * 同时，也可用于 watch & autorun，声明对其模型数据的深度观察
+   * @param target 组件
+   * @param method 组件方法（可选）
+   */
+  function deep(target: any, method?: any): any;
+
+  /**
    * 包含一组工具方法
    */
   const utils: any;
