@@ -6,7 +6,7 @@
 
 const { isFunction } = require('ntils');
 const lifecycle = require('./lifecycle');
-const { get, set, push } = require('./annotation');
+const { get, set } = require('./annotation');
 
 function watch(calculator, immed) {
   if (!isFunction(calculator)) {
@@ -14,16 +14,15 @@ function watch(calculator, immed) {
   }
   return function (target, method) {
     let watcher;
+    //watch 如果已经存在，比如父类声明了，calc 函数可能不同，子类也要添加
+    //可能多个 calc 都想执行同一个方法
     lifecycle.didMount.add(target, function () {
-      if (!this._observer_) return;
-      const calcs = get('watch_calcs', target, method);
-      if (calcs && calcs.indexOf(calculator) > -1) return;
-      push('watch_calcs', calculator, target, method);
       const context = this;
-      const deep = get('deep', target, method);
-      watcher = this._observer_.watch(function () {
-        return calculator.call(this, this.model);
-      }, this[method], { context, deep });
+      if (!context._observer_) return;
+      const deep = get('deep', context, method);
+      watcher = context._observer_.watch(function () {
+        return calculator.call(context, context.model);
+      }, context[method], { context, deep });
       //immed 通过 autorun.run 方法会传递给 watcher.calc 方法
       watcher.autoRef.run(immed || false);
     });

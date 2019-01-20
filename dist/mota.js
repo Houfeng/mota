@@ -1107,7 +1107,7 @@ var Lifecycle = function () {
   Lifecycle.prototype.get = function get(target) {
     var base = (0, _getPrototypeOf2.default)(target);
     var baseList = base ? this.get(base) : null;
-    var list = _get(this.key, target);
+    var list = _get(this.key, target, null, true);
     if (!list) return baseList;
     return baseList ? [].concat(baseList, list) : list;
   };
@@ -1922,12 +1922,12 @@ module.exports = /** @class */ (function () {
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];
             }
+            var _a;
             _this.dependencies = {};
             _this.runing = true;
             var result = (_a = _this.handler).call.apply(_a, [_this.context].concat(args));
             _this.runing = false;
             return result;
-            var _a;
         };
         this.handler = handler;
         this.context = context || this;
@@ -2708,9 +2708,12 @@ module.exports = function (index, length) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -2937,7 +2940,6 @@ var Observer = /** @class */ (function (_super) {
     /**
      * 包裹数组
      * @param {array} array 源数组
-     * @returns {array} 处理后的数组
      */
     Observer.prototype._wrapArray = function (array) {
         if (array._wrapped_)
@@ -3104,7 +3106,7 @@ var EventEmitter = /** @class */ (function () {
         this._listeners_[name].push(listener);
         var maxListeners = EventEmitter._maxListeners;
         if (this._listeners_[name].length > maxListeners) {
-            console.warn("The '" + name + "' event listener is not more than " + maxListeners);
+            console.warn("The '" + name + "' event listener is not more than " + maxListeners, this);
         }
     };
     /**
@@ -3431,7 +3433,7 @@ React.createElement = function (type) {
     args[_key - 1] = arguments[_key];
   }
 
-  beforeCreateElement.apply(undefined, [type].concat(args));
+  onCreateElement.apply(undefined, [type].concat(args));
   return initailCreateElement.call.apply(initailCreateElement, [this, type].concat(args));
 };
 
@@ -3448,7 +3450,7 @@ function endIntercept() {
   component = null;
 }
 
-function beforeCreateElement(type) {
+function onCreateElement(type) {
   for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
     args[_key2 - 1] = arguments[_key2];
   }
@@ -3461,16 +3463,16 @@ function beforeCreateElement(type) {
   });
 }
 
-function afterCreateElement(element) {
+function convertElement(element) {
   if (!element) return element;
-  if (isArray(element)) return element.map(afterCreateElement);
+  if (isArray(element)) return element.map(convertElement);
   if (element.type && element.props) {
     if ((0, _isFrozen2.default)(element)) element = (0, _assign2.default)({}, element);
     if ((0, _isFrozen2.default)(element.props)) element.props = (0, _assign2.default)({}, element.props);
-    beforeCreateElement(element.type, element.props);
+    onCreateElement(element.type, element.props);
   }
   if (element.props && element.props.children) {
-    element.props.children = afterCreateElement(element.props.children);
+    element.props.children = convertElement(element.props.children);
   }
   return element;
 }
@@ -3489,13 +3491,13 @@ function wrapRender(initailRender) {
     });
     beginIntercept(this);
     var element = initailRender.call.apply(initailRender, [this].concat(args));
-    if (!intercepted) element = afterCreateElement(element);
+    if (!intercepted) element = convertElement(element);
     endIntercept(this);
     return element;
   };
 }
 
-module.exports = { wrapRender: wrapRender };
+module.exports = { wrapRender: wrapRender, convertElement: convertElement };
 
 /***/ }),
 /* 78 */
@@ -4309,15 +4311,16 @@ var _require = __webpack_require__(12),
     set = _require.set;
 
 function autorun(target, method) {
-  if (!target) return autorun;
+  if (!target || !method) return autorun;
+  //autorun 如果已经存在，比如父类声明了，都不再重复处理
+  var exist = get('autorun', target, method);
+  if (exist) return;
   var autoRef = void 0;
   lifecycle.didMount.add(target, function () {
-    if (!this._observer_) return;
-    if (get('autorun_started', target, method)) return;
-    set('autorun_started', true, target, method);
     var context = this;
-    var deep = get('deep', target, method);
-    autoRef = this._observer_.run(this[method], { context: context, deep: deep });
+    if (!context._observer_) return;
+    var deep = get('deep', context, method);
+    autoRef = context._observer_.run(context[method], { context: context, deep: deep });
     autoRef.run();
   });
   lifecycle.unmount.add(target, function () {
@@ -4345,8 +4348,7 @@ var lifecycle = __webpack_require__(11);
 
 var _require2 = __webpack_require__(12),
     get = _require2.get,
-    set = _require2.set,
-    push = _require2.push;
+    set = _require2.set;
 
 function watch(calculator, immed) {
   if (!isFunction(calculator)) {
@@ -4354,16 +4356,15 @@ function watch(calculator, immed) {
   }
   return function (target, method) {
     var watcher = void 0;
+    //watch 如果已经存在，比如父类声明了，calc 函数可能不同，子类也要添加
+    //可能多个 calc 都想执行同一个方法
     lifecycle.didMount.add(target, function () {
-      if (!this._observer_) return;
-      var calcs = get('watch_calcs', target, method);
-      if (calcs && calcs.indexOf(calculator) > -1) return;
-      push('watch_calcs', calculator, target, method);
       var context = this;
-      var deep = get('deep', target, method);
-      watcher = this._observer_.watch(function () {
-        return calculator.call(this, this.model);
-      }, this[method], { context: context, deep: deep });
+      if (!context._observer_) return;
+      var deep = get('deep', context, method);
+      watcher = context._observer_.watch(function () {
+        return calculator.call(context, context.model);
+      }, context[method], { context: context, deep: deep });
       //immed 通过 autorun.run 方法会传递给 watcher.calc 方法
       watcher.autoRef.run(immed || false);
     });
@@ -4618,7 +4619,7 @@ module.exports = { useModel: useModel };
 /* 119 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"2.0.2"}
+module.exports = {"name":"mota","version":"2.0.6"}
 
 /***/ })
 /******/ ]);
