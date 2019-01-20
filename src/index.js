@@ -18,12 +18,12 @@ const stateful = require('./stateful');
 const composition = require('./composition');
 const annotation = require('./annotation');
 const lifecycle = require('./lifecycle');
-const recursive = require('./recursive');
-const { useModel } = require('./hook');
 const info = require('$info');
+const { config } = require('./config');
+const { useModel } = require('./hook');
 
 module.exports = {
   connect, model, binding, bindable, watch, mapping, autorun, deep, stateful,
   composition, Observer, expression, nextTick, annotation, lifecycle, useModel,
-  recursive, utils, ...info
+  utils, config, ...info
 };

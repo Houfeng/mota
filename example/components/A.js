@@ -3,9 +3,13 @@ import React from 'react';
 export class A extends React.Component {
 
   render() {
+    const { attr, elements } = this.props;
     return <div>A
-      {this.props.attr.test}
+      <div>
+        {attr && attr.test}
+        {elements('test')}
+      </div>
     </div>;
   }
-  
+
 }

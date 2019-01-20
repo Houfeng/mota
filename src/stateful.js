@@ -6,7 +6,7 @@
 
 const React = require('react');
 
-module.exports = function (stateless) {
+function stateful(stateless) {
   if (!stateless._stateful_) {
     class StatelessWrapper extends React.Component {
       render() {
@@ -16,4 +16,7 @@ module.exports = function (stateless) {
     stateless._stateful_ = StatelessWrapper;
   }
   return stateless._stateful_;
-};
+}
+
+stateful.stateful = stateful;
+module.exports = stateful;

@@ -32,6 +32,7 @@ function create(list) {
   return map;
 }
 
-module.exports = create([
-  'didMount', 'unmount', 'didUpdate', 'element', 'render', 'model'
-]);
+const lifecycle = create(['didMount', 'unmount', 'didUpdate', 'model']);
+
+lifecycle.lifecycle = lifecycle;
+module.exports = lifecycle;
