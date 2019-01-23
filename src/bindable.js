@@ -96,4 +96,5 @@ function bindable(opts, component) {
 }
 
 bindable.getOptions = getOptions;
+bindable.bindable = bindable;
 module.exports = bindable;

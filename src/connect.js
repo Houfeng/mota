@@ -8,10 +8,9 @@ const Observer = require('ober');
 const { final, isObject, isFunction } = require('ntils');
 const { isComponentClass, define } = require('./utils');
 const { wrapRender } = require('./render');
-const annotation = require('./annotation');
-const lifecycle = require('./lifecycle');
-const stateful = require('./stateful');
-const binding = require('./binding');
+const { annotation } = require('./annotation');
+const { lifecycle } = require('./lifecycle');
+const { stateful } = require('./stateful');
 
 function createRender(proto) {
   const initailRender = proto.render;
@@ -19,16 +18,18 @@ function createRender(proto) {
   const overrideRender = wrapRender(initailRender);
   const render = function (...args) {
     if (!this._run_) {
-      final(this, '_observer_', new Observer(this.model));
+      const model = this.model;
+      final(this, '_observer_', new Observer(model));
       final(this, '_trigger_', function () {
         if (!this._mounted_) return;
-        this.forceUpdate();
+        this.setState({ model });
       });
       final(this, '_run_', this._observer_.run(overrideRender, {
         context: this,
         trigger: this._trigger_,
         deep: annotation.get('deep', this)
       }));
+      this.state = Object.assign({}, this.state, { model });
     }
     return this._run_.run(...args);
   };
@@ -96,9 +97,10 @@ function createModelGetter(model) {
   };
 }
 
-function recursiveConnect(component) {
-  connect(this.model, component);
-}
+// 递归 connect 子组件
+// function recursiveConnect(component) {
+//   return connect(this.model, component);
+// }
 
 function connect(model, component) {
   if (!component) return component => connect(model, component);
@@ -112,10 +114,16 @@ function connect(model, component) {
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
   proto.componentDidUpdate = createDidUpdate(proto);
-  lifecycle.element.add(proto, binding.elementHandler);
-  lifecycle.element.add(proto, recursiveConnect);
+  //lifecycle.element.add(proto, binding.elementHandler);
+  //是否自动递归 connect 子组件，在 <3.x 的版本中会动递归 connect，通过 props 传给子组件
+  //一个子对象引用时，给子对象的字段赋值时会自动更新组件，但子组件没有声明 model，
+  //理论上应该不更新。>=3.x 这种情况将不会更新子组件，如果需要需使用 @recursive
+  // if (annotation.get('recursive', proto)) {
+  //   lifecycle.element.add(proto, recursiveConnect);
+  // }
   final(proto, '_contented_', true);
   return component;
 }
 
+connect.connect = connect;
 module.exports = connect;

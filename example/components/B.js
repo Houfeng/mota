@@ -1,29 +1,28 @@
 import React from 'react';
-import { model, watch, autorun } from '../../src';
+import { model, binding, config } from '../../src';
 import { A } from "./A";
 import { Info } from "../model/info";
 
+// config({ binding: true });
+
 @model(Info)
-export class B extends A {
-
-  @watch(function calcB(m) {
-    console.log('calc B', m.name);
-    return m.name;
-  })
-  execA() {
-    console.log('exec B', this.model.name);
-  }
-
-  @autorun
-  autorunB() {
-    console.log('autorun B', this.model.name);
-  }
-
-  componentDidMount() {
-    console.log('didmount B')
-  }
+@binding
+export class B extends React.Component {
 
   render() {
-    return <div>B</div>;
+    window.xxx = this.model;
+    return <div>B
+      <div>{this.model.name}
+        <input data-bind="name" />
+      </div>
+      <A attr={this.model.attr} elements={
+        binding((id) => {
+          return <div>
+            {id}: <input data-bind="name" />
+          </div>
+        })
+      } />
+    </div>;
   }
+
 }

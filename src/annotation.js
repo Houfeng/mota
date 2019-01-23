@@ -70,5 +70,5 @@ annotation.set = set;
 annotation.push = push;
 annotation.get = get;
 annotation.getAll = getStore;
-
+annotation.annotation = annotation;
 module.exports = annotation;

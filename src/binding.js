@@ -4,9 +4,13 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const bindable = require('./bindable');
+const React = require('react');
+const { bindable } = require('./bindable');
 const { expression } = require('ober');
-const { isObject } = require('ntils');
+const { isObject, isArray, isFunction } = require('ntils');
+const { isComponentClass } = require('./utils');
+const { owner } = require('./owner');
+const { set } = require('./annotation');
 
 function compileExpr(expr) {
   return {
@@ -15,13 +19,15 @@ function compileExpr(expr) {
   };
 }
 
-function elementHandler(type, props) {
+function convertProps(type, props, model) {
   if (!type || !props) return;
+  if (!model) model = owner.component && owner.component.model;
+  if (!model) return;
   const dataBind = props['data-bind'];
   if (!dataBind) return;
   const bindOpts = dataBind && bindable.getOptions(type, props);
   if (!bindOpts) return;
-  const dataScope = props['data-scope'] || this.model;
+  const dataScope = props['data-scope'] || model;
   const bindExpr = compileExpr(dataBind);
   const setValue = value => bindExpr.set(Object.create(dataScope, {
     $value: { value }
@@ -52,22 +58,56 @@ function elementHandler(type, props) {
   props['data-bind'] = undefined;
 }
 
-/**
- * @deprecated
- * @param {React.Component} component React Component
- * @returns {void}
- */
-function binding(component) {
-  // if (!component) return binding;
-  // const proto = component.prototype;
-  // if (proto.hasOwnProperty('_contented_')) {
-  //   throw new Error('`binding` must be enabled before `model`');
-  // }
-  // registerElementHandler(proto, elementHandler);
-  console.warn('binding is deprecated and will be automatic');
-  return component;
+function convertElement(element, model) {
+  if (!element) return element;
+  if (isArray(element)) return element.map(el => convertElement(el, model));
+  if (element.type && element.props) {
+    if (Object.isFrozen(element)) element = Object.assign({}, element);
+    if (Object.isFrozen(element.props)) element.props = Object.assign({},
+      element.props);
+    convertProps(element.type, element.props, model);
+  }
+  if (element.props && element.props.children) {
+    element.props.children = convertElement(element.props.children, model);
+  }
+  return element;
 }
 
-binding.elementHandler = elementHandler;
+@binding
+class ComlizeWrapper extends React.Component {
+  render() {
+    const { func, context, args } = this.props;
+    return func.call(context, ...args);
+  }
+}
+
+/**
+ * 处理包含双向绑定声明的 React 元素
+ * @param {React.ReactNode|Function} target 组件类或元素或返回元素的函数
+ * @param {any} model ViewModel
+ * @returns {React.ReactNode} 处理后的 React 元素
+ */
+function binding(target, model) {
+  if (!target) return binding;
+  if (isComponentClass(target)) {
+    set('binding', true, target.prototype || target);
+    return target;
+  }
+  if (!model) model = owner.component && owner.component.model;
+  if (!model) throw new Error('Binding error: Invalid model');
+  if (isFunction(target)) {
+    return function (...args) {
+      const { connect } = require('./connect');
+      const Comlize = connect(model, ComlizeWrapper);
+      return <Comlize func={target} context={this} args={args} />;
+    };
+  } else {
+    return convertElement(target, model);
+  }
+}
+
+binding.convertElement = convertElement;
+binding.convertProps = convertProps;
+binding.binding = binding;
 
 module.exports = binding;
