@@ -1540,8 +1540,8 @@ function createRender(proto) {
   var render = function render() {
     var _run_;
 
+    var model = this.model;
     if (!this._run_) {
-      var model = this.model;
       defineGetter(this, '_observer_', new Observer(model));
       defineGetter(this, '_trigger_', function () {
         return function () {
@@ -1562,6 +1562,12 @@ function createRender(proto) {
   return render;
 }
 
+function clearReference(com) {
+  if (com._run_) com._observer_.stop(com._run_);
+  if (com._isNewModelInstance_) com._observer_.clearReference();
+  defineGetter(com, '_run_', null);
+}
+
 function createUnmount(proto) {
   var initailUnmount = proto.componentWillUnmount;
   return function () {
@@ -1580,8 +1586,7 @@ function createUnmount(proto) {
         return handler.call.apply(handler, [_this].concat(args));
       });
     }
-    if (this._run_) this._observer_.stop(this._run_);
-    if (this._isNewModelInstance_) this._observer_.clearReference();
+    clearReference(this);
     return result;
   };
 }
@@ -1629,9 +1634,13 @@ function createModelGetter(model) {
   return function () {
     var _this4 = this;
 
-    //const modelInProps = 'model' in this.props;
-    if (this._model_) return this._model_;
-    var componentModel = this.props.model || model || {};
+    var modelInProps = 'model' in this.props;
+    var propModel = this.props.model || {};
+    if (this._model_ && (!modelInProps || propModel === this._model_)) {
+      return this._model_;
+    }
+    clearReference(this);
+    var componentModel = modelInProps ? propModel : model;
     var isNewModelInstance = false;
     if (!isObject(componentModel) && !isFunction(componentModel)) {
       throw new Error('Invalid Model');
@@ -4664,7 +4673,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.0.1"}
+module.exports = {"name":"mota","version":"3.0.2"}
 
 /***/ }),
 /* 121 */
@@ -4728,18 +4737,20 @@ function createModel(factory) {
   return collect(state);
 }
 
-function useModel(factory) {
+function useModel(factory, full) {
   var _createModel = createModel(factory),
       model = _createModel[0],
-      distory = _createModel[1];
+      distory = _createModel[1],
+      deps = _createModel[2];
 
   useEffect(function () {
     return distory;
   }, []);
+  //最后一个 useModel 在 mounted 后完成收集（最后一个有可能多收集）
   useLayoutEffect(function () {
     return collect();
   });
-  return model;
+  return full ? [model, distory, deps] : model;
 }
 
 module.exports = { useModel: useModel };

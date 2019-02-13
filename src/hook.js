@@ -43,11 +43,12 @@ function createModel(factory) {
   return collect(state);
 }
 
-function useModel(factory) {
-  const [model, distory] = createModel(factory);
+function useModel(factory, full) {
+  const [model, distory, deps] = createModel(factory);
   useEffect(() => distory, []);
+  //最后一个 useModel 在 mounted 后完成收集（最后一个有可能多收集）
   useLayoutEffect(() => collect());
-  return model;
+  return full ? [model, distory, deps] : model;
 }
 
 module.exports = { useModel };

@@ -17,8 +17,8 @@ function createRender(proto) {
   if (!initailRender || initailRender._override_) return initailRender;
   const overrideRender = wrapRender(initailRender);
   const render = function (...args) {
+    const model = this.model;
     if (!this._run_) {
-      const model = this.model;
       defineGetter(this, '_observer_', new Observer(model));
       defineGetter(this, '_trigger_', () => function () {
         if (!this._mounted_) return;
@@ -37,6 +37,12 @@ function createRender(proto) {
   return render;
 }
 
+function clearReference(com) {
+  if (com._run_) com._observer_.stop(com._run_);
+  if (com._isNewModelInstance_) com._observer_.clearReference();
+  defineGetter(com, '_run_', null);
+}
+
 function createUnmount(proto) {
   const initailUnmount = proto.componentWillUnmount;
   return function (...args) {
@@ -47,8 +53,7 @@ function createUnmount(proto) {
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
     }
-    if (this._run_) this._observer_.stop(this._run_);
-    if (this._isNewModelInstance_) this._observer_.clearReference();
+    clearReference(this);
     return result;
   };
 }
@@ -78,9 +83,13 @@ function createDidUpdate(proto) {
 
 function createModelGetter(model) {
   return function () {
-    //const modelInProps = 'model' in this.props;
-    if (this._model_) return this._model_;
-    let componentModel = this.props.model || model || {};
+    const modelInProps = 'model' in this.props;
+    const propModel = this.props.model || {};
+    if (this._model_ && (!modelInProps || propModel === this._model_)) {
+      return this._model_;
+    }
+    clearReference(this);
+    let componentModel = modelInProps ? propModel : model;
     let isNewModelInstance = false;
     if (!isObject(componentModel) && !isFunction(componentModel)) {
       throw new Error('Invalid Model');
