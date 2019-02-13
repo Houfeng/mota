@@ -7,7 +7,7 @@ export class A extends React.Component {
     return <div>A
       <div>
         {attr && attr.test}
-        {elements('test')}
+        {elements && elements('test')}
       </div>
     </div>;
   }
