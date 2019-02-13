@@ -4673,7 +4673,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.0.2"}
+module.exports = {"name":"mota","version":"3.0.3"}
 
 /***/ }),
 /* 121 */
@@ -4721,10 +4721,10 @@ function createModel(factory) {
   var isNew = factory instanceof Function;
   var model = isNew ? new factory() : factory;
   var observer = new Observer(model);
-  if (!observer.id) observer.id = '_observer_:' + owner.uuid++;
+  if (!observer.id) observer.id = '_observer_' + owner.uuid++;
   function setter(info) {
     if (state[2].indexOf(this.id + '.' + info.path) < 0) return;
-    update(state);
+    update([].concat(state));
   }
   function distory() {
     observer.off('change', setter);
@@ -4737,11 +4737,10 @@ function createModel(factory) {
   return collect(state);
 }
 
-function useModel(factory, full) {
+function useModel(factory) {
   var _createModel = createModel(factory),
       model = _createModel[0],
-      distory = _createModel[1],
-      deps = _createModel[2];
+      distory = _createModel[1];
 
   useEffect(function () {
     return distory;
@@ -4750,7 +4749,7 @@ function useModel(factory, full) {
   useLayoutEffect(function () {
     return collect();
   });
-  return full ? [model, distory, deps] : model;
+  return model;
 }
 
 module.exports = { useModel: useModel };

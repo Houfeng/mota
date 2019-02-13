@@ -27,10 +27,10 @@ function createModel(factory) {
   const isNew = factory instanceof Function;
   const model = isNew ? new factory() : factory;
   const observer = new Observer(model);
-  if (!observer.id) observer.id = '_observer_:' + owner.uuid++;
+  if (!observer.id) observer.id = '_observer_' + owner.uuid++;
   function setter(info) {
     if (state[2].indexOf(`${this.id}.${info.path}`) < 0) return;
-    update(state);
+    update([...state]);
   }
   function distory() {
     observer.off('change', setter);
@@ -43,12 +43,12 @@ function createModel(factory) {
   return collect(state);
 }
 
-function useModel(factory, full) {
-  const [model, distory, deps] = createModel(factory);
+function useModel(factory) {
+  const [model, distory] = createModel(factory);
   useEffect(() => distory, []);
   //最后一个 useModel 在 mounted 后完成收集（最后一个有可能多收集）
   useLayoutEffect(() => collect());
-  return full ? [model, distory, deps] : model;
+  return model;
 }
 
 module.exports = { useModel };
