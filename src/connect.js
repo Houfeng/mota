@@ -5,8 +5,8 @@
  */
 
 const Observer = require('ober');
-const { final, isObject, isFunction } = require('ntils');
-const { isComponentClass, define } = require('./utils');
+const { isObject, isFunction } = require('ntils');
+const { isComponentClass, defineGetter } = require('./utils');
 const { wrapRender } = require('./render');
 const { annotation } = require('./annotation');
 const { lifecycle } = require('./lifecycle');
@@ -19,12 +19,12 @@ function createRender(proto) {
   const render = function (...args) {
     if (!this._run_) {
       const model = this.model;
-      final(this, '_observer_', new Observer(model));
-      final(this, '_trigger_', function () {
+      defineGetter(this, '_observer_', new Observer(model));
+      defineGetter(this, '_trigger_', () => function () {
         if (!this._mounted_) return;
         this.setState({ model });
       });
-      final(this, '_run_', this._observer_.run(overrideRender, {
+      defineGetter(this, '_run_', this._observer_.run(overrideRender, {
         context: this,
         trigger: this._trigger_,
         deep: annotation.get('deep', this)
@@ -33,14 +33,14 @@ function createRender(proto) {
     }
     return this._run_.run(...args);
   };
-  final(render, '_override_', true);
+  defineGetter(render, '_override_', true);
   return render;
 }
 
 function createUnmount(proto) {
   const initailUnmount = proto.componentWillUnmount;
   return function (...args) {
-    this._mounted_ = false;
+    defineGetter(this, '_mounted_', false);
     let result = null;
     if (initailUnmount) result = initailUnmount.call(this, ...args);
     const handlers = lifecycle.unmount.get(this);
@@ -56,7 +56,7 @@ function createUnmount(proto) {
 function createMount(proto) {
   const initailMount = proto.componentDidMount;
   return function (...args) {
-    this._mounted_ = true;
+    defineGetter(this, '_mounted_', true);
     const handlers = lifecycle.didMount.get(this);
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
@@ -78,6 +78,7 @@ function createDidUpdate(proto) {
 
 function createModelGetter(model) {
   return function () {
+    //const modelInProps = 'model' in this.props;
     if (this._model_) return this._model_;
     let componentModel = this.props.model || model || {};
     let isNewModelInstance = false;
@@ -88,19 +89,14 @@ function createModelGetter(model) {
       componentModel = new componentModel();
       isNewModelInstance = true;
     }
-    final(this, '_model_', componentModel);
-    final(this, '_isNewModelInstance_', isNewModelInstance);
+    defineGetter(this, '_model_', componentModel);
+    defineGetter(this, '_isNewModelInstance_', isNewModelInstance);
     const handlers = lifecycle.model.get(this);
     if (handlers) handlers.forEach(handler => handler.call(this));
     if (this.modelDidCreate) this.modelDidCreate();
     return this._model_;
   };
 }
-
-// 递归 connect 子组件
-// function recursiveConnect(component) {
-//   return connect(this.model, component);
-// }
 
 function connect(model, component) {
   if (!component) return component => connect(model, component);
@@ -109,19 +105,12 @@ function connect(model, component) {
   const proto = component.prototype;
   //通过 hasOwnProperty 才能保证父类装饰过了，子类可重新装饰
   if (proto.hasOwnProperty('_contented_')) return component;
-  define(proto, 'model', createModelGetter(model));
+  defineGetter(proto, 'model', createModelGetter(model));
   proto.render = createRender(proto);
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
   proto.componentDidUpdate = createDidUpdate(proto);
-  //lifecycle.element.add(proto, binding.elementHandler);
-  //是否自动递归 connect 子组件，在 <3.x 的版本中会动递归 connect，通过 props 传给子组件
-  //一个子对象引用时，给子对象的字段赋值时会自动更新组件，但子组件没有声明 model，
-  //理论上应该不更新。>=3.x 这种情况将不会更新子组件，如果需要需使用 @recursive
-  // if (annotation.get('recursive', proto)) {
-  //   lifecycle.element.add(proto, recursiveConnect);
-  // }
-  final(proto, '_contented_', true);
+  defineGetter(proto, '_contented_', true);
   return component;
 }
 

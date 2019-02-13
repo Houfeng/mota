@@ -25,7 +25,7 @@ function has(owner, key, ownOnly) {
   return owner && owner.hasOwnProperty(key);
 }
 
-function define(owner, key, value) {
+function defineGetter(owner, key, value) {
   const getter = isFunction(value) ? value :
     function () { return value; };
   Object.defineProperty(owner, key, {
@@ -35,9 +35,4 @@ function define(owner, key, value) {
   });
 }
 
-module.exports = {
-  isComponentClass,
-  isComponentInstance,
-  has,
-  define
-};
+module.exports = { isComponentClass, isComponentInstance, has, defineGetter };

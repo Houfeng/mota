@@ -5,7 +5,7 @@
  */
 
 const { isArray } = require('ntils');
-const { has, define } = require('./utils');
+const { has, defineGetter } = require('./utils');
 
 const STORE_KEY = '_annotations_';
 
@@ -23,7 +23,7 @@ function useStore(target, member) {
   target = target.prototype || target;
   const baseStore = getStore(Object.getPrototypeOf(target));
   if (!has(target, STORE_KEY)) {
-    define(target, STORE_KEY, Object.create(baseStore));
+    defineGetter(target, STORE_KEY, Object.create(baseStore));
   }
   const store = target[STORE_KEY];
   if (!member) return store;

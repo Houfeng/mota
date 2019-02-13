@@ -936,7 +936,7 @@ var _require = __webpack_require__(1),
 
 var _require2 = __webpack_require__(17),
     has = _require2.has,
-    define = _require2.define;
+    defineGetter = _require2.defineGetter;
 
 var STORE_KEY = '_annotations_';
 
@@ -954,7 +954,7 @@ function useStore(target, member) {
   target = target.prototype || target;
   var baseStore = getStore((0, _getPrototypeOf2.default)(target));
   if (!has(target, STORE_KEY)) {
-    define(target, STORE_KEY, (0, _create2.default)(baseStore));
+    defineGetter(target, STORE_KEY, (0, _create2.default)(baseStore));
   }
   var store = target[STORE_KEY];
   if (!member) return store;
@@ -1258,7 +1258,7 @@ function has(owner, key, ownOnly) {
   return owner && owner.hasOwnProperty(key);
 }
 
-function define(owner, key, value) {
+function defineGetter(owner, key, value) {
   var getter = isFunction(value) ? value : function () {
     return value;
   };
@@ -1269,12 +1269,7 @@ function define(owner, key, value) {
   });
 }
 
-module.exports = {
-  isComponentClass: isComponentClass,
-  isComponentInstance: isComponentInstance,
-  has: has,
-  define: define
-};
+module.exports = { isComponentClass: isComponentClass, isComponentInstance: isComponentInstance, has: has, defineGetter: defineGetter };
 
 /***/ }),
 /* 18 */
@@ -1519,13 +1514,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Observer = __webpack_require__(16);
 
 var _require = __webpack_require__(1),
-    final = _require.final,
     isObject = _require.isObject,
     isFunction = _require.isFunction;
 
 var _require2 = __webpack_require__(17),
     isComponentClass = _require2.isComponentClass,
-    define = _require2.define;
+    defineGetter = _require2.defineGetter;
 
 var _require3 = __webpack_require__(82),
     wrapRender = _require3.wrapRender;
@@ -1548,12 +1542,14 @@ function createRender(proto) {
 
     if (!this._run_) {
       var model = this.model;
-      final(this, '_observer_', new Observer(model));
-      final(this, '_trigger_', function () {
-        if (!this._mounted_) return;
-        this.setState({ model: model });
+      defineGetter(this, '_observer_', new Observer(model));
+      defineGetter(this, '_trigger_', function () {
+        return function () {
+          if (!this._mounted_) return;
+          this.setState({ model: model });
+        };
       });
-      final(this, '_run_', this._observer_.run(overrideRender, {
+      defineGetter(this, '_run_', this._observer_.run(overrideRender, {
         context: this,
         trigger: this._trigger_,
         deep: annotation.get('deep', this)
@@ -1562,7 +1558,7 @@ function createRender(proto) {
     }
     return (_run_ = this._run_).run.apply(_run_, arguments);
   };
-  final(render, '_override_', true);
+  defineGetter(render, '_override_', true);
   return render;
 }
 
@@ -1575,7 +1571,7 @@ function createUnmount(proto) {
       args[_key] = arguments[_key];
     }
 
-    this._mounted_ = false;
+    defineGetter(this, '_mounted_', false);
     var result = null;
     if (initailUnmount) result = initailUnmount.call.apply(initailUnmount, [this].concat(args));
     var handlers = lifecycle.unmount.get(this);
@@ -1599,7 +1595,7 @@ function createMount(proto) {
       args[_key2] = arguments[_key2];
     }
 
-    this._mounted_ = true;
+    defineGetter(this, '_mounted_', true);
     var handlers = lifecycle.didMount.get(this);
     if (handlers) {
       handlers.forEach(function (handler) {
@@ -1633,6 +1629,7 @@ function createModelGetter(model) {
   return function () {
     var _this4 = this;
 
+    //const modelInProps = 'model' in this.props;
     if (this._model_) return this._model_;
     var componentModel = this.props.model || model || {};
     var isNewModelInstance = false;
@@ -1643,8 +1640,8 @@ function createModelGetter(model) {
       componentModel = new componentModel();
       isNewModelInstance = true;
     }
-    final(this, '_model_', componentModel);
-    final(this, '_isNewModelInstance_', isNewModelInstance);
+    defineGetter(this, '_model_', componentModel);
+    defineGetter(this, '_isNewModelInstance_', isNewModelInstance);
     var handlers = lifecycle.model.get(this);
     if (handlers) handlers.forEach(function (handler) {
       return handler.call(_this4);
@@ -1653,11 +1650,6 @@ function createModelGetter(model) {
     return this._model_;
   };
 }
-
-// 递归 connect 子组件
-// function recursiveConnect(component) {
-//   return connect(this.model, component);
-// }
 
 function connect(model, component) {
   if (!component) return function (component) {
@@ -1668,19 +1660,12 @@ function connect(model, component) {
   var proto = component.prototype;
   //通过 hasOwnProperty 才能保证父类装饰过了，子类可重新装饰
   if (proto.hasOwnProperty('_contented_')) return component;
-  define(proto, 'model', createModelGetter(model));
+  defineGetter(proto, 'model', createModelGetter(model));
   proto.render = createRender(proto);
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
   proto.componentDidUpdate = createDidUpdate(proto);
-  //lifecycle.element.add(proto, binding.elementHandler);
-  //是否自动递归 connect 子组件，在 <3.x 的版本中会动递归 connect，通过 props 传给子组件
-  //一个子对象引用时，给子对象的字段赋值时会自动更新组件，但子组件没有声明 model，
-  //理论上应该不更新。>=3.x 这种情况将不会更新子组件，如果需要需使用 @recursive
-  // if (annotation.get('recursive', proto)) {
-  //   lifecycle.element.add(proto, recursiveConnect);
-  // }
-  final(proto, '_contented_', true);
+  defineGetter(proto, '_contented_', true);
   return component;
 }
 
