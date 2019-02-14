@@ -18,7 +18,7 @@ function getStore(target, member, ownOnly) {
   return has(store, member, ownOnly) ? store[member] : {};
 }
 
-function useStore(target, member) {
+function useStore(target, member) { 
   if (!target) throw new Error('Invalid annotation target');
   target = target.prototype || target;
   const baseStore = getStore(Object.getPrototypeOf(target));
@@ -47,7 +47,7 @@ function get(key, target, member, ownOnly) {
 function set(key, value, target, member) {
   if (!key || !value) return null;
   key = wrapKey(key);
-  const store = useStore(target, member);
+  const store = useStore(target, member); //eslint-disable-line
   store[key] = value;
   return value;
 }

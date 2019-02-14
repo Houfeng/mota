@@ -21,7 +21,7 @@ function collect(nextState) {
   return nextState;
 }
 
-function createModel(factory) {
+function useObservable(factory) {
   const [state, update] = useState([]);
   if (state.length > 0) return collect(state);
   const isNew = factory instanceof Function;
@@ -44,7 +44,7 @@ function createModel(factory) {
 }
 
 function useModel(factory) {
-  const [model, distory] = createModel(factory);
+  const [model, distory] = useObservable(factory);
   useEffect(() => distory, []);
   //最后一个 useModel 在 mounted 后完成收集（最后一个有可能多收集）
   useLayoutEffect(() => collect());

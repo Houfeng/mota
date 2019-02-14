@@ -77,7 +77,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.6.2' };
+var core = module.exports = { version: '2.6.4' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -978,7 +978,7 @@ function get(key, target, member, ownOnly) {
 function set(key, value, target, member) {
   if (!key || !value) return null;
   key = wrapKey(key);
-  var store = useStore(target, member);
+  var store = useStore(target, member); //eslint-disable-line
   store[key] = value;
   return value;
 }
@@ -4673,7 +4673,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.0.3"}
+module.exports = {"name":"mota","version":"3.0.4"}
 
 /***/ }),
 /* 121 */
@@ -4712,7 +4712,7 @@ function collect(nextState) {
   return nextState;
 }
 
-function createModel(factory) {
+function useObservable(factory) {
   var _useState = useState([]),
       state = _useState[0],
       update = _useState[1];
@@ -4738,9 +4738,9 @@ function createModel(factory) {
 }
 
 function useModel(factory) {
-  var _createModel = createModel(factory),
-      model = _createModel[0],
-      distory = _createModel[1];
+  var _useObservable = useObservable(factory),
+      model = _useObservable[0],
+      distory = _useObservable[1];
 
   useEffect(function () {
     return distory;
