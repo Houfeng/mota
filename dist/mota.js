@@ -1546,7 +1546,7 @@ function createRender(proto) {
       defineGetter(this, '_trigger_', function () {
         return function () {
           if (!this._mounted_) return;
-          this.setState({ model: model });
+          this.forceUpdate();
         };
       });
       defineGetter(this, '_run_', this._observer_.run(overrideRender, {
@@ -4673,7 +4673,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.0.4"}
+module.exports = {"name":"mota","version":"3.0.5"}
 
 /***/ }),
 /* 121 */

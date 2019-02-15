@@ -22,7 +22,7 @@ function createRender(proto) {
       defineGetter(this, '_observer_', new Observer(model));
       defineGetter(this, '_trigger_', () => function () {
         if (!this._mounted_) return;
-        this.setState({ model });
+        this.forceUpdate();
       });
       defineGetter(this, '_run_', this._observer_.run(overrideRender, {
         context: this,
