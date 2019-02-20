@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 66);
+/******/ 	return __webpack_require__(__webpack_require__.s = 67);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -919,14 +919,14 @@ var _create = __webpack_require__(39);
 
 var _create2 = _interopRequireDefault(_create);
 
-var _getPrototypeOf = __webpack_require__(63);
+var _getPrototypeOf = __webpack_require__(64);
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -1010,7 +1010,7 @@ module.exports = annotation;
 
 var global = __webpack_require__(2);
 var core = __webpack_require__(0);
-var ctx = __webpack_require__(40);
+var ctx = __webpack_require__(41);
 var hide = __webpack_require__(10);
 var has = __webpack_require__(8);
 var PROTOTYPE = 'prototype';
@@ -1077,7 +1077,7 @@ module.exports = $export;
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(15);
-var IE8_DOM_DEFINE = __webpack_require__(41);
+var IE8_DOM_DEFINE = __webpack_require__(42);
 var toPrimitive = __webpack_require__(25);
 var dP = Object.defineProperty;
 
@@ -1161,7 +1161,7 @@ module.exports = function (exec) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(44);
+var IObject = __webpack_require__(45);
 var defined = __webpack_require__(26);
 module.exports = function (it) {
   return IObject(defined(it));
@@ -1207,10 +1207,10 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var Observer = __webpack_require__(76);
-var AutoRun = __webpack_require__(47);
-var Watcher = __webpack_require__(49);
+var AutoRun = __webpack_require__(48);
+var Watcher = __webpack_require__(50);
 var expression = __webpack_require__(78);
-var nextTick = __webpack_require__(48);
+var nextTick = __webpack_require__(49);
 Observer.AutoRun = AutoRun;
 Observer.Watcher = Watcher;
 Observer.expression = expression;
@@ -1230,7 +1230,7 @@ var _defineProperty2 = _interopRequireDefault(_defineProperty);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -1275,7 +1275,7 @@ module.exports = { isComponentClass: isComponentClass, isComponentInstance: isCo
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _getPrototypeOf = __webpack_require__(63);
+var _getPrototypeOf = __webpack_require__(64);
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
@@ -1286,7 +1286,7 @@ var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -1349,7 +1349,7 @@ module.exports = function (bitmap, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(43);
+var $keys = __webpack_require__(44);
 var enumBugKeys = __webpack_require__(30);
 
 module.exports = Object.keys || function keys(O) {
@@ -1506,7 +1506,7 @@ var _assign2 = _interopRequireDefault(_assign);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -1530,7 +1530,7 @@ var _require4 = __webpack_require__(3),
 var _require5 = __webpack_require__(18),
     lifecycle = _require5.lifecycle;
 
-var _require6 = __webpack_require__(65),
+var _require6 = __webpack_require__(66),
     stateful = _require6.stateful;
 
 function createRender(proto) {
@@ -1703,7 +1703,7 @@ var PROTOTYPE = 'prototype';
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var createDict = function () {
   // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(42)('iframe');
+  var iframe = __webpack_require__(43)('iframe');
   var i = enumBugKeys.length;
   var lt = '<';
   var gt = '>';
@@ -1780,6 +1780,35 @@ module.exports = { "default": __webpack_require__(110), __esModule: true };
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+exports.__esModule = true;
+
+var _assign = __webpack_require__(9);
+
+var _assign2 = _interopRequireDefault(_assign);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _assign2.default || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // optional / simple context binding
 var aFunction = __webpack_require__(71);
 module.exports = function (fn, that, length) {
@@ -1803,16 +1832,16 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(7) && !__webpack_require__(11)(function () {
-  return Object.defineProperty(__webpack_require__(42)('div'), 'a', { get: function () { return 7; } }).a != 7;
+  return Object.defineProperty(__webpack_require__(43)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(6);
@@ -1825,7 +1854,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(8);
@@ -1848,11 +1877,11 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(45);
+var cof = __webpack_require__(46);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -1860,7 +1889,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -1871,7 +1900,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports) {
 
 var g;
@@ -1898,10 +1927,10 @@ module.exports = g;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nextTick = __webpack_require__(48);
+var nextTick = __webpack_require__(49);
 module.exports = /** @class */ (function () {
     function AutoRun(handler, context, trigger, deep) {
         var _this = this;
@@ -1958,7 +1987,7 @@ module.exports = /** @class */ (function () {
 //# sourceMappingURL=autorun.js.map
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 var handlers = [];
@@ -2034,7 +2063,7 @@ module.exports = nextTick;
 //# sourceMappingURL=next-tick.js.map
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _a = __webpack_require__(1), isFunction = _a.isFunction, isBoolean = _a.isBoolean, getByPath = _a.getByPath, deepEqual = _a.deepEqual, clone = _a.clone;
@@ -2066,13 +2095,13 @@ module.exports = Watcher;
 //# sourceMappingURL=watcher.js.map
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = { "default": __webpack_require__(83), __esModule: true };
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // most Object methods by ES6 should accept primitives
@@ -2088,18 +2117,18 @@ module.exports = function (KEY, exec) {
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _classCallCheck2 = __webpack_require__(24);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _possibleConstructorReturn2 = __webpack_require__(53);
+var _possibleConstructorReturn2 = __webpack_require__(54);
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = __webpack_require__(60);
+var _inherits2 = __webpack_require__(61);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
@@ -2107,7 +2136,7 @@ var _assign = __webpack_require__(9);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _isFrozen = __webpack_require__(50);
+var _isFrozen = __webpack_require__(51);
 
 var _isFrozen2 = _interopRequireDefault(_isFrozen);
 
@@ -2120,14 +2149,14 @@ var _class;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
 
 var React = __webpack_require__(13);
 
-var _require = __webpack_require__(61),
+var _require = __webpack_require__(62),
     bindable = _require.bindable;
 
 var _require2 = __webpack_require__(16),
@@ -2141,7 +2170,7 @@ var _require3 = __webpack_require__(1),
 var _require4 = __webpack_require__(17),
     isComponentClass = _require4.isComponentClass;
 
-var _require5 = __webpack_require__(62),
+var _require5 = __webpack_require__(63),
     owner = _require5.owner;
 
 var _require6 = __webpack_require__(3),
@@ -2279,7 +2308,7 @@ binding.binding = binding;
 module.exports = binding;
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2287,7 +2316,7 @@ module.exports = binding;
 
 exports.__esModule = true;
 
-var _typeof2 = __webpack_require__(54);
+var _typeof2 = __webpack_require__(55);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -2302,7 +2331,7 @@ exports.default = function (self, call) {
 };
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2329,19 +2358,19 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 };
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var LIBRARY = __webpack_require__(21);
 var $export = __webpack_require__(4);
-var redefine = __webpack_require__(56);
+var redefine = __webpack_require__(57);
 var hide = __webpack_require__(10);
 var Iterators = __webpack_require__(34);
 var $iterCreate = __webpack_require__(89);
 var setToStringTag = __webpack_require__(36);
-var getPrototypeOf = __webpack_require__(57);
+var getPrototypeOf = __webpack_require__(58);
 var ITERATOR = __webpack_require__(14)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -2405,14 +2434,14 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(10);
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
@@ -2431,11 +2460,11 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(43);
+var $keys = __webpack_require__(44);
 var hiddenKeys = __webpack_require__(30).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
@@ -2444,7 +2473,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(23);
@@ -2452,7 +2481,7 @@ var createDesc = __webpack_require__(19);
 var toIObject = __webpack_require__(12);
 var toPrimitive = __webpack_require__(25);
 var has = __webpack_require__(8);
-var IE8_DOM_DEFINE = __webpack_require__(41);
+var IE8_DOM_DEFINE = __webpack_require__(42);
 var gOPD = Object.getOwnPropertyDescriptor;
 
 exports.f = __webpack_require__(7) ? gOPD : function getOwnPropertyDescriptor(O, P) {
@@ -2466,7 +2495,7 @@ exports.f = __webpack_require__(7) ? gOPD : function getOwnPropertyDescriptor(O,
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2482,7 +2511,7 @@ var _create = __webpack_require__(39);
 
 var _create2 = _interopRequireDefault(_create);
 
-var _typeof2 = __webpack_require__(54);
+var _typeof2 = __webpack_require__(55);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -2505,7 +2534,7 @@ exports.default = function (subClass, superClass) {
 };
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _assign = __webpack_require__(9);
@@ -2515,7 +2544,7 @@ var _assign2 = _interopRequireDefault(_assign);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -2625,11 +2654,11 @@ bindable.bindable = bindable;
 module.exports = bindable;
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports) {
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -2640,13 +2669,13 @@ owner.owner = owner;
 module.exports = owner;
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = { "default": __webpack_require__(112), __esModule: true };
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _assign = __webpack_require__(9);
@@ -2656,7 +2685,7 @@ var _assign2 = _interopRequireDefault(_assign);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -2670,25 +2699,29 @@ function config(opts) {
 module.exports = { config: config, options: options };
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
+
+var _extends2 = __webpack_require__(40);
+
+var _extends3 = _interopRequireDefault(_extends2);
 
 var _classCallCheck2 = __webpack_require__(24);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _possibleConstructorReturn2 = __webpack_require__(53);
+var _possibleConstructorReturn2 = __webpack_require__(54);
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = __webpack_require__(60);
+var _inherits2 = __webpack_require__(61);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -2706,7 +2739,7 @@ function stateful(stateless) {
       }
 
       StatelessWrapper.prototype.render = function render() {
-        return stateless(this.props, this.context);
+        return stateless((0, _extends3.default)({ model: this.model }, this.props), this.context);
       };
 
       return StatelessWrapper;
@@ -2721,24 +2754,24 @@ stateful.stateful = stateful;
 module.exports = stateful;
 
 /***/ }),
-/* 66 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(67);
-
-
-/***/ }),
 /* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _extends2 = __webpack_require__(68);
+module.exports = __webpack_require__(68);
+
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _extends2 = __webpack_require__(40);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -2750,20 +2783,20 @@ var _require = __webpack_require__(16),
 
 var connect = __webpack_require__(33);
 var model = __webpack_require__(114);
-var binding = __webpack_require__(52);
-var bindable = __webpack_require__(61);
+var binding = __webpack_require__(53);
+var bindable = __webpack_require__(62);
 var autorun = __webpack_require__(115);
 var watch = __webpack_require__(116);
 var deep = __webpack_require__(117);
 var mapping = __webpack_require__(118);
 var utils = __webpack_require__(17);
-var stateful = __webpack_require__(65);
+var stateful = __webpack_require__(66);
 var composition = __webpack_require__(119);
 var annotation = __webpack_require__(3);
 var lifecycle = __webpack_require__(18);
 var info = __webpack_require__(120);
 
-var _require2 = __webpack_require__(64),
+var _require2 = __webpack_require__(65),
     config = _require2.config;
 
 var _require3 = __webpack_require__(121),
@@ -2773,35 +2806,6 @@ module.exports = (0, _extends3.default)({
   connect: connect, model: model, binding: binding, bindable: bindable, watch: watch, mapping: mapping, autorun: autorun, deep: deep, stateful: stateful,
   composition: composition, Observer: Observer, expression: expression, nextTick: nextTick, annotation: annotation, lifecycle: lifecycle, useModel: useModel,
   utils: utils, config: config }, info);
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _assign = __webpack_require__(9);
-
-var _assign2 = _interopRequireDefault(_assign);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _assign2.default || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
 
 /***/ }),
 /* 69 */
@@ -2842,7 +2846,7 @@ var getKeys = __webpack_require__(20);
 var gOPS = __webpack_require__(31);
 var pIE = __webpack_require__(23);
 var toObject = __webpack_require__(32);
-var IObject = __webpack_require__(44);
+var IObject = __webpack_require__(45);
 var $assign = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
@@ -2945,8 +2949,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var _a = __webpack_require__(1), isArray = _a.isArray, isFunction = _a.isFunction, isNull = _a.isNull, isObject = _a.isObject, copy = _a.copy, final = _a.final, each = _a.each;
 var EventEmitter = __webpack_require__(77);
-var AutoRun = __webpack_require__(47);
-var Watcher = __webpack_require__(49);
+var AutoRun = __webpack_require__(48);
+var Watcher = __webpack_require__(50);
 var OBSERVER_PROP_NAME = '_observer_';
 var CHANGE_EVENT_NAME = 'change';
 var GET_EVENT_NAME = 'get';
@@ -3523,7 +3527,7 @@ EventEmitter.register = function (descriptor) {
 };
 module.exports = EventEmitter;
 //# sourceMappingURL=index.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(46)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(47)))
 
 /***/ }),
 /* 78 */
@@ -3621,14 +3625,14 @@ $export($export.S + $export.F * !__webpack_require__(7), 'Object', { definePrope
 /* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _isFrozen = __webpack_require__(50);
+var _isFrozen = __webpack_require__(51);
 
 var _isFrozen2 = _interopRequireDefault(_isFrozen);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -3638,17 +3642,17 @@ var React = __webpack_require__(13);
 var _require = __webpack_require__(1),
     isNull = _require.isNull;
 
-var _require2 = __webpack_require__(52),
+var _require2 = __webpack_require__(53),
     convertElement = _require2.convertElement,
     convertProps = _require2.convertProps;
 
 var _require3 = __webpack_require__(3),
     get = _require3.get;
 
-var _require4 = __webpack_require__(64),
+var _require4 = __webpack_require__(65),
     options = _require4.options;
 
-var _require5 = __webpack_require__(62),
+var _require5 = __webpack_require__(63),
     owner = _require5.owner;
 
 if (!_isFrozen2.default) Object.isFrozen = function () {
@@ -3714,7 +3718,7 @@ module.exports = __webpack_require__(0).Object.isFrozen;
 // 19.1.2.12 Object.isFrozen(O)
 var isObject = __webpack_require__(6);
 
-__webpack_require__(51)('isFrozen', function ($isFrozen) {
+__webpack_require__(52)('isFrozen', function ($isFrozen) {
   return function isFrozen(it) {
     return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
   };
@@ -3745,7 +3749,7 @@ module.exports = __webpack_require__(37).f('iterator');
 var $at = __webpack_require__(88)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(55)(String, 'String', function (iterated) {
+__webpack_require__(56)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -3870,7 +3874,7 @@ var toIObject = __webpack_require__(12);
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(55)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(56)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -3940,7 +3944,7 @@ var global = __webpack_require__(2);
 var has = __webpack_require__(8);
 var DESCRIPTORS = __webpack_require__(7);
 var $export = __webpack_require__(4);
-var redefine = __webpack_require__(56);
+var redefine = __webpack_require__(57);
 var META = __webpack_require__(99).KEY;
 var $fails = __webpack_require__(11);
 var shared = __webpack_require__(29);
@@ -3958,7 +3962,7 @@ var toPrimitive = __webpack_require__(25);
 var createDesc = __webpack_require__(19);
 var _create = __webpack_require__(35);
 var gOPNExt = __webpack_require__(102);
-var $GOPD = __webpack_require__(59);
+var $GOPD = __webpack_require__(60);
 var $DP = __webpack_require__(5);
 var $keys = __webpack_require__(20);
 var gOPD = $GOPD.f;
@@ -4083,7 +4087,7 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(58).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(59).f = gOPNExt.f = $getOwnPropertyNames;
   __webpack_require__(23).f = $propertyIsEnumerable;
   __webpack_require__(31).f = $getOwnPropertySymbols;
 
@@ -4255,7 +4259,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(45);
+var cof = __webpack_require__(46);
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
@@ -4267,7 +4271,7 @@ module.exports = Array.isArray || function isArray(arg) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = __webpack_require__(12);
-var gOPN = __webpack_require__(58).f;
+var gOPN = __webpack_require__(59).f;
 var toString = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -4345,7 +4349,7 @@ module.exports = {
   set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
     function (test, buggy, set) {
       try {
-        set = __webpack_require__(40)(Function.call, __webpack_require__(59).f(Object.prototype, '__proto__').set, 2);
+        set = __webpack_require__(41)(Function.call, __webpack_require__(60).f(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) { buggy = true; }
@@ -4394,9 +4398,9 @@ module.exports = __webpack_require__(0).Object.getPrototypeOf;
 
 // 19.1.2.9 Object.getPrototypeOf(O)
 var toObject = __webpack_require__(32);
-var $getPrototypeOf = __webpack_require__(57);
+var $getPrototypeOf = __webpack_require__(58);
 
-__webpack_require__(51)('getPrototypeOf', function () {
+__webpack_require__(52)('getPrototypeOf', function () {
   return function getPrototypeOf(it) {
     return $getPrototypeOf(toObject(it));
   };
@@ -4408,7 +4412,7 @@ __webpack_require__(51)('getPrototypeOf', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -4431,7 +4435,7 @@ module.exports = function model(model) {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -4468,7 +4472,7 @@ module.exports = autorun;
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -4514,7 +4518,7 @@ module.exports = watch;
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -4539,7 +4543,7 @@ module.exports = deep;
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -4596,7 +4600,7 @@ var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -4667,13 +4671,13 @@ AutoRun.prototype.isSync = function () {
 };
 
 module.exports = composition;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(46)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(47)))
 
 /***/ }),
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.0.6"}
+module.exports = {"name":"mota","version":"3.0.7"}
 
 /***/ }),
 /* 121 */
@@ -4686,7 +4690,7 @@ var _assign2 = _interopRequireDefault(_assign);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
