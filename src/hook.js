@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
@@ -21,16 +21,16 @@ function collect(nextState) {
   return nextState;
 }
 
-function createModel(factory) {
+function useObservable(factory) {
   const [state, update] = useState([]);
   if (state.length > 0) return collect(state);
   const isNew = factory instanceof Function;
   const model = isNew ? new factory() : factory;
   const observer = new Observer(model);
-  if (!observer.id) observer.id = '_observer_:' + owner.uuid++;
+  if (!observer.id) observer.id = '_observer_' + owner.uuid++;
   function setter(info) {
     if (state[2].indexOf(`${this.id}.${info.path}`) < 0) return;
-    update(state);
+    update([...state]);
   }
   function distory() {
     observer.off('change', setter);
@@ -44,8 +44,9 @@ function createModel(factory) {
 }
 
 function useModel(factory) {
-  const [model, distory] = createModel(factory);
+  const [model, distory] = useObservable(factory);
   useEffect(() => distory, []);
+  //最后一个 useModel 在 mounted 后完成收集（最后一个有可能多收集）
   useLayoutEffect(() => collect());
   return model;
 }

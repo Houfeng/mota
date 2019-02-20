@@ -1,11 +1,11 @@
 /**
- * Copyright (c) 2012-present Houfeng
+ * Copyright (c) 2015-present Houfeng
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <admin@xhou.net>
  */
 
 const { isArray } = require('ntils');
-const { has, define } = require('./utils');
+const { has, defineGetter } = require('./utils');
 
 const STORE_KEY = '_annotations_';
 
@@ -18,12 +18,12 @@ function getStore(target, member, ownOnly) {
   return has(store, member, ownOnly) ? store[member] : {};
 }
 
-function useStore(target, member) {
+function useStore(target, member) { 
   if (!target) throw new Error('Invalid annotation target');
   target = target.prototype || target;
   const baseStore = getStore(Object.getPrototypeOf(target));
   if (!has(target, STORE_KEY)) {
-    define(target, STORE_KEY, Object.create(baseStore));
+    defineGetter(target, STORE_KEY, Object.create(baseStore));
   }
   const store = target[STORE_KEY];
   if (!member) return store;
@@ -47,7 +47,7 @@ function get(key, target, member, ownOnly) {
 function set(key, value, target, member) {
   if (!key || !value) return null;
   key = wrapKey(key);
-  const store = useStore(target, member);
+  const store = useStore(target, member); //eslint-disable-line
   store[key] = value;
   return value;
 }
