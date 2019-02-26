@@ -85,7 +85,7 @@ class ComlizeWrapper extends React.Component {
  * 处理包含双向绑定声明的 React 元素
  * @param {React.ReactNode|Function} target 组件类或元素或返回元素的函数
  * @param {any} model ViewModel
- * @returns {React.ReactNode} 处理后的 React 元素
+ * @returns {React.ReactNode} 处理后的 React 元素或组件
  */
 function binding(target, model) {
   if (!target) return binding;

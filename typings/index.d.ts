@@ -46,15 +46,12 @@ declare namespace mota {
   function mapping(map: Array<string> | Object | any): any;
 
   /**
-   * 处理包含双向绑定声明的 React 元素
-   * 需要注意：在 <3.x 的版本，binding 有不同行为
-   *  - 在小于 3.0 的版本，为绑定装饰器，用于在组件上启用双向绑定
-   *  - 在 3.0 及之后的版本，作为装饰器使用将会在控制台抛出警告
-   * @param {any} elements React elements
+   * 处理包含双向绑定声明的 React 元素或组件
+   * @param {any} target 组件类或元素或返回元素的函数
    * @param {any} model ViewModel
-   * @returns {any} 处理后的 React 元素
+   * @returns {any} 处理后的 React 元素或组件
    */
-  function binding(elements: any, model: any): any;
+  function binding(target: any, model?: any): any;
 
   /**
    * 用于将一个普通组件包装为「可绑定组件」的高阶函数

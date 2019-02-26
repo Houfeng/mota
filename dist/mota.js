@@ -77,7 +77,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.6.4' };
+var core = module.exports = { version: '2.6.5' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -2271,7 +2271,7 @@ var ComlizeWrapper = binding(_class = function (_React$Component) {
  * 处理包含双向绑定声明的 React 元素
  * @param {React.ReactNode|Function} target 组件类或元素或返回元素的函数
  * @param {any} model ViewModel
- * @returns {React.ReactNode} 处理后的 React 元素
+ * @returns {React.ReactNode} 处理后的 React 元素或组件
  */
 
 
@@ -4677,7 +4677,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.0.7"}
+module.exports = {"name":"mota","version":"3.0.8"}
 
 /***/ }),
 /* 121 */
