@@ -4715,7 +4715,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.1.0"}
+module.exports = {"name":"mota","version":"3.1.1"}
 
 /***/ }),
 /* 121 */
@@ -4768,7 +4768,8 @@ function getModelState(model) {
   throw new Error('When using ES module as a model, the module must export \'state\'');
 }
 
-function checkConditions(conditions, path) {
+function hasChange(conditions, path) {
+  if (!conditions) return false;
   return isFunction(conditions) ? conditions(path) : conditions.indexOf && conditions.indexOf(path) > -1;
 }
 
@@ -4785,9 +4786,8 @@ function useObservable(factory, conditions) {
   function setter(info) {
     var deps = state[2],
         fullPath = this.id + '.' + info.path;
-    if (deps.indexOf(fullPath) > -1) return update([].concat(state));
-    if (conditions & checkConditions(conditions, info.path)) {
-      return update([].concat(state));
+    if (deps.indexOf(fullPath) > -1 || hasChange(conditions, info.path)) {
+      update([].concat(state));
     }
   }
   function distory() {

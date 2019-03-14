@@ -36,7 +36,8 @@ function getModelState(model) {
   );
 }
 
-function checkConditions(conditions, path) {
+function hasChange(conditions, path) {
+  if (!conditions) return false;
   return isFunction(conditions) ? conditions(path) :
     conditions.indexOf && conditions.indexOf(path) > -1;
 }
@@ -50,9 +51,8 @@ function useObservable(factory, conditions) {
   if (!observer.id) observer.id = '_observer_' + owner.uuid++;
   function setter(info) {
     const deps = state[2], fullPath = `${this.id}.${info.path}`;
-    if (deps.indexOf(fullPath) > -1) return update([...state]);
-    if (conditions & checkConditions(conditions, info.path)) {
-      return update([...state]);
+    if (deps.indexOf(fullPath) > -1 || hasChange(conditions, info.path)) {
+      update([...state]);
     }
   }
   function distory() {
