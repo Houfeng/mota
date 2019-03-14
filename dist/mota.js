@@ -345,6 +345,17 @@ function isArray(obj) {
 }
 exports.isArray = isArray;
 /**
+ * 验证一个对象是否为typed array
+ * @method isTypedArray
+ * @param  {Object}  obj 要验证的对象
+ * @return {Boolean}     结果
+ * @static
+ */
+function isTypedArray(obj) {
+    return ArrayBuffer.isView(obj) && !(obj instanceof DataView);
+}
+exports.isTypedArray = isTypedArray;
+/**
  * 验证是不是一个日期对象
  * @method isDate
  * @param {Object} val   要检查的对象
@@ -389,14 +400,24 @@ exports.toArray = toArray;
  * @static
  */
 function toDate(val) {
-    if (isNumber(val))
+    if (isNumber(val)) {
         return new Date(val);
-    else if (isString(val))
-        return new Date(replace(replace(val, '-', '/'), 'T', ' '));
-    else if (isDate(val))
+    }
+    else if (isDate(val)) {
         return val;
-    else
+    }
+    else if (isFunction(val)) {
+        return new Date(val());
+    }
+    else if (isFunctionString(val)) {
+        return new Date(toFunction(val)());
+    }
+    else if (isString(val)) {
+        return new Date(replace(replace(val, '-', '/'), 'T', ' '));
+    }
+    else {
         return null;
+    }
 }
 exports.toDate = toDate;
 /**
@@ -508,6 +529,9 @@ function clone(src, igonres) {
         isDate(src)) {
         return src;
     }
+    if (isTypedArray(src)) {
+        return src.slice();
+    }
     var objClone = src;
     try {
         objClone = new src.constructor();
@@ -544,14 +568,14 @@ function mix(dst, src, igonres, mode, igonreNull) {
     //根据模式来判断，默认是Obj to Obj的  
     if (mode) {
         switch (mode) {
-            case 1:// proto to proto  
+            case 1: // proto to proto  
                 return mix(dst.prototype, src.prototype, igonres, 0);
-            case 2:// object to object and proto to proto  
+            case 2: // object to object and proto to proto  
                 mix(dst.prototype, src.prototype, igonres, 0);
                 break; // pass through  
-            case 3:// proto to static  
+            case 3: // proto to static  
                 return mix(dst, src.prototype, igonres, 0);
-            case 4:// static to proto  
+            case 4: // static to proto  
                 return mix(dst.prototype, src, igonres, 0);
             default: // object to object is what happens below  
         }
@@ -804,6 +828,20 @@ function getFunctionArgumentNames(fn) {
     });
 }
 exports.getFunctionArgumentNames = getFunctionArgumentNames;
+var FUNC_REGEXP = /^function\s*\(([\s\S]*?)\)\s*\{([\s\S]*?)\}$/i;
+function isFunctionString(str) {
+    return FUNC_REGEXP.test(str);
+}
+exports.isFunctionString = isFunctionString;
+function toFunction(str) {
+    var info = FUNC_REGEXP.exec(str);
+    if (!info || info.length < 3)
+        return;
+    var params = info[1].split(',').filter(function (p) { return !!p; }).map(function (p) { return p.trim(); });
+    var body = info[2];
+    return new (Function.bind.apply(Function, [void 0].concat(params, [body])))();
+}
+exports.toFunction = toFunction;
 /**
  * 缩短字符串
  */
@@ -4677,7 +4715,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.0.8"}
+module.exports = {"name":"mota","version":"3.1.0"}
 
 /***/ }),
 /* 121 */
@@ -4695,12 +4733,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Houfeng <admin@xhou.net>
  */
 
+var Observer = __webpack_require__(16);
+
 var _require = __webpack_require__(13),
     useState = _require.useState,
     useEffect = _require.useEffect,
     useLayoutEffect = _require.useLayoutEffect;
 
-var Observer = __webpack_require__(16);
+var _require2 = __webpack_require__(1),
+    isFunction = _require2.isFunction;
 
 var owner = { buffer: [], state: null, uuid: 0 };
 
@@ -4716,7 +4757,22 @@ function collect(nextState) {
   return nextState;
 }
 
-function useObservable(factory) {
+function isESModule(obj) {
+  if (!obj) return;
+  return obj.__esModule || Object.prototype.toString.call(obj) === '[object Module]';
+}
+
+function getModelState(model) {
+  if (!isESModule(model)) return model;
+  if (model.state) return model.state;
+  throw new Error('When using ES module as a model, the module must export \'state\'');
+}
+
+function checkConditions(conditions, path) {
+  return isFunction(conditions) ? conditions(path) : conditions.indexOf && conditions.indexOf(path) > -1;
+}
+
+function useObservable(factory, conditions) {
   var _useState = useState([]),
       state = _useState[0],
       update = _useState[1];
@@ -4724,11 +4780,15 @@ function useObservable(factory) {
   if (state.length > 0) return collect(state);
   var isNew = factory instanceof Function;
   var model = isNew ? new factory() : factory;
-  var observer = new Observer(model);
+  var observer = new Observer(getModelState(model));
   if (!observer.id) observer.id = '_observer_' + owner.uuid++;
   function setter(info) {
-    if (state[2].indexOf(this.id + '.' + info.path) < 0) return;
-    update([].concat(state));
+    var deps = state[2],
+        fullPath = this.id + '.' + info.path;
+    if (deps.indexOf(fullPath) > -1) return update([].concat(state));
+    if (conditions & checkConditions(conditions, info.path)) {
+      return update([].concat(state));
+    }
   }
   function distory() {
     observer.off('change', setter);
@@ -4741,8 +4801,8 @@ function useObservable(factory) {
   return collect(state);
 }
 
-function useModel(factory) {
-  var _useObservable = useObservable(factory),
+function useModel(factory, conditions) {
+  var _useObservable = useObservable(factory, conditions),
       model = _useObservable[0],
       distory = _useObservable[1];
 

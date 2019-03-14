@@ -4,8 +4,9 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const { useState, useEffect, useLayoutEffect } = require('react');
 const Observer = require('ober');
+const { useState, useEffect, useLayoutEffect } = require('react');
+const { isFunction } = require('ntils');
 
 const owner = { buffer: [], state: null, uuid: 0 };
 
@@ -21,16 +22,38 @@ function collect(nextState) {
   return nextState;
 }
 
-function useObservable(factory) {
+function isESModule(obj) {
+  if (!obj) return;
+  return obj.__esModule ||
+    Object.prototype.toString.call(obj) === '[object Module]';
+}
+
+function getModelState(model) {
+  if (!isESModule(model)) return model;
+  if (model.state) return model.state;
+  throw new Error(
+    'When using ES module as a model, the module must export \'state\''
+  );
+}
+
+function checkConditions(conditions, path) {
+  return isFunction(conditions) ? conditions(path) :
+    conditions.indexOf && conditions.indexOf(path) > -1;
+}
+
+function useObservable(factory, conditions) {
   const [state, update] = useState([]);
   if (state.length > 0) return collect(state);
   const isNew = factory instanceof Function;
   const model = isNew ? new factory() : factory;
-  const observer = new Observer(model);
+  const observer = new Observer(getModelState(model));
   if (!observer.id) observer.id = '_observer_' + owner.uuid++;
   function setter(info) {
-    if (state[2].indexOf(`${this.id}.${info.path}`) < 0) return;
-    update([...state]);
+    const deps = state[2], fullPath = `${this.id}.${info.path}`;
+    if (deps.indexOf(fullPath) > -1) return update([...state]);
+    if (conditions & checkConditions(conditions, info.path)) {
+      return update([...state]);
+    }
   }
   function distory() {
     observer.off('change', setter);
@@ -43,8 +66,8 @@ function useObservable(factory) {
   return collect(state);
 }
 
-function useModel(factory) {
-  const [model, distory] = useObservable(factory);
+function useModel(factory, conditions) {
+  const [model, distory] = useObservable(factory, conditions);
   useEffect(() => distory, []);
   //最后一个 useModel 在 mounted 后完成收集（最后一个有可能多收集）
   useLayoutEffect(() => collect());

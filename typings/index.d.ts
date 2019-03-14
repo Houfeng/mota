@@ -19,10 +19,17 @@ declare namespace mota {
   function model(model?: any): any;
 
   /**
+   * 显式声明依赖 model 数据的路径（格式 x.y.z）
+   * 可以是一个「路径数组」或参数为路径返回值为 boolean 的函数
+   */
+  type UpdateConditions = (path: string) => boolean | string[];
+
+  /**
    * 用于函数式组件的模型 hook
    * @param model 参数 model 可是以模型类或实例，如果是一个类将自动创建一个实例
+   * @param conditions 显式声明依赖 model 数据的路径（函数或数组，格式 x.y.z）
    */
-  function useModel(model?: any): any;
+  function useModel<T>(model?: T, conditions?: UpdateConditions): T;
 
   /**
    * 自动执行方法装饰器，通过 @autorun 可声明一个组件方法，在依赖的模型数据方法发生变化时，
