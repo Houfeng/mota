@@ -10,7 +10,7 @@ index: 6
 
 ### 基本用法
 
-不要惊诧，就是「双向绑定」。`mota` 主张「面向对象」，同样也不排斥「双向绑定」，使用 mota 能够实现类似 `ng` 或 `vue` 的绑定效果。还是前边小节中的模型，我们来稍微改动一下组件的代码
+不要惊诧，就是「双向绑定」。Mota 不排斥「双向绑定」，使用 Mota 能够实现类似 `ng` 或 `vue` 的绑定效果。还是前边小节中的模型，我们来稍微改动一下组件的代码
 
 ```js
 import { model,binding } from 'mota';
@@ -57,7 +57,7 @@ class App extends React.Component {
 }
 ```
 
-因为「绑定表达式」的执行 `scope` 默认是 `this.model`，以及「表达式是个字符串」，看一下 `userList[${index}].selected` 这并不友好，为此 mota 还提供了一个名为 `data-scope` 的 `attribute`，通过它能改变要绑定的 `scope`，参考如下示例
+因为「绑定表达式」的执行 `scope` 默认是 `this.model`，以及「表达式是个字符串」，看一下 `userList[${index}].selected` 这并不友好，为此 Mota 还提供了一个名为 `data-scope` 的 `attribute`，通过它能改变要绑定的 `scope`，参考如下示例
 
 ```js
 @model(userModel)
@@ -83,7 +83,7 @@ class App extends React.Component {
 
 所有的原生表单控件，比如「普通 input、checkbox、radio、textarea、select」都可以直接进行绑定。其中，「普通 input 和 textrea」比较简单，将一个字符类型的模型数据与控件绑定就行了，而对于「checkbox 和 radio」 有多种不同的绑定形式。
 
-将「checkbox 或 radio」绑定到一个 `boolean` 值，此时会将 checkbox 或 radio 的 checked 属性和模型数据建立绑定，checked 反应了 `boolean` 变量的值，参考如下示例
+将「checkbox 或 radio」绑定到一个 `boolean` 值，此时会将 checkbox 或 radio 的 `checked` 属性和模型数据建立绑定，`checked` 反应了 `boolean` 变量的值，参考如下示例
 
 ```js
 @model({ selected:false })
@@ -133,12 +133,12 @@ class App extends React.Component {
   }
 }
 ```
-通过 `this.model.selected` 就能拿到当前选中的 radio 的 value
+通过 `this.model.selected` 就能拿到当前选中的 radio 的 `value`
 
 
 ### 自定义组件
 
-但是对于一些「组件库」中的「部分表单组件」不能直接绑定，因为 mota 并没有什么依据可以判断这是一个什么组件。所以 mota 提供了一个名为 `bindable` 的函数，用将任意组件包装成「可绑定组件」。
+但是对于一些「组件库」中的「部分表单组件」不能直接绑定，因为 Mota 并没有什么依据可以判断这是一个什么组件。所以 Mota 提供了一个名为 `bindable` 的函数，用将任意组件包装成「可绑定组件」。
 
 bindable 有两种个参数，用于分别指定「原始组件」和「包装选项」
 
@@ -149,7 +149,7 @@ const MyComponent = bindable(opts, Component);
 const MyCompoent = bindable(Component, opts);
 ```
 
-关建是 `bindable` 需要的 `opts`，通过 `opts` 我们可以造诉 mota 如何绑定这个组件，`opts` 中有两个重要的成员，它的结构如下
+关建是 `bindable` 需要的 `opts`，通过 `opts` 我们可以造诉 Mota 如何绑定这个组件，`opts` 中有两个重要的成员，它的结构如下
 
 ```js
 {
@@ -167,7 +167,7 @@ const MyInput = bindable(Input,{
 });
 ```
 
-对这种「value 不需要转换，change 能通过 event 或 event.target.value 拿到值」的组件，通过如上的代码就能完成包装了。
+对这种「value 不需要转换，`change` 能通过 `event` 或 `event.target.value` 拿到值」的组件，通过如上的代码就能完成包装了。
 
 对于有 `onChange` 和 `value` 的这类文本输入组件，因为 opts 的默认值就是
 
@@ -205,7 +205,7 @@ const radioOpts = {
 };
 ```
 
-通过 `prop` 的第二个值，能指定「属性处理函数」，event 的第二个值能指取「事件处理函数」，处理函数的 `ctx` 是个特殊的对象 
+通过 `prop` 的第二个值，能指定「属性处理函数」，`event` 的第二个值能指取「事件处理函数」，处理函数的 `ctx` 是个特殊的对象 
 
 - `ctx.getValue` 能获取「当前绑定的模型数据」
 - `ctx.setValue` 能设置「当前绑定的模型数据」
@@ -214,7 +214,7 @@ const radioOpts = {
 
 通过「属性处理函数」和「事件处理函数」几乎就能将任意的自定义组件转换为「可绑定组件」了。
 
-另外，对于常见的 `CheckBox` 和 `Radio` 类型的组件 mota 也提供了内建的 `opts` 配置支持，如果一个自定义组件拥有和「原生 checkbox 一致的属性和事件模型」，那边可以直接用简单的方式去包装，如下
+另外，对于常见的 `CheckBox` 和 `Radio` 类型的组件 Mota 也提供了内建的 `opts` 配置支持，如果一个自定义组件拥有和「原生 checkbox 一致的属性和事件模型」，那边可以直接用简单的方式去包装，如下
 
 ```js
 const MyCheckBox = bindable('checkbox',CheckBox);
