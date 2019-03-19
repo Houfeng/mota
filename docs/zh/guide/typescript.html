@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>在 TS 中使用 - Mota</title>
+  <meta name="keywords" content="在 TS 中使用" />
+  <meta name="description" content="在 TS 中使用" />
+  <meta name="author" content="doczilla">
+  <base href="../../" route="%7B%22lang%22%3A%22zh%22%2C%22group%22%3A%22guide%22%2C%22doc%22%3A%22typescript%22%7D" />
+  <link href="./assets/index.css" rel="stylesheet">
+  <link href="./plugins/doczilla-card/index.css" rel="stylesheet" /><link href="./plugins/doczilla-details/index.css" rel="stylesheet" /><link href="./plugins/doczilla-highlight/index.css" rel="stylesheet" /></head>
+</head>
+
+<body>
+  <div id="root"><div data-reactroot=""><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="./"><i class="icon fa fa-graduation-cap" aria-hidden="true"></i><span class="name">Mota</span></a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><form class="navbar-form navbar-left"><div class="form-group search"><span class="separator"></span><input type="text" class="form-control" placeholder="Search by keyword ..." value=""/></div></form><ul class="nav navbar-nav navbar-right"><li><a href="//houfeng.net/mota/">文档</a></li><li><a href="//github.com/Houfeng/mota">GitHub</a></li><li><a href="//houfeng.net/dn-template-mota/example/">示例</a></li><li class="dropdown locales"><a class="dropdown-toggle" data-toggle="dropdown" role="button">中文<!-- --> <span class="caret"></span></a><ul class="dropdown-menu"><li><a href="zh/guide/typescript.html">中文</a></li></ul></li></ul></div></div></nav><div class="container"><div class="panel panel-default"><div class="panel-body"><div class="row"><div class="col-md-3 col-side"><div class="catalog"><ul class="group"><li class="group-item"><a><i class="fa fa-bookmark" aria-hidden="true"></i>使用指南</a><ul class="doc"><li class="doc-item"><a class="" href="zh/guide/quick.html">快速开始</a></li><li class="doc-item"><a class="" href="zh/guide/model.html">编写业务模型</a></li><li class="doc-item"><a class="" href="zh/guide/mapping.html">属性映射</a></li><li class="doc-item"><a class="" href="zh/guide/autorun.html">自执行函数</a></li><li class="doc-item"><a class="" href="zh/guide/watch.html">监听模型变化</a></li><li class="doc-item"><a class="" href="zh/guide/binding.html">数据绑定</a></li><li class="doc-item"><a class="" href="zh/guide/use_model.html">使用 Hook API</a></li><li class="doc-item"><a class="" href="zh/guide/hook_model.html">面向 Hook 的模型</a></li><li class="doc-item"><a class="active" href="zh/guide/typescript.html">在 TS 中使用</a></li></ul></li></ul></div></div><div class="col-md-9 col-main"><div class="article markdown-body"><h1 id="%E5%9C%A8-ts-%E4%B8%AD%E4%BD%BF%E7%94%A8-mota">在 TS 中使用 Mota</h1>
+<p>Mota 的 <code>Package</code> 中自带了「类型定义文件」，无论使用 <code>Class + Decorator</code> 风格的 API 或使用 <code>Hooks</code> 风格的 API，都能愉快的使用 TypeScript，下边有两个小提示。</p>
+<h3 id="%E6%8F%90%E7%A4%BA%E4%B8%80%EF%BC%9A%E4%BD%BF%E7%94%A8-%40model">提示一：使用 @model</h3>
+<p>在通过 <code>@model</code> 为组件关联了一个 <code>model</code> 后，需要声明 <code>this.model</code> 的类型，参考如下代码</p>
+<pre><code class="language-js"><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> React <span class="token keyword">from</span> <span class="token string">"react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> model<span class="token punctuation">,</span> watch<span class="token punctuation">,</span> mapping <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"mota"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> DemoModel <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"./DemoModel"</span><span class="token punctuation">;</span>
+
+@<span class="token function">model</span><span class="token punctuation">(</span>DemoModel<span class="token punctuation">)</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">Demo</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
+
+  <span class="token comment">//需要声明 model 的类型</span>
+  model<span class="token punctuation">:</span> DemoModel<span class="token punctuation">;</span>
+
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//便能让 this.model 具备完整的类型提示了</span>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span> name <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>model<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">&lt;</span>div className<span class="token operator">=</span><span class="token string">"demo"</span><span class="token operator">></span>  
+      <span class="token punctuation">{</span>name<span class="token punctuation">}</span>  
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="%E6%8F%90%E7%A4%BA%E4%B8%80%EF%BC%9A%E4%BD%BF%E7%94%A8-usemodel">提示一：使用 useModel</h3>
+<p>完整的 <code>useModel</code> 的定义为 <code>useModel&lt;T&gt;(model:T)=&gt;T</code>，但使用 <code>useModel</code> 时一般不需做特别的声明，默认情况下 <code>TS</code> 就能完成类型推导</p>
+<pre><code class="language-js"><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> React <span class="token keyword">from</span> <span class="token string">"react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> useModel <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"mota"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> DemoModel <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"./DemoModel"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> Demo <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">{</span> name <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">useModel</span><span class="token punctuation">(</span>DemoModel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token operator">&lt;</span>div className<span class="token operator">=</span><span class="token string">"demo"</span><span class="token operator">></span>  
+    <span class="token punctuation">{</span>name<span class="token punctuation">}</span>  
+  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div></div></div></div></div></div><footer class="footer">Powered By <!-- -->doczilla<!-- --> v<!-- -->3.2.2</footer></div></div>
+  <script src="./data.js"></script>
+  <script src="./assets/index.js"></script>
+  <script src="./plugins/doczilla-highlight/index.js"></script></body>
+</body>
+
+</html>
