@@ -16,7 +16,10 @@ function getter(info) {
 }
 
 function collect(nextState) {
-  if (owner.state) owner.state[2] = owner.buffer;
+  if (owner.state) {
+    owner.state[2].length = 0;
+    owner.state[2].push(...(owner.buffer));
+  }
   owner.buffer = [];
   owner.state = nextState;
   return nextState;
@@ -55,22 +58,23 @@ function useObservable(factory, conditions) {
       update([...state]);
     }
   }
-  function distory() {
+  function destroy() {
     observer.off('change', setter);
     if (isNew) observer.clearReference();
   }
-  Object.assign(state, [model, distory, []]);
+  Object.assign(state, [model, destroy, []]);
   observer.off('get', getter);
   observer.on('get', getter);
   observer.on('change', setter);
   return collect(state);
 }
 
-function useModel(factory, conditions) {
-  const [model, distory] = useObservable(factory, conditions);
-  useEffect(() => distory, []);
+function useModel(factory, conditions, debug) {
+  const [model, destroy, deps] = useObservable(factory, conditions);
+  useEffect(() => destroy, []);
   //最后一个 useModel 在 mounted 后完成收集（最后一个有可能多收集）
   useLayoutEffect(() => collect());
+  if (debug) debug({ model, deps });
   return model;
 }
 
