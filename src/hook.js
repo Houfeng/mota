@@ -7,6 +7,7 @@
 const Observer = require('ober');
 const { useState, useEffect, useLayoutEffect } = require('react');
 const { isFunction } = require('ntils');
+const { getModelState } = require('./utils');
 
 const owner = { buffer: [], state: null, uuid: 0 };
 
@@ -23,20 +24,6 @@ function collect(nextState) {
   owner.buffer = [];
   owner.state = nextState;
   return nextState;
-}
-
-function isESModule(obj) {
-  if (!obj) return;
-  return obj.__esModule ||
-    Object.prototype.toString.call(obj) === '[object Module]';
-}
-
-function getModelState(model) {
-  if (!isESModule(model)) return model;
-  if (model.state) return model.state;
-  throw new Error(
-    'When using ES module as a model, the module must export \'state\''
-  );
 }
 
 function hasChange(conditions, path) {

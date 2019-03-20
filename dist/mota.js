@@ -7,7 +7,7 @@
 		exports["mota"] = factory(require("react"));
 	else
 		root["mota"] = factory(root["React"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_13__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_14__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -972,7 +972,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _require = __webpack_require__(1),
     isArray = _require.isArray;
 
-var _require2 = __webpack_require__(17),
+var _require2 = __webpack_require__(13),
     has = _require2.has,
     defineGetter = _require2.defineGetter;
 
@@ -1114,7 +1114,7 @@ module.exports = $export;
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(15);
+var anObject = __webpack_require__(16);
 var IE8_DOM_DEFINE = __webpack_require__(42);
 var toPrimitive = __webpack_require__(25);
 var dP = Object.defineProperty;
@@ -1208,57 +1208,6 @@ module.exports = function (it) {
 
 /***/ }),
 /* 13 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_13__;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(29)('wks');
-var uid = __webpack_require__(22);
-var Symbol = __webpack_require__(2).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(6);
-module.exports = function (it) {
-  if (!isObject(it)) throw TypeError(it + ' is not an object!');
-  return it;
-};
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Observer = __webpack_require__(76);
-var AutoRun = __webpack_require__(48);
-var Watcher = __webpack_require__(50);
-var expression = __webpack_require__(78);
-var nextTick = __webpack_require__(49);
-Observer.AutoRun = AutoRun;
-Observer.Watcher = Watcher;
-Observer.expression = expression;
-Observer.nextTick = nextTick;
-Observer.Observer = Observer;
-module.exports = Observer;
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _defineProperty = __webpack_require__(79);
@@ -1273,7 +1222,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Houfeng <admin@xhou.net>
  */
 
-var React = __webpack_require__(13);
+var React = __webpack_require__(14);
 var Component = React.Component,
     PureComponent = React.PureComponent;
 
@@ -1307,7 +1256,72 @@ function defineGetter(owner, key, value) {
   });
 }
 
-module.exports = { isComponentClass: isComponentClass, isComponentInstance: isComponentInstance, has: has, defineGetter: defineGetter };
+function isESModule(obj) {
+  if (!obj) return;
+  return obj.__esModule || Object.prototype.toString.call(obj) === '[object Module]';
+}
+
+function getModelState(model) {
+  if (!isESModule(model)) return model;
+  if (model.state) return model.state;
+  throw new Error('When using ES module as a model, the module must export \'state\'');
+}
+
+module.exports = {
+  isComponentClass: isComponentClass, isComponentInstance: isComponentInstance, has: has,
+  defineGetter: defineGetter, isESModule: isESModule, getModelState: getModelState
+};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_14__;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store = __webpack_require__(29)('wks');
+var uid = __webpack_require__(22);
+var Symbol = __webpack_require__(2).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(6);
+module.exports = function (it) {
+  if (!isObject(it)) throw TypeError(it + ' is not an object!');
+  return it;
+};
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Observer = __webpack_require__(76);
+var AutoRun = __webpack_require__(48);
+var Watcher = __webpack_require__(50);
+var expression = __webpack_require__(78);
+var nextTick = __webpack_require__(49);
+Observer.AutoRun = AutoRun;
+Observer.Watcher = Watcher;
+Observer.expression = expression;
+Observer.nextTick = nextTick;
+Observer.Observer = Observer;
+module.exports = Observer;
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 /* 18 */
@@ -1549,13 +1563,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Houfeng <admin@xhou.net>
  */
 
-var Observer = __webpack_require__(16);
+var Observer = __webpack_require__(17);
 
 var _require = __webpack_require__(1),
     isObject = _require.isObject,
     isFunction = _require.isFunction;
 
-var _require2 = __webpack_require__(17),
+var _require2 = __webpack_require__(13),
     isComponentClass = _require2.isComponentClass,
     defineGetter = _require2.defineGetter;
 
@@ -1731,7 +1745,7 @@ module.exports = {};
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(15);
+var anObject = __webpack_require__(16);
 var dPs = __webpack_require__(90);
 var enumBugKeys = __webpack_require__(30);
 var IE_PROTO = __webpack_require__(28)('IE_PROTO');
@@ -1779,7 +1793,7 @@ module.exports = Object.create || function create(O, Properties) {
 
 var def = __webpack_require__(5).f;
 var has = __webpack_require__(8);
-var TAG = __webpack_require__(14)('toStringTag');
+var TAG = __webpack_require__(15)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -1790,7 +1804,7 @@ module.exports = function (it, tag, stat) {
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(14);
+exports.f = __webpack_require__(15);
 
 
 /***/ }),
@@ -2192,12 +2206,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Houfeng <admin@xhou.net>
  */
 
-var React = __webpack_require__(13);
+var React = __webpack_require__(14);
 
 var _require = __webpack_require__(62),
     bindable = _require.bindable;
 
-var _require2 = __webpack_require__(16),
+var _require2 = __webpack_require__(17),
     expression = _require2.expression;
 
 var _require3 = __webpack_require__(1),
@@ -2205,7 +2219,7 @@ var _require3 = __webpack_require__(1),
     isArray = _require3.isArray,
     isFunction = _require3.isFunction;
 
-var _require4 = __webpack_require__(17),
+var _require4 = __webpack_require__(13),
     isComponentClass = _require4.isComponentClass;
 
 var _require5 = __webpack_require__(63),
@@ -2409,7 +2423,7 @@ var Iterators = __webpack_require__(34);
 var $iterCreate = __webpack_require__(89);
 var setToStringTag = __webpack_require__(36);
 var getPrototypeOf = __webpack_require__(58);
-var ITERATOR = __webpack_require__(14)('iterator');
+var ITERATOR = __webpack_require__(15)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -2587,7 +2601,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Houfeng <admin@xhou.net>
  */
 
-var _require = __webpack_require__(17),
+var _require = __webpack_require__(13),
     isComponentClass = _require.isComponentClass;
 
 var defaultOpts = {
@@ -2764,7 +2778,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Houfeng <admin@xhou.net>
  */
 
-var React = __webpack_require__(13);
+var React = __webpack_require__(14);
 
 function stateful(stateless) {
   if (!stateless._stateful_) {
@@ -2814,7 +2828,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Houfeng <admin@xhou.net>
  */
 
-var _require = __webpack_require__(16),
+var _require = __webpack_require__(17),
     Observer = _require.Observer,
     expression = _require.expression,
     nextTick = _require.nextTick;
@@ -2827,7 +2841,7 @@ var autorun = __webpack_require__(115);
 var watch = __webpack_require__(116);
 var deep = __webpack_require__(117);
 var mapping = __webpack_require__(118);
-var utils = __webpack_require__(17);
+var utils = __webpack_require__(13);
 var stateful = __webpack_require__(66);
 var composition = __webpack_require__(119);
 var annotation = __webpack_require__(3);
@@ -3675,7 +3689,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Houfeng <admin@xhou.net>
  */
 
-var React = __webpack_require__(13);
+var React = __webpack_require__(14);
 
 var _require = __webpack_require__(1),
     isNull = _require.isNull;
@@ -3837,7 +3851,7 @@ var setToStringTag = __webpack_require__(36);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(10)(IteratorPrototype, __webpack_require__(14)('iterator'), function () { return this; });
+__webpack_require__(10)(IteratorPrototype, __webpack_require__(15)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -3850,7 +3864,7 @@ module.exports = function (Constructor, NAME, next) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(5);
-var anObject = __webpack_require__(15);
+var anObject = __webpack_require__(16);
 var getKeys = __webpack_require__(20);
 
 module.exports = __webpack_require__(7) ? Object.defineProperties : function defineProperties(O, Properties) {
@@ -3880,7 +3894,7 @@ __webpack_require__(93);
 var global = __webpack_require__(2);
 var hide = __webpack_require__(10);
 var Iterators = __webpack_require__(34);
-var TO_STRING_TAG = __webpack_require__(14)('toStringTag');
+var TO_STRING_TAG = __webpack_require__(15)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
   'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
@@ -3988,12 +4002,12 @@ var $fails = __webpack_require__(11);
 var shared = __webpack_require__(29);
 var setToStringTag = __webpack_require__(36);
 var uid = __webpack_require__(22);
-var wks = __webpack_require__(14);
+var wks = __webpack_require__(15);
 var wksExt = __webpack_require__(37);
 var wksDefine = __webpack_require__(38);
 var enumKeys = __webpack_require__(100);
 var isArray = __webpack_require__(101);
-var anObject = __webpack_require__(15);
+var anObject = __webpack_require__(16);
 var isObject = __webpack_require__(6);
 var toIObject = __webpack_require__(12);
 var toPrimitive = __webpack_require__(25);
@@ -4378,7 +4392,7 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(109).set });
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
 var isObject = __webpack_require__(6);
-var anObject = __webpack_require__(15);
+var anObject = __webpack_require__(16);
 var check = function (O, proto) {
   anObject(O);
   if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
@@ -4456,7 +4470,7 @@ __webpack_require__(52)('getPrototypeOf', function () {
  */
 
 var connect = __webpack_require__(33);
-var React = __webpack_require__(13);
+var React = __webpack_require__(14);
 
 module.exports = function model(model) {
   if (model && model.prototype instanceof React.Component) {
@@ -4643,7 +4657,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Houfeng <admin@xhou.net>
  */
 
-var _require = __webpack_require__(16),
+var _require = __webpack_require__(17),
     AutoRun = _require.AutoRun;
 
 var UPDATE_EVENT = 'compositionupdate';
@@ -4715,7 +4729,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.1.3"}
+module.exports = {"name":"mota","version":"3.1.4"}
 
 /***/ }),
 /* 121 */
@@ -4733,15 +4747,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Houfeng <admin@xhou.net>
  */
 
-var Observer = __webpack_require__(16);
+var Observer = __webpack_require__(17);
 
-var _require = __webpack_require__(13),
+var _require = __webpack_require__(14),
     useState = _require.useState,
     useEffect = _require.useEffect,
     useLayoutEffect = _require.useLayoutEffect;
 
 var _require2 = __webpack_require__(1),
     isFunction = _require2.isFunction;
+
+var _require3 = __webpack_require__(13),
+    getModelState = _require3.getModelState;
 
 var owner = { buffer: [], state: null, uuid: 0 };
 
@@ -4760,17 +4777,6 @@ function collect(nextState) {
   owner.buffer = [];
   owner.state = nextState;
   return nextState;
-}
-
-function isESModule(obj) {
-  if (!obj) return;
-  return obj.__esModule || Object.prototype.toString.call(obj) === '[object Module]';
-}
-
-function getModelState(model) {
-  if (!isESModule(model)) return model;
-  if (model.state) return model.state;
-  throw new Error('When using ES module as a model, the module must export \'state\'');
 }
 
 function hasChange(conditions, path) {
