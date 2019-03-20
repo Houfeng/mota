@@ -35,4 +35,21 @@ function defineGetter(owner, key, value) {
   });
 }
 
-module.exports = { isComponentClass, isComponentInstance, has, defineGetter };
+function isESModule(obj) {
+  if (!obj) return;
+  return obj.__esModule ||
+    Object.prototype.toString.call(obj) === '[object Module]';
+}
+
+function getModelState(model) {
+  if (!isESModule(model)) return model;
+  if (model.state) return model.state;
+  throw new Error(
+    'When using ES module as a model, the module must export \'state\''
+  );
+}
+
+module.exports = {
+  isComponentClass, isComponentInstance, has,
+  defineGetter, isESModule, getModelState
+};
