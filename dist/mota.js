@@ -4715,7 +4715,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.1.1"}
+module.exports = {"name":"mota","version":"3.1.2"}
 
 /***/ }),
 /* 121 */
@@ -4801,10 +4801,11 @@ function useObservable(factory, conditions) {
   return collect(state);
 }
 
-function useModel(factory, conditions) {
+function useModel(factory, conditions, debug) {
   var _useObservable = useObservable(factory, conditions),
       model = _useObservable[0],
-      distory = _useObservable[1];
+      distory = _useObservable[1],
+      deps = _useObservable[2];
 
   useEffect(function () {
     return distory;
@@ -4813,6 +4814,7 @@ function useModel(factory, conditions) {
   useLayoutEffect(function () {
     return collect();
   });
+  if (debug) debug({ model: model, deps: deps });
   return model;
 }
 

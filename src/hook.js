@@ -66,11 +66,12 @@ function useObservable(factory, conditions) {
   return collect(state);
 }
 
-function useModel(factory, conditions) {
-  const [model, distory] = useObservable(factory, conditions);
+function useModel(factory, conditions, debug) {
+  const [model, distory, deps] = useObservable(factory, conditions);
   useEffect(() => distory, []);
   //最后一个 useModel 在 mounted 后完成收集（最后一个有可能多收集）
   useLayoutEffect(() => collect());
+  if (debug) debug({ model, deps });
   return model;
 }
 

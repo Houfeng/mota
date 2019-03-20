@@ -28,8 +28,11 @@ declare namespace mota {
    * 用于函数式组件的模型 hook
    * @param model 参数 model 可是以模型类或实例，如果是一个类将自动创建一个实例
    * @param conditions 显式声明依赖 model 数据的路径（函数或数组，格式 x.y.z）
+   * @param debug 用于开发时的 debug 函数，参数包括相关信息
    */
-  function useModel<T>(model?: T, conditions?: UpdateConditions): T;
+  function useModel<T>(
+    model?: T, conditions?: UpdateConditions, debug?: Function
+  ): T;
 
   /**
    * 自动执行方法装饰器，通过 @autorun 可声明一个组件方法，在依赖的模型数据方法发生变化时，
