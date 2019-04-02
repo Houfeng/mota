@@ -4729,7 +4729,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.1.4"}
+module.exports = {"name":"mota","version":"3.1.5"}
 
 /***/ }),
 /* 121 */
