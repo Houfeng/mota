@@ -2118,19 +2118,20 @@ module.exports = nextTick;
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _a = __webpack_require__(1), isFunction = _a.isFunction, isBoolean = _a.isBoolean, getByPath = _a.getByPath, deepEqual = _a.deepEqual, clone = _a.clone;
+var _a = __webpack_require__(1), isFunction = _a.isFunction, isBoolean = _a.isBoolean, getByPath = _a.getByPath;
 var Watcher = /** @class */ (function () {
     function Watcher(calculator, handler, context) {
         var _this = this;
         //force: true 强制执行，false 强制不执行，无参数根据计算结果决定
         this.calc = function (force) {
             var newValue = _this.calculator.call(_this.context);
+            var newValueJson = JSON.stringify(newValue);
             var willExecute = isBoolean(force) ? force :
-                !deepEqual(newValue, _this.value);
+                !(newValueJson === _this.value);
             if (willExecute) {
-                _this.handler.call(_this.context, newValue, _this.value);
+                _this.handler.call(_this.context, newValue, _this.value && JSON.parse(_this.value));
             }
-            _this.value = clone(newValue);
+            _this.value = newValueJson;
         };
         if (!isFunction(calculator) || !isFunction(handler)) {
             throw new Error('Invalid parameters');
@@ -4729,7 +4730,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.1.5"}
+module.exports = {"name":"mota","version":"3.1.6"}
 
 /***/ }),
 /* 121 */
