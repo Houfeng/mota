@@ -9,15 +9,15 @@ const { isNull } = require('ntils');
 const { convertElement, convertProps } = require('./binding');
 const { get } = require('./annotation');
 const { options } = require('./config');
-const { owner } = require('./owner'); 
+const { owner } = require('./owner');
 
 if (!Object.isFrozen) Object.isFrozen = () => false;
 
 const initailCreateElement = React.createElement;
-React.createElement = function (type, ...args) {
+React.createElement = function (type, props, ...args) {
   owner.intercepted = true;
-  if (owner.component && owner.binding) convertProps(type, ...args);
-  return initailCreateElement.call(this, type, ...args);
+  if (owner.component && owner.binding) convertProps(type, props);
+  return initailCreateElement.call(this, type, props, ...args);
 };
 
 function beginRender(component) {

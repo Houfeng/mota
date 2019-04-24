@@ -8,6 +8,7 @@ import { B } from "./components/B";
 import { D } from "./components/D";
 import './assets/common.less';
 import { Info } from './model/info';
+import { binding } from '../src/binding';
 
 // function App() {
 //   const model = useModel({ name: 'APP' });
@@ -30,12 +31,16 @@ import { Info } from './model/info';
 // }
 
 @model(Info)
+@binding
 class Test extends React.PureComponent {
   onClick = () => {
     this.model.name = '1111';
   }
   render() {
-    return <div onClick={this.onClick}>{this.model.name}</div>
+    return <div onClick={this.onClick}>
+      {this.model.name}
+      <input data-bind="name" />
+    </div>
   }
 }
 

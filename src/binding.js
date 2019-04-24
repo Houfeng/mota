@@ -58,7 +58,7 @@ function convertProps(type, props, model) {
   props['data-bind'] = undefined;
 }
 
-function convertElement(element, model) {
+function convertElement(element, model, deep) {
   if (!element) return element;
   if (isArray(element)) return element.map(el => convertElement(el, model));
   if (element.type && element.props) {
@@ -67,7 +67,7 @@ function convertElement(element, model) {
       element.props);
     convertProps(element.type, element.props, model);
   }
-  if (element.props && element.props.children) {
+  if (deep !== false && element.props && element.props.children) {
     element.props.children = convertElement(element.props.children, model);
   }
   return element;

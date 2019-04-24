@@ -2286,7 +2286,7 @@ function convertProps(type, props, model) {
   props['data-bind'] = undefined;
 }
 
-function convertElement(element, model) {
+function convertElement(element, model, deep) {
   if (!element) return element;
   if (isArray(element)) return element.map(function (el) {
     return convertElement(el, model);
@@ -2296,7 +2296,7 @@ function convertElement(element, model) {
     if ((0, _isFrozen2.default)(element.props)) element.props = (0, _assign2.default)({}, element.props);
     convertProps(element.type, element.props, model);
   }
-  if (element.props && element.props.children) {
+  if (deep !== false && element.props && element.props.children) {
     element.props.children = convertElement(element.props.children, model);
   }
   return element;
@@ -3715,15 +3715,15 @@ if (!_isFrozen2.default) Object.isFrozen = function () {
 };
 
 var initailCreateElement = React.createElement;
-React.createElement = function (type) {
+React.createElement = function (type, props) {
   owner.intercepted = true;
+  if (owner.component && owner.binding) convertProps(type, props);
 
-  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
+  for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    args[_key - 2] = arguments[_key];
   }
 
-  if (owner.component && owner.binding) convertProps.apply(undefined, [type].concat(args));
-  return initailCreateElement.call.apply(initailCreateElement, [this, type].concat(args));
+  return initailCreateElement.call.apply(initailCreateElement, [this, type, props].concat(args));
 };
 
 function beginRender(component) {
@@ -4732,7 +4732,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.1.7"}
+module.exports = {"name":"mota","version":"3.2.0"}
 
 /***/ }),
 /* 121 */
