@@ -1567,7 +1567,8 @@ var Observer = __webpack_require__(17);
 
 var _require = __webpack_require__(1),
     isObject = _require.isObject,
-    isFunction = _require.isFunction;
+    isFunction = _require.isFunction,
+    isNull = _require.isNull;
 
 var _require2 = __webpack_require__(13),
     isComponentClass = _require2.isComponentClass,
@@ -1693,6 +1694,7 @@ function createModelGetter(model) {
     }
     clearReference(this);
     var componentModel = modelInProps ? propModel : model;
+    if (isNull(componentModel)) componentModel = {};
     var isNewModelInstance = false;
     if (!isObject(componentModel) && !isFunction(componentModel)) {
       throw new Error('Invalid Model');
@@ -4730,7 +4732,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.1.6"}
+module.exports = {"name":"mota","version":"3.1.7"}
 
 /***/ }),
 /* 121 */
