@@ -16,8 +16,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@ali/dn-middleware-query": "^1.2.9",
-    "@ali/dn-middleware-stats": "^1.0.9",
     "@types/node": "^9.4.0",
     "coveralls": "^3.0.0",
     "dawn": "^1.8.0",
