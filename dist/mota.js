@@ -1567,7 +1567,8 @@ var Observer = __webpack_require__(17);
 
 var _require = __webpack_require__(1),
     isObject = _require.isObject,
-    isFunction = _require.isFunction;
+    isFunction = _require.isFunction,
+    isNull = _require.isNull;
 
 var _require2 = __webpack_require__(13),
     isComponentClass = _require2.isComponentClass,
@@ -1693,6 +1694,7 @@ function createModelGetter(model) {
     }
     clearReference(this);
     var componentModel = modelInProps ? propModel : model;
+    if (isNull(componentModel)) componentModel = {};
     var isNewModelInstance = false;
     if (!isObject(componentModel) && !isFunction(componentModel)) {
       throw new Error('Invalid Model');
@@ -2118,19 +2120,20 @@ module.exports = nextTick;
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _a = __webpack_require__(1), isFunction = _a.isFunction, isBoolean = _a.isBoolean, getByPath = _a.getByPath, deepEqual = _a.deepEqual, clone = _a.clone;
+var _a = __webpack_require__(1), isFunction = _a.isFunction, isBoolean = _a.isBoolean, getByPath = _a.getByPath;
 var Watcher = /** @class */ (function () {
     function Watcher(calculator, handler, context) {
         var _this = this;
         //force: true 强制执行，false 强制不执行，无参数根据计算结果决定
         this.calc = function (force) {
             var newValue = _this.calculator.call(_this.context);
+            var newValueJson = JSON.stringify(newValue);
             var willExecute = isBoolean(force) ? force :
-                !deepEqual(newValue, _this.value);
+                !(newValueJson === _this.value);
             if (willExecute) {
-                _this.handler.call(_this.context, newValue, _this.value);
+                _this.handler.call(_this.context, newValue, _this.value && JSON.parse(_this.value));
             }
-            _this.value = clone(newValue);
+            _this.value = newValueJson;
         };
         if (!isFunction(calculator) || !isFunction(handler)) {
             throw new Error('Invalid parameters');
@@ -2283,7 +2286,7 @@ function convertProps(type, props, model) {
   props['data-bind'] = undefined;
 }
 
-function convertElement(element, model) {
+function convertElement(element, model, deep) {
   if (!element) return element;
   if (isArray(element)) return element.map(function (el) {
     return convertElement(el, model);
@@ -2293,7 +2296,7 @@ function convertElement(element, model) {
     if ((0, _isFrozen2.default)(element.props)) element.props = (0, _assign2.default)({}, element.props);
     convertProps(element.type, element.props, model);
   }
-  if (element.props && element.props.children) {
+  if (deep !== false && element.props && element.props.children) {
     element.props.children = convertElement(element.props.children, model);
   }
   return element;
@@ -3712,15 +3715,15 @@ if (!_isFrozen2.default) Object.isFrozen = function () {
 };
 
 var initailCreateElement = React.createElement;
-React.createElement = function (type) {
+React.createElement = function (type, props) {
   owner.intercepted = true;
+  if (owner.component && owner.binding) convertProps(type, props);
 
-  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
+  for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    args[_key - 2] = arguments[_key];
   }
 
-  if (owner.component && owner.binding) convertProps.apply(undefined, [type].concat(args));
-  return initailCreateElement.call.apply(initailCreateElement, [this, type].concat(args));
+  return initailCreateElement.call.apply(initailCreateElement, [this, type, props].concat(args));
 };
 
 function beginRender(component) {
@@ -4729,7 +4732,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.1.4"}
+module.exports = {"name":"mota","version":"3.2.0"}
 
 /***/ }),
 /* 121 */

@@ -30,7 +30,7 @@
 @<span class="token function">model</span><span class="token punctuation">(</span>DemoModel<span class="token punctuation">)</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> Demo <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
 
-  @<span class="token function">watch</span><span class="token punctuation">(</span>model<span class="token operator">=></span>model<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+  @<span class="token function">watch</span><span class="token punctuation">(</span><span class="token parameter">model</span><span class="token operator">=></span>model<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
   <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'name 发生了变化'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
@@ -41,7 +41,7 @@
 <p><code>watch</code> 是否重新执行，取决于 <code>watch</code> 的作为第一个参数传给它的「计算函数」的计算结果，每当依赖的模型数据发生变化时 <code>watch</code> 都会重执行计算函数，当计算结果有变化时，才会执行被装饰的「组件方法」，示例</p>
 <pre><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">default</span> Demo <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
 
-  @<span class="token function">watch</span><span class="token punctuation">(</span>model<span class="token operator">=></span>model<span class="token punctuation">.</span>name<span class="token operator">+</span>model<span class="token punctuation">.</span>age<span class="token punctuation">)</span>
+  @<span class="token function">watch</span><span class="token punctuation">(</span><span class="token parameter">model</span><span class="token operator">=></span>model<span class="token punctuation">.</span>name<span class="token operator">+</span>model<span class="token punctuation">.</span>age<span class="token punctuation">)</span>
   <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'name 发生变化'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
@@ -51,7 +51,7 @@
 <p>有时，我们希望 <code>watch</code> 能首先自动执行一次，那么可通过向第二个参数传一个 <code>true</code> 声明这个 <code>watch</code> 要自动执行一次。</p>
 <pre><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">default</span> Demo <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
 
-  @<span class="token function">watch</span><span class="token punctuation">(</span>model<span class="token operator">=></span>model<span class="token punctuation">.</span>name<span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+  @<span class="token function">watch</span><span class="token punctuation">(</span><span class="token parameter">model</span><span class="token operator">=></span>model<span class="token punctuation">.</span>name<span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span>
   <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'name 发生变化'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>

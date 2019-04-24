@@ -5,7 +5,7 @@
  */
 
 const Observer = require('ober');
-const { isObject, isFunction } = require('ntils');
+const { isObject, isFunction, isNull } = require('ntils');
 const { isComponentClass, defineGetter } = require('./utils');
 const { wrapRender } = require('./render');
 const { annotation } = require('./annotation');
@@ -90,6 +90,7 @@ function createModelGetter(model) {
     }
     clearReference(this);
     let componentModel = modelInProps ? propModel : model;
+    if (isNull(componentModel)) componentModel = {};
     let isNewModelInstance = false;
     if (!isObject(componentModel) && !isFunction(componentModel)) {
       throw new Error('Invalid Model');
