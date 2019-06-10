@@ -38,8 +38,10 @@ function createRender(proto) {
 }
 
 function clearReference(com) {
-  if (com._run_) com._observer_.stop(com._run_);
-  if (com._isNewModelInstance_) com._observer_.clearReference();
+  if (com._run_ && com._observer_) com._observer_.stop(com._run_);
+  if (com._isNewModelInstance_ && com._observer_) {
+    com._observer_.clearReference();
+  }
   defineGetter(com, '_run_', null);
 }
 
