@@ -69,4 +69,4 @@ publish:
     script:
       - dn test
       - dn build
-      - npm pu
+      - npm pu --registry=http://registry.npmjs.org

@@ -26,6 +26,7 @@
     "dn-middleware-file-header": "^1.0.3",
     "dn-middleware-lint": "^2.1.4",
     "dn-middleware-server": "^1.0.15",
+    "dn-middleware-shell": "^1.1.0",
     "dn-middleware-unit": "^0.2.0",
     "dn-middleware-webpack": "^1.11.5",
     "ntils": "^4.0.4",
