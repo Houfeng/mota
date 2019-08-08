@@ -2329,11 +2329,12 @@ var ComlizeWrapper = binding(_class = function (_React$Component) {
  * 处理包含双向绑定声明的 React 元素
  * @param {React.ReactNode|Function} target 组件类或元素或返回元素的函数
  * @param {any} model ViewModel
+ * @param {any} deep 是否深度处理子元素(当 target 为 element 时有效)
  * @returns {React.ReactNode} 处理后的 React 元素或组件
  */
 
 
-function binding(target, model) {
+function binding(target, model, deep) {
   if (!target) return binding;
   if (isComponentClass(target)) {
     set('binding', true, target.prototype || target);
@@ -2355,7 +2356,7 @@ function binding(target, model) {
       return React.createElement(Comlize, { func: target, context: this, args: args });
     };
   } else {
-    return convertElement(target, model);
+    return convertElement(target, model, deep);
   }
 }
 
@@ -4757,7 +4758,7 @@ module.exports = composition;
 /* 121 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.2.2"}
+module.exports = {"name":"mota","version":"3.3.0"}
 
 /***/ }),
 /* 122 */

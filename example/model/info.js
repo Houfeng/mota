@@ -1,8 +1,7 @@
-export class Info {
-  theme = 'dark';
-  name = '中国';
-  welcome = 'Welcome';
-  attr = {
-    test: 1
-  }
+export const state = {
+  message: 'test',
+}
+
+export function show(msg) {
+  state.message = msg;
 }
