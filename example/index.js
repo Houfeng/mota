@@ -10,25 +10,12 @@ import './assets/common.less';
 import { Info } from './model/info';
 import { binding } from '../src/binding';
 
-// function App() {
-//   const model = useModel({ name: 'APP' });
-//   return <Router>
-//     <div>
-//       <div>
-//         {model.name}
-//         <D />
-//       </div>
-//       <div>
-//         <Link to="/a">AAA</Link>
-//         <Link to="/b">BBB</Link>
-//       </div>
-//       <div>
-//         <Route path="/a" component={A} strict />
-//         <Route path="/b" component={B} strict />
-//       </div>
-//     </div>
-//   </Router>
-// }
+function App() {
+  const model = useModel(model);
+  return <div>
+    {model.message}
+  </div>;
+}
 
 @model(Info)
 @binding

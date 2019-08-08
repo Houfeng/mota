@@ -69,9 +69,10 @@ declare namespace mota {
    * 处理包含双向绑定声明的 React 元素或组件
    * @param {any} target 组件类或元素或返回元素的函数
    * @param {any} model ViewModel
+   * @param {any} deep 是否深度处理子元素(当 target 为 element 时有效)
    * @returns {any} 处理后的 React 元素或组件
    */
-  function binding(target: any, model?: any): any;
+  function binding(target: any, model?: any, deep?: boolean): any;
 
   /**
    * 用于将一个普通组件包装为「可绑定组件」的高阶函数
