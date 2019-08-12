@@ -2020,11 +2020,11 @@ module.exports = /** @class */ (function () {
                 });
         };
         this.run = function () {
+            var _a;
             var args = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];
             }
-            var _a;
             _this.dependencies = {};
             _this.runing = true;
             var result = (_a = _this.handler).call.apply(_a, [_this.context].concat(args));
@@ -3003,7 +3003,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -3420,7 +3420,8 @@ var EventEmitter = /** @class */ (function () {
             if (!this._listeners_[name])
                 return;
             var index = this._listeners_[name].indexOf(listener);
-            this._listeners_[name].splice(index, 1);
+            if (index > -1)
+                this._listeners_[name].splice(index, 1);
         }
         else if (name) {
             if (this._isNative_ && this._listeners_[name]) {
@@ -4758,7 +4759,7 @@ module.exports = composition;
 /* 121 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.3.0"}
+module.exports = {"name":"mota","version":"3.3.1"}
 
 /***/ }),
 /* 122 */
