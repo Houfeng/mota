@@ -4,20 +4,20 @@ mode: static
 
 locales:
   - name: zh
-    text: 中文
+    text: 中文 (CN)
     title: Mota
     groups:
       - name: guide
         text: 使用指南
     links:
-      - text: GitHub
-        url: //github.com/Houfeng/mota
-      - text: Demo
-        url: //houfeng.net/dn-template-mota/example/
-      - text: Mota Validation
+      - text: 状态管理 (Mota)
+        url: //houfeng.net/mota/
+      - text: 数据验证 (Validation)
         url: //houfeng.net/mota-validation/
-      - text: Mota Form
-        url: //houfeng.net/mota-form/
+      - text: 表单组件 (Form)
+        url: //houfeng.net/mota-form/    
+      - text: 源码 (GitHub)
+        url: //github.com/Houfeng/mota
         
     docs:
       - ./**/*.md
