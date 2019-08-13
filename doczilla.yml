@@ -18,7 +18,7 @@ locales:
         url: //houfeng.net/mota-form/    
       - text: 源码 (GitHub)
         url: //github.com/Houfeng/mota
-        
+         
     docs:
       - ./**/*.md
       - '!./node_modules/**/*.md'
