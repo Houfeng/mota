@@ -10,13 +10,15 @@ locales:
       - name: guide
         text: 使用指南
     links:
-      - text: 文档
-        url: //houfeng.net/mota/
       - text: GitHub
         url: //github.com/Houfeng/mota
-      - text: 示例
+      - text: Demo
         url: //houfeng.net/dn-template-mota/example/
-
+      - text: Mota Validation
+        url: //houfeng.net/mota-validation/
+      - text: Mota Form
+        url: //houfeng.net/mota-form/
+        
     docs:
       - ./**/*.md
       - '!./node_modules/**/*.md'
