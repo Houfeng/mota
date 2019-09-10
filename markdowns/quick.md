@@ -18,6 +18,8 @@ Mota 是一个响应式的 React 应用状态管理库，基于 Mota 你可以�
 [在线 TodoList 示例](http://houfeng.net/dn-template-mota/example/)
 ([示例源码](https://github.com/Houfeng/dn-template-mota))
 
+<iframe src="https://codesandbox.io/embed/hungry-oskar-n93p9vp1p4?fontsize=14&hidenavigation=1&view=preview" title="dn-template-mota-hook " allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
 ## 安装
 
 通过 npm 安装，如下
