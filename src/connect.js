@@ -68,6 +68,8 @@ function createMount(proto) {
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
     }
+    const { constructor: ctor, model, props } = this;
+    if (ctor.modeInitialize) ctor.modeInitialize.call(ctor, model, props);
     if (initailMount) return initailMount.call(this, ...args);
   };
 }

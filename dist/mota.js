@@ -1663,6 +1663,11 @@ function createMount(proto) {
         return handler.call.apply(handler, [_this2].concat(args));
       });
     }
+    var ctor = this.constructor,
+        model = this.model,
+        props = this.props;
+
+    if (ctor.modeInitialize) ctor.modeInitialize.call(ctor, model, props);
     if (initailMount) return initailMount.call.apply(initailMount, [this].concat(args));
   };
 }
@@ -4759,7 +4764,7 @@ module.exports = composition;
 /* 121 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.3.2"}
+module.exports = {"name":"mota","version":"3.4.0"}
 
 /***/ }),
 /* 122 */

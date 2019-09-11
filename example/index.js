@@ -2,13 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { model } from '../src';
 import { useModel } from '../src';
-import { HashRouter as Router, Route, Link } from "react-router-dom";
-import { A } from "./components/A";
-import { B } from "./components/B";
-import { D } from "./components/D";
-import './assets/common.less';
-import { Info } from './model/info';
 import { binding } from '../src/binding';
+import './assets/common.less';
 
 function App() {
   const model = useModel(model);
@@ -17,14 +12,14 @@ function App() {
   </div>;
 }
 
-@model(Info)
+@model({ name: 'test' })
 @binding
 class Test extends React.PureComponent {
-  onClick = () => {
-    this.model.name = '1111';
+  static modeInitialize(model, props) {
+    console.log('modeInitialize', model, props);
   }
   render() {
-    return <div onClick={this.onClick}>
+    return <div>
       {this.model.name}
       <input data-bind="name" />
     </div>
