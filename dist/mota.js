@@ -1702,11 +1702,14 @@ function createModelGetter(model) {
     }
     clearReference(this);
     var componentModel = modelInProps ? propModel : model;
+    if (this.modelWillCreate) {
+      componentModel = this.modelWillCreate(componentModel) || componentModel;
+    }
     if (isNull(componentModel)) componentModel = {};
-    var isNewModelInstance = false;
     if (!isObject(componentModel) && !isFunction(componentModel)) {
       throw new Error('Invalid Model');
     }
+    var isNewModelInstance = false;
     if (componentModel instanceof Function) {
       componentModel = new componentModel();
       isNewModelInstance = true;
@@ -4764,7 +4767,7 @@ module.exports = composition;
 /* 121 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.4.0"}
+module.exports = {"name":"mota","version":"3.5.0"}
 
 /***/ }),
 /* 122 */

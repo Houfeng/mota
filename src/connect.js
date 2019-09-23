@@ -94,11 +94,14 @@ function createModelGetter(model) {
     }
     clearReference(this);
     let componentModel = modelInProps ? propModel : model;
+    if (this.modelWillCreate) {
+      componentModel = this.modelWillCreate(componentModel) || componentModel;
+    }
     if (isNull(componentModel)) componentModel = {};
-    let isNewModelInstance = false;
     if (!isObject(componentModel) && !isFunction(componentModel)) {
       throw new Error('Invalid Model');
     }
+    let isNewModelInstance = false;
     if (componentModel instanceof Function) {
       componentModel = new componentModel();
       isNewModelInstance = true;
