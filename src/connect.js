@@ -89,9 +89,10 @@ function createModelGetter(model) {
   return function () {
     const modelInProps = 'model' in this.props;
     const propModel = this.props.model || {};
-    if (this._model_ && (!modelInProps || propModel === this._model_)) {
+    if (this._model_ && (!modelInProps || propModel === this._prop_model_)) {
       return this._model_;
     }
+    defineGetter(this, '_prop_model_', propModel);
     clearReference(this);
     let componentModel = modelInProps ? propModel : model;
     if (this.modelWillCreate) {
