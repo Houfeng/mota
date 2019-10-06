@@ -1697,9 +1697,10 @@ function createModelGetter(model) {
 
     var modelInProps = 'model' in this.props;
     var propModel = this.props.model || {};
-    if (this._model_ && (!modelInProps || propModel === this._model_)) {
+    if (this._model_ && (!modelInProps || propModel === this._prop_model_)) {
       return this._model_;
     }
+    defineGetter(this, '_prop_model_', propModel);
     clearReference(this);
     var componentModel = modelInProps ? propModel : model;
     if (this.modelWillCreate) {
@@ -4767,7 +4768,7 @@ module.exports = composition;
 /* 121 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.5.0"}
+module.exports = {"name":"mota","version":"3.5.1"}
 
 /***/ }),
 /* 122 */
