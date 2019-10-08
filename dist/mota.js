@@ -1663,6 +1663,11 @@ function createMount(proto) {
         return handler.call.apply(handler, [_this2].concat(args));
       });
     }
+    var ctor = this.constructor,
+        model = this.model,
+        props = this.props;
+
+    if (ctor.modeInitialize) ctor.modeInitialize.call(ctor, model, props);
     if (initailMount) return initailMount.call.apply(initailMount, [this].concat(args));
   };
 }
@@ -1692,16 +1697,20 @@ function createModelGetter(model) {
 
     var modelInProps = 'model' in this.props;
     var propModel = this.props.model || {};
-    if (this._model_ && (!modelInProps || propModel === this._model_)) {
+    if (this._model_ && (!modelInProps || propModel === this._prop_model_)) {
       return this._model_;
     }
+    defineGetter(this, '_prop_model_', propModel);
     clearReference(this);
     var componentModel = modelInProps ? propModel : model;
+    if (this.modelWillCreate) {
+      componentModel = this.modelWillCreate(componentModel) || componentModel;
+    }
     if (isNull(componentModel)) componentModel = {};
-    var isNewModelInstance = false;
     if (!isObject(componentModel) && !isFunction(componentModel)) {
       throw new Error('Invalid Model');
     }
+    var isNewModelInstance = false;
     if (componentModel instanceof Function) {
       componentModel = new componentModel();
       isNewModelInstance = true;
@@ -4759,7 +4768,7 @@ module.exports = composition;
 /* 121 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.3.2"}
+module.exports = {"name":"mota","version":"3.5.1"}
 
 /***/ }),
 /* 122 */

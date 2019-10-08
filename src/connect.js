@@ -68,6 +68,8 @@ function createMount(proto) {
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
     }
+    const { constructor: ctor, model, props } = this;
+    if (ctor.modeInitialize) ctor.modeInitialize.call(ctor, model, props);
     if (initailMount) return initailMount.call(this, ...args);
   };
 }
@@ -87,16 +89,20 @@ function createModelGetter(model) {
   return function () {
     const modelInProps = 'model' in this.props;
     const propModel = this.props.model || {};
-    if (this._model_ && (!modelInProps || propModel === this._model_)) {
+    if (this._model_ && (!modelInProps || propModel === this._prop_model_)) {
       return this._model_;
     }
+    defineGetter(this, '_prop_model_', propModel);
     clearReference(this);
     let componentModel = modelInProps ? propModel : model;
+    if (this.modelWillCreate) {
+      componentModel = this.modelWillCreate(componentModel) || componentModel;
+    }
     if (isNull(componentModel)) componentModel = {};
-    let isNewModelInstance = false;
     if (!isObject(componentModel) && !isFunction(componentModel)) {
       throw new Error('Invalid Model');
     }
+    let isNewModelInstance = false;
     if (componentModel instanceof Function) {
       componentModel = new componentModel();
       isNewModelInstance = true;
