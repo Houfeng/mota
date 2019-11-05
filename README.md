@@ -10,22 +10,22 @@
 
 </div>
 
-## Overview
+# Overview
 
 Mota 是一个 React 应用状态管理库，Mota 希望用纯粹的 JavaScript 为应用编写不强依赖于框架的「业务模型」，然后由 Mota 将「业务模型」关联到 React 应用。
 
 Mota 同时支持 Class 和 Hook 的两种编程风格。
 
-## Install
+# Install
 
 通过 npm 安装，如下
 ```sh
 $ npm i mota --save
 ```
 
-## API
+# API
 
-### model
+## model
 
 DemoModel.js
 ```js
@@ -53,7 +53,7 @@ export class Demo extends Component{
 }
 ```
 
-### useModel
+## useModel
 
 DemoModel.js
 ```js
@@ -79,7 +79,7 @@ export function Demo{
 }
 ```
 
-### binding
+## binding
 
 For class
 ```js
@@ -121,12 +121,12 @@ export function Demo(){
 }
 ```
 
-## Examples
+# Examples
 
 [在线 TodoList 示例](http://houfeng.net/dn-template-mota/example/)
 ([示例源码](https://github.com/Houfeng/dn-template-mota))
 
-## Docs
+# Docs
 - [快速开始](http://houfeng.net/mota/#!/zh/guide/quick)
 - [编写业务模型](http://houfeng.net/mota/#!/zh/guide/model)
 - [将组件属性映射到模型](http://houfeng.net/mota/#!/zh/guide/mapping)
@@ -134,6 +134,6 @@ export function Demo(){
 - [监听模型变化](http://houfeng.net/mota/#!/zh/guide/watch)
 - [将模型数据与表单绑定](http://houfeng.net/mota/#!/zh/guide/binding)
 
-## Links
+# Links
 - [版本发布日志](https://github.com/Houfeng/mota/releases)
 - [MIT 开源协议](https://tldrlegal.com/license/mit-license)
