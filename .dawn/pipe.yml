@@ -65,6 +65,8 @@ test:
   - name: unit
 
 publish:
+  - name: version
+  - name: submitter
   - name: shell
     script:
       - dn test
