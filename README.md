@@ -91,6 +91,7 @@ export class DemoModel {
 }
 
 @model(DemoModel)
+@binding
 export class Demo extends Component{
   render() {
     const { print } = this.model
@@ -104,7 +105,7 @@ export class Demo extends Component{
 
 For hook
 ```js
-const state = {
+export const state = {
   message = "hello";
 }
 
