@@ -69,15 +69,55 @@ export function add(){
 Demo.js
 ```js
 import { useModel } from "mota";
-import * as DemoModel from "./DemoModel";
 import { state, add } from "./DemoModel";
 
 export function Demo{
-  const { count } = useModel(DemoModel);
-  // or: const { count } = useModel(state);
+  const { count } = useModel(state);
   return <div>
     {count} <button onClick={add}>Add</button>
   </div>
+}
+```
+
+### binding
+
+For class
+```js
+export class DemoModel {
+  message = "hello";
+  print = ()=> {
+    console.log(this.message);
+  }
+}
+
+@model(DemoModel)
+export class Demo extends Component{
+  render() {
+    const { print } = this.model
+    return <div>
+      <input data-bind="message"/>
+      <button onClick={print}>Print</button>
+    </div>
+  }
+}
+```
+
+For hook
+```js
+const state = {
+  message = "hello";
+}
+
+export function print(){
+ console.log(state.message);
+}
+
+export function Demo(){
+  const model = useModel(state);
+  return binding(<div>
+    <input data-bind="message"/>
+    <button onClick={print}>Print</button>
+  </div>, model);
 }
 ```
 
