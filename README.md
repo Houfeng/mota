@@ -12,9 +12,9 @@
 
 # Overview
 
-Mota 是一个 React 应用状态管理库，Mota 希望用纯粹的 JavaScript 为应用编写不强依赖于框架的「业务模型」，然后由 Mota 将「业务模型」关联到 React 应用。
+Mota 是一个面向 React 应用的状态管理库，希望用纯粹的、普通的 JavaScript 为应用编写不强依赖于框架的「业务模型」，然后，仅由 Mota 将「业务模型」关联到 React 应用。
 
-Mota 同时支持 Class 和 Hook 的两种编程风格。
+此外，Mota 同时支持 Class 和 Hook 的两种编程风格。
 
 # Install
 
@@ -91,6 +91,7 @@ export class DemoModel {
 }
 
 @model(DemoModel)
+@binding
 export class Demo extends Component{
   render() {
     const { print } = this.model
@@ -104,7 +105,7 @@ export class Demo extends Component{
 
 For hook
 ```js
-const state = {
+export const state = {
   message = "hello";
 }
 
