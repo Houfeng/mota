@@ -66,9 +66,9 @@ test:
 
 publish:
   - name: version
-  - name: submitter
   - name: shell
     script:
       - dn test
       - dn build
       - npm pu --registry=http://registry.npmjs.org
+  - name: submitter
