@@ -12,16 +12,23 @@ function App() {
   </div>;
 }
 
-@model({ name: 'test' })
+@model({ items: [], name: "" })
 @binding
 class Test extends React.PureComponent {
-  static modeInitialize(model, props) {
-    console.log('modeInitialize', model, props);
-  }
   render() {
     return <div>
-      {this.model.name}
       <input data-bind="name" />
+      <button onClick={() => {
+        this.model.items.push(this.model.name)
+        this.model.name = "";
+      }}>添加</button>
+      {this.model.items.map((item, index) => {
+        return <div key={item}>{item}
+          <button onClick={() => {
+            this.model.items.splice(index, 1);
+          }}>删除</button>
+        </div>
+      })}
     </div>
   }
 }

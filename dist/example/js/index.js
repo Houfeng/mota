@@ -3223,7 +3223,7 @@ function App() {
   );
 }
 
-var Test = (_dec = (0, _src.model)({ name: 'test' }), _dec(_class = (0, _binding.binding)(_class = function (_React$PureComponent) {
+var Test = (_dec = (0, _src.model)({ items: [], name: "" }), _dec(_class = (0, _binding.binding)(_class = function (_React$PureComponent) {
   (0, _inherits3.default)(Test, _React$PureComponent);
 
   function Test() {
@@ -3231,16 +3231,35 @@ var Test = (_dec = (0, _src.model)({ name: 'test' }), _dec(_class = (0, _binding
     return (0, _possibleConstructorReturn3.default)(this, _React$PureComponent.apply(this, arguments));
   }
 
-  Test.modeInitialize = function modeInitialize(model, props) {
-    console.log('modeInitialize', model, props);
-  };
-
   Test.prototype.render = function render() {
+    var _this2 = this;
+
     return _react2.default.createElement(
       'div',
       null,
-      this.model.name,
-      _react2.default.createElement('input', { 'data-bind': 'name' })
+      _react2.default.createElement('input', { 'data-bind': 'name' }),
+      _react2.default.createElement(
+        'button',
+        { onClick: function onClick() {
+            _this2.model.items.push(_this2.model.name);
+            _this2.model.name = "";
+          } },
+        '\u6DFB\u52A0'
+      ),
+      this.model.items.map(function (item, index) {
+        return _react2.default.createElement(
+          'div',
+          { key: item },
+          item,
+          _react2.default.createElement(
+            'button',
+            { onClick: function onClick() {
+                _this2.model.items.splice(index, 1);
+              } },
+            '\u5220\u9664'
+          )
+        );
+      })
     );
   };
 
@@ -36309,7 +36328,7 @@ var Observer = /** @class */ (function (_super) {
         });
         final(array, 'splice', function () {
             var _this = this;
-            var delItems = [].splice.call(this, arguments);
+            var delItems = [].splice.apply(this, arguments);
             var items = [].slice.call(arguments, 2);
             var observer = this[OBSERVER_PROP_NAME];
             items.forEach(function (item) {
