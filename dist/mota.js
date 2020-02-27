@@ -1222,13 +1222,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Houfeng <admin@xhou.net>
  */
 
-var React = __webpack_require__(14);
-var Component = React.Component,
-    PureComponent = React.PureComponent;
+var _require = __webpack_require__(14),
+    Component = _require.Component,
+    PureComponent = _require.PureComponent;
 
-var _require = __webpack_require__(1),
-    isObject = _require.isObject,
-    isFunction = _require.isFunction;
+var _require2 = __webpack_require__(1),
+    isObject = _require2.isObject,
+    isFunction = _require2.isFunction;
 
 function isComponentInstance(instance) {
   if (!instance || !isObject(instance)) return false;
@@ -4773,7 +4773,7 @@ module.exports = composition;
 /* 120 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"3.5.4"}
+module.exports = {"name":"mota","version":"3.5.5"}
 
 /***/ }),
 /* 121 */

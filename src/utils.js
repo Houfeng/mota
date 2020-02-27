@@ -4,8 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const React = require('react');
-const { Component, PureComponent } = React;
+const { Component, PureComponent } = require('react');
 const { isObject, isFunction } = require('ntils');
 
 function isComponentInstance(instance) {
