@@ -5,4 +5,3 @@
  */
 
 export const owner = { component: null, intercepted: false, binding: false };
-export default owner;

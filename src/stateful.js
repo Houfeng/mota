@@ -17,5 +17,3 @@ export function stateful(stateless) {
   }
   return stateless._stateful_;
 }
-
-export default stateful;

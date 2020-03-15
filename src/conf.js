@@ -9,5 +9,3 @@ export const options = {};
 export function config(opts) {
   Object.assign(options, opts);
 }
-
-export default { config, options };

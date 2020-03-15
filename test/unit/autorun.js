@@ -1,9 +1,8 @@
 import assert from 'assert';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import model from '../../src/model';
-import autorun from '../../src/autorun';
-import deep from '../../src/deep';
+import { model } from '../../src/model';
+import { autorun } from '../../src/autorun';
 
 const root = document.querySelector('.root');
 

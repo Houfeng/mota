@@ -9,7 +9,7 @@ import { has, defineGetter } from './utils';
 
 const STORE_KEY = '_annotations_';
 
-function getStore(target, member, ownOnly) {
+export function getAll(target, member, ownOnly) {
   if (!target) return {};
   target = target.prototype || target;
   if (!has(target, STORE_KEY, ownOnly)) return {};
@@ -18,36 +18,36 @@ function getStore(target, member, ownOnly) {
   return has(store, member, ownOnly) ? store[member] : {};
 }
 
-function useStore(target, member) {
+export function getStore(target, member) {
   if (!target) throw new Error('Invalid annotation target');
   target = target.prototype || target;
-  const baseStore = getStore(Object.getPrototypeOf(target));
+  const baseStore = getAll(Object.getPrototypeOf(target));
   if (!has(target, STORE_KEY)) {
     defineGetter(target, STORE_KEY, Object.create(baseStore));
   }
   const store = target[STORE_KEY];
   if (!member) return store;
   if (!has(store, member)) {
-    store[member] = Object.create(getStore(baseStore[member]));
+    store[member] = Object.create(getAll(baseStore[member]));
   }
   return store[member];
 }
 
-function wrapKey(key) {
+export function wrapKey(key) {
   return ':' + key;
 }
 
 export function get(key, target, member, ownOnly) {
   if (!key) return null;
   key = wrapKey(key);
-  const store = getStore(target, member, ownOnly || false);
+  const store = getAll(target, member, ownOnly || false);
   return store && store[key];
 }
 
 export function set(key, value, target, member) {
   if (!key || !value) return null;
   key = wrapKey(key);
-  const store = useStore(target, member); //eslint-disable-line
+  const store = getStore(target, member); //eslint-disable-line
   store[key] = value;
   return value;
 }
@@ -69,7 +69,4 @@ export function annotation(key, value) {
 annotation.set = set;
 annotation.push = push;
 annotation.get = get;
-annotation.getAll = getStore;
-annotation.annotation = annotation;
-
-export default annotation;
+annotation.getAll = getAll;

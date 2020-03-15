@@ -6,7 +6,7 @@
 
 import { push, get } from './annotation';
 
-class Lifecycle {
+export class Lifecycle {
 
   constructor(name) {
     this.key = `${name}:handlers`;
@@ -32,8 +32,4 @@ function create(list) {
   return map;
 }
 
-const lifecycle = create(['didMount', 'unmount', 'didUpdate', 'model']);
-
-lifecycle.lifecycle = lifecycle;
-
-export default lifecycle;
+export const lifecycle = create(['didMount', 'unmount', 'didUpdate', 'model']);

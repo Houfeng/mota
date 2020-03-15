@@ -12,7 +12,7 @@ import { annotation } from './annotation';
 import { lifecycle } from './lifecycle';
 import { stateful } from './stateful';
 
-function createRender(proto) {
+export function createRender(proto) {
   const initailRender = proto.render;
   if (!initailRender || initailRender._override_) return initailRender;
   const overrideRender = wrapRender(initailRender);
@@ -37,7 +37,7 @@ function createRender(proto) {
   return render;
 }
 
-function clearReference(com) {
+export function clearReference(com) {
   if (com._run_ && com._observer_) com._observer_.stop(com._run_);
   if (com._isNewModelInstance_ && com._observer_) {
     com._observer_.clearReference();
@@ -45,7 +45,7 @@ function clearReference(com) {
   defineGetter(com, '_run_', null);
 }
 
-function createUnmount(proto) {
+export function createUnmount(proto) {
   const initailUnmount = proto.componentWillUnmount;
   return function (...args) {
     defineGetter(this, '_mounted_', false);
@@ -60,7 +60,7 @@ function createUnmount(proto) {
   };
 }
 
-function createMount(proto) {
+export function createMount(proto) {
   const initailMount = proto.componentDidMount;
   return function (...args) {
     defineGetter(this, '_mounted_', true);
@@ -74,7 +74,7 @@ function createMount(proto) {
   };
 }
 
-function createDidUpdate(proto) {
+export function createDidUpdate(proto) {
   const initailDidUpdate = proto.componentDidUpdate;
   return function (...args) {
     const handlers = lifecycle.didUpdate.get(this);
@@ -85,7 +85,7 @@ function createDidUpdate(proto) {
   };
 }
 
-function createModelGetter(model) {
+export function createModelGetter(model) {
   return function () {
     const modelInProps = 'model' in this.props;
     const propModel = this.props.model || {};
@@ -116,7 +116,7 @@ function createModelGetter(model) {
   };
 }
 
-function connect(model, component) {
+export function connect(model, component) {
   if (!component) return component => connect(model, component);
   if (!isFunction(component)) return component;
   if (!isComponentClass(component)) component = stateful(component);
@@ -131,7 +131,3 @@ function connect(model, component) {
   defineGetter(proto, '_contented_', true);
   return component;
 }
-
-connect.connect = connect;
-
-export default connect;

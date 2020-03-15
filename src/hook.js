@@ -32,7 +32,7 @@ function hasChange(conditions, path) {
     conditions.indexOf && conditions.indexOf(path) > -1;
 }
 
-function useObservable(factory, conditions) {
+export function useObservable(factory, conditions) {
   const [state, update] = useState([]);
   if (state.length > 0) return collect(state);
   const isNew = factory instanceof Function;
@@ -56,7 +56,7 @@ function useObservable(factory, conditions) {
   return collect(state);
 }
 
-function useModel(factory, conditions, debug) {
+export function useModel(factory, conditions, debug) {
   const [model, destroy, deps] = useObservable(factory, conditions);
   useEffect(() => destroy, []);
   //最后一个 useModel 在 mounted 后完成收集（最后一个有可能多收集）
@@ -64,5 +64,3 @@ function useModel(factory, conditions, debug) {
   if (debug) debug({ model, deps });
   return model;
 }
-
-export default useModel;

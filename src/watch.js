@@ -5,10 +5,10 @@
  */
 
 import { isFunction } from 'ntils';
-import lifecycle from './lifecycle';
+import { lifecycle } from './lifecycle';
 import { get, set } from './annotation';
 
-function watch(calculator, immed) {
+export function watch(calculator, immed) {
   if (!isFunction(calculator)) {
     throw new Error('Watch needs to specify a calculation function');
   }
@@ -32,5 +32,3 @@ function watch(calculator, immed) {
     set('watch', true, target, method);
   };
 }
-
-export default watch;

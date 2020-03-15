@@ -4,10 +4,10 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import lifecycle from './lifecycle';
+import { lifecycle } from './lifecycle';
 import { get, set } from './annotation';
 
-function autorun(target, method) {
+export function autorun(target, method) {
   if (!target || !method) return autorun;
   //autorun 如果已经存在，比如父类声明了，都不再重复处理
   const exist = get('autorun', target, method);
@@ -25,5 +25,3 @@ function autorun(target, method) {
   });
   set('autorun', true, target, method);
 }
-
-module.exports = autorun;

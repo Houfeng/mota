@@ -97,5 +97,3 @@ export function bindable(opts, component) {
 
 bindable.getOptions = getOptions;
 bindable.bindable = bindable;
-
-export default bindable;

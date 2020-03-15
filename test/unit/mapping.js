@@ -1,8 +1,8 @@
 import assert from 'assert';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import model from '../../src/model';
-import mapping from '../../src/mapping';
+import { model } from '../../src/model';
+import { mapping } from '../../src/mapping';
 
 const root = document.querySelector('.root');
 

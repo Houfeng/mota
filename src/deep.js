@@ -6,7 +6,7 @@
 
 import { get, set } from './annotation';
 
-function deep(target, method) {
+export function deep(target, method) {
   if (!target) return deep;
   const error = method ?
     get('autorun', target, method) || get('watch', target, method) :
@@ -16,5 +16,3 @@ function deep(target, method) {
   }
   set('deep', true, target, method);
 }
-
-export default deep;

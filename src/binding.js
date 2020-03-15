@@ -12,14 +12,14 @@ import { isComponentClass } from './utils';
 import { owner } from './owner';
 import { set } from './annotation';
 
-function compileExpr(expr) {
+export function compileExpr(expr) {
   return {
     get: expression(expr),
     set: expression(`$scope.${expr}=$value`)
   };
 }
 
-function convertProps(type, props, model) {
+export function convertProps(type, props, model) {
   if (!type || !props) return;
   if (!model) model = owner.component && owner.component.model;
   if (!model) return;
@@ -58,7 +58,7 @@ function convertProps(type, props, model) {
   props['data-bind'] = undefined;
 }
 
-function convertElement(element, model, deep) {
+export function convertElement(element, model, deep) {
   if (!element) return element;
   if (isArray(element)) return element.map(el => convertElement(el, model));
   if (element.type && element.props) {
@@ -74,7 +74,7 @@ function convertElement(element, model, deep) {
 }
 
 @binding
-class ComlizeWrapper extends React.Component {
+export class ComlizeWrapper extends React.Component {
   render() {
     const { func, context, args } = this.props;
     return func.call(context, ...args);
@@ -88,7 +88,7 @@ class ComlizeWrapper extends React.Component {
  * @param {any} deep 是否深度处理子元素(当 target 为 element 时有效)
  * @returns {React.ReactNode} 处理后的 React 元素或组件
  */
-function binding(target, model, deep) {
+export function binding(target, model, deep) {
   if (!target) return binding;
   if (isComponentClass(target)) {
     set('binding', true, target.prototype || target);
@@ -109,6 +109,3 @@ function binding(target, model, deep) {
 
 binding.convertElement = convertElement;
 binding.convertProps = convertProps;
-binding.binding = binding;
-
-export default binding;

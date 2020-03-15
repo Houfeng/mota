@@ -4,10 +4,10 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import connect from './connect';
+import { connect } from './connect';
 import React from 'react';
 
-export default function model(model) {
+export function model(model) {
   if (model && model.prototype instanceof React.Component) {
     return connect(null, model);
   } else {

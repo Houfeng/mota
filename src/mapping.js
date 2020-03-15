@@ -5,9 +5,9 @@
  */
 
 import { isObject, each, isString, getByPath, setByPath } from 'ntils';
-import lifecycle from './lifecycle';
+import { lifecycle } from './lifecycle';
 
-function mapping(map) {
+export function mapping(map) {
   if (!isObject(map)) {
     throw new Error('Mapping needs to specify a object or array');
   }
@@ -37,5 +37,3 @@ function mapping(map) {
     });
   };
 }
-
-export default mapping;

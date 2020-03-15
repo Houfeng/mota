@@ -34,7 +34,7 @@ function endRender() {
   owner.binding = false;
 }
 
-function wrapRender(initailRender) {
+export function wrapRender(initailRender) {
   return function (...args) {
     beginRender(this);
     let element = initailRender.call(this, ...args);
@@ -44,5 +44,3 @@ function wrapRender(initailRender) {
     return element;
   };
 }
-
-export default { wrapRender };

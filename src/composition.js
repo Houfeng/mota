@@ -10,7 +10,7 @@ const UPDATE_EVENT = 'compositionupdate';
 const END_EVENT = 'compositionend';
 const INPUT_EVENT = 'input';
 
-class Composition {
+export class Composition {
 
   composing = false;
   inputting = false;
@@ -59,10 +59,8 @@ class Composition {
 
 }
 
-const composition = new Composition();
+export const composition = new Composition();
 
 AutoRun.prototype.isSync = function () {
   return !global.document || composition.composing || composition.inputting;
 };
-
-export default composition;
