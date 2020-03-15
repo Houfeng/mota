@@ -4,8 +4,8 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const { isObject, each, isString, getByPath, setByPath } = require('ntils');
-const lifecycle = require('./lifecycle');
+import { isObject, each, isString, getByPath, setByPath } from 'ntils';
+import lifecycle from './lifecycle';
 
 function mapping(map) {
   if (!isObject(map)) {
@@ -38,4 +38,4 @@ function mapping(map) {
   };
 }
 
-module.exports = mapping;
+export default mapping;

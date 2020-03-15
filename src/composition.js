@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const { AutoRun } = require('ober');
+import { AutoRun } from 'ober';
 
 const UPDATE_EVENT = 'compositionupdate';
 const END_EVENT = 'compositionend';
@@ -65,4 +65,4 @@ AutoRun.prototype.isSync = function () {
   return !global.document || composition.composing || composition.inputting;
 };
 
-module.exports = composition;
+export default composition;

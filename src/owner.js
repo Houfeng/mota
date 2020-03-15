@@ -4,7 +4,5 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const owner = { component: null, intercepted: false, binding: false };
-
-owner.owner = owner;
-module.exports = owner;
+export const owner = { component: null, intercepted: false, binding: false };
+export default owner;

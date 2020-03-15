@@ -4,13 +4,13 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const React = require('react');
-const { bindable } = require('./bindable');
-const { expression } = require('ober');
-const { isObject, isArray, isFunction } = require('ntils');
-const { isComponentClass } = require('./utils');
-const { owner } = require('./owner');
-const { set } = require('./annotation');
+import React from 'react';
+import { bindable } from './bindable';
+import { expression } from 'ober';
+import { isObject, isArray, isFunction } from 'ntils';
+import { isComponentClass } from './utils';
+import { owner } from './owner';
+import { set } from './annotation';
 
 function compileExpr(expr) {
   return {
@@ -111,4 +111,4 @@ binding.convertElement = convertElement;
 binding.convertProps = convertProps;
 binding.binding = binding;
 
-module.exports = binding;
+export default binding;

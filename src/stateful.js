@@ -4,9 +4,9 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const React = require('react');
+import React from 'react';
 
-function stateful(stateless) {
+export function stateful(stateless) {
   if (!stateless._stateful_) {
     class StatelessWrapper extends React.Component {
       render() {
@@ -18,5 +18,4 @@ function stateful(stateless) {
   return stateless._stateful_;
 }
 
-stateful.stateful = stateful;
-module.exports = stateful;
+export default stateful;

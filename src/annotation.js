@@ -4,8 +4,8 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const { isArray } = require('ntils');
-const { has, defineGetter } = require('./utils');
+import { isArray } from 'ntils';
+import { has, defineGetter } from './utils';
 
 const STORE_KEY = '_annotations_';
 
@@ -18,7 +18,7 @@ function getStore(target, member, ownOnly) {
   return has(store, member, ownOnly) ? store[member] : {};
 }
 
-function useStore(target, member) { 
+function useStore(target, member) {
   if (!target) throw new Error('Invalid annotation target');
   target = target.prototype || target;
   const baseStore = getStore(Object.getPrototypeOf(target));
@@ -37,14 +37,14 @@ function wrapKey(key) {
   return ':' + key;
 }
 
-function get(key, target, member, ownOnly) {
+export function get(key, target, member, ownOnly) {
   if (!key) return null;
   key = wrapKey(key);
   const store = getStore(target, member, ownOnly || false);
   return store && store[key];
 }
 
-function set(key, value, target, member) {
+export function set(key, value, target, member) {
   if (!key || !value) return null;
   key = wrapKey(key);
   const store = useStore(target, member); //eslint-disable-line
@@ -52,7 +52,7 @@ function set(key, value, target, member) {
   return value;
 }
 
-function push(key, value, target, member) {
+export function push(key, value, target, member) {
   let list = get(key, target, member, true);
   if (list && !isArray(list)) throw new Error('Invaild Array');
   if (!list) list = set(key, [], target, member);
@@ -60,7 +60,7 @@ function push(key, value, target, member) {
   return list;
 }
 
-function annotation(key, value) {
+export function annotation(key, value) {
   return (target, member) => {
     set(key, value, target, member);
   };
@@ -71,4 +71,5 @@ annotation.push = push;
 annotation.get = get;
 annotation.getAll = getStore;
 annotation.annotation = annotation;
-module.exports = annotation;
+
+export default annotation;

@@ -4,10 +4,10 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const options = {};
+export const options = {};
 
-function config(opts) {
+export function config(opts) {
   Object.assign(options, opts);
 }
 
-module.exports = { config, options };
+export default { config, options };

@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const { isComponentClass } = require('./utils');
+import { isComponentClass } from './utils';
 
 const defaultOpts = {
   prop: ['value'],
@@ -84,7 +84,7 @@ function getOptions(type, props) {
   return opts;
 }
 
-function bindable(opts, component) {
+export function bindable(opts, component) {
   if (isComponentClass(opts)) {
     return bindable(component, opts);
   }
@@ -97,4 +97,5 @@ function bindable(opts, component) {
 
 bindable.getOptions = getOptions;
 bindable.bindable = bindable;
-module.exports = bindable;
+
+export default bindable;

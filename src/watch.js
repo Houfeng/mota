@@ -4,9 +4,9 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const { isFunction } = require('ntils');
-const lifecycle = require('./lifecycle');
-const { get, set } = require('./annotation');
+import { isFunction } from 'ntils';
+import lifecycle from './lifecycle';
+import { get, set } from './annotation';
 
 function watch(calculator, immed) {
   if (!isFunction(calculator)) {
@@ -33,4 +33,4 @@ function watch(calculator, immed) {
   };
 }
 
-module.exports = watch;
+export default watch;

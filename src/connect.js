@@ -4,13 +4,13 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const Observer = require('ober');
-const { isObject, isFunction, isNull } = require('ntils');
-const { isComponentClass, defineGetter } = require('./utils');
-const { wrapRender } = require('./render');
-const { annotation } = require('./annotation');
-const { lifecycle } = require('./lifecycle');
-const { stateful } = require('./stateful');
+import Observer from 'ober';
+import { isObject, isFunction, isNull } from 'ntils';
+import { isComponentClass, defineGetter } from './utils';
+import { wrapRender } from './render';
+import { annotation } from './annotation';
+import { lifecycle } from './lifecycle';
+import { stateful } from './stateful';
 
 function createRender(proto) {
   const initailRender = proto.render;
@@ -133,4 +133,5 @@ function connect(model, component) {
 }
 
 connect.connect = connect;
-module.exports = connect;
+
+export default connect;

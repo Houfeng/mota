@@ -4,10 +4,10 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const Observer = require('ober');
-const { useState, useEffect, useLayoutEffect } = require('react');
-const { isFunction } = require('ntils');
-const { getModelState } = require('./utils');
+import Observer from 'ober';
+import { useState, useEffect, useLayoutEffect } from 'react';
+import { isFunction } from 'ntils';
+import { getModelState } from './utils';
 
 const owner = { buffer: [], state: null, uuid: 0 };
 
@@ -65,4 +65,4 @@ function useModel(factory, conditions, debug) {
   return model;
 }
 
-module.exports = { useModel };
+export default useModel;

@@ -4,12 +4,12 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const React = require('react');
-const { isNull } = require('ntils');
-const { convertElement, convertProps } = require('./binding');
-const { get } = require('./annotation');
-const { options } = require('./config');
-const { owner } = require('./owner');
+import React from 'react';
+import { isNull } from 'ntils';
+import { convertElement, convertProps } from './binding';
+import { get } from './annotation';
+import { options } from './conf';
+import { owner } from './owner';
 
 if (!Object.isFrozen) Object.isFrozen = () => false;
 
@@ -45,4 +45,4 @@ function wrapRender(initailRender) {
   };
 }
 
-module.exports = { wrapRender };
+export default { wrapRender };

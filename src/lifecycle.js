@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const { push, get } = require('./annotation');
+import { push, get } from './annotation';
 
 class Lifecycle {
 
@@ -35,4 +35,5 @@ function create(list) {
 const lifecycle = create(['didMount', 'unmount', 'didUpdate', 'model']);
 
 lifecycle.lifecycle = lifecycle;
-module.exports = lifecycle;
+
+export default lifecycle;

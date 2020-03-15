@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const { get, set } = require('./annotation');
+import { get, set } from './annotation';
 
 function deep(target, method) {
   if (!target) return deep;
@@ -17,4 +17,4 @@ function deep(target, method) {
   set('deep', true, target, method);
 }
 
-module.exports = deep;
+export default deep;

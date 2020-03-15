@@ -4,8 +4,8 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const lifecycle = require('./lifecycle');
-const { get, set } = require('./annotation');
+import lifecycle from './lifecycle';
+import { get, set } from './annotation';
 
 function autorun(target, method) {
   if (!target || !method) return autorun;
