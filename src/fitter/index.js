@@ -4,4 +4,6 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-export const owner = { component: null, intercepted: false, binding: false };
+export * from './render';
+export * from './factory';
+export * from './owner';

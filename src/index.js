@@ -20,9 +20,10 @@ import { inputRepair } from './connect/input';
 import { annotation } from './common/annotation';
 import { lifecycles } from './connect/lifecycle';
 import { useModel } from './hooks';
+import { createFitter } from './fitter/factory';
 
 export default {
   connect, model, binding, bindable, watch, mapping, autorun, deep,
   stateful, inputRepair, Observer, expression, nextTick, annotation,
-  lifecycles, useModel, utils, ...info
+  lifecycles, useModel, createFitter, utils, ...info
 };

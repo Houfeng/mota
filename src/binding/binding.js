@@ -4,13 +4,10 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import React from 'react';
-import { bindable } from './bindable';
 import { expression } from 'ober';
-import { isObject, isArray, isFunction } from 'ntils';
-import { isComponentClass } from '../common/utils';
-import { owner } from '../compose/owner';
-import { annotation } from '../common/annotation';
+import { isObject } from 'ntils';
+import { createFitter } from '../fitter/factory';
+import { bindable } from './bindable';
 
 export function compileExpr(expr) {
   return {
@@ -19,10 +16,8 @@ export function compileExpr(expr) {
   };
 }
 
-export function convertProps(type, props, model) {
-  if (!type || !props) return;
-  if (!model) model = owner.component && owner.component.model;
-  if (!model) return;
+export const binding = createFitter(function (type, props, model) {
+  if (!type || !props || !model) return;
   const dataBind = props['data-bind'];
   if (!dataBind) return;
   const bindOpts = dataBind && bindable.getOptions(type, props);
@@ -56,56 +51,4 @@ export function convertProps(type, props, model) {
   props[bindEvent] = bindEventHandler;
   props['data-scope'] = undefined;
   props['data-bind'] = undefined;
-}
-
-export function convertElement(element, model, deep) {
-  if (!element) return element;
-  if (isArray(element)) return element.map(el => convertElement(el, model));
-  if (element.type && element.props) {
-    if (Object.isFrozen(element)) element = Object.assign({}, element);
-    if (Object.isFrozen(element.props)) element.props = Object.assign({},
-      element.props);
-    convertProps(element.type, element.props, model);
-  }
-  if (deep !== false && element.props && element.props.children) {
-    element.props.children = convertElement(element.props.children, model);
-  }
-  return element;
-}
-
-@binding
-export class ComlizeWrapper extends React.Component {
-  render() {
-    const { func, context, args } = this.props;
-    return func.call(context, ...args);
-  }
-}
-
-/**
- * 处理包含双向绑定声明的 React 元素
- * @param {React.ReactNode|Function} target 组件类或元素或返回元素的函数
- * @param {any} model ViewModel
- * @param {any} deep 是否深度处理子元素(当 target 为 element 时有效)
- * @returns {React.ReactNode} 处理后的 React 元素或组件
- */
-export function binding(target, model, deep) {
-  if (!target) return binding;
-  if (isComponentClass(target)) {
-    annotation.set('binding', true, target.prototype || target);
-    return target;
-  }
-  if (!model) model = owner.component && owner.component.model;
-  if (!model) throw new Error('Binding error: Invalid model');
-  if (isFunction(target)) {
-    return function (...args) {
-      const { connect } = require('../connect/connect');
-      const Comlize = connect(model, ComlizeWrapper);
-      return <Comlize func={target} context={this} args={args} />;
-    };
-  } else {
-    return convertElement(target, model, deep);
-  }
-}
-
-binding.convertElement = convertElement;
-binding.convertProps = convertProps;
+});

@@ -4,5 +4,9 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-export * from './render';
-export * from './owner';
+export const owner = {
+  component: null,
+  fitters: null,
+  model: null,
+  intercepted: false,
+};

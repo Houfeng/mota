@@ -5,37 +5,40 @@
  */
 
 import React from 'react';
-import { convertElement, convertProps } from '../binding/binding';
 import { annotation } from '../common/annotation';
+import { convertElement } from './factory';
 import { owner } from './owner';
 
-if (!Object.isFrozen) Object.isFrozen = () => false;
-
-const initailCreateElement = React.createElement;
+const originCreateElement = React.createElement;
 React.createElement = function (type, props, ...args) {
   owner.intercepted = true;
-  if (owner.component && owner.binding) convertProps(type, props);
-  return initailCreateElement.call(this, type, props, ...args);
+  if (owner.component && owner.fitters) {
+    owner.fitters.forEach(fitter => fitter(type, props, owner.model));
+  }
+  return originCreateElement.call(this, type, props, ...args);
 };
 
 function beginRender(component) {
   owner.component = component;
+  owner.model = component && component.model;
+  owner.fitters = annotation.get('fitters', component);
   owner.intercepted = false;
-  owner.binding = annotation.get('binding', component);
 }
 
 function endRender() {
   owner.component = null;
+  owner.model = null;
+  owner.fitters = null;
   owner.intercepted = false;
-  owner.binding = false;
 }
 
 export function wrapRender(initailRender) {
   return function (...args) {
     beginRender(this);
     let element = initailRender.call(this, ...args);
-    if (!owner.binding) return element;
-    if (!owner.intercepted) element = convertElement(element);
+    if (!owner.intercepted && owner.fitters) {
+      element = convertElement(element, owner.model, owner.fitters);
+    }
     endRender();
     return element;
   };

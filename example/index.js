@@ -15,6 +15,10 @@ function App() {
 @model({ items: [], name: "" })
 @binding
 class Test extends React.PureComponent {
+  constructor() {
+    super();
+    window.test = this;
+  }
   render() {
     return <div>
       <input data-bind="name" />
@@ -22,6 +26,7 @@ class Test extends React.PureComponent {
         this.model.items.push(this.model.name)
         this.model.name = "";
       }}>添加</button>
+      <div>{this.model.name}</div>
       {this.model.items.map((item, index) => {
         return <div key={item}>{item}
           <button onClick={() => {

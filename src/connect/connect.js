@@ -7,7 +7,7 @@
 import { Observer } from 'ober';
 import { isObject, isFunction, isNull } from 'ntils';
 import { isComponentClass, defineGetter } from '../common/utils';
-import { wrapRender } from '../compose/render';
+import { wrapRender } from '../fitter/render';
 import { annotation } from '../common/annotation';
 import { lifecycles } from './lifecycle';
 import { stateful } from './stateful';

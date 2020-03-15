@@ -99,15 +99,17 @@ declare namespace mota {
 
   /**
    * 将一个函数组件转换为具备状态的类组件
-   * @param fn 函数组件
+   * @param func 函数组件
    */
-  function stateful(fn: Function): any;
+  function stateful(func: Function): any;
 
   /**
-   * 设定全局配置
-   * @param opts 增量配置
+   * 创建一个装配器
+   * @param handler 装配器处理函数
    */
-  function config(opts: any): any;
+  function createFitter(
+    handler: (type: any, props: any, model: any) => void
+  ): any;
 
   /**
    * 包含一组工具方法
