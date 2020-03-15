@@ -108,8 +108,8 @@ declare namespace mota {
    * @param handler 装配器处理函数
    */
   function createFitter(
-    handler: (type: any, props: any, model: any) => void
-  ): any;
+    handler: (type: any, props: any, model?: any, component?: any) => void
+  ): ((target: any, model?: any, deep?: boolean) => any);
 
   /**
    * 包含一组工具方法

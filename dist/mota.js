@@ -2928,7 +2928,7 @@ module.exports = function (index, length) {
 /* 74 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"4.0.0"}
+module.exports = {"name":"mota","version":"4.0.1"}
 
 /***/ }),
 /* 75 */
@@ -3655,7 +3655,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var originCreateElement = _react2.default.createElement;
 _react2.default.createElement = function (type, props) {
   _owner.owner.intercepted = true;
-  if (_owner.owner.component && _owner.owner.fitters) {
+  if (_owner.owner.fitters) {
     _owner.owner.fitters.forEach(function (fitter) {
       return fitter(type, props, _owner.owner.model);
     });

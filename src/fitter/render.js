@@ -12,7 +12,7 @@ import { owner } from './owner';
 const originCreateElement = React.createElement;
 React.createElement = function (type, props, ...args) {
   owner.intercepted = true;
-  if (owner.component && owner.fitters) {
+  if (owner.fitters) {
     owner.fitters.forEach(fitter => fitter(type, props, owner.model));
   }
   return originCreateElement.call(this, type, props, ...args);
