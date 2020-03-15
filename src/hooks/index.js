@@ -7,7 +7,7 @@
 import { Observer } from 'ober';
 import { useState, useEffect, useLayoutEffect } from 'react';
 import { isFunction } from 'ntils';
-import { getModelState } from './utils';
+import { getModelState } from '../common/utils';
 
 const owner = { buffer: [], state: null, uuid: 0 };
 

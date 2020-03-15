@@ -4,8 +4,8 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { lifecycles } from './lifecycle';
-import { annotation } from './annotation';
+import { lifecycles } from '../connect/lifecycle';
+import { annotation } from '../common/annotation';
 
 export function autorun(target, method) {
   if (!target || !method) return autorun;

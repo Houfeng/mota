@@ -117,7 +117,7 @@ declare namespace mota {
   /**
    * 生命周期 hook 工具
    */
-  const lifecycle: any;
+  const lifecycles: any;
 
 }
 

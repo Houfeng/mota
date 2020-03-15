@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { annotation } from './annotation';
+import { annotation } from '../common/annotation';
 
 export function deep(target, method) {
   if (!target) return deep;

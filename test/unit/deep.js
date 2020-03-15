@@ -1,10 +1,10 @@
 import assert from 'assert';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { model } from '../../src/model';
-import { autorun } from '../../src/autorun';
-import { watch } from '../../src/watch';
-import { deep } from '../../src/deep';
+import { model } from '../../src/connect/model';
+import { autorun } from '../../src/observe/autorun';
+import { watch } from '../../src/observe/watch';
+import { deep } from '../../src/connect/deep';
 
 const root = document.querySelector('.root');
 

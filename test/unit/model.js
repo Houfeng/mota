@@ -1,8 +1,8 @@
 import assert from 'assert';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { model } from '../../src/model';
-import { connect } from '../../src/connect';
+import { model } from '../../src/connect/model';
+import { connect } from '../../src/connect/connect';
 
 const root = document.querySelector('.root');
 

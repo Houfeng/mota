@@ -8,9 +8,9 @@ import React from 'react';
 import { bindable } from './bindable';
 import { expression } from 'ober';
 import { isObject, isArray, isFunction } from 'ntils';
-import { isComponentClass } from './utils';
-import { owner } from './owner';
-import { annotation } from './annotation';
+import { isComponentClass } from '../common/utils';
+import { owner } from '../compose/owner';
+import { annotation } from '../common/annotation';
 
 export function compileExpr(expr) {
   return {
@@ -98,7 +98,7 @@ export function binding(target, model, deep) {
   if (!model) throw new Error('Binding error: Invalid model');
   if (isFunction(target)) {
     return function (...args) {
-      const { connect } = require('./connect');
+      const { connect } = require('../connect/connect');
       const Comlize = connect(model, ComlizeWrapper);
       return <Comlize func={target} context={this} args={args} />;
     };

@@ -1,8 +1,8 @@
 import assert from 'assert';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { model } from '../../src/model';
-import { watch } from '../../src/watch';
+import { model } from '../../src/connect/model';
+import { watch } from '../../src/observe/watch';
 
 const root = document.querySelector('.root');
 

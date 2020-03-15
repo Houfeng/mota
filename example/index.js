@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { model } from '../src';
 import { useModel } from '../src';
-import { binding } from '../src/binding';
+import { binding } from '../src/binding/binding';
 import './assets/common.less';
 
 function App() {

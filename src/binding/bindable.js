@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { isComponentClass } from './utils';
+import { isComponentClass } from '../common/utils';
 
 const defaultOpts = {
   prop: ['value'],
@@ -96,4 +96,3 @@ export function bindable(opts, component) {
 }
 
 bindable.getOptions = getOptions;
-bindable.bindable = bindable;

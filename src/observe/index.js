@@ -4,8 +4,5 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-export const options = {};
-
-export function config(opts) {
-  Object.assign(options, opts);
-}
+export * from './autorun';
+export * from './watch';

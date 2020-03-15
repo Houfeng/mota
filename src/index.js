@@ -4,26 +4,25 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { Observer, expression, nextTick } from 'ober';
-import { connect } from './connect';
-import { model } from './model';
-import { binding } from './binding';
-import { bindable } from './bindable';
-import { autorun } from './autorun';
-import { watch } from './watch';
-import { deep } from './deep';
-import { mapping } from './mapping';
-import * as utils from './utils';
-import { stateful } from './stateful';
-import { composition } from './composition';
-import { annotation } from './annotation';
-import { lifecycles } from './lifecycle';
-import { config } from './conf';
-import { useModel } from './hook';
 import info from '$info';
+import * as utils from './common/utils';
+import { Observer, expression, nextTick } from 'ober';
+import { connect } from './connect/connect';
+import { model } from './connect/model';
+import { binding } from './binding/binding';
+import { bindable } from './binding/bindable';
+import { autorun } from './observe/autorun';
+import { watch } from './observe/watch';
+import { deep } from './connect/deep';
+import { mapping } from './connect/mapping';
+import { stateful } from './connect/stateful';
+import { inputRepair } from './connect/input';
+import { annotation } from './common/annotation';
+import { lifecycles } from './connect/lifecycle';
+import { useModel } from './hooks';
 
 export default {
-  connect, model, binding, bindable, watch, mapping, autorun, deep, stateful,
-  composition, Observer, expression, nextTick, annotation, lifecycle: lifecycles, useModel,
-  utils, config, ...info
+  connect, model, binding, bindable, watch, mapping, autorun, deep,
+  stateful, inputRepair, Observer, expression, nextTick, annotation,
+  lifecycles, useModel, utils, ...info
 };

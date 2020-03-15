@@ -5,8 +5,8 @@
  */
 
 import { isFunction } from 'ntils';
-import { lifecycles } from './lifecycle';
-import { annotation } from './annotation';
+import { lifecycles } from '../connect/lifecycle';
+import { annotation } from '../common/annotation';
 
 export function watch(calculator, immed) {
   if (!isFunction(calculator)) {

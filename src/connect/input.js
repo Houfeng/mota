@@ -10,7 +10,7 @@ const UPDATE_EVENT = 'compositionupdate';
 const END_EVENT = 'compositionend';
 const INPUT_EVENT = 'input';
 
-export class Composition {
+export class InputRepair {
 
   composing = false;
   inputting = false;
@@ -59,8 +59,8 @@ export class Composition {
 
 }
 
-export const composition = new Composition();
+export const inputRepair = new InputRepair();
 
 AutoRun.prototype.isSync = function () {
-  return !global.document || composition.composing || composition.inputting;
+  return !global.document || inputRepair.composing || inputRepair.inputting;
 };
