@@ -4,15 +4,16 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { get, set } from './annotation';
+import { annotation } from './annotation';
 
 export function deep(target, method) {
   if (!target) return deep;
   const error = method ?
-    get('autorun', target, method) || get('watch', target, method) :
+    annotation.get('autorun', target, method) ||
+    annotation.get('watch', target, method) :
     target && target.prototype && target.prototype._contented_;
   if (error) {
     throw new Error('`deep` must be enabled before `model/autorun/watch`');
   }
-  set('deep', true, target, method);
+  annotation.set('deep', true, target, method);
 }

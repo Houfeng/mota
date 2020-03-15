@@ -17,13 +17,13 @@ import * as utils from './utils';
 import { stateful } from './stateful';
 import { composition } from './composition';
 import { annotation } from './annotation';
-import { lifecycle } from './lifecycle';
+import { lifecycles } from './lifecycle';
 import { config } from './conf';
 import { useModel } from './hook';
 import info from '$info';
 
 export default {
   connect, model, binding, bindable, watch, mapping, autorun, deep, stateful,
-  composition, Observer, expression, nextTick, annotation, lifecycle, useModel,
+  composition, Observer, expression, nextTick, annotation, lifecycle: lifecycles, useModel,
   utils, config, ...info
 };

@@ -7,7 +7,7 @@
 import React from 'react';
 import { isNull } from 'ntils';
 import { convertElement, convertProps } from './binding';
-import { get } from './annotation';
+import { annotation } from './annotation';
 import { options } from './conf';
 import { owner } from './owner';
 
@@ -23,7 +23,7 @@ React.createElement = function (type, props, ...args) {
 function beginRender(component) {
   owner.component = component;
   owner.intercepted = false;
-  let binding = get('binding', component);
+  let binding = annotation.get('binding', component);
   if (isNull(binding)) binding = options.binding;
   owner.binding = binding;
 }

@@ -10,7 +10,7 @@ import { expression } from 'ober';
 import { isObject, isArray, isFunction } from 'ntils';
 import { isComponentClass } from './utils';
 import { owner } from './owner';
-import { set } from './annotation';
+import { annotation } from './annotation';
 
 export function compileExpr(expr) {
   return {
@@ -91,7 +91,7 @@ export class ComlizeWrapper extends React.Component {
 export function binding(target, model, deep) {
   if (!target) return binding;
   if (isComponentClass(target)) {
-    set('binding', true, target.prototype || target);
+    annotation.set('binding', true, target.prototype || target);
     return target;
   }
   if (!model) model = owner.component && owner.component.model;

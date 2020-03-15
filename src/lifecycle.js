@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { push, get } from './annotation';
+import { annotation } from './annotation';
 
 export class Lifecycle {
 
@@ -13,23 +13,22 @@ export class Lifecycle {
   }
 
   add(target, handler) {
-    push(this.key, handler, target);
+    annotation.push(this.key, handler, target);
   }
 
   get(target) {
     const base = Object.getPrototypeOf(target);
     const baseList = base ? this.get(base) : null;
-    const list = get(this.key, target, null, true);
+    const list = annotation.get(this.key, target, null, true);
     if (!list) return baseList;
     return baseList ? [].concat(baseList, list) : list;
   }
 
 }
 
-function create(list) {
-  const map = {};
-  list.forEach(name => map[name] = new Lifecycle(name));
-  return map;
-}
-
-export const lifecycle = create(['didMount', 'unmount', 'didUpdate', 'model']);
+export const lifecycles = {
+  didMount: new Lifecycle('didMount'),
+  unmount: new Lifecycle('unmount'),
+  didUpdate: new Lifecycle('didUpdate'),
+  model: new Lifecycle('model'),
+};

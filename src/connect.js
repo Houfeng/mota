@@ -4,12 +4,12 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import Observer from 'ober';
+import { Observer } from 'ober';
 import { isObject, isFunction, isNull } from 'ntils';
 import { isComponentClass, defineGetter } from './utils';
 import { wrapRender } from './render';
 import { annotation } from './annotation';
-import { lifecycle } from './lifecycle';
+import { lifecycles } from './lifecycle';
 import { stateful } from './stateful';
 
 export function createRender(proto) {
@@ -51,7 +51,7 @@ export function createUnmount(proto) {
     defineGetter(this, '_mounted_', false);
     let result = null;
     if (initailUnmount) result = initailUnmount.call(this, ...args);
-    const handlers = lifecycle.unmount.get(this);
+    const handlers = lifecycles.unmount.get(this);
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
     }
@@ -64,7 +64,7 @@ export function createMount(proto) {
   const initailMount = proto.componentDidMount;
   return function (...args) {
     defineGetter(this, '_mounted_', true);
-    const handlers = lifecycle.didMount.get(this);
+    const handlers = lifecycles.didMount.get(this);
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
     }
@@ -77,7 +77,7 @@ export function createMount(proto) {
 export function createDidUpdate(proto) {
   const initailDidUpdate = proto.componentDidUpdate;
   return function (...args) {
-    const handlers = lifecycle.didUpdate.get(this);
+    const handlers = lifecycles.didUpdate.get(this);
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
     }
@@ -109,7 +109,7 @@ export function createModelGetter(model) {
     }
     defineGetter(this, '_model_', componentModel);
     defineGetter(this, '_isNewModelInstance_', isNewModelInstance);
-    const handlers = lifecycle.model.get(this);
+    const handlers = lifecycles.model.get(this);
     if (handlers) handlers.forEach(handler => handler.call(this));
     if (this.modelDidCreate) this.modelDidCreate();
     return this._model_;

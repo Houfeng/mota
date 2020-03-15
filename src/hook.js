@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import Observer from 'ober';
+import { Observer } from 'ober';
 import { useState, useEffect, useLayoutEffect } from 'react';
 import { isFunction } from 'ntils';
 import { getModelState } from './utils';

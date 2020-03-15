@@ -5,7 +5,7 @@
  */
 
 import { isObject, each, isString, getByPath, setByPath } from 'ntils';
-import { lifecycle } from './lifecycle';
+import { lifecycles } from './lifecycle';
 
 export function mapping(map) {
   if (!isObject(map)) {
@@ -29,10 +29,10 @@ export function mapping(map) {
     if (proto._contented_) {
       throw new Error('`mapping` must be enabled before `model`');
     }
-    lifecycle.model.add(proto, function () {
+    lifecycles.model.add(proto, function () {
       assign(this.model, this.props);
     });
-    lifecycle.didUpdate.add(proto, function (prevProps) {
+    lifecycles.didUpdate.add(proto, function (prevProps) {
       assign(this.model, this.props, prevProps);
     });
   };
