@@ -4,10 +4,10 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const { isObject, each, isString, getByPath, setByPath } = require('ntils');
-const lifecycle = require('./lifecycle');
+import { isObject, each, isString, getByPath, setByPath } from 'ntils';
+import { lifecycles } from './lifecycle';
 
-function mapping(map) {
+export function mapping(map) {
   if (!isObject(map)) {
     throw new Error('Mapping needs to specify a object or array');
   }
@@ -29,13 +29,11 @@ function mapping(map) {
     if (proto._contented_) {
       throw new Error('`mapping` must be enabled before `model`');
     }
-    lifecycle.model.add(proto, function () {
+    lifecycles.model.add(proto, function () {
       assign(this.model, this.props);
     });
-    lifecycle.didUpdate.add(proto, function (prevProps) {
+    lifecycles.didUpdate.add(proto, function (prevProps) {
       assign(this.model, this.props, prevProps);
     });
   };
 }
-
-module.exports = mapping;

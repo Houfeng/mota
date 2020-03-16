@@ -4,26 +4,26 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const { Observer, expression, nextTick } = require('ober');
-const connect = require('./connect');
-const model = require('./model');
-const binding = require('./binding');
-const bindable = require('./bindable');
-const autorun = require('./autorun');
-const watch = require('./watch');
-const deep = require('./deep');
-const mapping = require('./mapping');
-const utils = require('./utils');
-const stateful = require('./stateful');
-const composition = require('./composition');
-const annotation = require('./annotation');
-const lifecycle = require('./lifecycle');
-const info = require('$info');
-const { config } = require('./config');
-const { useModel } = require('./hook');
+import info from '$info';
+import * as utils from './common/utils';
+import { Observer, expression, nextTick } from 'ober';
+import { connect } from './connect/connect';
+import { model } from './connect/model';
+import { binding } from './binding/binding';
+import { bindable } from './binding/bindable';
+import { autorun } from './observe/autorun';
+import { watch } from './observe/watch';
+import { deep } from './connect/deep';
+import { mapping } from './connect/mapping';
+import { stateful } from './connect/stateful';
+import { inputRepair } from './connect/input';
+import { annotation } from './common/annotation';
+import { lifecycles } from './connect/lifecycle';
+import { useModel } from './hooks';
+import { createFitter } from './fitter/factory';
 
-module.exports = {
-  connect, model, binding, bindable, watch, mapping, autorun, deep, stateful,
-  composition, Observer, expression, nextTick, annotation, lifecycle, useModel,
-  utils, config, ...info
+export default {
+  connect, model, binding, bindable, watch, mapping, autorun, deep,
+  stateful, inputRepair, Observer, expression, nextTick, annotation,
+  lifecycles, useModel, createFitter, utils, ...info
 };

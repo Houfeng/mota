@@ -4,13 +4,13 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const { AutoRun } = require('ober');
+import { AutoRun } from 'ober';
 
 const UPDATE_EVENT = 'compositionupdate';
 const END_EVENT = 'compositionend';
 const INPUT_EVENT = 'input';
 
-class Composition {
+export class InputRepair {
 
   composing = false;
   inputting = false;
@@ -59,10 +59,8 @@ class Composition {
 
 }
 
-const composition = new Composition();
+export const inputRepair = new InputRepair();
 
 AutoRun.prototype.isSync = function () {
-  return !global.document || composition.composing || composition.inputting;
+  return !global.document || inputRepair.composing || inputRepair.inputting;
 };
-
-module.exports = composition;

@@ -1,9 +1,9 @@
 import assert from 'assert';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import model from '../../src/model';
-import binding from '../../src/binding';
-import bindable from '../../src/bindable';
+import { model } from '../../src/connect/model';
+import { binding } from '../../src/binding/binding';
+import { bindable } from '../../src/binding/bindable';
 
 import ReactTestUtils from 'react-dom/test-utils';
 
