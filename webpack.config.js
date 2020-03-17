@@ -4,6 +4,6 @@ const pkg = require('./package');
 module.exports = function (webpackConf) {
   webpackConf.plugins.push(new VModule({
     name: '$info',
-    content: { name: pkg.name, version: pkg.version }
+    content: { version: pkg.version }
   }));
 };
