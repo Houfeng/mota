@@ -1333,7 +1333,7 @@ module.exports = Observer;
 /***/ (function(module, exports, __webpack_require__) {
 
 exports.__esModule = true;
-exports.lifecycles = exports.Lifecycle = undefined;
+exports.lifecycle = exports.lifecycles = exports.Lifecycle = undefined;
 
 var _getPrototypeOf = __webpack_require__(52);
 
@@ -1379,6 +1379,11 @@ var lifecycles = exports.lifecycles = {
   didUpdate: new Lifecycle('didUpdate'),
   model: new Lifecycle('model')
 };
+
+/**
+ * @deprecated Please replace with "lifecycles"
+ */
+var lifecycle = exports.lifecycle = lifecycles;
 
 /***/ }),
 /* 19 */
@@ -2789,11 +2794,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = (0, _extends3.default)({
   connect: _connect.connect, model: _model.model, binding: _binding.binding, bindable: _bindable.bindable, watch: _watch.watch, mapping: _mapping.mapping, autorun: _autorun.autorun, deep: _deep.deep,
   stateful: _stateful.stateful, inputRepair: _input.inputRepair, Observer: _ober.Observer, expression: _ober.expression, nextTick: _ober.nextTick, annotation: _annotation.annotation,
-  lifecycles: _lifecycle.lifecycles, useModel: _hooks.useModel, createFitter: _factory.createFitter, utils: utils }, _$info2.default); /**
-                                                                                                                                        * Copyright (c) 2015-present Houfeng
-                                                                                                                                        * @homepage https://github.com/Houfeng/mota
-                                                                                                                                        * @author Houfeng <admin@xhou.net>
-                                                                                                                                        */
+  lifecycles: _lifecycle.lifecycles, lifecycle: _lifecycle.lifecycle, useModel: _hooks.useModel, createFitter: _factory.createFitter, utils: utils }, _$info2.default); /**
+                                                                                                                                                                         * Copyright (c) 2015-present Houfeng
+                                                                                                                                                                         * @homepage https://github.com/Houfeng/mota
+                                                                                                                                                                         * @author Houfeng <admin@xhou.net>
+                                                                                                                                                                         */
 
 module.exports = exports['default'];
 
@@ -2928,7 +2933,7 @@ module.exports = function (index, length) {
 /* 74 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"mota","version":"4.0.1"}
+module.exports = {"name":"mota","version":"4.0.2"}
 
 /***/ }),
 /* 75 */
