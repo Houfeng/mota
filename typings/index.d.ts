@@ -121,6 +121,12 @@ declare namespace mota {
    */
   const lifecycles: any;
 
+  /**
+   * 生命周期 hook 工具
+   * @deprecated Please replace with "lifecycles"
+   */
+  const lifecycle: any;
+
 }
 
 export = mota;
