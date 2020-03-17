@@ -32,3 +32,8 @@ export const lifecycles = {
   didUpdate: new Lifecycle('didUpdate'),
   model: new Lifecycle('model'),
 };
+
+/**
+ * @deprecated Please replace with "lifecycles"
+ */
+export const lifecycle = lifecycles;
