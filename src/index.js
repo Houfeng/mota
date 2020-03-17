@@ -4,8 +4,8 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import info from '$info';
 import * as utils from './common/utils';
+import { version } from '$info';
 import { Observer, expression, nextTick } from 'ober';
 import { connect } from './connect/connect';
 import { model } from './connect/model';
@@ -22,8 +22,14 @@ import { lifecycles, lifecycle } from './connect/lifecycle';
 import { useModel } from './hooks';
 import { createFitter } from './fitter/factory';
 
+export {
+  connect, model, binding, bindable, watch, mapping, autorun, deep,
+  stateful, inputRepair, Observer, expression, nextTick, annotation,
+  lifecycles, lifecycle, useModel, createFitter, utils, version
+};
+
 export default {
   connect, model, binding, bindable, watch, mapping, autorun, deep,
   stateful, inputRepair, Observer, expression, nextTick, annotation,
-  lifecycles, lifecycle, useModel, createFitter, utils, ...info
+  lifecycles, lifecycle, useModel, createFitter, utils, version
 };
