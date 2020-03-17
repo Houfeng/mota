@@ -2826,7 +2826,7 @@ module.exports = function (it) {
 /* 70 */
 /***/ (function(module, exports) {
 
-module.exports = {"version":"4.0.4"}
+module.exports = {"version":"4.0.5"}
 
 /***/ }),
 /* 71 */
