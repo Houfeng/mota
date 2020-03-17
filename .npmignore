@@ -22,7 +22,7 @@ design/
 markdowns/
 .coveralls.yml
 .travis.yml
-.doczilla.yml
+doczilla.yml
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 ISSUE_TEMPLATE.md
