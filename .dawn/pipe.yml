@@ -21,6 +21,7 @@ dev:
 build:
   - name: clean
     target: ./dist/
+  - name: ./scripts/info.js
   - name: file-header
     text: 
       - 'Copyright (c) 2015-present Houfeng'

@@ -5,7 +5,7 @@
  */
 
 import * as utils from './common/utils';
-import { version } from '$info';
+import { version } from './common/info';
 import { Observer, expression, nextTick } from 'ober';
 import { connect } from './connect/connect';
 import { model } from './connect/model';
