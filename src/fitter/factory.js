@@ -9,6 +9,7 @@ import { isArray, isFunction } from 'ntils';
 import { isComponentClass } from '../common/utils';
 import { owner } from './owner';
 import { annotation } from '../common/annotation';
+import { connect } from '../connect/connect';
 
 //处理 Object.isFrozen 
 Object.isFrozen = Object.isFrozen || (() => false);
@@ -53,7 +54,6 @@ export function createFitter(handler) {
     if (!model) throw new Error('Compose error: Invalid model');
     if (isFunction(target)) {
       return function (...args) {
-        const { connect } = require('../connect/connect');
         const Comlize = func(connect(model, ComlizeWrapper));
         return <Comlize origin={target} context={this} args={args} />;
       };

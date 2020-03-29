@@ -12,6 +12,9 @@ function App() {
   </div>;
 }
 
+const Fn = binding(function () {
+  return <div>测试</div>
+}, {});
 @model({ items: [], name: "" })
 @binding
 class Test extends React.PureComponent {
@@ -34,6 +37,7 @@ class Test extends React.PureComponent {
           }}>删除</button>
         </div>
       })}
+      <Fn />
     </div>
   }
 }
