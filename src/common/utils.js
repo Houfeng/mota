@@ -4,13 +4,13 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { Component, PureComponent } from 'react';
+import React from 'react';
 import { isObject, isFunction } from 'ntils';
 
 export function isComponentInstance(instance) {
   if (!instance || !isObject(instance)) return false;
-  return (instance instanceof Component) ||
-    (instance instanceof PureComponent) ||
+  return (instance instanceof React.Component) ||
+    (instance instanceof React.PureComponent) ||
     ('render' in instance && '__reactAutoBindPairs' in instance);
 }
 

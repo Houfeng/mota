@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { isObject, each, isString, getByPath, setByPath } from 'ntils';
+import { isObject, getByPath, setByPath, isArray } from 'ntils';
 import { lifecycles } from './lifecycle';
 
 export function mapping(map) {
@@ -12,8 +12,9 @@ export function mapping(map) {
     throw new Error('Mapping needs to specify a object or array');
   }
   function assign(model, props, prevProps) {
-    each(map, (propName, modelField) => {
-      if (!isString(propName)) propName = modelField;
+    Object.keys(map).forEach(propName => {
+      const modelField = map[propName];
+      if (isArray(map)) propName = modelField;
       const propValue = getByPath(props, propName);
       const modelValue = getByPath(model, modelField);
       if (modelValue === propValue ||

@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/es",
+    "sourceMap": false,
+    "allowJs": true,
+    "noImplicitAny": true,
+    "module": "ESNext",
+    "target": "es5",
+    "removeComments": true,
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "esModuleInterop": true,
+    "lib": [
+      "dom",
+      "es2017"
+    ]
+  },
+  "include": [
+    "./src/**/*.js"
+  ]
+}

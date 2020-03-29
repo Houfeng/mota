@@ -26,35 +26,10 @@ build:
       - 'Copyright (c) 2015-present Houfeng'
       - '@homepage https://github.com/Houfeng/mota'
       - '@author Houfeng <admin@xhou.net>'
-  - name: webpack
-    entry:
-      mota-min: ./src/index.js
-    output: ./dist/
-    folders:
-      js: '.'
-    common:
-      disabled: true
-    library: true
-    env: production
-    umd:
-      library: '${project.name}'
-      libraryTarget: 'umd'
-      umdNamedDefine: true
-  - name: webpack
-    entry:
-      mota: ./src/index.js
-    output: ./dist/
-    folders:
-      js: '.'
-    common:
-      disabled: true
-    compress: false
-    library: true
-    env: production
-    umd:
-      library: '${project.name}'
-      libraryTarget: 'umd'
-      umdNamedDefine: true
+  - name: shell
+    script:
+      - tsc --locale zh-CN 
+      - rollup -c
   - name: doc
   - name: copy
     files:
