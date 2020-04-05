@@ -4,12 +4,11 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import React from 'react';
 import { isArray, isFunction } from 'ntils';
 import { isComponentClass } from '../common/utils';
 import { owner } from './owner';
 import { annotation } from '../common/annotation';
-import { connect } from '../connect/connect';
+import { stateful } from '../connect';
 
 //处理 Object.isFrozen 
 Object.isFrozen = Object.isFrozen || (() => false);
@@ -36,13 +35,6 @@ export function convertElement(element, model, fitters, deep) {
   return element;
 }
 
-export class ComlizeWrapper extends React.Component {
-  render() {
-    const { origin, context, args } = this.props;
-    return origin.call(context, ...args);
-  }
-}
-
 export function createFitter(handler) {
   return function func(target, model, deep) {
     if (!target) return func;
@@ -50,13 +42,12 @@ export function createFitter(handler) {
       annotation.push('fitters', handler, target.prototype || target);
       return target;
     }
-    if (!model) model = owner.component && owner.component.model;
-    if (!model) throw new Error('Compose error: Invalid model');
+    if (!model) {
+      model = (owner.component && owner.component.model)
+        || target._model_ || {};
+    }
     if (isFunction(target)) {
-      return function (...args) {
-        const Comlize = func(connect(model, ComlizeWrapper));
-        return <Comlize origin={target} context={this} args={args} />;
-      };
+      return stateful(target, model, element => func(element, model, deep));
     } else {
       return convertElement(target, model, [handler], deep);
     }

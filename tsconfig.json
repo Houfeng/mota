@@ -3,6 +3,7 @@
     "outDir": "./dist/es",
     "sourceMap": false,
     "allowJs": true,
+    "declaration": false,
     "noImplicitAny": true,
     "module": "ESNext",
     "target": "es5",

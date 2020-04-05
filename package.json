@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "description": "Mota 是一个面向 React 的状态管理库（http://houfeng.net/mota）",
   "main": "./dist/cjs/mota.js",
   "typings": "./typings/index.d.ts",
@@ -38,6 +38,7 @@
     "dn-middleware-server": "^1.0.15",
     "dn-middleware-shell": "^1.1.0",
     "dn-middleware-submitter": "^1.0.1",
+    "dn-middleware-typescript": "^2.0.8",
     "dn-middleware-unit": "^0.2.0",
     "dn-middleware-version": "^1.0.4",
     "dn-middleware-webpack": "^1.11.5",

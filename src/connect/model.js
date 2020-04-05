@@ -5,12 +5,10 @@
  */
 
 import { connect } from './connect';
-import React from 'react';
+import { isComponentClass } from '../common';
 
-export function model(model) {
-  if (model && model.prototype instanceof React.Component) {
-    return connect(null, model);
-  } else {
-    return component => connect(model, component);
-  }
+export function model(model, component) {
+  if (isComponentClass(model)) return connect(component, model);
+  if (model && component) return connect(model, component);
+  return component => connect(model, component);
 }

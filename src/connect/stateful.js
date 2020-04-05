@@ -4,16 +4,26 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import React from 'react';
+import { Component } from 'react';
+import { suppertHook } from '../common';
+import { useModel } from '../hooks';
+import { connect } from './connect';
 
-export function stateful(stateless) {
-  if (!stateless._stateful_) {
-    class StatelessWrapper extends React.Component {
+export function stateful(fn, model, convert) {
+  if (fn._stateful_) return fn._stateful_;
+  if (suppertHook()) {
+    fn._stateful_ = function StatefulWrapper(props, context) {
+      const element = fn({ model: useModel(model), ...props }, context);
+      return convert ? convert(element) : element;
+    };
+  } else {
+    fn._stateful_ = connect(model, class StatefulWrapper extends Component {
       render() {
-        return stateless({ model: this.model, ...this.props }, this.context);
+        const element = fn({ model: this.model, ...this.props }, this.context);
+        return convert ? convert(element) : element;
       }
-    }
-    stateless._stateful_ = StatelessWrapper;
+    });
   }
-  return stateless._stateful_;
+  fn._stateful_._model_ = model;
+  return fn._stateful_;
 }

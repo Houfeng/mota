@@ -119,7 +119,7 @@ export function createModelGetter(model) {
 export function connect(model, component) {
   if (!component) return component => connect(model, component);
   if (!isFunction(component)) return component;
-  if (!isComponentClass(component)) component = stateful(component);
+  if (!isComponentClass(component)) return stateful(component, model);
   const proto = component.prototype;
   //通过 hasOwnProperty 才能保证父类装饰过了，子类可重新装饰
   if (proto.hasOwnProperty('_contented_')) return component;

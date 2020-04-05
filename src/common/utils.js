@@ -47,3 +47,7 @@ export function getModelState(model) {
     'When using ES module as a model, the module must export \'state\''
   );
 }
+
+export function suppertHook() {
+  return !!React.useState;
+}
