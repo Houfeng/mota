@@ -5,13 +5,13 @@
  */
 
 import { Component } from 'react';
-import { suppertHook } from '../common';
+import { supportHook } from '../common';
 import { useModel } from '../hooks';
 import { connect } from './connect';
 
 export function stateful(fn, model, convert) {
   if (fn._stateful_) return fn._stateful_;
-  if (suppertHook()) {
+  if (supportHook()) {
     fn._stateful_ = function StatefulWrapper(props, context) {
       const element = fn({ model: useModel(model), ...props }, context);
       return convert ? convert(element) : element;

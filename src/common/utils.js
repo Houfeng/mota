@@ -48,6 +48,6 @@ export function getModelState(model) {
   );
 }
 
-export function suppertHook() {
+export function supportHook() {
   return !!React.useState;
 }
