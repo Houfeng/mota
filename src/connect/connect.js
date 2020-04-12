@@ -12,6 +12,8 @@ import { annotation } from '../common/annotation';
 import { lifecycles } from './lifecycle';
 import { stateful } from './stateful';
 
+const STATS_KEY = '_mota_stats_';
+
 export function createRender(proto) {
   const initailRender = proto.render;
   if (!initailRender || initailRender._override_) return initailRender;
@@ -22,7 +24,8 @@ export function createRender(proto) {
       defineGetter(this, '_observer_', new Observer(model));
       defineGetter(this, '_trigger_', () => function () {
         if (!this._mounted_) return;
-        this.forceUpdate();
+        const stats = (this.state && this.state[STATS_KEY]) || 0;
+        this.setState({ [STATS_KEY]: stats + 1 });
       });
       defineGetter(this, '_run_', this._observer_.run(overrideRender, {
         context: this,
