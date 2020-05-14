@@ -7,9 +7,10 @@
 import { isFunction } from 'ntils';
 import { lifecycles } from '../connect/lifecycle';
 import { annotation } from '../common/annotation';
+import * as observable from './observable';
 
-export function watch(calculator, immed) {
-  if (!isFunction(calculator)) {
+export function watch(calc, immed) {
+  if (!isFunction(calc)) {
     throw new Error('Watch needs to specify a calculation function');
   }
   return function (target, method) {
@@ -17,17 +18,12 @@ export function watch(calculator, immed) {
     //watch 如果已经存在，比如父类声明了，calc 函数可能不同，子类也要添加
     //可能多个 calc 都想执行同一个方法
     lifecycles.didMount.add(target, function () {
-      const context = this;
-      if (!context._observer_) return;
-      const deep = annotation.get('deep', context, method);
-      watcher = context._observer_.watch(function () {
-        return calculator.call(context, context.model);
-      }, context[method], { context, deep });
-      //immed 通过 autorun.run 方法会传递给 watcher.calc 方法
-      watcher.autoRef.run(immed || false);
+      if (!this[method]) return;
+      const handler = this[method].bind(this);
+      watcher = observable.watch(() => calc(this.model), handler, immed);
     });
     lifecycles.unmount.add(target, function () {
-      this._observer_.unWatch(watcher);
+      if (watcher) watcher.destory();
     });
     annotation.set('watch', true, target, method);
   };

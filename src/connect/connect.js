@@ -4,13 +4,12 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { Observer } from 'ober';
 import { isObject, isFunction, isNull } from 'ntils';
 import { isComponentClass, defineGetter } from '../common/utils';
 import { wrapRender } from '../fitter/render';
-import { annotation } from '../common/annotation';
 import { lifecycles } from './lifecycle';
 import { stateful } from './stateful';
+import { autorun, observable } from '../observe/observable';
 
 const STATS_KEY = '_mota_stats_';
 
@@ -19,33 +18,20 @@ export function createRender(proto) {
   if (!initailRender || initailRender._override_) return initailRender;
   const overrideRender = wrapRender(initailRender);
   const render = function (...args) {
-    const model = this.model;
-    if (!this._run_) {
-      defineGetter(this, '_observer_', new Observer(model));
-      defineGetter(this, '_trigger_', () => function () {
-        if (!this._mounted_) return;
-        const stats = (this.state && this.state[STATS_KEY]) || 0;
-        this.setState({ [STATS_KEY]: stats + 1 });
+    if (!render.run) {
+      render.run = autorun(overrideRender, {
+        immed: false,
+        trigger: () => {
+          if (!this._mounted_) return;
+          const stats = (this.state && this.state[STATS_KEY]) || 0;
+          this.setState({ [STATS_KEY]: stats + 1 });
+        }
       });
-      defineGetter(this, '_run_', this._observer_.run(overrideRender, {
-        context: this,
-        trigger: this._trigger_,
-        deep: annotation.get('deep', this)
-      }));
-      this.state = Object.assign({}, this.state, { model });
     }
-    return this._run_.run(...args);
+    return render.run.call(this, ...args);
   };
   defineGetter(render, '_override_', true);
   return render;
-}
-
-export function clearReference(com) {
-  if (com._run_ && com._observer_) com._observer_.stop(com._run_);
-  if (com._isNewModelInstance_ && com._observer_) {
-    com._observer_.clearReference();
-  }
-  defineGetter(com, '_run_', null);
 }
 
 export function createUnmount(proto) {
@@ -58,7 +44,7 @@ export function createUnmount(proto) {
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
     }
-    clearReference(this);
+    if (this.render && this.render.destory) this.render.destory();
     return result;
   };
 }
@@ -95,8 +81,6 @@ export function createModelGetter(model) {
     if (this._model_ && (!modelInProps || propModel === this._prop_model_)) {
       return this._model_;
     }
-    defineGetter(this, '_prop_model_', propModel);
-    clearReference(this);
     let componentModel = modelInProps ? propModel : model;
     if (this.modelWillCreate) {
       componentModel = this.modelWillCreate(componentModel) || componentModel;
@@ -105,13 +89,10 @@ export function createModelGetter(model) {
     if (!isObject(componentModel) && !isFunction(componentModel)) {
       throw new Error('Invalid Model');
     }
-    let isNewModelInstance = false;
     if (componentModel instanceof Function) {
       componentModel = new componentModel();
-      isNewModelInstance = true;
     }
-    defineGetter(this, '_model_', componentModel);
-    defineGetter(this, '_isNewModelInstance_', isNewModelInstance);
+    defineGetter(this, '_model_', observable(componentModel));
     const handlers = lifecycles.model.get(this);
     if (handlers) handlers.forEach(handler => handler.call(this));
     if (this.modelDidCreate) this.modelDidCreate();

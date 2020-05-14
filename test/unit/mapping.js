@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { model } from '../../src/connect/model';
 import { mapping } from '../../src/connect/mapping';
+import { observable } from '../../src/observe/observable';
 
 const root = document.querySelector('.root');
 
+@observable
 class TextModel {
   value = 0;
 }
@@ -31,6 +33,7 @@ class Text2 extends Component {
 }
 
 
+@observable
 class AppModel {
   value = 1;
 }
@@ -117,9 +120,9 @@ describe('mapping', () => {
   });
 
   it('属性更新时也能将属性同步到模型', (done) => {
-    const demo = {
+    const demo = observable({
       value: 'demo'
-    };
+    });
     let synced = false;
     @model({ value: '' })
     @mapping(['value'])

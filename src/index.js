@@ -6,7 +6,8 @@
 
 import * as utils from './common/utils';
 import { version } from './common/info';
-import { Observer, expression, nextTick } from 'ober';
+import { expression } from 'ober';
+import { nextTick } from './observe/Tick';
 import { connect } from './connect/connect';
 import { model } from './connect/model';
 import { binding } from './binding/binding';
@@ -24,12 +25,12 @@ import { createFitter } from './fitter/factory';
 
 export {
   connect, model, binding, bindable, watch, mapping, autorun, deep,
-  stateful, inputRepair, Observer, expression, nextTick, annotation,
+  stateful, inputRepair, expression, nextTick, annotation,
   lifecycles, lifecycle, useModel, createFitter, utils, version
 };
 
 export default {
   connect, model, binding, bindable, watch, mapping, autorun, deep,
-  stateful, inputRepair, Observer, expression, nextTick, annotation,
+  stateful, inputRepair, expression, nextTick, annotation,
   lifecycles, lifecycle, useModel, createFitter, utils, version
 };

@@ -6,9 +6,11 @@ import { binding } from '../../src/binding/binding';
 import { bindable } from '../../src/binding/bindable';
 
 import ReactTestUtils from 'react-dom/test-utils';
+import { observable } from '../../src/observe/observable';
 
 const root = document.querySelector('.root');
 
+@observable
 class Demo {
   name = 'demo';
   gender = 'male';

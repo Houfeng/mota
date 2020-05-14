@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { model } from '../../src/connect/model';
 import { watch } from '../../src/observe/watch';
+import { observable } from '../../src/observe/observable';
 
 const root = document.querySelector('.root');
 
+@observable
 class Demo {
   name1 = 'demo1';
   name2 = 'demo2';
@@ -17,7 +19,7 @@ class Demo {
   };
 }
 
-const demo = new Demo();
+const demo = observable(new Demo());
 
 @model(demo)
 class App extends Component {
@@ -51,8 +53,8 @@ describe('watch', () => {
       setTimeout(() => {
         assert.equal(root.querySelector("#msg1").innerHTML, 'hello1 test1');
         done();
-      });
-    });
+      }, 0);
+    }, 0);
   });
 
   it('Watch 允许自动执行', (done) => {

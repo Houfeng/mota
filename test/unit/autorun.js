@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { model } from '../../src/connect/model';
 import { autorun } from '../../src/observe/autorun';
+import { observable } from '../../src/observe/observable';
 
 const root = document.querySelector('.root');
 
+@observable
 class Demo {
   name = 'demo';
   message = 'hello';
