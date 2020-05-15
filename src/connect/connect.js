@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { isObject, isFunction, isNull } from 'ntils';
+import { isFunction } from 'ntils';
 import { isComponentClass, defineGetter } from '../common/utils';
 import { wrapRender } from '../fitter/render';
 import { lifecycles } from './lifecycle';
@@ -18,8 +18,8 @@ export function createRender(proto) {
   if (!initailRender || initailRender._override_) return initailRender;
   const overrideRender = wrapRender(initailRender);
   const render = function (...args) {
-    if (!render.run) {
-      render.run = autorun(overrideRender, {
+    if (!this._runner_) {
+      this._runner_ = autorun(overrideRender, {
         immed: false,
         trigger: () => {
           if (!this._mounted_) return;
@@ -28,7 +28,7 @@ export function createRender(proto) {
         }
       });
     }
-    return render.run.call(this, ...args);
+    return this._runner_.call(this, ...args);
   };
   defineGetter(render, '_override_', true);
   return render;
@@ -44,7 +44,7 @@ export function createUnmount(proto) {
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
     }
-    if (this.render && this.render.destory) this.render.destory();
+    if (this._runner_ && this._runner_.destory) this._runner_.destory();
     return result;
   };
 }
@@ -81,12 +81,14 @@ export function createModelGetter(model) {
     if (this._model_ && (!modelInProps || propModel === this._prop_model_)) {
       return this._model_;
     }
+    defineGetter(this, '_prop_model_', propModel);
     let componentModel = modelInProps ? propModel : model;
     if (this.modelWillCreate) {
       componentModel = this.modelWillCreate(componentModel) || componentModel;
     }
-    if (isNull(componentModel)) componentModel = {};
-    if (!isObject(componentModel) && !isFunction(componentModel)) {
+    if (!componentModel) componentModel = {};
+    if (typeof componentModel !== "object" &&
+      typeof componentModel !== "function") {
       throw new Error('Invalid Model');
     }
     if (componentModel instanceof Function) {

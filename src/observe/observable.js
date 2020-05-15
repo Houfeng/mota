@@ -7,12 +7,13 @@
 import { nextTick } from './Tick';
 
 export const ObserveSymbol = Symbol('observe');
+export const ProxySymbol = Symbol('proxy');
 
 export const ObserveHandlers = {};
 
 export let uuid = 0;
 export function ObserveId() {
-  return uuid++;
+  return (uuid++);
 }
 
 export function subscribe(name, handler) {
@@ -32,31 +33,44 @@ export function publish(name, data) {
 }
 
 export function observe(target) {
+  if (!target) throw new Error('Invalid proxy target');
   if (!target.hasOwnProperty(ObserveSymbol)) {
     const id = ObserveId();
     const proxy = new Proxy(target, {
       get(target, member, receiver) {
-        if (member === ObserveSymbol) return target[ObserveSymbol];
+        if (member === ProxySymbol) return true;
         const value = target[member];
-        publish('get', { id, target, receiver, member, value });
-        return typeof value === 'object' ? observe(value).proxy : value;
+        if (typeof member === 'symbol') {
+          return value;
+        }
+        if (!member.startsWith || !member.startsWith('__')) {
+          publish('get', { id, target, receiver, member, value });
+        }
+        return value && (typeof value === 'object') ?
+          observe(value).proxy : value;
       },
       set(target, member, value, receiver) {
         target[member] = value;
-        publish('set', { id, target, receiver, member, value });
+        if (typeof member !== 'symbol' || member.startsWith && member.startsWith('__')) {
+          publish('set', { id, target, receiver, member, value });
+        }
         return true;
       },
     });
     Object.defineProperty(target, ObserveSymbol, {
+      enumerable: false,
       value: { id, proxy, target }
     });
   }
-  return Reflect.get(target, ObserveSymbol);
+  return target[ObserveSymbol];
 }
 
 export function observable(taregt) {
   if (typeof taregt === 'function') {
     return new Proxy(taregt, {
+      get(target, member) {
+        if (member === ProxySymbol) return true;
+      },
       construct(taregt, args) {
         return observe(new taregt(...args)).proxy;
       }

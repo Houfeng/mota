@@ -31,6 +31,7 @@ export function mapping(map) {
       throw new Error('`mapping` must be enabled before `model`');
     }
     lifecycles.model.add(proto, function () {
+      console.log("lifecycles.model")
       assign(this.model, this.props);
     });
     lifecycles.didUpdate.add(proto, function (prevProps) {

@@ -8,6 +8,7 @@ import * as utils from './common/utils';
 import { version } from './common/info';
 import { expression } from 'ober';
 import { nextTick } from './observe/Tick';
+import { observable } from './observe/observable';
 import { connect } from './connect/connect';
 import { model } from './connect/model';
 import { binding } from './binding/binding';
@@ -30,7 +31,7 @@ export {
 };
 
 export default {
-  connect, model, binding, bindable, watch, mapping, autorun, deep,
+  connect, model, observable, binding, bindable, watch, mapping, autorun, deep,
   stateful, inputRepair, expression, nextTick, annotation,
   lifecycles, lifecycle, useModel, createFitter, utils, version
 };

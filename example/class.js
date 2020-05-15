@@ -1,15 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { model, binding, watch, autorun } from "../src";
+import { model, binding, watch, autorun, mapping } from "../src";
+
+export class Role {
+  name = "1";
+  constructor(user) {
+    this.user = user;
+  }
+}
+
+export class User {
+  name = "1";
+  age = 0;
+  role = new Role(this);
+}
 
 @model
+@mapping(["name"])
 export class Child extends React.PureComponent {
   render() {
     return <div style={{ width: 100, margin: 20 }}>child</div>;
   }
 }
 
-@model({ name: "", age: "" })
+@model(User)
 @binding
 export class App extends React.Component {
 
@@ -26,7 +40,7 @@ export class App extends React.Component {
   render() {
     window.xxx = this;
     return <div>
-      <Child model={this.model} />
+      <Child model={this.model} name="a" />
       <div><input data-bind="name" /></div>
       <div><input data-bind="age" /></div>
       <div>{this.model.name}</div>
