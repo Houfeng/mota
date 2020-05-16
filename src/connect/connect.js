@@ -87,8 +87,8 @@ export function createModelGetter(model) {
       componentModel = this.modelWillCreate(componentModel) || componentModel;
     }
     if (!componentModel) componentModel = {};
-    if (typeof componentModel !== "object" &&
-      typeof componentModel !== "function") {
+    if (typeof componentModel !== 'object' &&
+      typeof componentModel !== 'function') {
       throw new Error('Invalid Model');
     }
     if (componentModel instanceof Function) {
