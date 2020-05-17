@@ -8,22 +8,23 @@ import { Component } from 'react';
 import { supportHook } from '../common';
 import { useModel } from '../hooks';
 import { connect } from './connect';
+import { StatefulSymbol, ModelSymbol } from '../common/symbols';
 
 export function stateful(fn, model, convert) {
-  if (fn._stateful_) return fn._stateful_;
+  if (fn[StatefulSymbol]) return fn[StatefulSymbol];
   if (supportHook()) {
-    fn._stateful_ = function StatefulWrapper(props, context) {
+    fn[StatefulSymbol] = function StatefulWrapper(props, context) {
       const element = fn({ model: useModel(model), ...props }, context);
       return convert ? convert(element) : element;
     };
   } else {
-    fn._stateful_ = connect(model, class StatefulWrapper extends Component {
+    fn[StatefulSymbol] = connect(model, class StatefulWrapper extends Component {
       render() {
         const element = fn({ model: this.model, ...this.props }, this.context);
         return convert ? convert(element) : element;
       }
     });
   }
-  fn._stateful_._model_ = model;
-  return fn._stateful_;
+  fn[StatefulSymbol][ModelSymbol] = model;
+  return fn[StatefulSymbol];
 }

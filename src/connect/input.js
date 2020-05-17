@@ -4,8 +4,6 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { AutoRun } from 'ober';
-
 const UPDATE_EVENT = 'compositionupdate';
 const END_EVENT = 'compositionend';
 const INPUT_EVENT = 'input';
@@ -60,7 +58,3 @@ export class InputRepair {
 }
 
 export const inputRepair = new InputRepair();
-
-AutoRun.prototype.isSync = function () {
-  return !global.document || inputRepair.composing || inputRepair.inputting;
-};

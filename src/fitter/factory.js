@@ -9,8 +9,8 @@ import { isComponentClass } from '../common/utils';
 import { owner } from './owner';
 import { annotation } from '../common/annotation';
 import { stateful } from '../connect';
+import { ModelSymbol } from '../common/symbols';
 
-//处理 Object.isFrozen 
 Object.isFrozen = Object.isFrozen || (() => false);
 
 export function convertElement(element, model, fitters, deep) {
@@ -44,7 +44,7 @@ export function createFitter(handler) {
     }
     if (!model) {
       model = (owner.component && owner.component.model)
-        || target._model_ || {};
+        || target[ModelSymbol] || {};
     }
     if (isFunction(target)) {
       return stateful(target, model, element => func(element, model, deep));

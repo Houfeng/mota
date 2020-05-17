@@ -5,7 +5,6 @@
  */
 
 export * from './connect';
-export * from './deep';
 export * from './input';
 export * from './lifecycle';
 export * from './mapping';

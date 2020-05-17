@@ -4,10 +4,10 @@
  * @author Houfeng <admin@xhou.net>
  */
 
+import * as observable from 'ober';
 import { isFunction } from 'ntils';
 import { lifecycles } from '../connect/lifecycle';
 import { annotation } from '../common/annotation';
-import * as observable from './observable';
 
 export function watch(calc, immed) {
   if (!isFunction(calc)) {

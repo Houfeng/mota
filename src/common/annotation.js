@@ -6,14 +6,13 @@
 
 import { isArray } from 'ntils';
 import { has, defineGetter } from './utils';
-
-const STORE_KEY = '_annotations_';
+import { AnnotationsSymbol } from './symbols';
 
 export function getAll(target, member, ownOnly) {
   if (!target) return {};
   target = target.prototype || target;
-  if (!has(target, STORE_KEY, ownOnly)) return {};
-  const store = target[STORE_KEY];
+  if (!has(target, AnnotationsSymbol, ownOnly)) return {};
+  const store = target[AnnotationsSymbol];
   if (!member) return store;
   return has(store, member, ownOnly) ? store[member] : {};
 }
@@ -22,10 +21,10 @@ export function getStore(target, member) {
   if (!target) throw new Error('Invalid annotation target');
   target = target.prototype || target;
   const baseStore = getAll(Object.getPrototypeOf(target));
-  if (!has(target, STORE_KEY)) {
-    defineGetter(target, STORE_KEY, Object.create(baseStore));
+  if (!has(target, AnnotationsSymbol)) {
+    defineGetter(target, AnnotationsSymbol, Object.create(baseStore));
   }
-  const store = target[STORE_KEY];
+  const store = target[AnnotationsSymbol];
   if (!member) return store;
   if (!has(store, member)) {
     store[member] = Object.create(getAll(baseStore[member]));

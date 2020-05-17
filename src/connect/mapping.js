@@ -6,7 +6,7 @@
 
 import { isObject, getByPath, setByPath, isArray } from 'ntils';
 import { lifecycles } from './lifecycle';
-
+import { ContentedSymbol } from '../common/symbols';
 export function mapping(map) {
   if (!isObject(map)) {
     throw new Error('Mapping needs to specify a object or array');
@@ -27,11 +27,10 @@ export function mapping(map) {
   return function (component) {
     if (!component) throw new Error('Invaild Component');
     const proto = component.prototype;
-    if (proto._contented_) {
+    if (proto[ContentedSymbol]) {
       throw new Error('`mapping` must be enabled before `model`');
     }
     lifecycles.model.add(proto, function () {
-      console.log('lifecycles.model');
       assign(this.model, this.props);
     });
     lifecycles.didUpdate.add(proto, function (prevProps) {

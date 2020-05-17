@@ -4,9 +4,9 @@
  * @author Houfeng <admin@xhou.net>
  */
 
+import * as observable from 'ober';
 import { lifecycles } from '../connect/lifecycle';
 import { annotation } from '../common/annotation';
-import * as observable from './observable';
 
 export function autorun(target, method) {
   if (!target || !method) return autorun;

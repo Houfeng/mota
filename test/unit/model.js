@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { model } from '../../src/connect/model';
 import { connect } from '../../src/connect/connect';
-import { observable } from '../../src/observe/observable';
+import { observable } from '../../src';
 
 const root = document.querySelector('.root');
 
@@ -131,13 +131,14 @@ describe('model', () => {
       }
     }
     const demo = new Demo();
-    ReactDOM.render(<App model={demo} />, root);
-    assert.equal(root.querySelector("#name").innerHTML, 'demo');
-    demo.name = "123";
-    setTimeout(() => {
-      assert.equal(root.querySelector("#name").innerHTML, '123');
-      done();
-    })
+    ReactDOM.render(<App model={demo} />, root, () => {
+      assert.equal(root.querySelector("#name").innerHTML, 'demo');
+      demo.name = "123";
+      setTimeout(() => {
+        assert.equal(root.querySelector("#name").innerHTML, '123');
+        done();
+      })
+    });
   });
 
   it('直接通过 connect', (done) => {

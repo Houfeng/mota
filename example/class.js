@@ -19,7 +19,10 @@ export class User {
 @mapping(["name"])
 export class Child extends React.PureComponent {
   render() {
-    return <div style={{ width: 100, margin: 20 }}>child</div>;
+    return <div style={{ width: 100, margin: 20 }}>
+      <div>child</div>
+      <div>{this.model.name}</div>
+    </div>;
   }
 }
 

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { model } from '../../src/connect/model';
 import { mapping } from '../../src/connect/mapping';
-import { observable } from '../../src/observe/observable';
+import { observable } from '../../src';
 
 const root = document.querySelector('.root');
 

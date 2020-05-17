@@ -112,6 +112,29 @@ declare namespace mota {
   ): ((target: any, model?: any, deep?: boolean) => any);
 
   /**
+   * 定义可观察对象
+   * @param target 原对象或类
+   */
+  function observable<T extends object>(taregt: T): T;
+
+  /**
+   * 全局禁用观察
+   */
+  function disableObserve(): void;
+
+  /**
+   * 全局开启观察
+   */
+  function enableObserve(): void;
+
+  /**
+   * 全局可观察配置
+   */
+  const ObserveConfig: {
+    mode: "proxy" | "property";
+  };
+
+  /**
    * 包含一组工具方法
    */
   const utils: any;
