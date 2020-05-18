@@ -1,53 +1,57 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { model, binding, watch, autorun, mapping } from "../src";
+import { model, binding, watch } from "../src";
 
-export class Role {
-  name = "1";
-  constructor(user) {
-    this.user = user;
-  }
-}
-
-export class User {
-  name = "1";
-  age = 0;
-  role = new Role(this);
-}
+const createItems = () => {
+  return new Array(2000).fill('').map((text, index) => {
+    return { size: 100, text, index };
+  });
+};
 
 @model
-@mapping(["name"])
-export class Child extends React.PureComponent {
+export class Item extends React.PureComponent {
   render() {
-    return <div style={{ width: 100, margin: 20 }}>
-      <div>child</div>
-      <div>{this.model.name}</div>
-    </div>;
+    //console.time("render");
+    const { index, text, size } = this.props.model;
+    const result = <div key={index} style={{
+      width: size, height: 20, margin: 5, background: 'red'
+    }}>
+      {text || index}
+    </div>
+    //console.timeEnd("render");
+    return result;
   }
 }
 
-@model(User)
+@model(() => {
+  return { size: 100, items: createItems() }
+})
 @binding
-export class App extends React.Component {
+export class App extends React.PureComponent {
 
-  @watch(model => model.name)
-  test() {
-    console.log("name", this.model.name);
-  }
-
-  @autorun
-  log() {
-    console.log("log", this.model.name);
+  input = (event) => {
+    this.model.size = Number(event.target.value);
+    this.model.items.forEach(item => {
+      item.size = this.model.size;
+    })
   }
 
   render() {
-    window.xxx = this;
+    window.model = this.model;
+    const { size, items } = this.model;
     return <div>
-      <Child model={this.model} name="a" />
-      <div><input data-bind="name" /></div>
+      {/* <div><input data-bind="name" /></div>
       <div><input data-bind="age" /></div>
       <div>{this.model.name}</div>
-      <div>{this.model.age}</div>
+      <div>{this.model.age}</div> */}
+      <div>
+        <input onChange={this.input} value={size} />
+      </div>
+      <div>
+        {items.map(item => {
+          return <Item key={item.index} model={{ ...item }} />
+        })}
+      </div>
     </div>
   }
 }
