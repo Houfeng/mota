@@ -9,8 +9,7 @@ import { isComponentClass, defineGetter } from '../common/utils';
 import { wrapRender } from '../fitter/render';
 import { lifecycles } from './lifecycle';
 import { stateful } from './stateful';
-import { observable, track, subscribe } from 'ober';
-import { defineMember } from 'ober';
+import { defineMember, observable, track, subscribe, unsubscribe } from 'ober';
 import {
   ContentedSymbol, MountSymbol, PropModelSymbol,
   OverrideSymbol, ModelSymbol, TriggerSymbol
@@ -24,9 +23,9 @@ export function createRender(proto) {
   const initailRender = proto.render;
   if (!initailRender || initailRender[OverrideSymbol]) return initailRender;
   const overrideRender = wrapRender(initailRender);
-  const render = function (...args) {
+  const render = function render(...args) {
     if (!this[TriggerSymbol]) {
-      const trigger = () => {
+      const update = () => {
         const stats = (this.state && this.state[STATS_KEY]) || 0;
         this.setState({ [STATS_KEY]: stats + 1 });
       };
@@ -34,14 +33,15 @@ export function createRender(proto) {
         if (!this[MountSymbol]) return;
         const { inputting, composing } = inputRepair;
         return inputting || composing ?
-          trigger() : nextTick(trigger, null, true);
+          update() : nextTick(update, null, true);
       });
-      subscribe('set', this[TriggerSymbol]);
     }
+    unsubscribe('set', this[TriggerSymbol]);
     const { result, dependencies } = track(() => {
       return overrideRender.call(this, ...args);
     });
     this[TriggerSymbol].dependencies = dependencies;
+    subscribe('set', this[TriggerSymbol]);
     return result;
   };
   defineMember(render, OverrideSymbol, true);
@@ -58,7 +58,7 @@ export function createUnmount(proto) {
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
     }
-    if (this._runner_ && this._runner_.destory) this._runner_.destory();
+    unsubscribe('set', this[TriggerSymbol]);
     return result;
   };
 }

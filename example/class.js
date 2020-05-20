@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom';
 import { model, binding, watch } from "../src";
 
 const createItems = () => {
-  return new Array(2000).fill('').map((text, index) => {
+  return new Array(20).fill('').map((text, index) => {
     return { size: 100, text, index };
   });
 };
 
+const items = [];
+
 @model
 export class Item extends React.PureComponent {
   render() {
+    items.push(this);
     //console.time("render");
     const { index, text, size } = this.props.model;
     const result = <div key={index} style={{
@@ -33,7 +36,7 @@ export class App extends React.PureComponent {
     this.model.size = Number(event.target.value);
     this.model.items.forEach(item => {
       item.size = this.model.size;
-    })
+    });
   }
 
   render() {
@@ -49,7 +52,7 @@ export class App extends React.PureComponent {
       </div>
       <div>
         {items.map(item => {
-          return <Item key={item.index} model={{ ...item }} />
+          return <Item key={item.index} model={item} />
         })}
       </div>
     </div>

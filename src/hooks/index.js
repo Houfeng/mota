@@ -4,46 +4,44 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { observable, unsubscribe, subscribe, ObserveKey } from 'ober';
-import { useState, useEffect, useLayoutEffect, useCallback } from 'react';
-import { isFunction } from 'ntils';
+import { observable, unsubscribe, subscribe, ObserveKey, nextTick } from 'ober';
+import { useState, useLayoutEffect, useCallback } from 'react';
 import { getModelState } from '../common/utils';
+import { inputRepair } from '../connect/input';
 
-const owner = { buffer: [] };
-const onGet = data => owner.buffer.push(ObserveKey(data));
+let current;
 
-function collect(nextState) {
-  if (owner.state) {
-    owner.state[2].push(...(owner.buffer));
-    owner.buffer.length = 0;
+function collect(next, update) {
+  if (current === next) return next;
+  if (current) {
+    unsubscribe('get', current.onGet);
+    subscribe('set', current.onSet);
   }
-  owner.buffer = [];
-  owner.state = nextState;
-  return nextState;
+  if (next) {
+    next.onSet = next.onSet || (() => {
+      const { inputting, composing } = inputRepair;
+      return inputting || composing ? update() : nextTick(update, null, true);
+    });
+    unsubscribe('set', next.onSet);
+    next.onSet.dependencies = new Set();
+    next.onGet = next.onGet || (data => {
+      next.onSet.dependencies.add(ObserveKey(data));
+    });
+    subscribe('get', next.onGet);
+  }
+  current = next;
+  return next;
 }
 
-export function useObservable(factory, conditions) {
-  const [deps, setState] = useState([]);
-  if (info.length > 0) return collect(info);
-  const update = () => setState([...deps]);
-  const onSet = useCallback(data => {
-    if (!deps[ObserveKey(data)]) return;
-    const { inputting, composing } = inputRepair;
-    return inputting || composing ? update() : nextTick(update, null, true);
-  }, [deps]);
-  useEffect(() => {
-    subscribe('set', onSet);
-    return () => unsubscribe('set', onSet)
-  }, []);
-  collect(deps);
+export function useModel(factory, debug) {
+  const [info, setInfo] = useState({});
+  const update = useCallback(() => setInfo({ ...info }), [info]);
+  collect(info, update);
   const value = factory instanceof Function ? new factory() : factory;
-  return observable(getModelState(value));
-}
-
-export function useModel(factory, conditions, debug) {
-  const [model, deps] = useObservable(factory, conditions);
+  const [state] = useState(() => getModelState(value));
+  const model = observable(state);
   //最后一个 useModel 在 mounted 后完成收集（最后一个有可能多收集）
   useLayoutEffect(() => collect());
-  if (debug) debug({ model, deps });
+  if (debug) debug(info);
   return model;
 }

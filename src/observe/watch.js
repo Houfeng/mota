@@ -14,16 +14,16 @@ export function watch(calc, immed) {
     throw new Error('Watch needs to specify a calculation function');
   }
   return function (target, method) {
-    let watcher;
+    let trackable;
     //watch 如果已经存在，比如父类声明了，calc 函数可能不同，子类也要添加
     //可能多个 calc 都想执行同一个方法
     lifecycles.didMount.add(target, function () {
       if (!this[method]) return;
       const handler = this[method].bind(this);
-      watcher = observable.watch(() => calc(this.model), handler, immed);
+      trackable = observable.watch(() => calc(this.model), handler, immed);
     });
     lifecycles.unmount.add(target, function () {
-      if (watcher) watcher.destory();
+      if (trackable) trackable.destroy();
     });
     annotation.set('watch', true, target, method);
   };

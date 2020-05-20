@@ -16,11 +16,10 @@ export function autorun(target, method) {
   lifecycles.didMount.add(target, function () {
     if (!this[method]) return;
     const handler = this[method].bind(this);
-    this[method] = observable.autorun(handler, { immed: true });
+    this[method] = observable.autorun(handler, true);
   });
   lifecycles.unmount.add(target, function () {
-    if (!this[method]) return;
-    this[method].destory();
+    if (this[method]) this[method].destroy();
   });
   annotation.set('autorun', true, target, method);
 }
