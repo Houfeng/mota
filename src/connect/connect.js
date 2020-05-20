@@ -26,6 +26,7 @@ export function createRender(proto) {
   const render = function render(...args) {
     if (!this[TriggerSymbol]) {
       const update = () => {
+        if (!this[MountSymbol]) return;
         const stats = (this.state && this.state[STATS_KEY]) || 0;
         this.setState({ [STATS_KEY]: stats + 1 });
       };
