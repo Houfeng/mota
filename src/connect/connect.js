@@ -4,6 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
+import { Component } from 'react';
 import { isFunction } from 'ntils';
 import { isComponentClass, defineGetter } from '../common/utils';
 import { wrapRender } from '../fitter/render';
@@ -17,7 +18,9 @@ import {
 import { nextTick } from 'ober';
 import { inputRepair } from './input';
 
-const STATS_KEY = '_mota_stats_';
+//const STATS_KEY = '_mota_stats_';
+
+const { forceUpdate } = Component.prototype;
 
 export function createRender(proto) {
   const initailRender = proto.render;
@@ -27,8 +30,9 @@ export function createRender(proto) {
     if (!this[TriggerSymbol]) {
       const update = () => {
         if (!this[MountSymbol]) return;
-        const stats = (this.state && this.state[STATS_KEY]) || 0;
-        this.setState({ [STATS_KEY]: stats + 1 });
+        forceUpdate.call(this);
+        // const stats = (this.state && this.state[STATS_KEY]) || 0;
+        // this.setState({ [STATS_KEY]: stats + 1 });
       };
       defineMember(this, TriggerSymbol, () => {
         if (!this[MountSymbol]) return;
