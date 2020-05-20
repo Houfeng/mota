@@ -24,7 +24,11 @@ dev:
 
 build:
   - name: clean
-    target: ./dist/
+    target: 
+      - ./dist/
+      - ./node_modules/@types/superagent
+      - ./node_modules/@types/supertest
+      - ./node_modules/@types/chai
   - name: ./scripts/info.js
   - name: file-header
     text: 
