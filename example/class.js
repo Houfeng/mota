@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { model, binding, watch } from "../src";
 
 const createItems = () => {
-  return new Array(1000).fill('').map((text, index) => {
+  return new Array(2000).fill('').map((text, index) => {
     return { size: 100, text, index };
   });
 };

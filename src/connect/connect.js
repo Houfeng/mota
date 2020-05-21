@@ -18,7 +18,7 @@ import {
 import { nextTick } from 'ober';
 import { inputRepair } from './input';
 
-const STATS_KEY = '_mota_stats_';
+const TICK_KEY = '_mota_tick_';
 const { setState } = Component.prototype;
 
 export function createRender(proto) {
@@ -30,8 +30,8 @@ export function createRender(proto) {
       const update = () => {
         if (!this[MountSymbol]) return;
         //forceUpdate.call(this);
-        const stats = (this.state && this.state[STATS_KEY]) || 0;
-        setState.call(this, { [STATS_KEY]: stats + 1 });
+        const stats = (this.state && this.state[TICK_KEY]) || 0;
+        setState.call(this, { [TICK_KEY]: stats + 1 });
       };
       defineMember(this, TriggerSymbol, () => {
         if (!this[MountSymbol]) return;
