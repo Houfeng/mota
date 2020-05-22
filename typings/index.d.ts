@@ -136,19 +136,10 @@ declare namespace mota {
     */
   function observable<T extends object>(taregt: T): T;
 
-  /**
-   * 全局禁用观察
-   */
   function disableObserve(): void;
-
-  /**
-   * 全局开启观察
-   */
   function enableObserve(): void;
-
-  /**
-   * 全局可观察配置
-   */
+  export function untrack<T>(func: Function, ...args: any[]): T;
+  export function untrackable<T>(func: Function): (...args: any[]) => T;
   const ObserveConfig: {
     mode: "proxy" | "property";
   };

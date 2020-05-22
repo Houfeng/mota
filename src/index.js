@@ -22,19 +22,20 @@ import { lifecycles, lifecycle } from './connect/lifecycle';
 import { useModel } from './hooks';
 import { createFitter } from './fitter/factory';
 import {
-  nextTick, observable, disableObserve, enableObserve, ObserveConfig, ObservePerf, ObserveHandlers
+  nextTick, observable, disableObserve, enableObserve, ObserveConfig,
+  ObservePerf, ObserveHandlers, untrack, untrackable
 } from 'ober';
 
 export {
   connect, model, observable, binding, bindable, watch, mapping, autorun,
   stateful, inputRepair, expression, nextTick, annotation, ober, lifecycles,
   disableObserve, enableObserve, ObserveConfig, ObservePerf, ObserveHandlers,
-  useModel, createFitter, lifecycle, utils, version
+  untrack, untrackable, useModel, createFitter, lifecycle, utils, version
 };
 
 export default {
   connect, model, observable, binding, bindable, watch, mapping, autorun,
   stateful, inputRepair, expression, nextTick, annotation, ober, lifecycles,
   disableObserve, enableObserve, ObserveConfig, ObservePerf, ObserveHandlers,
-  useModel, createFitter, lifecycle, utils, version
+  untrack, untrackable, useModel, createFitter, lifecycle, utils, version
 };
