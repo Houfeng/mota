@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { model, binding, watch } from "../src";
+import { model, binding } from "../src";
 
 const createItems = () => {
   return new Array(2000).fill('').map((text, index) => {

@@ -1,4 +1,4 @@
-import { ObserveData, ObserveHandler, ObserveHandlerStore } from "ober";
+import { ObserveData, ObserveHandler, ObserveHandlerStore, AnyFunction } from "ober";
 
 declare namespace mota {
 
@@ -138,11 +138,8 @@ declare namespace mota {
 
   function disableObserve(): void;
   function enableObserve(): void;
-  export function untrack<T>(func: Function, ...args: any[]): T;
-  export function untrackable<T>(func: Function): (...args: any[]) => T;
-  const ObserveConfig: {
-    mode: "proxy" | "property";
-  };
+  function untrack<T extends AnyFunction>(func: T, ...args: any[]): ReturnType<T>;
+  function untrackable<T extends AnyFunction>(func: T): T;
 
   const ObservePerf: {
     onPublish?: (info: {
