@@ -1,3 +1,5 @@
+import { ObserveData, ObserveHandler, ObserveHandlerStore } from "ober";
+
 declare namespace mota {
 
   /**
@@ -111,10 +113,27 @@ declare namespace mota {
     handler: (type: any, props: any, model?: any, component?: any) => void
   ): ((target: any, model?: any, deep?: boolean) => any);
 
+
   /**
-   * 定义可观察对象
-   * @param target 原对象或类
+   * 包含一组工具方法
    */
+  const utils: any;
+
+  /**
+   * 生命周期 hook 工具
+   */
+  const lifecycles: any;
+
+  /**
+   * 生命周期 hook 工具
+   * @deprecated Please replace with "lifecycles"
+   */
+  const lifecycle: any;
+
+  /**
+    * 定义可观察对象
+    * @param target 原对象或类
+    */
   function observable<T extends object>(taregt: T): T;
 
   /**
@@ -134,21 +153,24 @@ declare namespace mota {
     mode: "proxy" | "property";
   };
 
-  /**
-   * 包含一组工具方法
-   */
-  const utils: any;
+  const ObservePerf: {
+    onPublish?: (info: {
+      name: string;
+      data: ObserveData;
+      matchOnly: boolean;
+      matchedHandlers: Set<ObserveHandler>;
+    }) => void;
+    onSubscribe?: (info: {
+      name: string;
+      handler: ObserveHandler;
+    }) => void;
+    onUnsubscribe?: (info: {
+      name: string;
+      handler: ObserveHandler;
+    }) => void;
+  };
 
-  /**
-   * 生命周期 hook 工具
-   */
-  const lifecycles: any;
-
-  /**
-   * 生命周期 hook 工具
-   * @deprecated Please replace with "lifecycles"
-   */
-  const lifecycle: any;
+  const ObserveHandlers: ObserveHandlerStore;
 
 }
 
