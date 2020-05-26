@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { model, binding, autorun } from "../src";
+import { model, binding, autorun, nextTick } from "../src";
 
 const createItems = () => {
   return new Array(2).fill('').map((text, index) => {
@@ -34,7 +34,9 @@ export class App extends React.PureComponent {
 
   @autorun
   log = () => {
-    //this.model.message = this.model.size;
+    // nextTick(() => {
+    //   this.model.message = this.model.size;
+    // })
     console.log(this.model.size);
   }
 
