@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { model, binding } from "../src";
+import { model, binding, autorun } from "../src";
 
 const createItems = () => {
-  return new Array(2000).fill('').map((text, index) => {
+  return new Array(2).fill('').map((text, index) => {
     return { size: 100, text, index };
   });
 };
@@ -27,10 +27,16 @@ export class Item extends React.PureComponent {
 }
 
 @model(() => {
-  return { size: 100, items: createItems() }
+  return { message: '', size: 100, items: createItems() }
 })
 @binding
 export class App extends React.PureComponent {
+
+  @autorun
+  log = () => {
+    //this.model.message = this.model.size;
+    console.log(this.model.size);
+  }
 
   input = (event) => {
     this.model.size = Number(event.target.value);
@@ -41,15 +47,12 @@ export class App extends React.PureComponent {
 
   render() {
     window.model = this.model;
-    const { size, items } = this.model;
+    const { size, items, message } = this.model;
     return <div>
-      {/* <div><input data-bind="name" /></div>
-      <div><input data-bind="age" /></div>
-      <div>{this.model.name}</div>
-      <div>{this.model.age}</div> */}
       <div>
         <input onChange={this.input} value={size} />
       </div>
+      <div>{message}</div>
       <div>
         {items.map(item => {
           return <Item key={item.index} model={item} />

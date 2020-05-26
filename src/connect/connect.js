@@ -10,7 +10,10 @@ import { isComponentClass, defineGetter } from '../common/utils';
 import { wrapRender } from '../fitter/render';
 import { lifecycles } from './lifecycle';
 import { stateful } from './stateful';
-import { defineMember, observable, track, subscribe, unsubscribe } from 'ober';
+import {
+  defineMember, observable, ObserveState,
+  track, subscribe, unsubscribe
+} from 'ober';
 import {
   ContentedSymbol, MountSymbol, PropModelSymbol,
   OverrideSymbol, ModelSymbol, TriggerSymbol
@@ -26,6 +29,7 @@ export function createRender(proto) {
   if (!initailRender || initailRender[OverrideSymbol]) return initailRender;
   const overrideRender = wrapRender(initailRender);
   const render = function render(...args) {
+    ObserveState.set = false;
     if (!this[TriggerSymbol]) {
       const update = () => {
         if (!this[MountSymbol]) return;
@@ -46,6 +50,7 @@ export function createRender(proto) {
     });
     this[TriggerSymbol].dependencies = dependencies;
     subscribe('set', this[TriggerSymbol]);
+    ObserveState.set = true;
     return result;
   };
   defineMember(render, OverrideSymbol, true);
