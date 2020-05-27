@@ -5,9 +5,7 @@
  */
 
 import * as ober from 'ober';
-import * as utils from './common/utils';
 import { version } from './common/info';
-import { expression } from 'ober';
 import { connect } from './connect/connect';
 import { model } from './connect/model';
 import { binding } from './binding/binding';
@@ -17,7 +15,6 @@ import { watch } from './observe/watch';
 import { mapping } from './connect/mapping';
 import { stateful } from './connect/stateful';
 import { inputRepair } from './connect/input';
-import { annotation } from './common/annotation';
 import { lifecycles, lifecycle } from './connect/lifecycle';
 import { useModel } from './hooks';
 import { createFitter } from './fitter/factory';
@@ -28,14 +25,14 @@ import {
 
 export {
   connect, model, observable, binding, bindable, watch, mapping, autorun,
-  stateful, inputRepair, expression, nextTick, annotation, ober, lifecycles,
-  ObserveConfig, ObservePerf, ObserveHandlers,
-  untrack, untrackable, useModel, createFitter, lifecycle, utils, version
+  stateful, inputRepair, nextTick, ober, lifecycles, ObserveConfig, ObservePerf,
+  ObserveHandlers, untrack, untrackable, useModel, createFitter, lifecycle,
+  version
 };
 
 export default {
   connect, model, observable, binding, bindable, watch, mapping, autorun,
-  stateful, inputRepair, expression, nextTick, annotation, ober, lifecycles,
-  ObserveConfig, ObservePerf, ObserveHandlers,
-  untrack, untrackable, useModel, createFitter, lifecycle, utils, version
+  stateful, inputRepair, nextTick, ober, lifecycles, ObserveConfig, ObservePerf,
+  ObserveHandlers, untrack, untrackable, useModel, createFitter, lifecycle,
+  version
 };

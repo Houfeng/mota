@@ -5,7 +5,7 @@
  */
 
 import { Component } from 'react';
-import { isFunction } from 'ntils';
+import { isFunction } from 'ober';
 import { isComponentClass, defineGetter } from '../common/utils';
 import { wrapRender } from '../fitter/render';
 import { lifecycles } from './lifecycle';

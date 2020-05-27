@@ -113,12 +113,6 @@ declare namespace mota {
     handler: (type: any, props: any, model?: any, component?: any) => void
   ): ((target: any, model?: any, deep?: boolean) => any);
 
-
-  /**
-   * 包含一组工具方法
-   */
-  const utils: any;
-
   /**
    * 生命周期 hook 工具
    */
@@ -135,12 +129,8 @@ declare namespace mota {
     * @param target 原对象或类
     */
   function observable<T extends object>(taregt: T): T;
-
-  function disableObserve(): void;
-  function enableObserve(): void;
   function untrack<T extends AnyFunction>(func: T, ...args: any[]): ReturnType<T>;
   function untrackable<T extends AnyFunction>(func: T): T;
-
   const ObservePerf: {
     onPublish?: (info: {
       name: string;
@@ -157,7 +147,6 @@ declare namespace mota {
       handler: ObserveHandler;
     }) => void;
   };
-
   const ObserveHandlers: ObserveHandlerStore;
 
 }

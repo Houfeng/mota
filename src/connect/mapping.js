@@ -4,9 +4,11 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { isObject, getByPath, setByPath, isArray } from 'ntils';
+import { isObject, isArray } from 'ntils';
+import { getByPath, setByPath } from 'ntils';
 import { lifecycles } from './lifecycle';
 import { ContentedSymbol } from '../common/symbols';
+
 export function mapping(map) {
   if (!isObject(map)) {
     throw new Error('Mapping needs to specify a object or array');

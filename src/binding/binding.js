@@ -4,8 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { expression } from 'ober';
-import { isObject } from 'ntils';
+import { expression, isObject } from 'ober';
 import { createFitter } from '../fitter/factory';
 import { bindable } from './bindable';
 

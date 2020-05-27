@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { isObject, isFunction } from 'ntils';
+import { isObject, isFunction } from 'ober';
 
 export function isComponentInstance(instance) {
   if (!instance || !isObject(instance)) return false;

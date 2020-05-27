@@ -5,7 +5,7 @@
  */
 
 import * as observable from 'ober';
-import { isFunction } from 'ntils';
+import { isFunction } from 'ober';
 import { lifecycles } from '../connect/lifecycle';
 import { annotation } from '../common/annotation';
 

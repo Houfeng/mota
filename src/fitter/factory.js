@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { isArray, isFunction } from 'ntils';
+import { isArray, isFunction } from 'ober';
 import { isComponentClass } from '../common/utils';
 import { owner } from './owner';
 import { annotation } from '../common/annotation';

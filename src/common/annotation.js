@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { isArray } from 'ntils';
+import { isArray } from 'ober';
 import { has, defineGetter } from './utils';
 import { AnnotationsSymbol } from './symbols';
 
