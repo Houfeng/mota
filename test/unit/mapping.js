@@ -127,7 +127,7 @@ describe('mapping', () => {
     @model({ value: '' })
     @mapping(['value'])
     class Text extends Component {
-      componentWillReceiveProps() {
+      componentDidUpdate() {
         synced = true;
       }
       render() {

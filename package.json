@@ -17,7 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "ntils": "^5.1.1",
-    "ober": "^4.3.0"
+    "ober": "^4.3.5"
   },
   "peerDependencies": {
     "react": "^16.13.1",

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { model, binding, autorun, nextTick } from "../src";
+import { model, binding, autorun } from "../src";
 
 const createItems = () => {
   return new Array(2).fill('').map((text, index) => {
@@ -27,39 +27,37 @@ export class Item extends React.PureComponent {
 }
 
 @model(() => {
-  return { message: '', size: 100, items: createItems() }
+  return { message: '', text: 'test' }
 })
 @binding
 export class App extends React.PureComponent {
 
   @autorun
   log = () => {
-    // nextTick(() => {
-    //   this.model.message = this.model.size;
-    // })
-    console.log(this.model.size);
+    this.model.message = this.model.text;
+    console.log(this.model.text);
   }
 
   input = (event) => {
-    this.model.size = Number(event.target.value);
-    this.model.items.forEach(item => {
-      item.size = this.model.size;
-    });
+    this.model.text = event.target.value;
+    // this.model.items.forEach(item => {
+    //   item.size = this.model.size;
+    // });
   }
 
   render() {
     window.model = this.model;
-    const { size, items, message } = this.model;
+    const { text, message } = this.model;
     return <div>
       <div>
-        <input onChange={this.input} value={size} />
+        <input onChange={this.input} value={text} />
       </div>
       <div>{message}</div>
-      <div>
+      {/* <div>
         {items.map(item => {
           return <Item key={item.index} model={item} />
         })}
-      </div>
+      </div> */}
     </div>
   }
 }

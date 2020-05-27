@@ -104,25 +104,6 @@ describe('model', () => {
     });
   });
 
-  it('检查不合法的 model', (done) => {
-    let result = false;
-    try {
-      @model('demo')
-      class App extends Component {
-        render() {
-          result = true
-          return <div>{this.model.name}</div>;
-        }
-      }
-      ReactDOM.render(<App />, root);
-    } catch (err) { }
-    console.log('检查不合法的 model:', '在执行测试时会看到 error 信息，看到说明检查成功了，代表测试通过');
-    setTimeout(() => {
-      assert.equal(result, false);
-      done();
-    })
-  });
-
   it('由外部传入 model', (done) => {
     @model
     class App extends Component {

@@ -29,28 +29,28 @@ export function createRender(proto) {
   if (!initailRender || initailRender[OverrideSymbol]) return initailRender;
   const overrideRender = wrapRender(initailRender);
   const render = function render(...args) {
+    const originSetState = ObserveState.set;
     ObserveState.set = false;
     if (!this[TriggerSymbol]) {
       const update = () => {
         if (!this[MountSymbol]) return;
-        //forceUpdate.call(this);
         const stats = (this.state && this.state[TICK_KEY]) || 0;
         setState.call(this, { [TICK_KEY]: stats + 1 });
       };
       defineMember(this, TriggerSymbol, () => {
         if (!this[MountSymbol]) return;
         const { inputting, composing } = inputRepair;
-        return inputting || composing ?
+        return (inputting || composing) ?
           update() : nextTick(update, null, true);
       });
     }
-    unsubscribe('set', this[TriggerSymbol]);
     const { result, dependencies } = track(() => {
       return overrideRender.call(this, ...args);
     });
+    unsubscribe('set', this[TriggerSymbol]);
     this[TriggerSymbol].dependencies = dependencies;
     subscribe('set', this[TriggerSymbol]);
-    ObserveState.set = true;
+    ObserveState.set = originSetState;
     return result;
   };
   defineMember(render, OverrideSymbol, true);
