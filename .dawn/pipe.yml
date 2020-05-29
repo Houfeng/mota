@@ -47,6 +47,7 @@ build:
 test:
   - name: lint
   - name: unit
+    files: ./test/**/*.js
 
 publish:
   - name: version

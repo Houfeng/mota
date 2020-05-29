@@ -1,9 +1,9 @@
 import assert from 'assert';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { model } from '../../src/connect/model';
-import { connect } from '../../src/connect/connect';
-import { observable } from '../../src';
+import { model } from '../src/connect/model';
+import { connect } from '../src/connect/connect';
+import { observable } from '../src';
 
 const root = document.querySelector('.root');
 

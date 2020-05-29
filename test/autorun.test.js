@@ -1,7 +1,7 @@
 import assert from 'assert';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { model, autorun, observable } from '../../src';
+import { model, autorun, observable } from '../src';
 
 const root = document.querySelector('.root');
 
