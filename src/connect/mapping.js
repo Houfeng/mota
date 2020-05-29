@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { isObject, isArray } from 'ntils';
+import { isObject, isArray } from 'ober';
 import { getByPath, setByPath } from 'ntils';
 import { lifecycles } from './lifecycle';
 import { ContentedSymbol } from '../common/symbols';
