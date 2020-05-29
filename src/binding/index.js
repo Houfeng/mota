@@ -6,3 +6,4 @@
 
 export * from './bindable';
 export * from './binding';
+export * from './expression';

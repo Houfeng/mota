@@ -4,7 +4,7 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { observable, unsubscribe, subscribe, ObserveKey, nextTick } from 'ober';
+import { observable, unsubscribe, subscribe, ObserveKey, nextTick, ObserveState } from 'ober';
 import { useState, useLayoutEffect, useCallback } from 'react';
 import { getModelState } from '../common/utils';
 import { inputRepair } from '../connect/input';
@@ -12,7 +12,7 @@ import { inputRepair } from '../connect/input';
 let current;
 
 function collect(next, update) {
-  if (current === next) return next;
+  ObserveState.get = false;
   if (current) {
     unsubscribe('get', current.onGet);
     subscribe('set', current.onSet);
@@ -28,6 +28,7 @@ function collect(next, update) {
       next.onSet.dependencies.add(ObserveKey(data));
     });
     subscribe('get', next.onGet);
+    ObserveState.get = true;
   }
   current = next;
   return next;

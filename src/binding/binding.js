@@ -4,9 +4,10 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { expression, isObject } from 'ober';
+import { isObject } from 'ober';
 import { createFitter } from '../fitter/factory';
 import { bindable } from './bindable';
+import { expression } from './expression';
 
 export function compileExpr(expr) {
   return {
