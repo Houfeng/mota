@@ -18,13 +18,7 @@ import { createFitter } from './fitter/factory';
 import { nextTick, observable, ObservePerf, untrack, untrackable } from 'ober';
 
 export {
-  connect, model, useModel, binding, bindable, watch, mapping, autorun,
+  connect, model, useModel, watch, mapping, autorun,
   nextTick, lifecycles, createFitter, observable, ObservePerf, untrack,
-  untrackable, version
-};
-
-export default {
-  connect, model, useModel, binding, bindable, watch, mapping, autorun,
-  nextTick, lifecycles, createFitter, observable, ObservePerf, untrack,
-  untrackable, version
+  untrackable, bindable, binding, version
 };

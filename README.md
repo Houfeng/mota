@@ -1,4 +1,4 @@
-![logo](https://raw.githubusercontent.com/Houfeng/mota/master/docs/logo.jpg)
+![logo](http://houfeng.net/mota/logo.jpg)
 
 <div align="center">
 

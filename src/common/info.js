@@ -4,4 +4,4 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-export const version = '6.2.4';
+export const version = '6.2.5';
