@@ -32,10 +32,10 @@ function endRender() {
   owner.intercepted = false;
 }
 
-export function wrapRender(initailRender) {
+export function wrapRender(initialRender) {
   return function (...args) {
     beginRender(this);
-    let element = initailRender.call(this, ...args);
+    let element = initialRender.call(this, ...args);
     if (!owner.intercepted && owner.fitters) {
       element = convertElement(element, owner.model, owner.fitters);
     }

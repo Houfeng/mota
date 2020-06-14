@@ -6,7 +6,7 @@
 
 import { isObject, isArray } from 'ober';
 import { getByPath, setByPath } from 'ntils';
-import { lifecycles } from './lifecycle';
+import { lifecycle } from './lifecycle';
 import { ContentedSymbol } from '../common/symbols';
 
 export function mapping(map) {
@@ -32,10 +32,10 @@ export function mapping(map) {
     if (proto[ContentedSymbol]) {
       throw new Error('`mapping` must be enabled before `model`');
     }
-    lifecycles.model.add(proto, function () {
+    lifecycle.model.add(proto, function () {
       assign(this.model, this.props);
     });
-    lifecycles.didUpdate.add(proto, function (prevProps) {
+    lifecycle.didUpdate.add(proto, function (prevProps) {
       assign(this.model, this.props, prevProps);
     });
   };

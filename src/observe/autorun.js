@@ -5,7 +5,7 @@
  */
 
 import * as observable from 'ober';
-import { lifecycles } from '../connect/lifecycle';
+import { lifecycle } from '../connect/lifecycle';
 import { annotation } from '../common/annotation';
 
 export function autorun(target, method) {
@@ -13,12 +13,12 @@ export function autorun(target, method) {
   //autorun 如果已经存在，比如父类声明了，都不再重复处理
   const exist = annotation.get('autorun', target, method);
   if (exist) return;
-  lifecycles.didMount.add(target, function () {
+  lifecycle.didMount.add(target, function () {
     if (!this[method]) return;
     const handler = this[method].bind(this);
     this[method] = observable.autorun(handler, true);
   });
-  lifecycles.unmount.add(target, function () {
+  lifecycle.unmount.add(target, function () {
     if (this[method]) this[method].destroy();
   });
   annotation.set('autorun', true, target, method);

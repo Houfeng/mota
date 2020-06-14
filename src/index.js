@@ -12,13 +12,13 @@ import { bindable } from './binding/bindable';
 import { autorun } from './observe/autorun';
 import { watch } from './observe/watch';
 import { mapping } from './connect/mapping';
-import { lifecycles } from './connect/lifecycle';
+import { lifecycle } from './connect/lifecycle';
 import { useModel } from './hooks';
 import { createFitter } from './fitter/factory';
 import { nextTick, observable, ObservePerf, untrack, untrackable } from 'ober';
 
 export {
   connect, model, useModel, watch, mapping, autorun,
-  nextTick, lifecycles, createFitter, observable, ObservePerf, untrack,
+  nextTick, lifecycle, createFitter, observable, ObservePerf, untrack,
   untrackable, bindable, binding, version
 };

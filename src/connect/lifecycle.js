@@ -26,7 +26,7 @@ export class Lifecycle {
 
 }
 
-export const lifecycles = {
+export const lifecycle = {
   didMount: new Lifecycle('didMount'),
   unmount: new Lifecycle('unmount'),
   didUpdate: new Lifecycle('didUpdate'),

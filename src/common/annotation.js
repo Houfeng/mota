@@ -53,7 +53,7 @@ export function set(key, value, target, member) {
 
 export function push(key, value, target, member) {
   let list = get(key, target, member, true);
-  if (list && !isArray(list)) throw new Error('Invaild Array');
+  if (list && !isArray(list)) throw new Error('Invalid Array');
   if (!list) list = set(key, [], target, member);
   list.push(value);
   return list;

@@ -4,8 +4,8 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-const UPDATE_EVENT = 'compositionupdate';
-const END_EVENT = 'compositionend';
+const UPDATE_EVENT = 'compositionUpdate';
+const END_EVENT = 'compositionEnd';
 const INPUT_EVENT = 'input';
 
 export class InputRepair {

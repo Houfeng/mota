@@ -8,12 +8,9 @@ import { Component } from 'react';
 import { isFunction } from 'ober';
 import { isComponentClass, defineGetter } from '../common/utils';
 import { wrapRender } from '../fitter/render';
-import { lifecycles } from './lifecycle';
+import { lifecycle } from './lifecycle';
 import { stateful } from './stateful';
-import {
-  defineMember, observable, ObserveState,
-  track, subscribe, unsubscribe
-} from 'ober';
+import { define, observable, ObserveState, track, subscribe, unsubscribe } from 'ober';
 import {
   ContentedSymbol, MountSymbol, PropModelSymbol,
   OverrideSymbol, ModelSymbol, TriggerSymbol
@@ -25,9 +22,9 @@ const TICK_KEY = '_mota_tick_';
 const { setState } = Component.prototype;
 
 export function createRender(proto) {
-  const initailRender = proto.render;
-  if (!initailRender || initailRender[OverrideSymbol]) return initailRender;
-  const overrideRender = wrapRender(initailRender);
+  const initialRender = proto.render;
+  if (!initialRender || initialRender[OverrideSymbol]) return initialRender;
+  const overrideRender = wrapRender(initialRender);
   const render = function render(...args) {
     const originSetState = ObserveState.set;
     ObserveState.set = false;
@@ -37,7 +34,7 @@ export function createRender(proto) {
         const stats = (this.state && this.state[TICK_KEY]) || 0;
         setState.call(this, { [TICK_KEY]: stats + 1 });
       };
-      defineMember(this, TriggerSymbol, () => {
+      define(this, TriggerSymbol, () => {
         if (!this[MountSymbol]) return;
         const { inputting, composing } = inputRepair;
         return (inputting || composing) ?
@@ -53,17 +50,17 @@ export function createRender(proto) {
     ObserveState.set = originSetState;
     return result;
   };
-  defineMember(render, OverrideSymbol, true);
+  define(render, OverrideSymbol, true);
   return render;
 }
 
 export function createUnmount(proto) {
-  const initailUnmount = proto.componentWillUnmount;
+  const initialUnmount = proto.componentWillUnmount;
   return function (...args) {
-    defineMember(this, MountSymbol, false);
+    define(this, MountSymbol, false);
     let result = null;
-    if (initailUnmount) result = initailUnmount.call(this, ...args);
-    const handlers = lifecycles.unmount.get(this);
+    if (initialUnmount) result = initialUnmount.call(this, ...args);
+    const handlers = lifecycle.unmount.get(this);
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
     }
@@ -73,27 +70,27 @@ export function createUnmount(proto) {
 }
 
 export function createMount(proto) {
-  const initailMount = proto.componentDidMount;
+  const initialMount = proto.componentDidMount;
   return function (...args) {
-    defineMember(this, MountSymbol, true);
-    const handlers = lifecycles.didMount.get(this);
+    define(this, MountSymbol, true);
+    const handlers = lifecycle.didMount.get(this);
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
     }
     const { constructor: ctor, model, props } = this;
     if (ctor.modeInitialize) ctor.modeInitialize.call(ctor, model, props);
-    if (initailMount) return initailMount.call(this, ...args);
+    if (initialMount) return initialMount.call(this, ...args);
   };
 }
 
 export function createDidUpdate(proto) {
-  const initailDidUpdate = proto.componentDidUpdate;
+  const initialDidUpdate = proto.componentDidUpdate;
   return function (...args) {
-    const handlers = lifecycles.didUpdate.get(this);
+    const handlers = lifecycle.didUpdate.get(this);
     if (handlers) {
       handlers.forEach(handler => handler.call(this, ...args));
     }
-    if (initailDidUpdate) return initailDidUpdate.call(this, ...args);
+    if (initialDidUpdate) return initialDidUpdate.call(this, ...args);
   };
 }
 
@@ -104,7 +101,7 @@ export function createModelGetter(model) {
     if (this[ModelSymbol] && (!modelInProps || propModel === this[PropModelSymbol])) {
       return this[ModelSymbol];
     }
-    defineMember(this, PropModelSymbol, propModel);
+    define(this, PropModelSymbol, propModel);
     let componentModel = modelInProps ? propModel : model;
     if (this.modelWillCreate) {
       componentModel = this.modelWillCreate(componentModel) || componentModel;
@@ -117,8 +114,8 @@ export function createModelGetter(model) {
     if (componentModel instanceof Function) {
       componentModel = new componentModel();
     }
-    defineMember(this, ModelSymbol, observable(componentModel));
-    const handlers = lifecycles.model.get(this);
+    define(this, ModelSymbol, observable(componentModel));
+    const handlers = lifecycle.model.get(this);
     if (handlers) handlers.forEach(handler => handler.call(this));
     if (this.modelDidCreate) this.modelDidCreate();
     return this[ModelSymbol];
@@ -136,6 +133,6 @@ export function connect(model, component) {
   proto.componentDidMount = createMount(proto);
   proto.componentWillUnmount = createUnmount(proto);
   proto.componentDidUpdate = createDidUpdate(proto);
-  defineMember(proto, ContentedSymbol, true);
+  define(proto, ContentedSymbol, true);
   return component;
 }
