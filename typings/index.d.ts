@@ -1,4 +1,4 @@
-import { ObserveData, ObserveHandler, ObserveHandlerStore, AnyFunction } from "ober";
+import { ObserveData, ObserveHandler, AnyFunction } from "ober";
 
 declare namespace mota {
 
@@ -25,7 +25,7 @@ declare namespace mota {
    * @param model 参数 model 可是以模型类或实例，如果是一个类将自动创建一个实例
    * @param debug 用于开发时的 debug 函数，参数包括相关信息
    */
-  function useModel<T = any>(model?: T, debug?: Function): T;
+  function useModel<T = any>(model?: T | (() => T) | ({ new(): T }), debug?: Function): T;
 
   /**
    * 自动执行方法装饰器，通过 @autorun 可声明一个组件方法，在依赖的模型数据方法发生变化时，
@@ -37,10 +37,10 @@ declare namespace mota {
 
   /**
    * 数据变化观察装饰器，通过 watch 能够在观察的数据发生变化时，自动执行组件方法
-   * @param clac Watcher 的计算函数，其计算结果发生变化时，才会执行被装饰的方法
+   * @param calc Watcher 的计算函数，其计算结果发生变化时，才会执行被装饰的方法
    * @param immed 是否立即执行，默认为 false，当为 true 时，Watcher 将自动立即执行一次
    */
-  function watch(clac: Function, immed?: boolean): any;
+  function watch(calc: Function, immed?: boolean): any;
 
   /**
    * 将组 Component 的属性（prop）自动映射到 model 的成员上
@@ -89,7 +89,7 @@ declare namespace mota {
     * 定义可观察对象
     * @param target 原对象或类
     */
-  function observable<T extends object>(taregt: T): T;
+  function observable<T extends object>(target: T): T;
   function untrack<T extends AnyFunction>(func: T, ...args: any[]): ReturnType<T>;
   function untrackable<T extends AnyFunction>(func: T): T;
   const ObservePerf: {
