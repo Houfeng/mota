@@ -29,6 +29,7 @@ build:
       - ./node_modules/@types/superagent
       - ./node_modules/@types/supertest
       - ./node_modules/@types/chai
+      - ./node_modules/@types/react
   - name: ./scripts/info.js
   - name: file-header
     text: 
