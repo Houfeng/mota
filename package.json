@@ -1,8 +1,9 @@
 {
   "name": "mota",
-  "version": "6.3.1",
+  "version": "6.3.3",
   "description": "Mota 是一个面向 React 的状态管理库（http://houfeng.net/mota）",
-  "main": "./dist/es/index.js",
+  "module": "./dist/es/index.js",
+  "main": "./dist/cjs/mota.js",
   "typings": "./typings/index.d.ts",
   "scripts": {
     "config": "dn config registry https://registry.npmjs.com/",
@@ -16,15 +17,14 @@
   },
   "license": "MIT",
   "dependencies": {
-    "ntils": "^5.1.1",
-    "ober": "^4.4.0"
+    "ntils": "^5.2.0",
+    "ober": "^5.0.0"
   },
   "peerDependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "@types/node": "^9.4.0",
     "@types/react": "^16.9.27",
     "@types/react-dom": "^16.9.5",
     "coveralls": "^3.0.0",

@@ -109,6 +109,24 @@ declare namespace mota {
     }) => void;
   };
 
+  enum ObserveMode {
+    proxy = "proxy",
+    property = "property",
+    auto = "auto"
+  }
+
+  const ObserveConfig: {
+    mode: ObserveMode;
+    strict: boolean;
+    maxDependencies: number;
+    maxHandlers: number;
+  };
+
+  enum ObserveEvent {
+    get = "get",
+    set = "set"
+  }
+
 }
 
 export = mota;
