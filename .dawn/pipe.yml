@@ -30,6 +30,9 @@ build:
       - ./node_modules/@types/supertest
       - ./node_modules/@types/chai
       - ./node_modules/@types/react
+      - ./node_modules/@types/node
+      - ./node_modules/@types/glob
+      - ./node_modules/@types/resolve
   - name: ./scripts/info.js
   - name: file-header
     text: 
