@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { model, binding, autorun } from "../src";
+import { model, binding, autorun, ObserveConfig, ObserveMode } from "../src";
+
+ObserveConfig.mode = ObserveMode.auto;
 
 const createItems = () => {
   return new Array(2).fill('').map((text, index) => {
@@ -36,6 +38,7 @@ export class App extends React.PureComponent {
   log = () => {
     this.model.message = this.model.text;
     console.log(this.model.text);
+    //console.log(this.model);
   }
 
   input = (event) => {

@@ -15,10 +15,13 @@ import { mapping } from './connect/mapping';
 import { lifecycle } from './connect/lifecycle';
 import { useModel } from './hooks';
 import { createFitter } from './fitter/factory';
-import { nextTick, observable, ObservePerf, untrack, untrackable } from 'ober';
+import {
+  nextTick, observable, ObserveConfig, ObserveMode, ObserveEvent,
+  ObservePerf, untrack, untrackable
+} from 'ober';
 
 export {
-  connect, model, useModel, watch, mapping, autorun,
-  nextTick, lifecycle, createFitter, observable, ObservePerf, untrack,
-  untrackable, bindable, binding, version
+  version, connect, model, useModel, watch, mapping, autorun, lifecycle,
+  createFitter, bindable, binding, nextTick, observable, ObserveConfig,
+  ObserveMode, ObserveEvent, ObservePerf, untrack, untrackable
 };
