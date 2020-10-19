@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "6.3.3",
+  "version": "7.0.0",
   "description": "Mota 是一个面向 React 的状态管理库（http://houfeng.net/mota）",
   "module": "./dist/es/index.js",
   "main": "./dist/cjs/mota.js",
