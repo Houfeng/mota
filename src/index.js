@@ -6,7 +6,6 @@
 
 import {
   ObserveConfig,
-  ObserveError,
   ObserveEvent,
   ObserveMode,
   ObservePerf,
@@ -34,4 +33,4 @@ export {
   ObserveMode, ObserveEvent, ObservePerf, untrack, untrackable
 };
 
-ObserveError.prefix = name.toLocaleUpperCase();
+ObserveConfig.logPrefix = name.toLocaleUpperCase();

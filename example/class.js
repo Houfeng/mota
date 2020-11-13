@@ -3,7 +3,7 @@ import { ObserveConfig, ObserveMode, autorun, binding, model } from "../src";
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const createItems = (num = 20000) => {
+const createItems = (num = 200) => {
   return new Array(num).fill('').map((num, index) => {
     return { size: 100, num, index };
   });
