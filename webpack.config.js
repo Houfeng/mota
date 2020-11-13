@@ -1,9 +1,9 @@
 const VModule = require('vmodule-webpack-plugin');
-const pkg = require('./package');
+const { name, version } = require('./package');
 
 module.exports = function (webpackConf) {
   webpackConf.plugins.push(new VModule({
     name: '$info',
-    content: { version: pkg.version }
+    content: { name, version }
   }));
 };

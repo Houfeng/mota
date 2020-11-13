@@ -1,9 +1,10 @@
-import assert from 'assert';
 import React, { Component } from 'react';
+
 import ReactDOM from 'react-dom';
+import assert from 'assert';
 import { model } from '../src/connect/model';
-import { watch } from '../src/observe/watch';
 import { observable } from '../src';
+import { watch } from '../src/observe/watch';
 
 const root = document.querySelector('.root');
 
@@ -82,7 +83,7 @@ describe('watch', () => {
       }
       assert.fail('没有检查到错误的 watch 用法');
     } catch (err) {
-      assert.equal(err.message, 'Watch needs to specify a calculation function');
+      assert.equal(err.message, 'MOTA: Watch needs to specify a calculation function');
     }
   });
 

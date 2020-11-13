@@ -4,19 +4,24 @@
  * @author Houfeng <admin@xhou.net>
  */
 
+import {
+  ContentedSymbol,
+  ModelSymbol,
+  MountSymbol,
+  OverrideSymbol,
+  PropModelSymbol,
+  TriggerSymbol
+} from '../common/symbols';
+import { ObserveError, nextTick } from 'ober';
+import { ObserveState, define, observable, subscribe, track, unsubscribe } from 'ober';
+import { defineGetter, isComponentClass } from '../common/utils';
+
 import { Component } from 'react';
+import { inputRepair } from './input';
 import { isFunction } from 'ober';
-import { isComponentClass, defineGetter } from '../common/utils';
-import { wrapRender } from '../fitter/render';
 import { lifecycle } from './lifecycle';
 import { stateful } from './stateful';
-import { define, observable, ObserveState, track, subscribe, unsubscribe } from 'ober';
-import {
-  ContentedSymbol, MountSymbol, PropModelSymbol,
-  OverrideSymbol, ModelSymbol, TriggerSymbol
-} from '../common/symbols';
-import { nextTick } from 'ober';
-import { inputRepair } from './input';
+import { wrapRender } from '../fitter/render';
 
 const TICK_KEY = '_mota_tick_';
 const { setState } = Component.prototype;
@@ -109,7 +114,7 @@ export function createModelGetter(model) {
     if (!componentModel) componentModel = {};
     if (typeof componentModel !== 'object' &&
       typeof componentModel !== 'function') {
-      throw new Error('Invalid Model');
+      throw ObserveError('Invalid Model');
     }
     if (componentModel instanceof Function) {
       componentModel = new componentModel();

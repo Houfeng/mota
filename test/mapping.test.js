@@ -1,8 +1,9 @@
-import assert from 'assert';
 import React, { Component } from 'react';
+
 import ReactDOM from 'react-dom';
-import { model } from '../src/connect/model';
+import assert from 'assert';
 import { mapping } from '../src/connect/mapping';
+import { model } from '../src/connect/model';
 import { observable } from '../src';
 
 const root = document.querySelector('.root');
@@ -90,7 +91,7 @@ describe('mapping', () => {
       }
       assert.fail('没有检查到错误的 mapping 用法');
     } catch (err) {
-      assert.equal(err.message, 'Mapping needs to specify a object or array');
+      assert.equal(err.message, 'MOTA: Mapping needs to specify a object or array');
     }
   });
 
@@ -106,7 +107,7 @@ describe('mapping', () => {
       }
       assert.fail('没有检查到错误的 mapping 用法');
     } catch (err) {
-      assert.equal(err.message, '`mapping` must be enabled before `model`');
+      assert.equal(err.message, 'MOTA: `mapping` must be enabled before `model`');
     }
   });
 
@@ -115,7 +116,7 @@ describe('mapping', () => {
       mapping(['value'])();
       assert.fail('没有检查到错误的方法式调用');
     } catch (err) {
-      assert.equal(err.message, 'Invaild Component');
+      assert.equal(err.message, 'MOTA: Invalid Component');
     }
   });
 

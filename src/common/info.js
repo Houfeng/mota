@@ -4,4 +4,5 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-export const version = '7.0.0';
+export const name = 'mota';
+export const version = '7.1.0';

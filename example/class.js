@@ -1,6 +1,7 @@
+import { ObserveConfig, ObserveMode, autorun, binding, model } from "../src";
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { model, binding, autorun, ObserveConfig, ObserveMode } from "../src";
 
 ObserveConfig.mode = ObserveMode.auto;
 
@@ -29,7 +30,7 @@ export class Item extends React.PureComponent {
 }
 
 @model(() => {
-  return { message: '', text: 'test' }
+  return { message: '' }
 })
 @binding
 export class App extends React.PureComponent {
@@ -53,7 +54,7 @@ export class App extends React.PureComponent {
     const { text, message } = this.model;
     return <div>
       <div>
-        <input onChange={this.input} value={text} />
+        <input onChange={this.input} value={text || ''} />
       </div>
       <div>{message}</div>
       {/* <div>

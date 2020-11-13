@@ -4,8 +4,9 @@
  * @author Houfeng <admin@xhou.net>
  */
 
+import { ObserveError, isFunction, isObject } from 'ober';
+
 import React from 'react';
-import { isObject, isFunction } from 'ober';
 
 export function isComponentInstance(instance) {
   if (!instance || !isObject(instance)) return false;
@@ -43,7 +44,7 @@ export function isESModule(obj) {
 export function getModelState(model) {
   if (!isESModule(model)) return model;
   if (model.state) return model.state;
-  throw new Error(
+  throw ObserveError(
     'When using ES module as a model, the module must export \'state\''
   );
 }

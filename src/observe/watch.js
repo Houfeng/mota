@@ -5,13 +5,15 @@
  */
 
 import * as observable from 'ober';
-import { isFunction } from 'ober';
-import { lifecycle } from '../connect/lifecycle';
+
+import { ObserveError, isFunction } from 'ober';
+
 import { annotation } from '../common/annotation';
+import { lifecycle } from '../connect/lifecycle';
 
 export function watch(calc, immed) {
   if (!isFunction(calc)) {
-    throw new Error('Watch needs to specify a calculation function');
+    throw ObserveError('Watch needs to specify a calculation function');
   }
   return function (target, method) {
     let trackable;

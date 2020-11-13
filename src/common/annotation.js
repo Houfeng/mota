@@ -4,8 +4,9 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { isArray } from 'ober';
-import { has, defineGetter } from './utils';
+import { ObserveError, isArray } from 'ober';
+import { defineGetter, has } from './utils';
+
 import { AnnotationsSymbol } from './symbols';
 
 export function getAll(target, member, ownOnly) {
@@ -18,7 +19,7 @@ export function getAll(target, member, ownOnly) {
 }
 
 export function getStore(target, member) {
-  if (!target) throw new Error('Invalid annotation target');
+  if (!target) throw ObserveError('Invalid annotation target');
   target = target.prototype || target;
   const baseStore = getAll(Object.getPrototypeOf(target));
   if (!has(target, AnnotationsSymbol)) {
@@ -53,7 +54,7 @@ export function set(key, value, target, member) {
 
 export function push(key, value, target, member) {
   let list = get(key, target, member, true);
-  if (list && !isArray(list)) throw new Error('Invalid Array');
+  if (list && !isArray(list)) throw ObserveError('Invalid Array');
   if (!list) list = set(key, [], target, member);
   list.push(value);
   return list;

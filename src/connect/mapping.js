@@ -4,14 +4,15 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { isObject, isArray } from 'ober';
+import { ObserveError, isArray, isObject } from 'ober';
 import { getByPath, setByPath } from 'ntils';
-import { lifecycle } from './lifecycle';
+
 import { ContentedSymbol } from '../common/symbols';
+import { lifecycle } from './lifecycle';
 
 export function mapping(map) {
   if (!isObject(map)) {
-    throw new Error('Mapping needs to specify a object or array');
+    throw ObserveError('Mapping needs to specify a object or array');
   }
   function assign(model, props, prevProps) {
     Object.keys(map).forEach(propName => {
@@ -27,10 +28,10 @@ export function mapping(map) {
     });
   }
   return function (component) {
-    if (!component) throw new Error('Invaild Component');
+    if (!component) throw ObserveError('Invalid Component');
     const proto = component.prototype;
     if (proto[ContentedSymbol]) {
-      throw new Error('`mapping` must be enabled before `model`');
+      throw ObserveError('`mapping` must be enabled before `model`');
     }
     lifecycle.model.add(proto, function () {
       assign(this.model, this.props);
