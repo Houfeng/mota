@@ -16,34 +16,26 @@ import { ObserveError, nextTick } from 'ober';
 import { ObserveState, define, observable, subscribe, track, unsubscribe } from 'ober';
 import { defineGetter, isComponentClass } from '../common/utils';
 
-import { Component } from 'react';
 import { inputRepair } from './input';
 import { isFunction } from 'ober';
 import { lifecycle } from './lifecycle';
 import { stateful } from './stateful';
 import { wrapRender } from '../fitter/render';
 
-const TICK_KEY = '_mota_tick_';
-const { setState } = Component.prototype;
-
 export function createRender(proto) {
   const initialRender = proto.render;
   if (!initialRender || initialRender[OverrideSymbol]) return initialRender;
   const overrideRender = wrapRender(initialRender);
   const render = function render(...args) {
-    const originSetState = ObserveState.set;
+    const originSetValue = ObserveState.set;
     ObserveState.set = false;
     if (!this[TriggerSymbol]) {
-      const update = () => {
-        if (!this[MountSymbol]) return;
-        const stats = (this.state && this.state[TICK_KEY]) || 0;
-        setState.call(this, { [TICK_KEY]: stats + 1 });
-      };
+      const requestUpdate = () => this[MountSymbol] && this.forceUpdate();
       define(this, TriggerSymbol, () => {
         if (!this[MountSymbol]) return;
         const { inputting, composing } = inputRepair;
         return (inputting || composing) ?
-          update() : nextTick(update, null, true);
+          requestUpdate() : nextTick(requestUpdate, null, true);
       });
     }
     const { result, dependencies } = track(() => {
@@ -52,7 +44,7 @@ export function createRender(proto) {
     unsubscribe('set', this[TriggerSymbol]);
     this[TriggerSymbol].dependencies = dependencies;
     subscribe('set', this[TriggerSymbol]);
-    ObserveState.set = originSetState;
+    ObserveState.set = originSetValue;
     return result;
   };
   define(render, OverrideSymbol, true);
