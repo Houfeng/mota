@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "7.2.2",
+  "version": "7.2.3",
   "description": "Mota 是一个面向 React 的状态管理库（http://houfeng.net/mota）",
   "module": "./dist/es/index.js",
   "main": "./dist/cjs/mota.js",
@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "ntils": "^5.2.0",
-    "ober": "^5.2.1"
+    "ober": "^6.1.2"
   },
   "peerDependencies": {
     "react": "^16.13.1",
@@ -45,6 +45,7 @@
     "nyc": "^11.4.1",
     "react-router-dom": "^4.3.1",
     "rollup": "^2.2.0",
+    "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.3.0",

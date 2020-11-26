@@ -1,5 +1,6 @@
+import cleanup from 'rollup-plugin-cleanup';
 import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
+// import commonjs from 'rollup-plugin-commonjs';
 import { terser } from "rollup-plugin-terser";
 
 export default {
@@ -23,7 +24,8 @@ export default {
   external: ['react', 'react-dom'],
   plugins: [
     resolve(),
-    commonjs(),
-    terser()
+    // commonjs(),
+    terser(),
+    cleanup({ comments: "none" }),
   ]
 };
