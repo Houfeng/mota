@@ -38,10 +38,10 @@ export function createRender(proto) {
           requestUpdate() : nextTick(requestUpdate, null, true);
       });
     }
+    unsubscribe('set', this[TriggerSymbol]);
     const { result, dependencies } = track(() => {
       return overrideRender.call(this, ...args);
     });
-    unsubscribe('set', this[TriggerSymbol]);
     this[TriggerSymbol].dependencies = dependencies;
     subscribe('set', this[TriggerSymbol]);
     ObserveState.set = originSetValue;

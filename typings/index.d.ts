@@ -94,18 +94,19 @@ declare namespace mota {
   function untrackable<T extends AnyFunction>(func: T): T;
   const ObservePerf: {
     onPublish?: (info: {
-      name: string;
-      data: ObserveData;
-      matchOnly: boolean;
-      matchedHandlers: Set<ObserveHandler>;
+      type?: string;
+      data?: ObserveData;
+      matchOnly?: boolean;
+      matchedHandlers?: Set<ObserveHandler>;
+      commonHandlers?: Set<ObserveHandler>;
     }) => void;
     onSubscribe?: (info: {
-      name: string;
-      handler: ObserveHandler;
+      type?: string;
+      handler?: ObserveHandler;
     }) => void;
     onUnsubscribe?: (info: {
-      name: string;
-      handler: ObserveHandler;
+      type?: string;
+      handler?: ObserveHandler;
     }) => void;
   };
 
