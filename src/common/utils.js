@@ -28,10 +28,14 @@ export function has(owner, key, ownOnly) {
 export function defineGetter(owner, key, value) {
   const getter = isFunction(value) ? value :
     function () { return value; };
+  //防止 babel 为 ts 仅类型声明的 filed 
+  //生成初始化（赋值）为 undefined 的代码，而报出不能写的错误
+  const setter = function () { };
   Object.defineProperty(owner, key, {
     configurable: true,
     enumerable: false,
-    get: getter
+    get: getter,
+    set: setter,
   });
 }
 
