@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "7.3.2",
+  "version": "7.3.3",
   "description": "Mota 是一个面向 React 的状态管理库（http://houfeng.net/mota）",
   "module": "./dist/es/index.js",
   "main": "./dist/cjs/mota.js",
@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "ntils": "^5.2.0",
-    "ober": "^6.4.0",
+    "ober": "^6.4.1",
     "tslib": "*"
   },
   "peerDependencies": {
