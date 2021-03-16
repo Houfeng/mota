@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "7.3.3",
+  "version": "7.3.4",
   "description": "Mota 是一个面向 React 的状态管理库（http://houfeng.net/mota）",
   "module": "./dist/es/index.js",
   "main": "./dist/cjs/mota.js",
@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "ntils": "^5.2.0",
-    "ober": "^6.4.1",
+    "ober": "^6.4.2",
     "tslib": "*"
   },
   "peerDependencies": {
@@ -35,12 +35,12 @@
     "dn-middleware-copy": "^0.2.7",
     "dn-middleware-doc": "^2.1.0",
     "dn-middleware-file-header": "^1.0.3",
-    "dn-middleware-lint": "^2.1.4",
+    "dn-middleware-lint": "^2.2.4",
     "dn-middleware-server": "^1.0.15",
     "dn-middleware-shell": "^1.1.0",
     "dn-middleware-submitter": "^1.0.1",
     "dn-middleware-typescript": "^2.0.8",
-    "dn-middleware-unit": "^0.2.0",
+    "dn-middleware-unit": "^0.2.2",
     "dn-middleware-version": "^1.0.4",
     "dn-middleware-webpack": "^1.11.5",
     "nyc": "^11.4.1",
