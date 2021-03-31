@@ -16,6 +16,7 @@ import {
 } from 'ober';
 import { name, version } from './common/info';
 
+import { ReactDOM } from './common/peers';
 import { autorun } from './observe/autorun';
 import { bindable } from './binding/bindable';
 import { binding } from './binding/binding';
@@ -24,7 +25,6 @@ import { createFitter } from './fitter/factory';
 import { lifecycle } from './connect/lifecycle';
 import { mapping } from './connect/mapping';
 import { model } from './connect/model';
-import { unstable_batchedUpdates } from 'react-dom';
 import { useModel } from './hooks';
 import { watch } from './observe/watch';
 
@@ -34,5 +34,5 @@ export {
   ObserveMode, ObserveEvent, ObservePerf, untrack, untrackable
 };
 
-nextTick.owner.transaction = unstable_batchedUpdates;
+nextTick.owner.transaction = ReactDOM.unstable_batchedUpdates;
 ObserveConfig.logPrefix = name.toLocaleUpperCase();

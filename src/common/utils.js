@@ -6,7 +6,7 @@
 
 import { ObserveError, isFunction, isObject } from 'ober';
 
-import React from 'react';
+import { React } from '../common/peers';
 
 export function isComponentInstance(instance) {
   if (!instance || !isObject(instance)) return false;

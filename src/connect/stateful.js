@@ -4,11 +4,12 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { Component } from 'react';
+import { ModelSymbol, StatefulSymbol } from '../common/symbols';
+
+import { React } from '../common/peers';
+import { connect } from './connect';
 import { supportHook } from '../common';
 import { useModel } from '../hooks';
-import { connect } from './connect';
-import { StatefulSymbol, ModelSymbol } from '../common/symbols';
 
 export function stateful(fn, model, convert) {
   if (fn[StatefulSymbol]) return fn[StatefulSymbol];
@@ -18,7 +19,7 @@ export function stateful(fn, model, convert) {
       return convert ? convert(element) : element;
     };
   } else {
-    fn[StatefulSymbol] = connect(model, class StatefulWrapper extends Component {
+    fn[StatefulSymbol] = connect(model, class StatefulWrapper extends React.Component {
       render() {
         const element = fn({ model: this.model, ...this.props }, this.context);
         return convert ? convert(element) : element;

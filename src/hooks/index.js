@@ -4,11 +4,13 @@
  * @author Houfeng <admin@xhou.net>
  */
 
-import { observable, unsubscribe, subscribe, ObserveKey, nextTick, ObserveState } from 'ober';
-import { useState, useLayoutEffect, useCallback } from 'react';
+import { ObserveKey, ObserveState, nextTick, observable, subscribe, unsubscribe } from 'ober';
+
+import { React } from '../common/peers';
 import { getModelState } from '../common/utils';
 import { inputRepair } from '../connect/input';
 
+const { useState, useLayoutEffect, useCallback } = React;
 let current;
 
 function collect(next, update) {
