@@ -9,6 +9,7 @@ import {
   ObserveEvent,
   ObserveMode,
   ObservePerf,
+  domUpdated,
   nextTick,
   observable,
   untrack,
@@ -30,8 +31,8 @@ import { watch } from './observe/watch';
 
 export {
   version, connect, model, useModel, watch, mapping, autorun, lifecycle,
-  createFitter, bindable, binding, nextTick, observable, ObserveConfig,
-  ObserveMode, ObserveEvent, ObservePerf, untrack, untrackable
+  createFitter, bindable, binding, nextTick, domUpdated, observable,
+  ObserveConfig, ObserveMode, ObserveEvent, ObservePerf, untrack, untrackable
 };
 
 nextTick.owner.transaction = ReactDOM.unstable_batchedUpdates;

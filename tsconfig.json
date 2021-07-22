@@ -16,6 +16,8 @@
     "noUnusedParameters": true,
     "importHelpers": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "lib": [
       "dom",
       "es2017"

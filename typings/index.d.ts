@@ -73,6 +73,12 @@ declare namespace mota {
   function nextTick(callback: Function, ctx?: any): any;
 
   /**
+   * 数据变更后，DOM 更新完成时
+   * @param fn 执行函数
+   */
+  function domUpdated(fn: (...args: any[]) => any): void;
+
+  /**
    * 创建一个装配器
    * @param handler 装配器处理函数
    */
