@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "outDir": "./dist/es",
+    "declarationDir": "./types/",
     "sourceMap": false,
-    "allowJs": true,
-    "declaration": false,
+    "allowJs": false,
+    "declaration": true,
     "noImplicitAny": true,
     "module": "ESNext",
     "target": "es5",
@@ -24,6 +25,6 @@
     ]
   },
   "include": [
-    "./src/**/*.js"
+    "./src/**/*.ts"
   ]
 }

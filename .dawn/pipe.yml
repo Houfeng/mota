@@ -3,22 +3,16 @@ init:
 
 dev:
   - name: clean
-    target: ./dist/example/
-  - name: copy
+    target: ./dist/
+  - name: copy 
     files:
-      ./dist/example/(0).ico: ./src/assets/favicon.ico
-  - name: typescript
-    declaration: false
-  - name: webpack
-    babel:
-      modules: false
-    entry: ./example/*.js
-    template: ./example/assets/index.html
-    output: ./dist/example/
-    watch: true
-    env: development
+      ./dist/(0).html: ./assets/*.html
+  - name: shell
+    async: true
+    script:
+      - rollup -w -c ./rollup.config.dev.js
   - name: server
-    public: ./dist/example/
+    public: ./dist/
     port: 6008
   - name: browser-sync
 
@@ -26,14 +20,6 @@ build:
   - name: clean
     target: 
       - ./dist/
-      - ./node_modules/@types/superagent
-      - ./node_modules/@types/supertest
-      - ./node_modules/@types/chai
-      - ./node_modules/@types/react
-      - ./node_modules/@types/react-dom
-      - ./node_modules/@types/node
-      - ./node_modules/@types/glob
-      - ./node_modules/@types/resolve
   - name: ./scripts/info.js
   - name: file-header
     text: 
@@ -44,15 +30,15 @@ build:
     script:
       - tsc --locale zh-CN 
       - rollup -c
-  - name: doc
   - name: copy
     files:
       ./docs/logo.jpg: ./design/logo.jpg
 
-test:
-  - name: lint
-  - name: unit
-    files: ./test/**/*.js
+# test:
+#   - name: lint
+#   - name: unit
+#     type: typescript
+#     files: ./test/**/*.ts
 
 publish:
   - name: version
