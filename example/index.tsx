@@ -1,17 +1,52 @@
+import React, { Fragment } from 'react';
 import { observable, observer } from "../src";
 
-import React from 'react';
 import ReactDOM from 'react-dom';
 
-const model = observable({
-  name: 'test1'
+export const model = observable({
+  name: 'test',
+  num: 0,
+  add() {
+    this.num += 1;
+  }
 })
 
-const App = observer(() => {
-  return <div>{model.name}</div>
+export const Demo1 = observer(function Demo1() {
+  return <div>
+    <h1>Demo1</h1>
+    <div>name: {model.name}</div>
+    <div onClick={() => model.add()}>num: {model.num}</div>
+  </div>
 });
+
+export const Demo2 = () => {
+  return <div>
+    <h1>Demo2</h1>
+    <div>name: {model.name}</div>
+    <div onClick={() => model.add()}>num: {model.num}</div>
+  </div>
+};
+
+@observer
+export class Demo3 extends React.Component {
+  render(): React.ReactNode {
+    return <div>
+      <h1>Demo3</h1>
+      <div>name: {model.name}</div>
+      <div onClick={() => model.add()}>num: {model.num}</div>
+    </div>
+  }
+}
+
+export const App = () => {
+  return <Fragment>
+    <Demo1 />
+    <Demo2 />
+    <Demo3 />
+  </Fragment>
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
 //@ts-ignore
-window.model = model;
+window.model = model; 

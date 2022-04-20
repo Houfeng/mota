@@ -14,7 +14,6 @@ dev:
   - name: server
     public: ./dist/
     port: 6008
-  - name: browser-sync
 
 build:
   - name: clean

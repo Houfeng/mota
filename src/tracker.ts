@@ -2,22 +2,14 @@ import { ObserveEvent, ObserveState, nextTick, subscribe, track, unsubscribe } f
 
 import { syncUpdate } from './sync';
 
-type Tracker = {
-  render?: (...args: any[]) => React.ReactNode,
-  update?: () => void;
-  trigger?: () => void;
-  destroy?: () => void;
-}
-
 export const createTracker = (
-  rawRender: (...args: any[]) => React.ReactNode
-): Tracker => {
-  const owner: Tracker = {};
+  rawRender: (...args: any[]) => React.ReactNode,
+  update: () => void,
+) => {
   const trigger = () => {
-    if (!owner.update) return;
     const { inputting, composing } = syncUpdate;
     return (inputting || composing) ?
-      owner.update() : nextTick(owner.update, null, true);
+      update() : nextTick(update, null, false);
   };
   trigger.dependencies = new Set<string>();
   const render = (...args: any[]) => {
@@ -33,8 +25,5 @@ export const createTracker = (
   const destroy = () => {
     subscribe(ObserveEvent.set, trigger);
   };
-  owner.trigger = trigger;
-  owner.render = render;
-  owner.destroy = destroy;
-  return owner;
+  return { render, destroy, update, dependencies: trigger.dependencies };
 };

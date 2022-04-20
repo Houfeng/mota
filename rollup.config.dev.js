@@ -1,6 +1,8 @@
 import commonjs from 'rollup-plugin-commonjs';
+import path from 'path';
 import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
+import sourcemaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 
 export default {
@@ -8,22 +10,25 @@ export default {
   output: [
     {
       file: './dist/index.js',
-      format: 'iife',
+      format: 'umd',
+      sourcemap: true,
       name: "index"
     }
   ],
-  external: [],
+  external: ['react', 'react-dom'],
   plugins: [
-    replace({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    }),
+    resolve(),
     commonjs({
+      ignoreDynamicRequires: true,
       namedExports: {
         // https://github.com/rollup/rollup-plugin-commonjs#custom-named-exports
         'node_modules/react/index.js': ['useState', 'useMemo', 'useEffect'],
       },
     }),
-    resolve(),
-    typescript(),
+    typescript({ tsconfig: path.resolve(__dirname, './tsconfig.dev.json') }),
+    sourcemaps(),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
   ]
 };
