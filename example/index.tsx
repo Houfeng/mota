@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { observable, observer } from "../src";
 
 import ReactDOM from 'react-dom';
@@ -12,6 +12,9 @@ export const model = observable({
 })
 
 export const Demo1 = observer(function Demo1() {
+  useEffect(() => {
+    console.log('mounted');
+  }, [])
   return <div>
     <h1>Demo1</h1>
     <div>name: {model.name}</div>
@@ -19,13 +22,13 @@ export const Demo1 = observer(function Demo1() {
   </div>
 });
 
-export const Demo2 = () => {
+export const Demo2 = observer(function Demo2() {
   return <div>
     <h1>Demo2</h1>
     <div>name: {model.name}</div>
     <div onClick={() => model.add()}>num: {model.num}</div>
   </div>
-};
+});
 
 @observer
 export class Demo3 extends React.Component {

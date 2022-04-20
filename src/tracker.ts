@@ -25,5 +25,10 @@ export const createTracker = (
   const destroy = () => {
     subscribe(ObserveEvent.set, trigger);
   };
-  return { render, destroy, update, dependencies: trigger.dependencies };
+  return {
+    render, destroy, update,
+    get dependencies() {
+      return trigger.dependencies;
+    }
+  };
 };
