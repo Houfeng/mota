@@ -1,21 +1,30 @@
 import { ComponentClass, ComponentType, FunctionComponent, isClassComponent } from './util';
 import { useEffect, useMemo, useState } from 'react';
 
-import { createTracker } from './tracker';
+import { createCollector } from './collector';
+import { createSymbol } from 'ober';
+import { name } from './info';
+
+const collectorKey: string = createSymbol(name) as any;
 
 const wrapClassComponent = <T extends ComponentClass>(Component: T): T => {
   const Wrapper = class extends Component {
     static displayName = Component.name || 'Component';
-    __tracker = createTracker(() => super.render(), () => this.setState({}));
     constructor(...args: any[]) {
       super(...args);
-      this.state = this.state || {};
+      const collector = createCollector(
+        () => super.render(), () => this.setState({})
+      );
+      this.state = {
+        ...this.state,
+        [collectorKey]: collector,
+      };
     }
     render() {
-      return this.__tracker.render();
+      return this.state[collectorKey].render();
     }
     componentWillUnmount(): void {
-      this.__tracker.destroy();
+      this.state[collectorKey].destroy();
       super.componentWillUnmount();
     }
   };
@@ -25,9 +34,11 @@ const wrapClassComponent = <T extends ComponentClass>(Component: T): T => {
 const wrapFunctionComponent = <T extends FunctionComponent>(FC: T): T => {
   const Wrapper = (...args: any[]) => {
     const [, setState] = useState({});
-    const tracker = useMemo(() => createTracker(FC, () => setState({})), []);
-    useEffect(() => () => tracker.destroy(), [tracker]);
-    return tracker.render(...args);
+    const collector = useMemo(() => {
+      return createCollector(FC, () => setState({}));
+    }, []);
+    useEffect(() => () => collector.destroy(), [collector]);
+    return collector.render(...args);
   };
   Wrapper.displayName = FC.name || 'FC';
   return Wrapper as T;

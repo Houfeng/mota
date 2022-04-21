@@ -28,7 +28,7 @@ export default {
     typescript({ tsconfig: path.resolve(__dirname, './tsconfig.dev.json') }),
     sourcemaps(),
     replace({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('development')
     }),
   ]
 };

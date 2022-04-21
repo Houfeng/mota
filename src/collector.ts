@@ -1,8 +1,8 @@
-import { ObserveEvent, ObserveState, nextTick, subscribe, track, unsubscribe } from 'ober';
+import { ObserveEvent, ObserveState, collect, nextTick, subscribe, unsubscribe } from 'ober';
 
 import { syncUpdate } from './sync';
 
-export const createTracker = (
+export const createCollector = (
   rawRender: (...args: any[]) => React.ReactNode,
   update: () => void,
 ) => {
@@ -16,15 +16,13 @@ export const createTracker = (
     const originSetState = ObserveState.set;
     ObserveState.set = false;
     unsubscribe(ObserveEvent.set, trigger);
-    const { result, dependencies } = track(() => rawRender(...args));
+    const { result, dependencies } = collect(() => rawRender(...args));
     trigger.dependencies = dependencies;
     subscribe(ObserveEvent.set, trigger);
     ObserveState.set = originSetState;
     return result;
   };
-  const destroy = () => {
-    subscribe(ObserveEvent.set, trigger);
-  };
+  const destroy = () => subscribe(ObserveEvent.set, trigger);
   return {
     render, destroy, update,
     get dependencies() {
