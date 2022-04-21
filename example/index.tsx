@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useDeferredValue } from 'react';
 import { observable, observer, useWatch } from "../src";
 
 import ReactDOM from 'react-dom';
@@ -29,11 +29,13 @@ export const Demo1 = observer(function Demo1() {
 export const Demo2 = observer(function Demo2() {
   useWatch(() => model.num > 100, () => {
     console.log("num:", model.num);
-  })
+  });
+  //@ts-ignore
+  const name = useDeferredValue(model.name, { timeoutMs: 1000 });
   return (
     <div>
-      <h1>Demo1</h1>
-      {/* <div>name: {model.name}</div> */}
+      <h1>Demo2</h1>
+      <div>name: {name}</div>
       <div onClick={() => model.add()}>num: {model.num}</div>
     </div>
   )
@@ -46,7 +48,7 @@ export class Demo3 extends React.Component {
     return (
       <div>
         <h1>Demo3</h1>
-        <div>name: {model.name}</div>
+        {/* <div>name: {model.name}</div> */}
         <div onClick={() => model.add()}>num: {model.num}</div>
       </div>
     )
@@ -63,7 +65,9 @@ export const App = () => {
   )
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+//@ts-ignore
+const root = ReactDOM.createRoot(document.getElementById('root'))
+root.render(<App />);
 
 //@ts-ignore
 window.model = model; 
