@@ -13,6 +13,20 @@ export const model = observable({
 })
 
 export const Demo1 = observer(function Demo1() {
+  return (
+    <div>
+      <h1>Demo1</h1>
+      <div>
+        <input
+          value={model.name}
+          onChange={event => model.name = event.target.value}
+        />
+      </div>
+    </div>
+  )
+});
+
+export const Demo2 = observer(function Demo2() {
   useWatch(() => model.num > 100, () => {
     console.log("num:", model.num);
   })
@@ -26,7 +40,7 @@ export const Demo1 = observer(function Demo1() {
 });
 
 @observer
-export class Demo2 extends React.Component {
+export class Demo3 extends React.Component {
   state = { name: 'Demo2' };
   render(): React.ReactNode {
     return (
@@ -44,6 +58,7 @@ export const App = () => {
     <Fragment>
       <Demo1 />
       <Demo2 />
+      <Demo3 />
     </Fragment>
   )
 }
