@@ -24,6 +24,7 @@ $ npm install mota --save
 # Usage
 
 ```js
+import { Component } from "react";
 import { observable, observer, useWatch, watch } from "mota";
 
 // 编写一个模型类
@@ -85,7 +86,7 @@ const DemoView4 = ()=>{
   // useWatch 的第一个参数是计算函数，
   // 计处函数的返回结果发生变化时, 将执行第二个处理函数
   useWatch(()=>model.count,()=>{
-    console.log('');
+    console.log('model.count', model.count);
   });
   return (
     <div>{model.count}</div>
@@ -94,17 +95,17 @@ const DemoView4 = ()=>{
 
 // 在任意地方使用 watch 
 const destroy = watch(()=>model.count,()=>{
-  console.log('');
+  console.log('model.count', model.count);
 });
 
 // 取消观察
 destroy();
 
 // 在类组件中使用 watch
-class DemoView5 extends React.Component {
+class DemoView5 extends Component {
   componentDidMount(){
     this.destroyWatch = watch(()=>model.count,()=>{
-      console.log('');
+     console.log('model.count', model.count);
     });
   }
   componentWillUnmount(){
