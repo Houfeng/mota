@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "8.0.0-alpha.1",
+  "version": "8.0.0-alpha.2",
   "description": "An extremely lightweight and responsive state management library",
   "module": "./dist/es/index.js",
   "main": "./dist/cjs/mota.js",
@@ -9,6 +9,10 @@
     "config": "dn config registry https://registry.npmjs.com/",
     "test": "npm run config && dn test && dn build -e prod",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Houfeng/mota"
   },
   "author": {
     "name": "Houfeng",

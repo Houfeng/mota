@@ -13,12 +13,12 @@ export default [
       {
         file: './dist/umd/mota.js',
         format: 'umd',
-        name: "mota"
+        name: "Mota"
       },
       {
         file: './dist/iife/mota.js',
         format: 'iife',
-        name: "mota"
+        name: "Mota"
       }
     ],
     external: ['react', 'react-dom'],
@@ -37,12 +37,12 @@ export default [
       {
         file: './dist/umd/mota.min.js',
         format: 'umd',
-        name: "mota"
+        name: "Mota"
       },
       {
         file: './dist/iife/mota.min.js',
         format: 'iife',
-        name: "mota"
+        name: "Mota"
       }
     ],
     external: ['react', 'react-dom'],
