@@ -1,9 +1,9 @@
 {
   "name": "mota",
-  "version": "8.0.0-alpha.5",
+  "version": "8.0.0-alpha.6",
   "description": "An extremely lightweight and responsive state management library",
-  "module": "./dist/es/index.js",
-  "main": "./dist/cjs/mota.js",
+  "module": "./dist/mota-es.js",
+  "main": "./dist/mota-cjs.js",
   "types": "./types/index.d.ts",
   "scripts": {
     "config": "dn config registry https://registry.npmjs.com/",

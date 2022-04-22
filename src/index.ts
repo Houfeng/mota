@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2015-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <houzhanfeng@gmail.com>
+ */
+
 import { ObserveConfig, nextTick } from "ober";
 
 import { ReactDOMUtil } from "./util";

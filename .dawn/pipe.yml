@@ -21,13 +21,13 @@ build:
       - ./dist/
   - name: ./scripts/info.js
   - name: file-header
+    files: ./src/**/*.ts
     text: 
       - 'Copyright (c) 2015-present Houfeng'
       - '@homepage https://github.com/Houfeng/mota'
-      - '@author Houfeng <admin@xhou.net>'
+      - '@author Houfeng <houzhanfeng@gmail.com>'
   - name: shell
     script:
-      - tsc --locale zh-CN 
       - rollup -c
   - name: copy
     files:

@@ -10,9 +10,9 @@ export default {
   output: [
     {
       file: './dist/index.js',
-      format: 'umd',
+      format: 'iife',
       sourcemap: true,
-      name: "index"
+      name: "Mota"
     }
   ],
   external: ['react', 'react-dom'],
@@ -21,11 +21,13 @@ export default {
     commonjs({
       ignoreDynamicRequires: true,
       namedExports: {
-        // https://github.com/rollup/rollup-plugin-commonjs#custom-named-exports
         'node_modules/react/index.js': ['useState', 'useMemo', 'useEffect'],
       },
     }),
-    typescript({ tsconfig: path.resolve(__dirname, './tsconfig.dev.json') }),
+    typescript({
+      useTsconfigDeclarationDir: true,
+      tsconfig: path.resolve(__dirname, './tsconfig.dev.json')
+    }),
     sourcemaps(),
     replace({
       'process.env.NODE_ENV': JSON.stringify('development')

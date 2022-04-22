@@ -1,55 +1,45 @@
 import cleanup from 'rollup-plugin-cleanup';
 import resolve from 'rollup-plugin-node-resolve';
 import { terser } from "rollup-plugin-terser";
+import typescript from 'rollup-plugin-typescript2';
+
+const createConf = ({ min } = {}) => {
+  const suffix = min ? '.min' : '';
+  return {
+    input: './src/index.ts',
+    output: [
+      {
+        file: `./dist/mota-es${suffix}.js`,
+        format: 'es'
+      },
+      {
+        file: `./dist/mota-cjs${suffix}.js`,
+        format: 'cjs'
+      },
+      {
+        file: `./dist/mota-umd${suffix}.js`,
+        format: 'umd',
+        name: "Mota"
+      },
+      {
+        file: `./dist/mota-iife${suffix}.js`,
+        format: 'iife',
+        name: "Mota"
+      }
+    ],
+    external: ['react', 'react-dom'],
+    plugins: [
+      resolve(),
+      min && terser(),
+      cleanup({ comments: "none" }),
+      typescript({
+        useTsconfigDeclarationDir: true,
+      }),
+    ].filter(Boolean)
+  };
+}
 
 export default [
-  {
-    input: './dist/es/index.js',
-    output: [
-      {
-        file: './dist/cjs/mota.js',
-        format: 'cjs'
-      },
-      {
-        file: './dist/umd/mota.js',
-        format: 'umd',
-        name: "Mota"
-      },
-      {
-        file: './dist/iife/mota.js',
-        format: 'iife',
-        name: "Mota"
-      }
-    ],
-    external: ['react', 'react-dom'],
-    plugins: [
-      resolve(),
-      cleanup({ comments: "none" }),
-    ]
-  },
-  {
-    input: './dist/es/index.js',
-    output: [
-      {
-        file: './dist/cjs/mota.min.js',
-        format: 'cjs'
-      },
-      {
-        file: './dist/umd/mota.min.js',
-        format: 'umd',
-        name: "Mota"
-      },
-      {
-        file: './dist/iife/mota.min.js',
-        format: 'iife',
-        name: "Mota"
-      }
-    ],
-    external: ['react', 'react-dom'],
-    plugins: [
-      resolve(),
-      terser(),
-      cleanup({ comments: "none" }),
-    ]
-  }
+  createConf(),
+  createConf({ min: true }),
 ];

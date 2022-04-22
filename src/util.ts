@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2015-present Houfeng
+ * @homepage https://github.com/Houfeng/mota
+ * @author Houfeng <houzhanfeng@gmail.com>
+ */
+
 export const inBrowser = () => typeof document !== "undefined";
 export const hasRequire = () => typeof require === "function";
 
