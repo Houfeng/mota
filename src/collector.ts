@@ -1,15 +1,21 @@
-import { ObserveEvent, ObserveState, collect, nextTick, subscribe, unsubscribe } from 'ober';
+import {
+  ObserveEvent,
+  ObserveState,
+  collect,
+  nextTick,
+  subscribe,
+  unsubscribe,
+} from "ober";
 
-import { syncUpdate } from './sync';
+import { syncUpdate } from "./sync";
 
 export const createCollector = (
   rawRender: (...args: any[]) => React.ReactNode,
-  update: () => void,
+  update: () => void
 ) => {
   const trigger = () => {
     const { inputting, composing } = syncUpdate;
-    return (inputting || composing) ?
-      update() : nextTick(update, false);
+    return inputting || composing ? update() : nextTick(update, false);
   };
   trigger.dependencies = new Set<string>();
   const render = (...args: any[]) => {
@@ -24,9 +30,11 @@ export const createCollector = (
   };
   const destroy = () => subscribe(ObserveEvent.set, trigger);
   return {
-    render, destroy, update,
+    render,
+    destroy,
+    update,
     get dependencies() {
       return trigger.dependencies;
-    }
+    },
   };
 };

@@ -1,11 +1,10 @@
 import { AnyFunction, inBrowser } from "./util";
 
-const UPDATE_EVENT = 'compositionUpdate';
-const END_EVENT = 'compositionEnd';
-const INPUT_EVENT = 'input';
+const UPDATE_EVENT = "compositionUpdate";
+const END_EVENT = "compositionEnd";
+const INPUT_EVENT = "input";
 
 export class SyncUpdate {
-
   inputTimer: any;
 
   composing = false;
@@ -52,7 +51,6 @@ export class SyncUpdate {
   constructor() {
     this.enable();
   }
-
 }
 
 export const syncUpdate = new SyncUpdate();

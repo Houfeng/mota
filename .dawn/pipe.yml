@@ -36,7 +36,7 @@ build:
 test:
   - name: shell
     script:
-      - eslint ./src/**/*.ts
+      - eslint --fix ./src/**/*.ts
   - name: unit
     env: typescript
     files: ./test/**/*.test.ts

@@ -1,5 +1,5 @@
-import { DependencyList, useEffect } from 'react';
-import { autorun, watch } from 'ober';
+import { DependencyList, useEffect } from "react";
+import { autorun, watch } from "ober";
 
 export const useWatch = (
   selector: () => any,
@@ -8,11 +8,8 @@ export const useWatch = (
   deps: DependencyList = []
 ) => {
   return useEffect(() => watch(selector, handler, immed), [immed, ...deps]);
-}
+};
 
-export const useAutoRun = (
-  handler: () => void,
-  deps: DependencyList = []
-) => {
+export const useAutoRun = (handler: () => void, deps: DependencyList = []) => {
   return useEffect(() => autorun(handler), deps);
-}
+};
