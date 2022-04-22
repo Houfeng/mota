@@ -9,7 +9,7 @@ export const createCollector = (
   const trigger = () => {
     const { inputting, composing } = syncUpdate;
     return (inputting || composing) ?
-      update() : nextTick(update, null, false);
+      update() : nextTick(update, false);
   };
   trigger.dependencies = new Set<string>();
   const render = (...args: any[]) => {

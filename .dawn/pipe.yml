@@ -33,11 +33,13 @@ build:
     files:
       ./docs/logo.jpg: ./design/logo.jpg
 
-# test:
-#   - name: lint
-#   - name: unit
-#     type: typescript
-#     files: ./test/**/*.ts
+test:
+  - name: shell
+    script:
+      - eslint ./src/**/*.ts
+  - name: unit
+    env: typescript
+    files: ./test/**/*.test.ts
 
 publish:
   - name: version

@@ -1,7 +1,7 @@
 {
   "name": "mota",
   "version": "8.0.0-alpha.1",
-  "description": "Mota 是一个面向 React 的状态管理库（http://houfeng.net/mota）",
+  "description": "An extremely lightweight and responsive state management library",
   "module": "./dist/es/index.js",
   "main": "./dist/cjs/mota.js",
   "types": "./types/index.d.ts",
@@ -17,7 +17,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "ober": "7.0.2",
+    "ober": "7.0.3",
     "tslib": "*"
   },
   "devDependencies": {
