@@ -12,129 +12,104 @@
 
 # Overview
 
-Mota 是一个面向 React 应用的状态管理库，希望用纯粹的、普通的 JavaScript 为应用编写不强依赖于框架的「业务模型」，然后，仅由 Mota 将「业务模型」关联到 React 应用。
-
-此外，Mota 同时支持 Class 和 Hook 的两种编程风格。
+Mota 是一个「极其轻量的可响应用状态管理库」，开发人员可利用它「编写几乎框架无关的业务模型」，然后由 Mota 可简便的使 React 组件响应模型的变化。
 
 # Install
 
 通过 npm 安装，如下
 ```sh
-$ npm i mota --save
+$ npm install mota --save
 ```
 
-# API
+# Usage
 
-## model
-
-DemoModel.js
 ```js
-export class DemoModel {
+import { observable, observer, useWatch, watch } from "mota";
+
+// 编写一个模型类
+@observable
+class DemoModel {
   count = 0;
   add = ()=>{
     this.count += 1;
   }
 }
-```
 
-Demol.js
-```js
-import { model } from "mota";
-import { DemoModel } from "./DemoModel"
+// 创建一个模型实例
+const demo = DemoModel();
 
-@model(DemoModel)
-export class Demo extends Component{
+// 直接声明一个对象
+const info = observable({
+  title: 'test',
+});
+
+// 在类组件中使用一
+@observer
+class DemoView1 extends Component{
+  // 创建一个组件实例对应和模型实例
+  model = new DemoModel();
   render() {
     const {count, add} = this.model
-    return <div>
-      {count} <button onClick={add}>Add</button>
-    </div>
-  }
-}
-```
-
-## useModel
-
-DemoModel.js
-```js
-export const state = {
-  count: 0,
-}
-
-export function add(){
-  state.count += 1;
-}
-```
-
-Demo.js
-```js
-import { useModel } from "mota";
-import { state, add } from "./DemoModel";
-
-export function Demo{
-  const { count } = useModel(state);
-  return <div>
-    {count} <button onClick={add}>Add</button>
-  </div>
-}
-```
-
-## binding
-
-For class
-```js
-export class DemoModel {
-  message = "hello";
-  print = ()=> {
-    console.log(this.message);
+    return (
+      <div>
+        <div>{info.title}</div>
+        <div>{count}</div>
+        <button onClick={add}>Add</button>
+      </div>
+    );
   }
 }
 
-@model(DemoModel)
-@binding
-export class Demo extends Component{
+// 在类组件中使用二
+@observer
+class DemoView2 extends Component{
   render() {
-    const { print } = this.model
-    return <div>
-      <input data-bind="message"/>
-      <button onClick={print}>Print</button>
-    </div>
+    return (
+      <div>
+        <div>{info.title}</div>
+        <div>{demo.count}</div>
+      </div>
+    );
   }
 }
+
+// 在函数组件中使用
+const DemoView3 = observer(()=>{
+  return (
+    <div>{model.count}</div>
+  )
+});
+
+// 监听数据变化
+const DemoView4 = ()=>{
+  // useWatch 的第一个参数是计算函数，
+  // 计处函数的返回结果发生变化时, 将执行第二个处理函数
+  useWatch(()=>model.count,()=>{
+    console.log('');
+  });
+  return (
+    <div>{model.count}</div>
+  )
+};
+
+// 在任意地方使用 watch 
+const destroy = watch(()=>model.count,()=>{
+  console.log('');
+});
+
+// 取消观察
+destroy();
+
+// 在类组件中使用 watch
+class DemoView5 extends React.Component {
+  componentDidMount(){
+    this.destroyWatch = watch(()=>model.count,()=>{
+      console.log('');
+    });
+  }
+  componentWillUnmount(){
+    if(this.destroyWatch) this.destroyWatch();
+  }
+}
+
 ```
-
-For hook
-```js
-export const state = {
-  message = "hello";
-}
-
-export function print(){
- console.log(state.message);
-}
-
-export function Demo(){
-  const model = useModel(state);
-  return binding(<div>
-    <input data-bind="message"/>
-    <button onClick={print}>Print</button>
-  </div>, model);
-}
-```
-
-# Examples
-
-[在线 TodoList 示例](http://houfeng.net/dn-template-mota/example/)
-([示例源码](https://github.com/Houfeng/dn-template-mota))
-
-# Docs
-- [快速开始](http://houfeng.net/mota/#!/zh/guide/quick)
-- [编写业务模型](http://houfeng.net/mota/#!/zh/guide/model)
-- [将组件属性映射到模型](http://houfeng.net/mota/#!/zh/guide/mapping)
-- [自执行函数](http://houfeng.net/mota/#!/zh/guide/autorun)
-- [监听模型变化](http://houfeng.net/mota/#!/zh/guide/watch)
-- [将模型数据与表单绑定](http://houfeng.net/mota/#!/zh/guide/binding)
-
-# Links
-- [版本发布日志](https://github.com/Houfeng/mota/releases)
-- [MIT 开源协议](https://tldrlegal.com/license/mit-license)
