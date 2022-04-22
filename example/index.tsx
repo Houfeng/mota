@@ -10,7 +10,7 @@ export const model = observable({
   add() {
     this.num += 1;
   }
-})
+})  
 
 export const Demo1 = observer(function Demo1() {
   return (

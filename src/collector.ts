@@ -1,4 +1,5 @@
 import {
+  ObserveData,
   ObserveEvent,
   ObserveState,
   collect,
@@ -7,15 +8,17 @@ import {
   unsubscribe,
 } from "ober";
 
-import { syncUpdate } from "./sync";
+import { inputOwner } from "./input";
 
 export const createCollector = (
   rawRender: (...args: any[]) => React.ReactNode,
   update: () => void
 ) => {
-  const trigger = () => {
-    const { inputting, composing } = syncUpdate;
-    return inputting || composing ? update() : nextTick(update, false);
+  const trigger = (info: ObserveData) => {
+    const { inputting, composing, value } = inputOwner;
+    return (inputting || composing) && value === info.value
+      ? update()
+      : nextTick(update, false);
   };
   trigger.dependencies = new Set<string>();
   const render = (...args: any[]) => {
