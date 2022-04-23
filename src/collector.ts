@@ -14,18 +14,14 @@ import {
   unsubscribe,
 } from "ober";
 
-import { inputOwner } from "./input";
+import { isSyncRequired } from "./input";
 
 export const createCollector = (
   rawRender: (...args: any[]) => React.ReactNode,
   update: () => void
 ) => {
-  const trigger = (info: ObserveData) => {
-    const { inputting, composing, value } = inputOwner;
-    return (inputting || composing) && value === info.value
-      ? update()
-      : nextTick(update, false);
-  };
+  const trigger = (info: ObserveData) =>
+    isSyncRequired(info.value) ? update() : nextTick(update, false);
   trigger.dependencies = new Set<string>();
   const render = (...args: any[]) => {
     const originSetState = ObserveState.set;
