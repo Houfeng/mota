@@ -4,5 +4,5 @@
  * @author Houfeng <houzhanfeng@gmail.com>
  */
 
-export const name = 'mota';
-export const version = '8.0.0-alpha.6';
+export const name = "mota";
+export const version = "8.0.0-alpha.7";
