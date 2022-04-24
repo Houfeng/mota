@@ -37,7 +37,7 @@ const wrapClassComponent = <T extends ComponentClass>(Component: T): T => {
     }
     componentWillUnmount(): void {
       this.state[collectorKey].destroy();
-      super.componentWillUnmount();
+      super.componentWillUnmount?.();
     }
   };
   return Wrapper;
