@@ -4,18 +4,18 @@
  * @author Houfeng <houzhanfeng@gmail.com>
  */
 
-import { DependencyList, useEffect } from "react";
 import { autorun, watch } from "ober";
+
+import { useEffect } from "react";
 
 export const useWatch = (
   selector: () => any,
   handler: () => void,
-  immed = true,
-  deps: DependencyList = []
+  immed = true
 ) => {
-  return useEffect(() => watch(selector, handler, immed), [immed, ...deps]);
+  return useEffect(() => watch(selector, handler, immed), [immed]);
 };
 
-export const useAutoRun = (handler: () => void, deps: DependencyList = []) => {
-  return useEffect(() => autorun(handler), deps);
+export const useAutoRun = (handler: () => void) => {
+  return useEffect(() => autorun(handler), []);
 };
