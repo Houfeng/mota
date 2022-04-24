@@ -39,8 +39,8 @@ describe('model', () => {
         assert.strictEqual(root.querySelector("#value").innerHTML, '2');
         assert.strictEqual(renderCount, 1);
         done();
-      });
-    })
+      }, 100);
+    }, 100);
   });
 
   it('匿名类组件: 响应模型变化并合并多次更新', (done) => {
@@ -65,8 +65,8 @@ describe('model', () => {
         assert.strictEqual(root.querySelector("#value").innerHTML, '2');
         assert.strictEqual(renderCount, 1);
         done();
-      });
-    })
+      }, 100);
+    }, 100);
   });
 
   it('函数组件: 响应模型变化并合并多次更新', (done) => {
@@ -87,8 +87,8 @@ describe('model', () => {
         assert.strictEqual(root.querySelector("#value").innerHTML, '2');
         assert.strictEqual(renderCount, 1);
         done();
-      });
-    })
+      }, 100);
+    }, 100)
   });
 
 });

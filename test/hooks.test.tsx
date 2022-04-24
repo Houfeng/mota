@@ -33,7 +33,7 @@ describe('model', () => {
         assert.strictEqual(runCount, 1);
         done();
       }, 100);
-    }, 100)
+    }, 100);
   });
 
   it('useWatch: 观察模型变化 & 立即自动执行一次', (done) => {
@@ -54,8 +54,8 @@ describe('model', () => {
         assert.strictEqual(root.querySelector("#value").innerHTML, '1');
         assert.strictEqual(runCount, 2);
         done();
-      });
-    })
+      }, 100);
+    }, 100);
   });
 
   it('useAutoRun: 模型变化自动执行', (done) => {
@@ -77,8 +77,8 @@ describe('model', () => {
         assert.strictEqual(root.querySelector("#value").innerHTML, '1');
         assert.strictEqual(runCount, 2);
         done();
-      });
-    })
+      }, 100);
+    }, 100);
   });
 
 });
