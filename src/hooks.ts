@@ -11,7 +11,7 @@ import { useEffect } from "react";
 export const useWatch = (
   selector: () => any,
   handler: () => void,
-  immed = true
+  immed = false
 ) => {
   return useEffect(() => watch(selector, handler, immed), [immed]);
 };

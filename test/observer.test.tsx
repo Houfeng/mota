@@ -43,10 +43,36 @@ describe('model', () => {
     })
   });
 
+  it('匿名类组件: 响应模型变化并合并多次更新', (done) => {
+    const demo = new DemoModel();
+    let renderCount = 0;
+    const DemoView = observer(
+      class extends Component<{ model: DemoModel }> {
+        render() {
+          renderCount++;
+          const { value } = this.props.model;
+          return <Label value={value} />;
+        }
+      }
+    )
+    ReactDOM.render(<DemoView model={demo} />, root);
+    setTimeout(() => {
+      assert.strictEqual(root.querySelector("#value").innerHTML, '0');
+      renderCount = 0;
+      demo.value = 1;
+      demo.value = 2;
+      setTimeout(() => {
+        assert.strictEqual(root.querySelector("#value").innerHTML, '2');
+        assert.strictEqual(renderCount, 1);
+        done();
+      });
+    })
+  });
+
   it('函数组件: 响应模型变化并合并多次更新', (done) => {
     const demo = new DemoModel();
     let renderCount = 0;
-    const DemoView = observer((props: { model: DemoModel }) => {
+    const DemoView = observer(function DemoView(props: { model: DemoModel }) {
       renderCount++;
       const { value } = props.model;
       return <Label value={value} />;
