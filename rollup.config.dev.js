@@ -39,5 +39,6 @@ const createConf = (page) => {
 
 export default [
   createConf('develop'),
-  createConf('benchmark'),
+  createConf('benchmark-mota'),
+  createConf('benchmark-normal'),
 ];

@@ -3,7 +3,7 @@ import { observable, observer, useWatch } from "../src";
 
 import ReactDOM from 'react-dom';
 
-export const model = observable({
+const model = observable({
   __displayName: 'model',
   name: 'test',
   num: 0,
@@ -12,7 +12,7 @@ export const model = observable({
   }
 })
 
-export const Demo1 = observer(function Demo1() {
+const Demo1 = observer(function Demo1() {
   return (
     <div>
       <h1>Demo1</h1>
@@ -26,7 +26,7 @@ export const Demo1 = observer(function Demo1() {
   )
 });
 
-export const Demo2 = observer(function Demo2() {
+const Demo2 = observer(function Demo2() {
   useWatch(() => model.num > 100, () => {
     console.log("num:", model.num);
   });
@@ -42,7 +42,7 @@ export const Demo2 = observer(function Demo2() {
 });
 
 @observer
-export class Demo3 extends React.Component {
+class Demo3 extends React.Component {
   state = { name: 'Demo2' };
   render(): React.ReactNode {
     return (
@@ -55,7 +55,7 @@ export class Demo3 extends React.Component {
   }
 }
 
-export const App = () => {
+const App = () => {
   return (
     <StrictMode>
       <Demo1 />
