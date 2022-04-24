@@ -4,6 +4,7 @@
  * @author Houfeng <houzhanfeng@gmail.com>
  */
 
+import { Collector, createCollector } from "./collector";
 import {
   ComponentClass,
   ComponentType,
@@ -12,31 +13,23 @@ import {
 } from "./util";
 import { useEffect, useMemo, useState } from "react";
 
-import { createCollector } from "./collector";
-import { createSymbol } from "ober";
-import { name } from "./info";
-
-const collectorKey: string = createSymbol(name) as any;
-
 const wrapClassComponent = <T extends ComponentClass>(Component: T): T => {
   const Wrapper = class extends Component {
     static displayName = Component.name || "Component";
+    private __collector__: Collector;
     constructor(...args: any[]) {
       super(...args);
-      const collector = createCollector(
+    }
+    render() {
+      if (this.__collector__) return super.render();
+      this.__collector__ = createCollector(
         () => super.render(),
         () => this.setState({})
       );
-      this.state = {
-        ...this.state,
-        [collectorKey]: collector,
-      };
-    }
-    render() {
-      return this.state[collectorKey].render();
+      return this.__collector__.render();
     }
     componentWillUnmount(): void {
-      this.state[collectorKey].destroy();
+      this.__collector__?.destroy();
       super.componentWillUnmount?.();
     }
   };

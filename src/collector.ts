@@ -14,12 +14,20 @@ import {
   unsubscribe,
 } from "ober";
 
+import React from "react";
 import { isSyncRequired } from "./input";
+
+export type Collector = {
+  render: (...args: any[]) => React.ReactNode;
+  update: () => void;
+  destroy: () => void;
+  dependencies: Set<string>;
+};
 
 export const createCollector = (
   rawRender: (...args: any[]) => React.ReactNode,
   update: () => void
-) => {
+): Collector => {
   const trigger = (info: ObserveData) =>
     isSyncRequired(info.value) ? update() : nextTick(update, false);
   trigger.dependencies = new Set<string>();
