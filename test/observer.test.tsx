@@ -29,7 +29,7 @@ class DemoView extends Component<{ model: DemoModel }> {
 
 describe('model', () => {
 
-  it('响应模型变化，并合并多次更新减少渲染', (done) => {
+  it('类组件：响应模型变化并合并多次更新', (done) => {
     const demo = new DemoModel();
     ReactDOM.render(<DemoView model={demo} />, root);
     assert.strictEqual(root.querySelector("#value").innerHTML, '0');

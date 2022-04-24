@@ -25,6 +25,7 @@
     "tslib": "*"
   },
   "devDependencies": {
+    "@types/mocha": "9.1.1",
     "@types/react": "*",
     "@types/react-dom": "*",
     "@typescript-eslint/eslint-plugin": "5.20.0",
