@@ -1,4 +1,4 @@
-import React, { Fragment, useDeferredValue } from 'react';
+import React, { StrictMode, useDeferredValue } from 'react';
 import { observable, observer, useWatch } from "../src";
 
 import ReactDOM from 'react-dom';
@@ -10,12 +10,12 @@ export const model = observable({
   add() {
     this.num += 1;
   }
-})  
+})
 
 export const Demo1 = observer(function Demo1() {
   return (
     <div>
-      <h1>Demo1</h1> 
+      <h1>Demo1</h1>
       <div>
         <input
           value={model.name}
@@ -57,11 +57,11 @@ export class Demo3 extends React.Component {
 
 export const App = () => {
   return (
-    <Fragment>
+    <StrictMode>
       <Demo1 />
       <Demo2 />
       <Demo3 />
-    </Fragment>
+    </StrictMode>
   )
 }
 

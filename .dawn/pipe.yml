@@ -38,8 +38,9 @@ test:
     script:
       - eslint --fix ./src/**/*.ts
   - name: unit
-    env: typescript
-    files: ./test/**/*.test.ts
+    env: browser_typescript
+    extension: .ts
+    files: ./test/**/*.test.tsx
 
 publish:
   - name: version
