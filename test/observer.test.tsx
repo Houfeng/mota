@@ -16,29 +16,27 @@ function Label(props: { value: string | number }) {
   return <div id="value">{props.value}</div>
 }
 
-@observer
-class DemoView extends Component<{ model: DemoModel }> {
-  static renderCount = 0;
-  render() {
-    DemoView.renderCount++;
-    const { value } = this.props.model;
-    return <Label value={value} />;
-  }
-}
-
-
 describe('model', () => {
 
   it('类组件：响应模型变化并合并多次更新', (done) => {
     const demo = new DemoModel();
+    let renderCount = 0;
+    @observer
+    class DemoView extends Component<{ model: DemoModel }> {
+      render() {
+        renderCount++;
+        const { value } = this.props.model;
+        return <Label value={value} />;
+      }
+    }
     ReactDOM.render(<DemoView model={demo} />, root);
     assert.strictEqual(root.querySelector("#value").innerHTML, '0');
-    DemoView.renderCount = 0;
+    renderCount = 0;
     demo.value = 1;
     demo.value = 2;
     setTimeout(() => {
       assert.strictEqual(root.querySelector("#value").innerHTML, '2');
-      assert.strictEqual(DemoView.renderCount, 1);
+      assert.strictEqual(renderCount, 1);
       done();
     });
   });
