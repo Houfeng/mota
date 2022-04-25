@@ -1,9 +1,9 @@
 import React, { StrictMode, createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 import ReactDOM from 'react-dom';
+import { list } from './data';
 
 let renderCount = 0;
-const list = new Array(20000).fill({});
 
 const markRender = () => {
   renderCount++;
