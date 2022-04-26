@@ -40,7 +40,7 @@
     "dn-middleware-shell": "^1.1.0",
     "dn-middleware-submitter": "^1.0.1",
     "dn-middleware-typescript": "^2.0.8",
-    "dn-middleware-unit": "^0.3.0",
+    "dn-middleware-unit": "0.3.1",
     "dn-middleware-version": "^1.0.4",
     "eslint": "8.13.0",
     "eslint-plugin-prettier": "4.0.0",
