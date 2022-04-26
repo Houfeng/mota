@@ -50,10 +50,18 @@ class Demo3 extends React.Component {
         <h1>Demo3</h1>
         {/* <div>name: {model.name}</div> */}
         <div onClick={() => model.add()}>num: {model.num}</div>
+        <Demo3_1 />
       </div>
     )
   }
 }
+
+const Demo3_1 = observer(function Demo3_1() {
+  return <div>
+    <h3>Demo3_1</h3>
+    {model.num}
+  </div>
+});
 
 const App = () => {
   return (
