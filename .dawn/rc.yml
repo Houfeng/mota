@@ -1,2 +1,2 @@
-server: https://query.aliyun.com/rest/dc.service.cli?team=general&conf=
-registry: https://registry.npm.taobao.org
+server: https://query.aliyun.com/rest/alidocs.ds?conf=
+registry: https://registry.npmmirror.com

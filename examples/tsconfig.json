@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/es",
+    "outDir": "./dist/",
     "declarationDir": "./types/",
     "sourceMap": false,
     "allowJs": false,
@@ -25,6 +25,6 @@
     ]
   },
   "include": [
-    "./src/**/*.ts"
+    "./**/*.tsx"
   ]
 }

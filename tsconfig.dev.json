@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/es",
     "declarationDir": "./types/",
-    "sourceMap": false,
+    "sourceMap": true,
     "allowJs": false,
     "declaration": true,
     "noImplicitAny": true,

@@ -1,7 +1,9 @@
 module.exports = function () {
   return async (next, ctx) => {
-    await ctx.utils.writeFile('./src/common/info.js', `
-export const version = '${ctx.project.version}';
+    const { name,version } = ctx.project;
+    await ctx.utils.writeFile('./src/info.ts', `
+export const name = "${name}";
+export const version = "${version}";
     `);
     next();
   }
