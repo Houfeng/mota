@@ -49,6 +49,3 @@ const App = () => {
 //@ts-ignore
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(<App />);
-
-//@ts-ignore
-window.model = model; 

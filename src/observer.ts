@@ -4,32 +4,47 @@
  * @author Houfeng <houzhanfeng@gmail.com>
  */
 
-import { Collector, createCollector } from "./collector";
 import {
   ComponentClass,
   ComponentType,
   FunctionComponent,
   isClassComponent,
 } from "./util";
-import { useEffect, useMemo, useState } from "react";
+import { ObserveData, nextTick, reactivable } from "ober";
+import { ReactNode, useEffect, useMemo, useState } from "react";
+
+import { isSyncRequired } from "./input";
+
+type Reactiver = (() => ReactNode) & { destroy?: () => void };
+
+const createReactiver = (
+  render: (...args: any[]) => ReactNode,
+  requestUpdate: () => void
+) => {
+  const trigger = (info: ObserveData) =>
+    isSyncRequired(info.value)
+      ? requestUpdate()
+      : nextTick(requestUpdate, false);
+  return reactivable(render, trigger);
+};
 
 const wrapClassComponent = <T extends ComponentClass>(Component: T): T => {
   const Wrapper = class extends Component {
     static displayName = Component.name || "Component";
-    private __collector__: Collector;
+    private __reactiver__: Reactiver;
     constructor(...args: any[]) {
       super(...args);
     }
     render() {
-      if (this.__collector__) return super.render();
-      this.__collector__ = createCollector(
+      if (this.__reactiver__) return super.render();
+      this.__reactiver__ = createReactiver(
         () => super.render(),
         () => this.setState({})
       );
-      return this.__collector__.render();
+      return this.__reactiver__();
     }
     componentWillUnmount(): void {
-      this.__collector__?.destroy();
+      this.__reactiver__?.destroy();
       super.componentWillUnmount?.();
     }
   };
@@ -39,11 +54,11 @@ const wrapClassComponent = <T extends ComponentClass>(Component: T): T => {
 const wrapFunctionComponent = <T extends FunctionComponent>(FC: T): T => {
   const Wrapper = (...args: any[]) => {
     const [, setState] = useState({});
-    const collector = useMemo(() => {
-      return createCollector(FC, () => setState({}));
+    const reactiver = useMemo(() => {
+      return createReactiver(FC, () => setState({}));
     }, []);
-    useEffect(() => () => collector.destroy(), [collector]);
-    return collector.render(...args);
+    useEffect(() => () => reactiver.destroy(), [reactiver]);
+    return reactiver(...args);
   };
   Wrapper.displayName = FC.name || "FC";
   return Wrapper as T;
