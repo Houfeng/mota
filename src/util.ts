@@ -3,6 +3,7 @@
  * @homepage https://github.com/Houfeng/mota
  * @author Houfeng <houzhanfeng@gmail.com>
  */
+
 import { Component, ReactNode } from "react";
 
 export const inBrowser = () => typeof document !== "undefined";

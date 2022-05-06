@@ -23,10 +23,10 @@ const Item = () => {
   const count = useContext(context);
   useEffect(() => markRender(), [count]);
   return (
-    <span style={itemStyle}>{count}</span>
+    <span x-data={count} style={itemStyle}>{count}</span>
   )
 };
-
+ 
 const App = () => {
   const [count, setCount] = useState(0);
   const test = useCallback(() => {
