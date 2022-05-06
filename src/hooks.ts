@@ -8,14 +8,14 @@ import { autorun, watch } from "ober";
 
 import { useEffect } from "react";
 
-export const useWatch = (
+export function useWatch(
   selector: () => any,
   handler: () => void,
   immed = false
-) => {
+) {
   return useEffect(() => watch(selector, handler, immed), [immed]);
-};
+}
 
-export const useAutoRun = (handler: () => void) => {
+export function useAutoRun(handler: () => void) {
   return useEffect(() => autorun(handler), []);
-};
+}

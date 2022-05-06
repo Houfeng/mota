@@ -17,18 +17,18 @@ import { isSyncRequired } from "./input";
 
 type Reactiver = (() => ReactNode) & { destroy?: () => void };
 
-const createReactiver = (
+function createReactiver(
   render: (...args: any[]) => ReactNode,
   requestUpdate: () => void
-) => {
+) {
   const trigger = (info: ObserveData) =>
     isSyncRequired(info.value)
       ? requestUpdate()
       : nextTick(requestUpdate, false);
   return reactivable(render, trigger);
-};
+}
 
-const wrapClassComponent = <T extends ComponentClass>(Component: T): T => {
+function wrapClassComponent<T extends ComponentClass>(Component: T): T {
   const Wrapper = class extends Component {
     static displayName = Component.name || "Component";
     private __reactiver__: Reactiver;
@@ -49,9 +49,9 @@ const wrapClassComponent = <T extends ComponentClass>(Component: T): T => {
     }
   };
   return Wrapper;
-};
+}
 
-const wrapFunctionComponent = <T extends FunctionComponent>(FC: T): T => {
+function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
   const Wrapper = (...args: any[]) => {
     const [, setState] = useState({});
     const reactiver = useMemo(() => {
@@ -62,11 +62,11 @@ const wrapFunctionComponent = <T extends FunctionComponent>(FC: T): T => {
   };
   Wrapper.displayName = FC.name || "FC";
   return Wrapper as T;
-};
+}
 
-export const observer = <T extends ComponentType>(com: T) => {
+export function observer<T extends ComponentType>(com: T) {
   const Wrapper = isClassComponent(com)
     ? wrapClassComponent(com)
     : wrapFunctionComponent(com);
   return Wrapper as T & { displayName?: string };
-};
+}

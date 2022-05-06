@@ -6,24 +6,27 @@
 
 import { AnyFunction, inBrowser } from "./util";
 
+import { ChangeEvent } from "react";
+
 let timer: any = 0;
 let composing = false;
 let inputting = false;
 let value: any = null;
 
-const bind = (name: any, handler: AnyFunction) => {
+function bind(name: any, handler: AnyFunction) {
   if (!inBrowser()) return;
   document.addEventListener(name, handler, true);
-};
+}
 
 bind("compositionUpdate", () => {
   composing = true;
 });
+
 bind("compositionEnd", () => {
   composing = false;
 });
 
-bind("input", (event: React.ChangeEvent<HTMLInputElement>) => {
+bind("input", (event: ChangeEvent<HTMLInputElement>) => {
   inputting = true;
   value = event.target.value as string;
   if (timer) clearTimeout(timer);
@@ -33,5 +36,6 @@ bind("input", (event: React.ChangeEvent<HTMLInputElement>) => {
   }, 0);
 });
 
-export const isSyncRequired = (updateValue: any) =>
-  (inputting || composing) && value === updateValue;
+export function isSyncRequired(updateValue: any) {
+  return (inputting || composing) && value === updateValue;
+}
