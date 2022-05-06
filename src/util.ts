@@ -22,8 +22,10 @@ export type FunctionComponent = ((...args: any[]) => ReactNode) & {
 
 export type ComponentType = ComponentClass | FunctionComponent;
 
-export function isClassComponent(com: ComponentType): com is ComponentClass {
-  return !!com.prototype.render;
+export function isClassComponent(
+  target: ComponentType
+): target is ComponentClass {
+  return target && !!target.prototype?.render;
 }
 
 export const ReactDOMUtil: any = (() => {

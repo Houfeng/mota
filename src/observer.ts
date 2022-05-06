@@ -28,13 +28,17 @@ function createReactiver(
   return reactivable(render, trigger);
 }
 
+function getDisplayName(
+  target: ComponentClass | FunctionComponent,
+  defaultName: string
+) {
+  return target.displayName || target.name || defaultName;
+}
+
 function wrapClassComponent<T extends ComponentClass>(Component: T): T {
   const Wrapper = class extends Component {
-    static displayName = Component.name || "Component";
+    static displayName = getDisplayName(Component, "Component");
     private __reactiver__: Reactiver;
-    constructor(...args: any[]) {
-      super(...args);
-    }
     render() {
       if (this.__reactiver__) return super.render();
       this.__reactiver__ = createReactiver(
@@ -44,7 +48,7 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
       return this.__reactiver__();
     }
     componentWillUnmount(): void {
-      this.__reactiver__?.destroy();
+      this.__reactiver__.destroy();
       super.componentWillUnmount?.();
     }
   };
@@ -57,16 +61,17 @@ function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
     const reactiver = useMemo(() => {
       return createReactiver(FC, () => setState({}));
     }, []);
-    useEffect(() => () => reactiver.destroy(), [reactiver]);
+    useEffect(() => reactiver.destroy, [reactiver]);
     return reactiver(...args);
   };
-  Wrapper.displayName = FC.name || "FC";
+  Wrapper.displayName = getDisplayName(FC, "FC");
   return Wrapper as T;
 }
 
-export function observer<T extends ComponentType>(com: T) {
-  const Wrapper = isClassComponent(com)
-    ? wrapClassComponent(com)
-    : wrapFunctionComponent(com);
+export function observer<T extends ComponentType>(target: T) {
+  if (!target) return target;
+  const Wrapper = isClassComponent(target)
+    ? wrapClassComponent(target)
+    : wrapFunctionComponent(target);
   return Wrapper as T & { displayName?: string };
 }
