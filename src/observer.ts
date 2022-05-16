@@ -38,12 +38,14 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
   const Wrapper = class extends Component {
     static displayName = getDisplayName(Component, "Component");
     private __reactiver__: ReactiveFunction;
-    render() {
-      if (this.__reactiver__) return super.render();
-      this.__reactiver__ = createReactiver(
-        () => super.render(),
-        () => this.setState({})
-      );
+    render(): ReactNode {
+      if (this.constructor !== Wrapper) return super.render();
+      if (!this.__reactiver__) {
+        this.__reactiver__ = createReactiver(
+          () => super.render(),
+          () => this.setState({})
+        );
+      }
       return this.__reactiver__();
     }
     componentWillUnmount(): void {
