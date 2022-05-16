@@ -10,22 +10,21 @@ import {
   FunctionComponent,
   isClassComponent,
 } from "./util";
-import { ObserveData, nextTick, reactivable } from "ober";
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import { ObserveData, ReactiveFunction, nextTick, reactivable } from "ober";
+import { ReactNode, useLayoutEffect, useMemo, useState } from "react";
 
 import { isSyncRequired } from "./input";
 
-type Reactiver = (() => ReactNode) & { destroy?: () => void };
-
 function createReactiver(
   render: (...args: any[]) => ReactNode,
-  requestUpdate: () => void
+  requestUpdate: () => void,
+  lazySubscribe = false
 ) {
   const trigger = (info: ObserveData) =>
     isSyncRequired(info.value)
       ? requestUpdate()
       : nextTick(requestUpdate, false);
-  return reactivable(render, trigger);
+  return reactivable(render, trigger, lazySubscribe);
 }
 
 function getDisplayName(
@@ -38,7 +37,7 @@ function getDisplayName(
 function wrapClassComponent<T extends ComponentClass>(Component: T): T {
   const Wrapper = class extends Component {
     static displayName = getDisplayName(Component, "Component");
-    private __reactiver__: Reactiver;
+    private __reactiver__: ReactiveFunction;
     render() {
       if (this.__reactiver__) return super.render();
       this.__reactiver__ = createReactiver(
@@ -48,7 +47,7 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
       return this.__reactiver__();
     }
     componentWillUnmount(): void {
-      this.__reactiver__.destroy();
+      this.__reactiver__.unsubscribe();
       super.componentWillUnmount?.();
     }
   };
@@ -57,11 +56,14 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
 
 function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
   const Wrapper = (...args: any[]) => {
-    const [, setState] = useState({});
+    const [, setState] = useState(0);
     const reactiver = useMemo(() => {
-      return createReactiver(FC, () => setState({}));
+      return createReactiver(FC, () => setState((t) => t + 1), true);
     }, []);
-    useEffect(() => reactiver.destroy, [reactiver]);
+    useLayoutEffect(() => {
+      reactiver.subscribe();
+      return reactiver.unsubscribe;
+    }, [reactiver]);
     return reactiver(...args);
   };
   Wrapper.displayName = getDisplayName(FC, "FC");

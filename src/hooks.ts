@@ -5,8 +5,9 @@
  */
 
 import { autorun, watch } from "ober";
+import { useEffect, useMemo } from "react";
 
-import { useEffect } from "react";
+import { AnyFunction } from "./util";
 
 export function useWatch(
   selector: () => any,
@@ -18,4 +19,14 @@ export function useWatch(
 
 export function useAutoRun(handler: () => void) {
   return useEffect(() => autorun(handler), []);
+}
+
+export function useBoundMethod<T, M extends keyof T>(
+  target: T,
+  name: M
+): Pick<T, M>[M] {
+  return useMemo(() => {
+    const method: AnyFunction = (target as any)[name];
+    return typeof method === "function" ? method.bind(target) : method;
+  }, [target, name]);
 }
