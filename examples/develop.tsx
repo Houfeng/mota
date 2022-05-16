@@ -104,11 +104,14 @@ export const Demo3_1 = observer(function Demo3_1() {
     <h3>Demo3_1</h3>
     {model.num}
   </div>
-});
+}); 
 
 const App = () => {
   return (
     <StrictMode>
+      <Demo1 />
+      <Demo2 />
+      <Demo3 />
       <Demo4 />
     </StrictMode>
   )

@@ -56,9 +56,9 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
 
 function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
   const Wrapper = (...args: any[]) => {
-    const [, setState] = useState(0);
+    const setState = useState({})[1];
     const reactiver = useMemo(() => {
-      return createReactiver(FC, () => setState((t) => t + 1), true);
+      return createReactiver(FC, () => setState({}), true);
     }, []);
     useLayoutEffect(() => {
       reactiver.subscribe();
