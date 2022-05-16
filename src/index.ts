@@ -16,6 +16,7 @@ export { useWatch, useAutoRun } from "./hooks";
 export {
   observable,
   action,
+  bind,
   ObserveInspector,
   ObserveConfig,
   ObserveMode,

@@ -5,28 +5,17 @@
  */
 
 import { autorun, watch } from "ober";
-import { useEffect, useMemo } from "react";
 
-import { AnyFunction } from "./util";
+import { useLayoutEffect } from "react";
 
 export function useWatch(
   selector: () => any,
   handler: () => void,
   immed = false
 ) {
-  return useEffect(() => watch(selector, handler, immed), [immed]);
+  return useLayoutEffect(() => watch(selector, handler, immed), [immed]);
 }
 
 export function useAutoRun(handler: () => void) {
-  return useEffect(() => autorun(handler), []);
-}
-
-export function useBoundMethod<T, M extends keyof T>(
-  target: T,
-  name: M
-): Pick<T, M>[M] {
-  return useMemo(() => {
-    const method: AnyFunction = (target as any)[name];
-    return typeof method === "function" ? method.bind(target) : method;
-  }, [target, name]);
+  return useLayoutEffect(() => autorun(handler), []);
 }
