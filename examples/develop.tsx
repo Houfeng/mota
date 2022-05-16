@@ -1,4 +1,4 @@
-import React, { StrictMode, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
+import React, { StrictMode, memo, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
 import { observable, observer, useWatch } from "../src";
 
 import ReactDOM from 'react-dom';
@@ -99,12 +99,12 @@ export class Demo3 extends React.Component {
   }
 }
 
-export const Demo3_1 = observer(function Demo3_1() {
+export const Demo3_1 = memo(observer(function Demo3_1() {
   return <div>
     <h3>Demo3_1</h3>
     {model.num}
   </div>
-}); 
+}));
 
 const App = () => {
   return (
