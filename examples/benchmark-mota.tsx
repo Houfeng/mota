@@ -29,11 +29,12 @@ const test = () => {
 const itemStyle = {
   padding: 4, margin: 2, background: '#eee', display: 'inline-block',
 }
-
+ 
 const Item = observer(function Item() {
-  useEffect(() => markRender(), [model.count]);
+  const { count } = model;
+  useEffect(() => markRender(), [count]);
   return (
-    <span style={itemStyle}>{model.count}</span>
+    <span x-data={count} style={itemStyle}>{count}</span>
   )
 });
 
@@ -51,6 +52,3 @@ const App = () => {
 //@ts-ignore
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(<App />);
-
-//@ts-ignore
-window.model = model; 

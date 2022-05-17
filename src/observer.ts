@@ -4,54 +4,78 @@
  * @author Houfeng <houzhanfeng@gmail.com>
  */
 
-import { Collector, createCollector } from "./collector";
 import {
   ComponentClass,
   ComponentType,
   FunctionComponent,
   isClassComponent,
 } from "./util";
-import { useEffect, useMemo, useState } from "react";
+import { ObserveData, ReactiveFunction, nextTick, reactivable } from "ober";
+import { ReactNode, useLayoutEffect, useMemo, useState } from "react";
 
-const wrapClassComponent = <T extends ComponentClass>(Component: T): T => {
+import { isSyncRequired } from "./input";
+
+function createReactiver(
+  render: (...args: any[]) => ReactNode,
+  requestUpdate: () => void,
+  lazySubscribe = false
+) {
+  const trigger = (info: ObserveData) =>
+    isSyncRequired(info.value)
+      ? requestUpdate()
+      : nextTick(requestUpdate, false);
+  return reactivable(render, trigger, lazySubscribe);
+}
+
+function getDisplayName(
+  target: ComponentClass | FunctionComponent,
+  defaultName: string
+) {
+  return target.displayName || target.name || defaultName;
+}
+
+function wrapClassComponent<T extends ComponentClass>(Component: T): T {
   const Wrapper = class extends Component {
-    static displayName = Component.name || "Component";
-    private __collector__: Collector;
-    constructor(...args: any[]) {
-      super(...args);
-    }
-    render() {
-      if (this.__collector__) return super.render();
-      this.__collector__ = createCollector(
-        () => super.render(),
-        () => this.setState({})
-      );
-      return this.__collector__.render();
+    static displayName = getDisplayName(Component, "Component");
+    private __reactiver__: ReactiveFunction;
+    render(): ReactNode {
+      if (this.constructor !== Wrapper) return super.render();
+      if (!this.__reactiver__) {
+        this.__reactiver__ = createReactiver(
+          () => super.render(),
+          () => this.setState({})
+        );
+      }
+      return this.__reactiver__();
     }
     componentWillUnmount(): void {
-      this.__collector__?.destroy();
+      this.__reactiver__.unsubscribe();
       super.componentWillUnmount?.();
     }
   };
   return Wrapper;
-};
+}
 
-const wrapFunctionComponent = <T extends FunctionComponent>(FC: T): T => {
+function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
   const Wrapper = (...args: any[]) => {
-    const [, setState] = useState({});
-    const collector = useMemo(() => {
-      return createCollector(FC, () => setState({}));
+    const setState = useState({})[1];
+    const reactiver = useMemo(() => {
+      return createReactiver(FC, () => setState({}), true);
     }, []);
-    useEffect(() => () => collector.destroy(), [collector]);
-    return collector.render(...args);
+    useLayoutEffect(() => {
+      reactiver.subscribe();
+      return reactiver.unsubscribe;
+    }, [reactiver]);
+    return reactiver(...args);
   };
-  Wrapper.displayName = FC.name || "FC";
+  Wrapper.displayName = getDisplayName(FC, "FC");
   return Wrapper as T;
-};
+}
 
-export const observer = <T extends ComponentType>(com: T) => {
-  const Wrapper = isClassComponent(com)
-    ? wrapClassComponent(com)
-    : wrapFunctionComponent(com);
+export function observer<T extends ComponentType>(target: T) {
+  if (!target) return target;
+  const Wrapper = isClassComponent(target)
+    ? wrapClassComponent(target)
+    : wrapFunctionComponent(target);
   return Wrapper as T & { displayName?: string };
-};
+}

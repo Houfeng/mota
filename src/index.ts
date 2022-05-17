@@ -9,21 +9,23 @@ import { ObserveConfig, nextTick } from "ober";
 import { ReactDOMUtil } from "./util";
 import { name } from "./info";
 
-export { name, version } from "./info";
+export { version } from "./info";
 export { observer } from "./observer";
 export { useWatch, useAutoRun } from "./hooks";
 
 export {
   observable,
+  action,
+  bind,
+  ObserveInspector,
   ObserveConfig,
-  ObservePerf,
-  ObserveEvent,
   ObserveMode,
+  track,
   untrack,
-  nextTick,
-  watch,
   autorun,
+  watch,
+  nextTick,
 } from "ober";
 
-nextTick.owner.transaction = ReactDOMUtil.unstable_batchedUpdates;
+nextTick.batch = ReactDOMUtil.unstable_batchedUpdates;
 ObserveConfig.logPrefix = name.toLocaleUpperCase();
