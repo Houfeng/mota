@@ -1,1 +1,1 @@
-export const list = new Array(1000).fill({});
+export const list = new Array(10000).fill({});
