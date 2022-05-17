@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "8.0.0-alpha.19",
+  "version": "8.0.0-alpha.20",
   "description": "An extremely lightweight and responsive state management library",
   "module": "./dist/mota-es.js",
   "main": "./dist/mota-cjs.js",
@@ -16,12 +16,12 @@
   },
   "author": {
     "name": "Houfeng",
-    "email": "admin@xhou.net",
+    "email": "houzhanfeng@gmail.com",
     "url": "http://houfeng.net"
   },
   "license": "MIT",
   "dependencies": {
-    "ober": "8.0.0-alpha.8",
+    "ober": "8.0.0",
     "tslib": "*"
   },
   "devDependencies": {
