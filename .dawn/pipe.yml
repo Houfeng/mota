@@ -3,7 +3,9 @@ init:
 
 dev:
   - name: clean
-    target: ./dist/
+    target: 
+      - ./dist/
+      - ./types/
   - name: copy 
     files:
       ./dist/(0).html: ./assets/*.html
@@ -19,6 +21,7 @@ build:
   - name: clean
     target: 
       - ./dist/
+      - ./types/
   - name: ./scripts/info.js
   - name: file-header
     files: ./src/**/*.ts

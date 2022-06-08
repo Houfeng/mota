@@ -23,7 +23,11 @@ const createConf = (page) => {
       commonjs({
         ignoreDynamicRequires: true,
         namedExports: {
-          'node_modules/react/index.js': ['useState', 'useMemo', 'useEffect'],
+          'node_modules/react/index.js': [
+            'useState',
+            'useMemo',
+            'useLayoutEffect'
+          ],
         },
       }),
       typescript({

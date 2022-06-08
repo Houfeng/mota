@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 
 const model = observable({
   __displayName: 'model',
+  error: null,
   name: 'test',
   num: 1,
   add() {
@@ -26,6 +27,7 @@ export const Demo1 = observer(function Demo1() {
           onChange={event => model.name = event.target.value}
         />
         <div>{model.num}</div>
+        <div>{model.error?.message || 'NONE'}</div>
       </div>
     </div>
   )
@@ -82,7 +84,7 @@ export const Demo4 = observer(function Demo4() {
     </div>
   )
 });
- 
+
 @observer
 export class Demo3 extends React.Component {
   state = { name: 'Demo3' };
