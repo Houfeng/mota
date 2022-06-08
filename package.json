@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "8.0.1",
+  "version": "8.0.2",
   "description": "An extremely lightweight and responsive state management library",
   "module": "./dist/mota-es.js",
   "main": "./dist/mota-cjs.js",

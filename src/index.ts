@@ -11,7 +11,7 @@ import { name } from "./info";
 
 export { version } from "./info";
 export { observer } from "./observer";
-export { useWatch, useAutoRun } from "./hooks";
+export { useWatch, useAutoRun, useObservable } from "./hooks";
 
 export {
   observable,

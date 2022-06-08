@@ -1,4 +1,4 @@
-import { observable, observer, useAutoRun, useWatch } from '../src/';
+import { observable, observer, useAutoRun, useObservable, useWatch } from '../src/';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -81,4 +81,21 @@ describe('model', () => {
     }, 100);
   });
 
-});
+  it('useObservable: 在函数组件中声明可观察对象', (done) => {
+    let model: { value: number };
+    const DemoView = observer(() => {
+      model = useObservable({ value: 0 });
+      return <div id="value">{model.value}</div>;
+    });
+    ReactDOM.render(<DemoView />, root);
+    setTimeout(() => {
+      assert.strictEqual(root.querySelector("#value").innerHTML, '0');
+      model.value = 1;
+      setTimeout(() => {
+        assert.strictEqual(root.querySelector("#value").innerHTML, '1');
+        done();
+      }, 100);
+    }, 100);
+  });
+
+});     
