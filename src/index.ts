@@ -19,7 +19,7 @@ export {
   bind,
   ObserveInspector,
   ObserveConfig,
-  ObserveMode,
+  type ObserveMode,
   track,
   untrack,
   autorun,

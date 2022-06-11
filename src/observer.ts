@@ -18,13 +18,13 @@ import { isSyncRequired } from "./input";
 function createReactiver(
   render: (...args: any[]) => ReactNode,
   requestUpdate: () => void,
-  lazySubscribe = false
+  bind = true
 ) {
-  const trigger = (info: ObserveData) =>
-    isSyncRequired(info.value)
+  const update = (info: ObserveData) =>
+    isSyncRequired(info?.value)
       ? requestUpdate()
-      : nextTick(requestUpdate, false);
-  return reactivable(render, trigger, lazySubscribe);
+      : nextTick(requestUpdate, true);
+  return reactivable(render, { bind, update });
 }
 
 function getDisplayName(
@@ -60,7 +60,7 @@ function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
   const Wrapper = (...args: any[]) => {
     const setState = useState({})[1];
     const reactiver = useMemo(() => {
-      return createReactiver(FC, () => setState({}), true);
+      return createReactiver(FC, () => setState({}), false);
     }, []);
     useLayoutEffect(() => {
       reactiver.subscribe();
