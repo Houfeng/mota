@@ -20,7 +20,7 @@ function createReactiver(
   requestUpdate: () => void,
   bind = true
 ) {
-  const update = (info: ObserveData) =>
+  const update = (info?: ObserveData) =>
     isSyncRequired(info?.value)
       ? requestUpdate()
       : nextTick(requestUpdate, true);
@@ -37,7 +37,7 @@ function getDisplayName(
 function wrapClassComponent<T extends ComponentClass>(Component: T): T {
   const Wrapper = class extends Component {
     static displayName = getDisplayName(Component, "Component");
-    private __reactiver__: ReactiveFunction;
+    private __reactiver__!: ReactiveFunction;
     render(): ReactNode {
       if (this.constructor !== Wrapper) return super.render();
       if (!this.__reactiver__) {
@@ -49,7 +49,7 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
       return this.__reactiver__();
     }
     componentWillUnmount(): void {
-      this.__reactiver__.unsubscribe();
+      this.__reactiver__!.unsubscribe!();
       super.componentWillUnmount?.();
     }
   };
@@ -63,7 +63,7 @@ function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
       return createReactiver(FC, () => setState({}), false);
     }, []);
     useLayoutEffect(() => {
-      reactiver.subscribe();
+      reactiver.subscribe!();
       return reactiver.unsubscribe;
     }, [reactiver]);
     return reactiver(...args);
