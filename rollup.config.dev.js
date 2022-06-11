@@ -1,4 +1,3 @@
-import { ObserveMode } from 'ober';
 import commonjs from 'rollup-plugin-commonjs';
 import injectProcessEnv from 'rollup-plugin-inject-process-env';
 import path from 'path';
@@ -37,7 +36,7 @@ const createConf = (page) => {
       sourcemaps(),
       injectProcessEnv({
         NODE_ENV: 'production',
-        OBER_CONFIG: { mode: ObserveMode.property },
+        OBER_CONFIG: { mode: 'property' },
       }),
     ]
   };

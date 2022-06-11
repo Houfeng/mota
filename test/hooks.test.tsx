@@ -1,10 +1,9 @@
+import { $, root } from './helpers/dom';
 import { observable, observer, useAutoRun, useObservable, useWatch } from '../src/';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import assert from 'assert';
-
-const root = document.querySelector('.root');
 
 @observable
 class DemoModel {
@@ -26,10 +25,10 @@ describe('model', () => {
     });
     ReactDOM.render(<DemoView model={demo} />, root);
     setTimeout(() => {
-      assert.strictEqual(root.querySelector("#value").innerHTML, '0');
+      assert.strictEqual($("#value").innerHTML, '0');
       demo.value = 1;
       setTimeout(() => {
-        assert.strictEqual(root.querySelector("#value").innerHTML, '1');
+        assert.strictEqual($("#value").innerHTML, '1');
         assert.strictEqual(runCount, 1);
         done();
       }, 100);
@@ -48,10 +47,10 @@ describe('model', () => {
     });
     ReactDOM.render(<DemoView model={demo} />, root);
     setTimeout(() => {
-      assert.strictEqual(root.querySelector("#value").innerHTML, '0');
+      assert.strictEqual($("#value").innerHTML, '0');
       demo.value = 1;
       setTimeout(() => {
-        assert.strictEqual(root.querySelector("#value").innerHTML, '1');
+        assert.strictEqual($("#value").innerHTML, '1');
         assert.strictEqual(runCount, 2);
         done();
       }, 100);
@@ -71,10 +70,10 @@ describe('model', () => {
     });
     ReactDOM.render(<DemoView model={demo} />, root);
     setTimeout(() => {
-      assert.strictEqual(root.querySelector("#value").innerHTML, '0');
+      assert.strictEqual($("#value").innerHTML, '0');
       demo.value = 1;
       setTimeout(() => {
-        assert.strictEqual(root.querySelector("#value").innerHTML, '1');
+        assert.strictEqual($("#value").innerHTML, '1');
         assert.strictEqual(runCount, 2);
         done();
       }, 100);
@@ -89,10 +88,10 @@ describe('model', () => {
     });
     ReactDOM.render(<DemoView />, root);
     setTimeout(() => {
-      assert.strictEqual(root.querySelector("#value").innerHTML, '0');
+      assert.strictEqual($("#value").innerHTML, '0');
       model.value = 1;
       setTimeout(() => {
-        assert.strictEqual(root.querySelector("#value").innerHTML, '1');
+        assert.strictEqual($("#value").innerHTML, '1');
         done();
       }, 100);
     }, 100);

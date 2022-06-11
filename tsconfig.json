@@ -11,6 +11,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "esModuleInterop": true,
+    "jsx": "react",
     /* 严格检查 */
     "strict": true,
     "noImplicitAny": true,
