@@ -72,6 +72,11 @@ function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
   return Wrapper as T;
 }
 
+/**
+ * 将一个组件转换为可响应组件
+ * @param target 原类组件或函数组件
+ * @returns 具有响应能力的组件
+ */
 export function observer<T extends ComponentType>(target: T) {
   if (!target) return target;
   const Wrapper = isClassComponent(target)
