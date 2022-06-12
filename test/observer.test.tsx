@@ -1,10 +1,9 @@
+import { $, root } from './helpers/dom';
 import React, { Component } from 'react';
 import { observable, observer } from '../src/';
 
 import ReactDOM from 'react-dom';
 import assert from 'assert';
-
-const root = document.querySelector('.root');
 
 @observable
 class DemoModel {
@@ -31,12 +30,12 @@ describe('model', () => {
     }
     ReactDOM.render(<DemoView model={demo} />, root);
     setTimeout(() => {
-      assert.strictEqual(root.querySelector("#value").innerHTML, '0');
+      assert.strictEqual($("#value").innerHTML, '0');
       renderCount = 0;
       demo.value = 1;
       demo.value = 2;
       setTimeout(() => {
-        assert.strictEqual(root.querySelector("#value").innerHTML, '2');
+        assert.strictEqual($("#value").innerHTML, '2');
         assert.strictEqual(renderCount, 1);
         done();
       }, 100);
@@ -57,12 +56,12 @@ describe('model', () => {
     )
     ReactDOM.render(<DemoView model={demo} />, root);
     setTimeout(() => {
-      assert.strictEqual(root.querySelector("#value").innerHTML, '0');
+      assert.strictEqual($("#value").innerHTML, '0');
       renderCount = 0;
       demo.value = 1;
       demo.value = 2;
       setTimeout(() => {
-        assert.strictEqual(root.querySelector("#value").innerHTML, '2');
+        assert.strictEqual($("#value").innerHTML, '2');
         assert.strictEqual(renderCount, 1);
         done();
       }, 100);
@@ -79,12 +78,12 @@ describe('model', () => {
     });
     ReactDOM.render(<DemoView model={demo} />, root);
     setTimeout(() => {
-      assert.strictEqual(root.querySelector("#value").innerHTML, '0');
+      assert.strictEqual($("#value").innerHTML, '0');
       renderCount = 0;
       demo.value = 1;
       demo.value = 2;
       setTimeout(() => {
-        assert.strictEqual(root.querySelector("#value").innerHTML, '2');
+        assert.strictEqual($("#value").innerHTML, '2');
         assert.strictEqual(renderCount, 1);
         done();
       }, 100);

@@ -1,9 +1,12 @@
+import { ObserveConfig, observable, observer } from "../src";
 import React, { StrictMode } from 'react';
-import { observable, observer } from "../src";
 
 import ReactDOM from 'react-dom';
 import { list } from './data';
 import { useEffect } from 'react';
+
+ObserveConfig.maxDependencies = Number.MAX_SAFE_INTEGER;
+ObserveConfig.maxHandlers = Number.MAX_SAFE_INTEGER;
 
 let renderCount = 0;
 
@@ -29,7 +32,7 @@ const test = () => {
 const itemStyle = {
   padding: 4, margin: 2, background: '#eee', display: 'inline-block',
 }
- 
+
 const Item = observer(function Item() {
   const { count } = model;
   useEffect(() => markRender(), [count]);

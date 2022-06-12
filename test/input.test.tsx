@@ -1,10 +1,9 @@
+import { $, root } from './helpers/dom';
 import { observable, observer } from '../src/';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import assert from 'assert';
-
-const root = document.querySelector('.root');
 
 @observable
 class DemoModel {
@@ -29,7 +28,7 @@ describe('model', () => {
     ReactDOM.render(<DemoView model={demo} />, root);
     setTimeout(() => {
       assert.strictEqual(
-        root.querySelector<HTMLInputElement>("#value").value, '0'
+        $<HTMLInputElement>("#value").value, '0'
       );
       window.eval(`
         const input = document.querySelector("#value");
@@ -39,7 +38,7 @@ describe('model', () => {
       `);
       setTimeout(() => {
         assert.strictEqual(
-          root.querySelector<HTMLInputElement>("#value").value, '1'
+          $<HTMLInputElement>("#value").value, '1'
         );
         done();
       }, 100);

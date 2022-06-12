@@ -18,13 +18,13 @@ import { isSyncRequired } from "./input";
 function createReactiver(
   render: (...args: any[]) => ReactNode,
   requestUpdate: () => void,
-  lazySubscribe = false
+  bind = true
 ) {
-  const trigger = (info: ObserveData) =>
-    isSyncRequired(info.value)
+  const update = (info?: ObserveData) =>
+    isSyncRequired(info?.value)
       ? requestUpdate()
-      : nextTick(requestUpdate, false);
-  return reactivable(render, trigger, lazySubscribe);
+      : nextTick(requestUpdate, true);
+  return reactivable(render, { bind, update, batch: false });
 }
 
 function getDisplayName(
@@ -37,7 +37,7 @@ function getDisplayName(
 function wrapClassComponent<T extends ComponentClass>(Component: T): T {
   const Wrapper = class extends Component {
     static displayName = getDisplayName(Component, "Component");
-    private __reactiver__: ReactiveFunction;
+    private __reactiver__!: ReactiveFunction;
     render(): ReactNode {
       if (this.constructor !== Wrapper) return super.render();
       if (!this.__reactiver__) {
@@ -49,7 +49,7 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
       return this.__reactiver__();
     }
     componentWillUnmount(): void {
-      this.__reactiver__.unsubscribe();
+      this.__reactiver__!.unsubscribe!();
       super.componentWillUnmount?.();
     }
   };
@@ -60,10 +60,10 @@ function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
   const Wrapper = (...args: any[]) => {
     const setState = useState({})[1];
     const reactiver = useMemo(() => {
-      return createReactiver(FC, () => setState({}), true);
+      return createReactiver(FC, () => setState({}), false);
     }, []);
     useLayoutEffect(() => {
-      reactiver.subscribe();
+      reactiver.subscribe!();
       return reactiver.unsubscribe;
     }, [reactiver]);
     return reactiver(...args);
@@ -72,6 +72,11 @@ function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
   return Wrapper as T;
 }
 
+/**
+ * 将一个组件转换为可响应组件
+ * @param target 原类组件或函数组件
+ * @returns 具有响应能力的组件
+ */
 export function observer<T extends ComponentType>(target: T) {
   if (!target) return target;
   const Wrapper = isClassComponent(target)

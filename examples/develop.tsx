@@ -1,5 +1,5 @@
-import React, { StrictMode, memo, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
-import { observable, observer, useWatch } from "../src";
+import React, { Fragment, memo, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
+import { computed, observable, observer, useObservable, useWatch } from "../src";
 
 import ReactDOM from 'react-dom';
 
@@ -9,9 +9,30 @@ const model = observable({
   name: 'test',
   num: 1,
   add() {
-    this.num += 1;
+    this.num += 1; 
   }
 })
+
+@observable
+class User {
+  firstName = "Feng";
+  lastName = "Hou";
+  age = 1;
+  @computed
+  get fullName() {
+    return `${this.firstName} ${this.lastName}: ${this.age}`;
+  }
+}
+
+const UserView = observer(function () {
+  const user = useObservable(() => new User());
+  return (
+    <div>
+      <strong>{user.fullName}</strong>
+      <div><button onClick={() => user.age++}>click</button></div>
+    </div>
+  )
+});
 
 export const Demo1 = observer(function Demo1() {
   useWatch(() => model.num > 100, () => {
@@ -110,12 +131,13 @@ export const Demo3_1 = memo(observer(function Demo3_1() {
 
 const App = () => {
   return (
-    <StrictMode>
+    <Fragment>
+      <UserView />
       <Demo1 />
       <Demo2 />
       <Demo3 />
       <Demo4 />
-    </StrictMode>
+    </Fragment>
   )
 }
 

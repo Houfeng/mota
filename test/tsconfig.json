@@ -1,28 +1,7 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/",
-    "declarationDir": "./types/",
-    "sourceMap": false,
-    "allowJs": false,
-    "declaration": true,
-    "noImplicitAny": true,
-    "module": "ESNext",
-    "target": "es5",
-    "removeComments": true,
     "jsx": "react",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "moduleResolution": "node",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "importHelpers": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "lib": [
-      "dom",
-      "es2017"
-    ]
   },
   "include": [
     "./**/*.tsx"
