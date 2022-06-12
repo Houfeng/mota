@@ -7,8 +7,6 @@
 import { DependencyList, useCallback, useLayoutEffect, useMemo } from "react";
 import { autorun, computable, observable, watch } from "ober";
 
-import { AnyFunction } from "./util";
-
 /**
  * 在函数组件中即时创建一个可观察对象
  * @param value 对象或创建对象的函数
@@ -52,7 +50,7 @@ export function useAutoRun(handler: () => void) {
  * @param fn 计算函数
  * @returns 计算结果
  */
-export function useComputed<T extends AnyFunction>(fn: T): T {
+export function useComputed<T>(fn: () => T): T {
   const compute = useCallback(computable(fn, { bind: false }), []);
   useLayoutEffect(() => {
     compute.subscribe!();
