@@ -24,7 +24,7 @@ function createReactiver(
     isSyncRequired(info?.value)
       ? requestUpdate()
       : nextTick(requestUpdate, true);
-  return reactivable(render, { bind, update });
+  return reactivable(render, { bind, update, batch: false });
 }
 
 function getDisplayName(
