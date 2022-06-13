@@ -5,4 +5,4 @@
  */
 
 export const name = "mota";
-export const version = "8.1.1";
+export const version = "8.1.2";
