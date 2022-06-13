@@ -32,14 +32,14 @@ const model = observable({ count: 0 });
 const add = ()=>model.count++;
 
 const View1 = observer(() {
-  return <div>{model.count}</div>
+  return <div>{model.count}</div>;
 });
 
 const View2 = observer(() {
   return <div>
     <span>{model.count}</span>
     <button onClick={add}>click<button>
-  </div>
+  </div>;
 });
 ```
 
@@ -53,7 +53,7 @@ const View = observer(() {
   return <div>
     <span>{model.count}</span>
     <button onClick={()=>model.count++}>click<button>
-  </div>
+  </div>;
 });
 ```
 
@@ -69,8 +69,10 @@ const user = observable({
 
 const View = observer(() {
   // The fullName will be cached and responsive
-  const fullName = useComputed(()=>`${user.firstName} ${user.lastName}`);
-  return <div>{fullName}</div>
+  const fullName = useComputed(()=>{
+    return `${user.firstName} ${user.lastName}`;
+  });
+  return <div>{fullName}</div>;
 });
 ```
 
@@ -88,7 +90,7 @@ const View = observer(() {
   useAutoRun(()=>{
     console.log('count:', model.count);
   });
-  return <div>{model.count}</div>
+  return <div>{model.count}</div>;
 });
 ```
 
@@ -105,7 +107,7 @@ const View = observer(() {
   useWatch(()=>model.count%10, (oldValue, newValue)=>{
     console.log(`old: ${oldValue}, new: ${newValue}`);
   });
-  return <div>{model.count}</div>
+  return <div>{model.count}</div>;
 });
 ```
 
@@ -141,7 +143,7 @@ class View extends React.Component {
     return <div>
       <span>{this.message}</span>
       <button onClick={this.add}>click<button>
-    </div>
+    </div>;
   }
 }
 ```
@@ -168,7 +170,7 @@ class View extends React.Component {
     return <div>
       <span>{this.model.message}</span>
       <button onClick={()=>this.model.add()}>click<button>
-    </div>
+    </div>;
   }
 }
 ```

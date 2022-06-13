@@ -21,9 +21,7 @@ function createReactiver(
   bind = true
 ) {
   const update = (info?: ObserveData) =>
-    isSyncRequired(info?.value)
-      ? requestUpdate()
-      : nextTick(requestUpdate, true);
+    isSyncRequired(info?.value) ? requestUpdate() : nextTick(requestUpdate);
   return reactivable(render, { bind, update, batch: false });
 }
 

@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 ObserveConfig.maxDependencies = Number.MAX_SAFE_INTEGER;
 ObserveConfig.maxHandlers = Number.MAX_SAFE_INTEGER;
-
+   
 let renderCount = 0;
 
 const markRender = () => {
