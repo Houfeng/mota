@@ -4,7 +4,7 @@
 
 [![npm](https://img.shields.io/npm/l/mota.svg)](LICENSE.md)
 [![NPM Version](https://img.shields.io/npm/v/mota.svg)](https://www.npmjs.com/package/mota)
-[![Build Status](https://www.travis-ci.org/Houfeng/mota.svg?branch=master)](https://www.travis-ci.org/Houfeng/mota)
+<!-- [![Build Status](https://www.travis-ci.org/Houfeng/mota.svg?branch=master)](https://www.travis-ci.org/Houfeng/mota) -->
 [![Coverage Status](https://coveralls.io/repos/github/Houfeng/mota/badge.svg?branch=master)](https://coveralls.io/github/Houfeng/mota?branch=master)
 [![npm](https://img.shields.io/npm/dt/mota.svg)](https://www.npmjs.com/package/mota)
 
@@ -12,105 +12,82 @@
 
 # Overview
 
-Mota 是一个「极轻量、可响应」的状态管理库，不足 5KB，开发人员可利用它编写「几乎框架无关的纯 JS/TS 业务模型」，然后通过 Mota 简便的让 React 组件响应模型的变化。
+Mota is a "lightweight and responsive" state management library, which is less than 5KB. Developers can use it to write "almost framework independent pure js/ts business models", and then use Mota to simply let react components respond to model changes.
 
 # Install
 
-通过 npm 安装，如下
+Install through NPM as follows
 ```sh
 $ npm install mota --save
 ```
 
 # Usage
 
-```js
-import { Component } from "react";
-import { observable, observer, useWatch, watch } from "mota";
+Example 1: Hello Mota
 
-// 编写一个模型类
-@observable
-class DemoModel {
-  count = 0;
-  add = ()=>{
-    this.count += 1;
-  }
-}
+```jsx
+import { observable, observer } from "mota";
 
-// 创建一个模型实例
-const demo = DemoModel();
+const model = observable({ count: 0 });
+const add = ()=>model.count++;
 
-// 直接声明一个对象
-const info = observable({
-  title: 'test',
+const View1 = observer(() {
+  return <div>{model.count}</div>
 });
 
-// 在类组件中使用一
-@observer
-class DemoView1 extends Component{
-  // 创建一个组件实例对应和模型实例
-  model = new DemoModel();
-  render() {
-    const {count, add} = this.model
-    return (
-      <div>
-        <div>{info.title}</div>
-        <div>{count}</div>
-        <button onClick={add}>Add</button>
-      </div>
-    );
-  }
-}
+const View2 = observer(() {
+  return <div>
+    <span>{model.count}</span>
+    <button onClick={add}>click<button>
+  </div>
+});
+```
 
-// 在类组件中使用二
-@observer
-class DemoView2 extends Component{
-  render() {
-    return (
-      <div>
-        <div>{info.title}</div>
-        <div>{demo.count}</div>
-      </div>
-    );
-  }
-}
+Example 2: Using useObservable
 
-// 在函数组件中使用
-const DemoView3 = observer(()=>{
-  return (
-    <div>{model.count}</div>
-  )
+```jsx
+import { observer, useObservable } from "mota";
+
+const View = observer(() {
+  const model = useObservable({ count: 0 });
+  return <div>
+    <span>{model.count}</span>
+    <button onClick={()=>model.count++}>click<button>
+  </div>
+});
+```
+
+Example 3: Using useComputed
+
+```jsx
+import { observer, observable, useComputed } from "mota";
+
+const user = observable({ 
+  firstName: 'Feng',
+  lastName: 'Hou'
 });
 
-// 监听数据变化
-const DemoView4 = ()=>{
-  // useWatch 的第一个参数是计算函数，
-  // 计处函数的返回结果发生变化时, 将执行第二个处理函数
-  useWatch(()=>model.count,()=>{
-    console.log('model.count', model.count);
+const View = observer(() {
+  // The fullName will be cached and responsive
+  const fullName = useComputed(()=>`${user.firstName} ${user.lastName}`);
+  return <div>{fullName}</div>
+});
+```
+
+
+Example 4: Using useAutoRun
+
+```jsx
+import { observer, observable, useAutoRun } from "mota";
+
+const model = observable({ count: 0 });
+
+const View = observer(() {
+  // When the count changes, 
+  // it will be automatically re executed and printed 'count: n'
+  useAutoRun(()=>{
+    console.log('count:', model.count);
   });
-  return (
-    <div>{model.count}</div>
-  )
-};
-
-// 在任意地方使用 watch 
-const destroy = watch(()=>model.count,()=>{
-  console.log('model.count', model.count);
+  return <div>{model.count}</div>
 });
-
-// 取消观察
-destroy();
-
-// 在类组件中使用 watch
-class DemoView5 extends Component {
-  componentDidMount(){
-    this.destroyWatch = watch(()=>model.count,()=>{
-     console.log('model.count', model.count);
-    });
-  }
-  componentWillUnmount(){
-    if(this.destroyWatch) this.destroyWatch();
-  }
-}
-
 ```
