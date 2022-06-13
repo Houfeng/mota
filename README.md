@@ -23,7 +23,7 @@ $ npm install mota --save
 
 # Usage
 
-Example 1: Hello Mota
+**Example 1**: Hello Mota
 
 ```jsx
 import { observable, observer } from "mota";
@@ -43,7 +43,7 @@ const View2 = observer(() {
 });
 ```
 
-Example 2: Using useObservable
+**Example 2**: Using useObservable
 
 ```jsx
 import { observer, useObservable } from "mota";
@@ -57,7 +57,7 @@ const View = observer(() {
 });
 ```
 
-Example 3: Using useComputed
+**Example 3**: Using useComputed
 
 ```jsx
 import { observer, observable, useComputed } from "mota";
@@ -75,7 +75,7 @@ const View = observer(() {
 ```
 
 
-Example 4: Using useAutoRun
+**Example 4**: Using useAutoRun
 
 ```jsx
 import { observer, observable, useAutoRun } from "mota";
@@ -90,4 +90,85 @@ const View = observer(() {
   });
   return <div>{model.count}</div>
 });
+```
+
+**Example 5**: Using useWatch
+
+```jsx
+import { observer, observable, useWatch } from "mota";
+
+const model = observable({ count: 0 });
+
+const View = observer(() {
+  // When the result of the evaluation function changes,
+  // the processing function is re executed.
+  useWatch(()=>model.count%10, (oldValue, newValue)=>{
+    console.log(`old: ${oldValue}, new: ${newValue}`);
+  });
+  return <div>{model.count}</div>
+});
+```
+
+**Example 6**: Using in class components
+
+```jsx
+import { observer, observable, autorun, watch } from "mota";
+
+const model = observable({ count: 0 });
+
+class View extends React.Component {
+  add = ()=> model.count++;
+
+  componentDidMount(){
+    this.destroyAutoRun = autorun(()=>{
+      console.log('autorun count: ', model.count);
+    });
+    this.destroyWatch = watch(()=> model.count%10, ()=>{
+      console.log('autorun count: ', model.count);
+    });
+  }
+
+  componentWillUnmount(){
+    this.destroyAutoRun();
+    this.destroyWatch();
+  }
+
+  @computed get message(){
+    return `count: ${model.count}`;
+  }
+
+  render() {
+    return <div>
+      <span>{this.message}</span>
+      <button onClick={this.add}>click<button>
+    </div>
+  }
+}
+```
+
+**Example 7**: Using multiple instances in class components
+
+```jsx
+import { observer, observable, autorun, watch } from "mota";
+
+@observable
+class Model {
+  count = 0;
+  add () {
+    this.count++;
+  }
+  @computed get message(){
+    return `count: ${model.count}`;
+  }
+}
+
+class View extends React.Component {
+  model = new Model();
+  render() {
+    return <div>
+      <span>{this.model.message}</span>
+      <button onClick={()=>this.model.add()}>click<button>
+    </div>
+  }
+}
 ```
