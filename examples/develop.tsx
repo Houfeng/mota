@@ -1,5 +1,5 @@
 import React, { Fragment, memo, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
-import { computed, observable, observer, useObservable, useWatch } from "../src";
+import { computed, observable, observer, printDependencies, useObservable, useWatch } from "../src";
 
 import ReactDOM from 'react-dom';
 
@@ -9,7 +9,7 @@ const model = observable({
   name: 'test',
   num: 1,
   add() {
-    this.num += 1; 
+    this.num += 1;
   }
 })
 
@@ -24,7 +24,7 @@ class User {
   }
 }
 
-const UserView = observer(function () {
+const UserView = observer(function UserView() {
   const user = useObservable(() => new User());
   return (
     <div>
@@ -35,6 +35,7 @@ const UserView = observer(function () {
 });
 
 export const Demo1 = observer(function Demo1() {
+  printDependencies("Demo1 依赖");
   useWatch(() => model.num > 100, () => {
     console.log("num:", model.num);
   });
@@ -105,7 +106,7 @@ export const Demo4 = observer(function Demo4() {
     </div>
   )
 });
- 
+
 @observer
 export class Demo3 extends React.Component {
   state = { name: 'Demo3' };

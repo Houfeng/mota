@@ -13,7 +13,7 @@ const markRender = () => {
   renderCount++;
   if (renderCount >= list.length) {
     console.timeEnd('time');
-  }
+  } 
 }
 
 const model = observable({
