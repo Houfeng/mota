@@ -1,0 +1,14 @@
+{
+  "name": "mota-examples",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Houfeng",
+  "license": "MIT",
+  "dependencies": {
+    "mota": "^7.3.8"
+  }
+}

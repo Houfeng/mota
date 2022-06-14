@@ -66,6 +66,7 @@ function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
     }, [reactiver]);
     return reactiver(...args);
   };
+  Object.defineProperties(Wrapper, Object.getOwnPropertyDescriptors(FC));
   Wrapper.displayName = getDisplayName(FC, "FC");
   return Wrapper as T;
 }

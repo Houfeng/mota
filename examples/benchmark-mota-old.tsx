@@ -1,4 +1,6 @@
-import { ObserveConfig, observable, observer } from "../src";
+import "./fix-require-error";
+
+import { ObserveConfig, observable, useModel } from "mota";
 import React, { StrictMode, useEffect } from 'react';
 
 import ReactDOM from 'react-dom';
@@ -7,10 +9,10 @@ import { list } from './data';
 ObserveConfig.maxDependencies = Number.MAX_SAFE_INTEGER;
 ObserveConfig.maxHandlers = Number.MAX_SAFE_INTEGER;
 
-let renderCount = 0;
+let renderCount = 0; 
 
 const markRender = () => {
-  renderCount++;
+  renderCount++; 
   if (renderCount >= list.length) {
     console.timeEnd('time');
   }
@@ -32,8 +34,8 @@ const itemStyle = {
   padding: 4, margin: 2, background: '#eee', display: 'inline-block',
 }
 
-const Item = observer(function Item() {
-  const { count } = model;
+const Item = (function Item() {
+  const { count } = useModel(model);
   useEffect(() => markRender(), [count]);
   return (
     <span x-data={count} style={itemStyle}>{count}</span>

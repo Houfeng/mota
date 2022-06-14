@@ -5,6 +5,11 @@ import resolve from 'rollup-plugin-node-resolve';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 
+const externals = {
+  'react': 'React',
+  'react-dom': 'ReactDOM',
+}
+
 const createConf = (page) => {
   return {
     input: `./examples/${page}.tsx`,
@@ -13,22 +18,14 @@ const createConf = (page) => {
         file: `./dist/js/${page}.js`,
         format: 'iife',
         sourcemap: true,
-        name: 'Mota'
+        name: page.split('-').join('_'),
+        globals: externals,
       }
     ],
-    external: ['react', 'react-dom'],
+    external: Object.keys(externals),
     plugins: [
       resolve(),
-      commonjs({
-        ignoreDynamicRequires: true,
-        namedExports: {
-          'node_modules/react/index.js': [
-            'useState',
-            'useMemo',
-            'useLayoutEffect'
-          ],
-        },
-      }),
+      commonjs(),
       typescript({
         useTsconfigDeclarationDir: true,
         tsconfig: path.resolve(__dirname, './tsconfig.dev.json')
@@ -45,5 +42,6 @@ const createConf = (page) => {
 export default [
   createConf('develop'),
   createConf('benchmark-mota'),
+  createConf('benchmark-mota-old'),
   createConf('benchmark-normal'),
 ];

@@ -24,6 +24,17 @@
     "ober": "8.2.8",
     "tslib": "*"
   },
+  "peerDependencies": {
+    "react": "*"
+  },
+  "peerDependenciesMeta": {
+    "react-dom": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@types/mocha": "9.1.1",
     "@types/react": "*",
@@ -48,7 +59,6 @@
     "prettier": "2.6.2",
     "react": "*",
     "react-dom": "*",
-    "react-router-dom": "^4.3.1",
     "rollup": "^2.2.0",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-commonjs": "^10.1.0",
