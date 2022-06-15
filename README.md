@@ -31,11 +31,11 @@ import { observable, observer } from "mota";
 const model = observable({ count: 0 });
 const add = ()=>model.count++;
 
-const View1 = observer(() {
+const View1 = observer(() => {
   return <div>{model.count}</div>;
 });
 
-const View2 = observer(() {
+const View2 = observer(() => {
   return <div>
     <span>{model.count}</span>
     <button onClick={add}>click<button>
@@ -48,7 +48,7 @@ const View2 = observer(() {
 ```jsx
 import { observer, useObservable } from "mota";
 
-const View = observer(() {
+const View = observer(() => {
   const model = useObservable({ count: 0 });
   return <div>
     <span>{model.count}</span>
@@ -67,7 +67,7 @@ const user = observable({
   lastName: 'Hou'
 });
 
-const View = observer(() {
+const View = observer(() => {
   // The fullName will be cached and responsive
   const fullName = useComputed(()=>{
     return `${user.firstName} ${user.lastName}`;
@@ -84,7 +84,7 @@ import { observer, observable, useAutoRun } from "mota";
 
 const model = observable({ count: 0 });
 
-const View = observer(() {
+const View = observer(() => {
   // When the count changes, 
   // it will be automatically re executed and printed 'count: n'
   useAutoRun(()=>{
@@ -101,7 +101,7 @@ import { observer, observable, useWatch } from "mota";
 
 const model = observable({ count: 0 });
 
-const View = observer(() {
+const View = observer(() => {
   // When the result of the evaluation function changes,
   // the processing function is re executed.
   useWatch(()=>model.count%10, (oldValue, newValue)=>{
@@ -118,6 +118,7 @@ import { observer, observable, autorun, watch } from "mota";
 
 const model = observable({ count: 0 });
 
+@observer
 class View extends React.Component {
   add = ()=> model.count++;
 
@@ -164,6 +165,7 @@ class Model {
   }
 }
 
+@observer
 class View extends React.Component {
   model = new Model();
   render() {
