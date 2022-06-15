@@ -21,7 +21,6 @@ const model = observable({
   count: 0,
 });
 
-console.time('time');
 const test = () => {
   console.time('time');
   renderCount = 0;

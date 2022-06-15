@@ -16,7 +16,6 @@ const itemStyle = {
   padding: 4, margin: 2, background: '#eee', display: 'inline-block',
 }
 
-console.time('time');
 const context = createContext(0);
 
 const Item = () => {
