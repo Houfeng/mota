@@ -1,7 +1,7 @@
 import React, { Fragment, memo, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
 import { computed, observable, observer, printDependencies, useObservable, useWatch } from "../src";
 
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const model = observable({
   __displayName: 'model',
@@ -142,11 +142,8 @@ const App = () => {
   )
 }
 
-//@ts-ignore
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root = createRoot(document.getElementById('root'))
 root.render(<App />);
-
-// ReactDOM.render(<App />, document.getElementById('root'));
 
 //@ts-ignore
 window.model = model; 

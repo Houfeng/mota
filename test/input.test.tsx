@@ -1,8 +1,7 @@
-import { $, root } from './helpers/dom';
+import { $, render } from './helpers/renderer';
 import { observable, observer } from '../src/';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import assert from 'assert';
 
 @observable
@@ -10,7 +9,7 @@ class DemoModel {
   value = '0';
 }
 
-describe('model', () => {
+describe('input', () => {
 
   it('Input: 输入处理', (done) => {
     const demo = new DemoModel();
@@ -25,7 +24,7 @@ describe('model', () => {
         </div>
       );
     });
-    ReactDOM.render(<DemoView model={demo} />, root);
+    render(<DemoView model={demo} />);
     setTimeout(() => {
       assert.strictEqual(
         $<HTMLInputElement>("#value").value, '0'
