@@ -20,13 +20,13 @@ export {
   autorun,
   watch,
   nextTick,
-  ObserveInspector,
   ObserveConfig,
+  ObserveInspector,
+  takeDependencies,
   type ObserveMode,
 } from "ober";
 
 export { version } from "./info";
-export { printDependencies } from "./debug";
 
 export { observer } from "./observer";
 export { useObservable, useWatch, useAutoRun, useComputed } from "./hooks";

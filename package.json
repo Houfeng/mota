@@ -21,7 +21,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "ober": "8.2.9",
+    "ober": "8.2.10",
     "tslib": "*"
   },
   "peerDependencies": {

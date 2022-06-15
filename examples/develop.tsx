@@ -1,5 +1,5 @@
 import React, { Fragment, memo, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
-import { computed, observable, observer, printDependencies, useObservable, useWatch } from "../src";
+import { computed, observable, observer, takeDependencies, useObservable, useWatch } from "../src";
 
 import { createRoot } from 'react-dom/client';
 
@@ -35,7 +35,7 @@ const UserView = observer(function UserView() {
 });
 
 export const Demo1 = observer(function Demo1() {
-  printDependencies("Demo1 依赖");
+  takeDependencies("Demo1 依赖");
   useWatch(() => model.num > 100, () => {
     console.log("num:", model.num);
   });
