@@ -9,6 +9,9 @@
   "author": "Houfeng",
   "license": "MIT",
   "dependencies": {
-    "mota": "^7.3.8"
+    "@reduxjs/toolkit": "^1.8.2",
+    "mota": "^7.3.8",
+    "react-redux": "^8.0.2",
+    "redux": "^4.2.0"
   }
 }

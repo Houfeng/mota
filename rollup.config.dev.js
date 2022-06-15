@@ -25,7 +25,20 @@ const createConf = (page) => {
     external: Object.keys(externals),
     plugins: [
       resolve(),
-      commonjs(),
+      commonjs({
+        namedExports: {
+          'examples/node_modules/react-is/index.js': [
+            'isValidElementType',
+            'isContextConsumer',
+          ],
+          'examples/node_modules/use-sync-external-store/shim/with-selector.js': [
+            'useSyncExternalStoreWithSelector'
+          ],
+          'examples/node_modules/use-sync-external-store/shim/index.js': [
+            'useSyncExternalStore'
+          ]
+        }
+      }),
       typescript({
         useTsconfigDeclarationDir: true,
         tsconfig: path.resolve(__dirname, './tsconfig.dev.json')
@@ -43,5 +56,6 @@ export default [
   createConf('develop'),
   createConf('benchmark-mota'),
   createConf('benchmark-mota-old'),
+  createConf('benchmark-redux'),
   createConf('benchmark-normal'),
 ];

@@ -3,16 +3,16 @@ import "./fix-require-error";
 import { ObserveConfig, observable, useModel } from "mota";
 import React, { StrictMode, useEffect } from 'react';
 
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { list } from './data';
 
 ObserveConfig.maxDependencies = Number.MAX_SAFE_INTEGER;
 ObserveConfig.maxHandlers = Number.MAX_SAFE_INTEGER;
 
-let renderCount = 0; 
+let renderCount = 0;
 
 const markRender = () => {
-  renderCount++; 
+  renderCount++;
   if (renderCount >= list.length) {
     console.timeEnd('time');
   }
@@ -23,7 +23,7 @@ const model = observable({
   count: 0,
 });
 
-const test = () => {
+const increment = () => {
   console.time('time');
   renderCount = 0;
   model.count++;
@@ -44,7 +44,7 @@ const Item = (function Item() {
 const App = () => {
   return (
     <StrictMode>
-      <button onClick={test}>test</button>
+      <button onClick={increment}>Increment</button>
       <div>
         {list.map((_, index) => <Item key={index} />)}
       </div>
@@ -52,6 +52,5 @@ const App = () => {
   )
 }
 
-//@ts-ignore
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root = createRoot(document.getElementById('root'))
 root.render(<App />);

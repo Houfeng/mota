@@ -1,6 +1,6 @@
 import React, { StrictMode, createContext, useCallback, useContext, useEffect, useState } from 'react';
 
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { list } from './data';
 
 let renderCount = 0;
@@ -25,10 +25,10 @@ const Item = () => {
     <span x-data={count} style={itemStyle}>{count}</span>
   )
 };
- 
+
 const App = () => {
   const [count, setCount] = useState(0);
-  const test = useCallback(() => {
+  const increment = useCallback(() => {
     console.time('time');
     renderCount = 0;
     setCount(count + 1);
@@ -36,7 +36,7 @@ const App = () => {
   return (
     <StrictMode>
       <context.Provider value={count}>
-        <button onClick={test}>test</button>
+        <button onClick={increment}>Increment</button>
         <div>
           {list.map((_, index) => <Item key={index} />)}
         </div>
@@ -45,6 +45,5 @@ const App = () => {
   )
 }
 
-//@ts-ignore
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root = createRoot(document.getElementById('root'))
 root.render(<App />);
