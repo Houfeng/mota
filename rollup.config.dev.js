@@ -57,5 +57,6 @@ export default [
   createConf('benchmark-mota'),
   createConf('benchmark-mota-old'),
   createConf('benchmark-redux'),
+  createConf('benchmark-mobx'),
   createConf('benchmark-normal'),
 ];
