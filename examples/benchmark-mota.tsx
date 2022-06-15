@@ -17,7 +17,6 @@ const markRender = () => {
 }
 
 const model = observable({
-  __displayName: 'model',
   count: 0,
 });
 
