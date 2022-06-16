@@ -1,3 +1,4 @@
+import alias from 'rollup-plugin-alias';
 import commonjs from 'rollup-plugin-commonjs';
 import injectProcessEnv from 'rollup-plugin-inject-process-env';
 import path from 'path';
@@ -25,6 +26,12 @@ const createConf = (page) => {
     external: Object.keys(externals),
     plugins: [
       resolve(),
+      alias({
+        resolve: ['.ts', '.tsx'],
+        entries: [
+          { find: 'ober', replacement: '/Users/houfeng/my/dev/ober/src/' },
+        ]
+      }),
       commonjs({
         namedExports: {
           'examples/node_modules/react-is/index.js': [

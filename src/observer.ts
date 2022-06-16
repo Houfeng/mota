@@ -41,7 +41,7 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
       if (!this.__reactiver__) {
         this.__reactiver__ = createReactiver(
           () => super.render(),
-          () => this.setState({})
+          () => this.setState([])
         );
       }
       return this.__reactiver__();
@@ -56,9 +56,9 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
 
 function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
   const Wrapper = (...args: any[]) => {
-    const setState = useState({})[1];
+    const setState = useState([])[1];
     const reactiver = useMemo(() => {
-      return createReactiver(FC, () => setState({}), false);
+      return createReactiver(FC, () => setState([]), false);
     }, []);
     useLayoutEffect(() => {
       reactiver.subscribe!();

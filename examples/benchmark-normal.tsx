@@ -2,13 +2,14 @@ import React, { StrictMode, createContext, useCallback, useContext, useEffect, u
 
 import { createRoot } from 'react-dom/client';
 import { list } from './data';
+import { observable } from '../src';
 
 let renderCount = 0;
 
 const markRender = () => {
   renderCount++;
   if (renderCount >= list.length) {
-    console.timeEnd('time');
+    console.timeEnd('time' );
   }
 }
 
@@ -18,13 +19,18 @@ const itemStyle = {
 
 const context = createContext(0);
 
-const Item = () => {
+export const model = observable({
+  count: 0,
+});
+
+const Item = (() => {
   const count = useContext(context);
   useEffect(() => markRender(), [count]);
+  model.count;
   return (
     <span x-data={count} style={itemStyle}>{count}</span>
   )
-};
+});
 
 const App = () => {
   const [count, setCount] = useState(0);

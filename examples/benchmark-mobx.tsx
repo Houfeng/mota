@@ -14,15 +14,16 @@ const markRender = () => {
   }
 }
 
+
 const model = observable({
-  count: 0,
+  counter: { count: 0 }
 });
 
 const increment = () => {
   console.time('time');
   renderCount = 0;
-  model.count++;
-  model.count++;
+  model.counter.count++;
+  model.counter.count++;
 }
 
 const itemStyle = {
@@ -30,7 +31,7 @@ const itemStyle = {
 }
 
 const Item = observer(function Item() {
-  const { count } = model;
+  const { count } = model.counter;
   useEffect(() => markRender(), [count]);
   return (
     <span x-data={count} style={itemStyle}>{count}</span>

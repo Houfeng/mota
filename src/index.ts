@@ -21,7 +21,7 @@ export {
   watch,
   nextTick,
   ObserveConfig,
-  ObserveInspector,
+  ObserveSpy,
   takeDependencies,
   type ObserveMode,
 } from "ober";

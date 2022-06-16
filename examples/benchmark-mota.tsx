@@ -1,22 +1,22 @@
 import { ObserveConfig, observable, observer } from "../src";
-import React, { StrictMode, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 
 import { createRoot } from 'react-dom/client';
 import { list } from './data';
 
-ObserveConfig.maxDependencies = Number.MAX_SAFE_INTEGER;
-ObserveConfig.maxHandlers = Number.MAX_SAFE_INTEGER;
+ObserveConfig.maxDependencies = Number.MAX_SAFE_INTEGER; 
+ObserveConfig.maxListeners = Number.MAX_SAFE_INTEGER; 
 
-let renderCount = 0;
-
-const markRender = () => {
+let renderCount = 0; 
+ 
+const markRender = () => {   
   renderCount++;
-  if (renderCount >= list.length) {
-    console.timeEnd('time');
+  if (renderCount >= list.length) { 
+    console.timeEnd('time');   
   }
 }
 
-const model = observable({
+const model = observable({  
   count: 0,
 });
 
@@ -40,14 +40,17 @@ const Item = observer(function Item() {
 
 const App = () => {
   return (
-    <StrictMode>
+    <Fragment>
       <button onClick={increment}>Increment</button>
       <div>
         {list.map((_, index) => <Item key={index} />)}
       </div>
-    </StrictMode>
-  )
+    </Fragment>   
+  ) 
 }
 
 const root = createRoot(document.getElementById('root'))
 root.render(<App />);
+
+//@ts-ignore
+window.model = model; 
