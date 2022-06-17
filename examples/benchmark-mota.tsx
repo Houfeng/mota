@@ -4,19 +4,18 @@ import React, { Fragment, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { list } from './data';
 
-ObserveConfig.maxDependencies = Number.MAX_SAFE_INTEGER; 
-ObserveConfig.maxListeners = Number.MAX_SAFE_INTEGER; 
+ObserveConfig.maxListeners = Number.MAX_SAFE_INTEGER;
 
-let renderCount = 0; 
- 
-const markRender = () => {   
+let renderCount = 0;
+
+const markRender = () => {
   renderCount++;
-  if (renderCount >= list.length) { 
-    console.timeEnd('time');   
+  if (renderCount >= list.length) {
+    console.timeEnd('time');
   }
 }
 
-const model = observable({  
+const model = observable({
   count: 0,
 });
 
@@ -45,8 +44,8 @@ const App = () => {
       <div>
         {list.map((_, index) => <Item key={index} />)}
       </div>
-    </Fragment>   
-  ) 
+    </Fragment>
+  )
 }
 
 const root = createRoot(document.getElementById('root'))
