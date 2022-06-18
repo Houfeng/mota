@@ -1,4 +1,3 @@
-import alias from 'rollup-plugin-alias';
 import commonjs from 'rollup-plugin-commonjs';
 import injectProcessEnv from 'rollup-plugin-inject-process-env';
 import path from 'path';
