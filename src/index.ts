@@ -6,8 +6,9 @@
 
 import { ObserveConfig, nextTick } from "ober";
 
-import { ReactDOMUtil } from "./util";
+import { unstable_batchedUpdates } from "./batch";
 import { name } from "./info";
+import { AnyFunction } from "./util";
 
 export {
   observable,
@@ -19,14 +20,20 @@ export {
   autorun,
   watch,
   nextTick,
-  ObserveInspector,
   ObserveConfig,
+  ObserveSpy,
+  takeDependencies,
   type ObserveMode,
 } from "ober";
 
 export { version } from "./info";
+
 export { observer } from "./observer";
 export { useObservable, useWatch, useAutoRun, useComputed } from "./hooks";
 
-nextTick.batch = ReactDOMUtil.unstable_batchedUpdates;
+export function setBatchHandler(fn: AnyFunction) {
+  nextTick.batch = fn;
+}
+
+setBatchHandler(unstable_batchedUpdates);
 ObserveConfig.logPrefix = name.toLocaleUpperCase();

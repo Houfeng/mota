@@ -5,6 +5,11 @@ import resolve from 'rollup-plugin-node-resolve';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 
+const externals = {
+  'react': 'React',
+  'react-dom': 'ReactDOM',
+}
+
 const createConf = (page) => {
   return {
     input: `./examples/${page}.tsx`,
@@ -13,21 +18,26 @@ const createConf = (page) => {
         file: `./dist/js/${page}.js`,
         format: 'iife',
         sourcemap: true,
-        name: 'Mota'
+        name: page.split('-').join('_'),
+        globals: externals,
       }
     ],
-    external: ['react', 'react-dom'],
+    external: Object.keys(externals),
     plugins: [
       resolve(),
       commonjs({
-        ignoreDynamicRequires: true,
         namedExports: {
-          'node_modules/react/index.js': [
-            'useState',
-            'useMemo',
-            'useLayoutEffect'
+          'examples/node_modules/react-is/index.js': [
+            'isValidElementType',
+            'isContextConsumer',
           ],
-        },
+          'examples/node_modules/use-sync-external-store/shim/with-selector.js': [
+            'useSyncExternalStoreWithSelector'
+          ],
+          'examples/node_modules/use-sync-external-store/shim/index.js': [
+            'useSyncExternalStore'
+          ]
+        }
       }),
       typescript({
         useTsconfigDeclarationDir: true,
@@ -45,5 +55,8 @@ const createConf = (page) => {
 export default [
   createConf('develop'),
   createConf('benchmark-mota'),
+  createConf('benchmark-mota-old'),
+  createConf('benchmark-redux'),
+  createConf('benchmark-mobx'),
   createConf('benchmark-normal'),
 ];

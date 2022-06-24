@@ -1,0 +1,18 @@
+{
+  "name": "mota-examples",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Houfeng",
+  "license": "MIT",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.2",
+    "mobx-react": "^7.5.0",
+    "mota": "^7.3.8",
+    "react-redux": "^8.0.2",
+    "redux": "^4.2.0"
+  }
+}

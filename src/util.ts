@@ -27,14 +27,3 @@ export function isClassComponent(
 ): target is ComponentClass {
   return target && !!target.prototype?.render;
 }
-
-export const ReactDOMUtil: any = (() => {
-  if (!inBrowser) return {};
-  if (!hasRequire()) return (window as any).ReactDOM || {};
-  try {
-    const reactDom = require("react-dom") || {};
-    return reactDom || reactDom.default;
-  } catch {
-    return {};
-  }
-})();

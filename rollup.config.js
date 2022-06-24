@@ -3,6 +3,11 @@ import resolve from 'rollup-plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
 
+const externals = {
+  'react': 'React',
+  'react-dom': 'ReactDOM',
+}
+
 const createConf = ({ min } = {}) => {
   const suffix = min ? '.min' : '';
   return {
@@ -19,15 +24,17 @@ const createConf = ({ min } = {}) => {
       {
         file: `./dist/mota-umd${suffix}.js`,
         format: 'umd',
-        name: 'Mota'
+        name: 'Mota',
+        globals: externals,
       },
       {
         file: `./dist/mota-iife${suffix}.js`,
         format: 'iife',
-        name: 'Mota'
+        name: 'Mota',
+        globals: externals,
       }
     ],
-    external: ['react', 'react-dom'],
+    external: Object.keys(externals),
     plugins: [
       resolve(),
       min && terser(),

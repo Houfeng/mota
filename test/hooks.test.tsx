@@ -1,8 +1,7 @@
-import { $, root } from './helpers/dom';
+import { $, render } from './helpers/renderer';
 import { observable, observer, useAutoRun, useObservable, useWatch } from '../src/';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import assert from 'assert';
 
 @observable
@@ -11,7 +10,7 @@ class DemoModel {
   value = 0;
 }
 
-describe('model', () => {
+describe('hooks', () => {
 
   it('useWatch: 观察模型变化', (done) => {
     const demo = new DemoModel();
@@ -23,7 +22,7 @@ describe('model', () => {
       const { value } = props.model;
       return <div id="value">{value}</div>;
     });
-    ReactDOM.render(<DemoView model={demo} />, root);
+    render(<DemoView model={demo} />);
     setTimeout(() => {
       assert.strictEqual($("#value").innerHTML, '0');
       demo.value = 1;
@@ -45,7 +44,7 @@ describe('model', () => {
       const { value } = props.model;
       return <div id="value">{value}</div>;
     });
-    ReactDOM.render(<DemoView model={demo} />, root);
+    render(<DemoView model={demo} />);
     setTimeout(() => {
       assert.strictEqual($("#value").innerHTML, '0');
       demo.value = 1;
@@ -62,13 +61,13 @@ describe('model', () => {
     let runCount = 0;
     const DemoView = observer((props: { model: DemoModel }) => {
       useAutoRun(() => {
-        console.log(demo.value);
+        console.log('      Print:', demo.value);
         runCount++;
       });
       const { value } = props.model;
       return <div id="value">{value}</div>;
     });
-    ReactDOM.render(<DemoView model={demo} />, root);
+    render(<DemoView model={demo} />);
     setTimeout(() => {
       assert.strictEqual($("#value").innerHTML, '0');
       demo.value = 1;
@@ -86,7 +85,7 @@ describe('model', () => {
       model = useObservable({ value: 0 });
       return <div id="value">{model.value}</div>;
     });
-    ReactDOM.render(<DemoView />, root);
+    render(<DemoView />);
     setTimeout(() => {
       assert.strictEqual($("#value").innerHTML, '0');
       model.value = 1;

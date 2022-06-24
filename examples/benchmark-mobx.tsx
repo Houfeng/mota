@@ -1,10 +1,9 @@
-import { ObserveConfig, observable, observer } from "../src";
-import React, { Fragment, useEffect } from 'react';
+import React, { StrictMode, useEffect } from 'react';
 
 import { createRoot } from 'react-dom/client';
 import { list } from './data';
-
-ObserveConfig.maxListeners = Number.MAX_SAFE_INTEGER;
+import { observable } from "mobx";
+import { observer } from "mobx-react";
 
 let renderCount = 0;
 
@@ -15,14 +14,16 @@ const markRender = () => {
   }
 }
 
+
 const model = observable({
-  count: 0,
+  counter: { count: 0 }
 });
 
 const increment = () => {
   console.time('time');
   renderCount = 0;
-  model.count++;
+  model.counter.count++;
+  model.counter.count++;
 }
 
 const itemStyle = {
@@ -30,7 +31,7 @@ const itemStyle = {
 }
 
 const Item = observer(function Item() {
-  const { count } = model;
+  const { count } = model.counter;
   useEffect(() => markRender(), [count]);
   return (
     <span x-data={count} style={itemStyle}>{count}</span>
@@ -39,17 +40,14 @@ const Item = observer(function Item() {
 
 const App = () => {
   return (
-    <Fragment>
+    <StrictMode>
       <button onClick={increment}>Increment</button>
       <div>
         {list.map((_, index) => <Item key={index} />)}
       </div>
-    </Fragment>
+    </StrictMode>
   )
 }
 
 const root = createRoot(document.getElementById('root'))
 root.render(<App />);
-
-//@ts-ignore
-window.model = model; 

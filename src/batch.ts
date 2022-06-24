@@ -4,5 +4,4 @@
  * @author Houfeng <houzhanfeng@gmail.com>
  */
 
-export const name = "mota";
-export const version = "8.1.13";
+export { unstable_batchedUpdates } from "react-dom";

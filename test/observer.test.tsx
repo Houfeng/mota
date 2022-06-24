@@ -1,8 +1,7 @@
-import { $, root } from './helpers/dom';
+import { $, render } from './helpers/renderer';
 import React, { Component } from 'react';
 import { observable, observer } from '../src/';
 
-import ReactDOM from 'react-dom';
 import assert from 'assert';
 
 @observable
@@ -15,7 +14,7 @@ function Label(props: { value: string | number }) {
   return <div id="value">{props.value}</div>
 }
 
-describe('model', () => {
+describe('observer', () => {
 
   it('类组件: 响应模型变化并合并多次更新', (done) => {
     const demo = new DemoModel();
@@ -28,7 +27,7 @@ describe('model', () => {
         return <Label value={value} />;
       }
     }
-    ReactDOM.render(<DemoView model={demo} />, root);
+    render(<DemoView model={demo} />);
     setTimeout(() => {
       assert.strictEqual($("#value").innerHTML, '0');
       renderCount = 0;
@@ -54,7 +53,7 @@ describe('model', () => {
         }
       }
     )
-    ReactDOM.render(<DemoView model={demo} />, root);
+    render(<DemoView model={demo} />);
     setTimeout(() => {
       assert.strictEqual($("#value").innerHTML, '0');
       renderCount = 0;
@@ -76,7 +75,7 @@ describe('model', () => {
       const { value } = props.model;
       return <Label value={value} />;
     });
-    ReactDOM.render(<DemoView model={demo} />, root);
+    render(<DemoView model={demo} />);
     setTimeout(() => {
       assert.strictEqual($("#value").innerHTML, '0');
       renderCount = 0;
