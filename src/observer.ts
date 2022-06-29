@@ -38,7 +38,7 @@ function getDisplayName(
   return target.displayName || target.name || defaultName;
 }
 
-type ComponentObserver = Component & { __reactiver__: ReactiveFunction };
+type ObserverComponent = Component & { __reactiver__: ReactiveFunction };
 
 function wrapClassComponent<T extends ComponentClass>(Component: T): T {
   // 8.1.10 之前的版本是通过 extends 传入 Component 的 mixin 方式
@@ -48,7 +48,7 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
   // 所以，在 8.1.10 后的版本采用「直接修改原型」的方式实现
   const proto = Component.prototype as Component;
   const { render, componentWillUnmount } = proto;
-  proto.render = function (this: ComponentObserver) {
+  proto.render = function (this: ObserverComponent) {
     if (this.constructor !== Component) return render?.call(this);
     if (!this.__reactiver__) {
       let tick = 0;
@@ -59,7 +59,7 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
     }
     return this.__reactiver__();
   };
-  proto.componentWillUnmount = function (this: ComponentObserver) {
+  proto.componentWillUnmount = function (this: ObserverComponent) {
     this.__reactiver__!.unsubscribe!();
     componentWillUnmount?.call(this);
   };
@@ -90,9 +90,10 @@ function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
  * @returns 具有响应能力的组件
  */
 export function observer<T extends ComponentType>(target: T) {
-  if (!target) return target;
+  if (!target || target.__observer__) return target;
   const Wrapper = isClassComponent(target)
     ? wrapClassComponent(target)
     : wrapFunctionComponent(target);
+  target.__observer__ = true;
   return Wrapper as T & { displayName?: string };
 }
