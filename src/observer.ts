@@ -51,9 +51,10 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
   proto.render = function (this: ComponentObserver) {
     if (this.constructor !== Component) return render?.call(this);
     if (!this.__reactiver__) {
+      let tick = 0;
       this.__reactiver__ = createReactiver(
         () => render?.call(this),
-        () => this.setState([])
+        () => this.setState({ __tick__: ++tick })
       );
     }
     return this.__reactiver__();
