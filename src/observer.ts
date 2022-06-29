@@ -17,7 +17,14 @@ import {
   FunctionComponent,
   isClassComponent,
 } from "./util";
-import { ObserveData, ReactiveFunction, nextTick, reactivable } from "ober";
+import {
+  ObserveData,
+  ReactiveFunction,
+  define,
+  getOwnValue,
+  nextTick,
+  reactivable,
+} from "ober";
 
 import { isSyncRequired } from "./input";
 
@@ -49,6 +56,7 @@ function wrapClassComponent<T extends ComponentClass>(Component: T): T {
   const proto = Component.prototype as Component;
   const { render, componentWillUnmount } = proto;
   proto.render = function (this: ObserverComponent) {
+    // 如果是实被子类调用直接执行原 render
     if (this.constructor !== Component) return render?.call(this);
     if (!this.__reactiver__) {
       let tick = 0;
@@ -90,10 +98,11 @@ function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
  * @returns 具有响应能力的组件
  */
 export function observer<T extends ComponentType>(target: T) {
-  if (!target || target.__observer__) return target;
+  if (!target || getOwnValue(target, "__observer__")) return target;
   const Wrapper = isClassComponent(target)
     ? wrapClassComponent(target)
     : wrapFunctionComponent(target);
   target.__observer__ = true;
+  define(target, "__observer__", true);
   return Wrapper as T & { displayName?: string };
 }
