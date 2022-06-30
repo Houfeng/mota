@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "8.1.13",
+  "version": "8.1.16",
   "description": "An extremely lightweight and responsive state management library",
   "module": "./dist/mota-es.js",
   "main": "./dist/mota-cjs.js",
@@ -21,7 +21,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "ober": "8.2.16",
+    "ober": "8.3.0",
     "tslib": "*"
   },
   "peerDependencies": {

@@ -20,7 +20,9 @@ export type FunctionComponent = ((...args: any[]) => ReactNode) & {
   displayName?: string;
 };
 
-export type ComponentType = ComponentClass | FunctionComponent;
+export type ComponentType = (ComponentClass | FunctionComponent) & {
+  __observer__?: boolean;
+};
 
 export function isClassComponent(
   target: ComponentType
