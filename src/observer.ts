@@ -93,7 +93,7 @@ function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
 }
 
 /**
- * 将一个组件转换为可响应组件
+ * 将一个组件转换为可响应组件 (不能是 memo/forwardRef/lazy 后的组件)
  * @param target 原类组件或函数组件
  * @returns 具有响应能力的组件
  */
