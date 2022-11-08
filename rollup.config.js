@@ -8,27 +8,27 @@ const externals = {
   'react-dom': 'ReactDOM',
 }
 
-const createConf = ({ min } = {}) => {
+const createConf = ({ name, input, min } = {}) => {
   const suffix = min ? '.min' : '';
   return {
-    input: './src/index.ts',
+    input: input,
     output: [
       {
-        file: `./dist/mota-es${suffix}.js`,
+        file: `./dist/${name}-es${suffix}.js`,
         format: 'es'
       },
       {
-        file: `./dist/mota-cjs${suffix}.js`,
+        file: `./dist/${name}-cjs${suffix}.js`,
         format: 'cjs'
       },
       {
-        file: `./dist/mota-umd${suffix}.js`,
+        file: `./dist/${name}-umd${suffix}.js`,
         format: 'umd',
         name: 'Mota',
         globals: externals,
       },
       {
-        file: `./dist/mota-iife${suffix}.js`,
+        file: `./dist/${name}-iife${suffix}.js`,
         format: 'iife',
         name: 'Mota',
         globals: externals,
@@ -46,7 +46,12 @@ const createConf = ({ min } = {}) => {
   };
 };
 
+const normalOptions = { name: 'mota', input: './src/index.ts' };
+const serverOptions = { name: 'mota-server', input: './src/server.ts' };
+
 export default [
-  createConf(),
-  createConf({ min: true }),
+  createConf({ ...normalOptions }),
+  createConf({ ...normalOptions, min: true }),
+  createConf({ ...serverOptions }),
+  createConf({ ...serverOptions, min: true }),
 ];

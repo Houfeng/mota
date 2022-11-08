@@ -4,11 +4,8 @@
  * @author Houfeng <houzhanfeng@gmail.com>
  */
 
-import { ObserveConfig, nextTick } from "ober";
-
-import { unstable_batchedUpdates } from "./batch";
+import { ObserveConfig } from "ober";
 import { name } from "./info";
-import { AnyFunction } from "./util";
 
 export {
   observable,
@@ -22,19 +19,10 @@ export {
   nextTick,
   ObserveConfig,
   ObserveSpy,
-  takeDependencies,
   isProxy,
   type ObserveMode,
 } from "ober";
 
 export { version } from "./info";
 
-export { observer } from "./observer";
-export { useObservable, useWatch, useAutoRun, useComputed } from "./hooks";
-
-export function setBatchHandler(fn: AnyFunction) {
-  nextTick.batch = fn;
-}
-
-setBatchHandler(unstable_batchedUpdates);
 ObserveConfig.logPrefix = name.toLocaleUpperCase();
