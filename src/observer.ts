@@ -26,15 +26,19 @@ import {
   reactivable,
 } from "ober";
 
-import { isSyncRequired } from "./input";
+import { inSyncHandler } from "./sync";
+import { isSyncInput } from "./input";
 
 function createReactiver(
   render: (...args: any[]) => ReactNode,
   requestUpdate: () => void,
   bind = true
 ) {
-  const update = (info?: ObserveData) =>
-    isSyncRequired(info?.value) ? requestUpdate() : nextTick(requestUpdate);
+  const update = (info?: ObserveData) => {
+    return inSyncHandler() || isSyncInput(info?.value)
+      ? requestUpdate()
+      : nextTick(requestUpdate);
+  };
   return reactivable(render, { bind, update, batch: false });
 }
 
@@ -93,7 +97,7 @@ function wrapFunctionComponent<T extends FunctionComponent>(FC: T): T {
 }
 
 /**
- * 将一个组件转换为可响应组件
+ * 将一个组件转换为可响应组件 (不能是 memo/forwardRef/lazy 后的组件)
  * @param target 原类组件或函数组件
  * @returns 具有响应能力的组件
  */

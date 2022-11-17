@@ -8,7 +8,7 @@ import { AnyFunction, inBrowser } from "./util";
 
 import { ChangeEvent } from "react";
 
-let timer: any = 0;
+let timer: ReturnType<typeof setTimeout> | null;
 let composing = false;
 let inputting = false;
 let value: any = null;
@@ -36,6 +36,6 @@ bind("input", (event: ChangeEvent<HTMLInputElement>) => {
   }, 0);
 });
 
-export function isSyncRequired(updateValue: any) {
+export function isSyncInput(updateValue: any) {
   return (inputting || composing) && value === updateValue;
 }

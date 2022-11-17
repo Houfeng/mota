@@ -28,9 +28,9 @@ export function useObservable<T extends object>(
  * @param handler 执行函数，由 selector 的计算结果决定是否重新执行
  * @param immed 是否立即执行一次 handler
  */
-export function useWatch(
-  selector: () => any,
-  handler: (newValue?: any, oldValue?: any) => void,
+export function useWatch<T>(
+  selector: () => T,
+  handler: (newValue?: T, oldValue?: T) => void,
   immed = false
 ) {
   return useLayoutEffect(() => watch(selector, handler, immed), [immed]);

@@ -86,7 +86,7 @@ describe('observer', () => {
         assert.strictEqual(renderCount, 1);
         done();
       }, 100);
-    }, 100)
+    }, 100);
   });
 
 });
