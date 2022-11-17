@@ -24,5 +24,6 @@ export {
 } from "ober";
 
 export { version } from "./info";
+export { sync } from "./sync";
 
 ObserveConfig.logPrefix = name.toLocaleUpperCase();

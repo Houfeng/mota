@@ -26,15 +26,19 @@ import {
   reactivable,
 } from "ober";
 
-import { isSyncRequired } from "./input";
+import { inSyncHandler } from "./sync";
+import { isSyncInput } from "./input";
 
 function createReactiver(
   render: (...args: any[]) => ReactNode,
   requestUpdate: () => void,
   bind = true
 ) {
-  const update = (info?: ObserveData) =>
-    isSyncRequired(info?.value) ? requestUpdate() : nextTick(requestUpdate);
+  const update = (info?: ObserveData) => {
+    return inSyncHandler() || isSyncInput(info?.value)
+      ? requestUpdate()
+      : nextTick(requestUpdate);
+  };
   return reactivable(render, { bind, update, batch: false });
 }
 
