@@ -12,7 +12,7 @@ export function inSyncHandler() {
   return syncing;
 }
 
-export function sync<T extends AnyFunction>(handler: T) {
+export function sync<T extends AnyFunction>(handler: T): ReturnType<T> {
   const originState = syncing;
   syncing = true;
   const result = handler();
