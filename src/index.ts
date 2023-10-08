@@ -28,6 +28,7 @@ export {
 } from "ober";
 
 export { version } from "./info";
+export { sync } from "./sync";
 
 export { observer } from "./observer";
 export { useObservable, useWatch, useAutoRun, useComputed } from "./hooks";
