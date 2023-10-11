@@ -1,6 +1,6 @@
 {
   "name": "mota",
-  "version": "8.2.5",
+  "version": "8.2.6",
   "description": "An extremely lightweight and responsive state management library",
   "module": "./dist/mota-es.js",
   "main": "./dist/mota-cjs.js",
@@ -9,28 +9,29 @@
   "react-native": "./dist/mota-native-es.js",
   "exports": {
     ".": {
+      "types": "./types/index.d.ts",
       "require": "./dist/mota-cjs.js",
       "node": "./dist/mota-cjs.js",
       "import": "./dist/mota-es.js",
       "default": "./dist/mota-es.js",
-      "types": "./types/index.d.ts",
       "browser": "./dist/mota-es.js",
       "react-native": "./dist/mota-native-es.js"
     },
     "./server": {
+      "types": "./types/server.d.ts",
       "require": "./dist/mota-server-cjs.js",
       "node": "./dist/mota-server-cjs.js",
       "import": "./dist/mota-server-es.js",
-      "default": "./dist/mota-server-es.js",
-      "types": "./types/server.d.ts"
+      "default": "./dist/mota-server-es.js"
     },
     "./native": {
+      "types": "./types/native.d.ts",
       "require": "./dist/mota-native-cjs.js",
       "node": "./dist/mota-native-cjs.js",
       "import": "./dist/mota-native-es.js",
-      "default": "./dist/mota-native-es.js",
-      "types": "./types/native.d.ts"
-    }
+      "default": "./dist/mota-native-es.js"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "config": "dn config registry https://registry.npmjs.com/",
