@@ -6,6 +6,7 @@
 
 import { ObserveConfig, nextTick } from "ober";
 
+import { unstable_batchedUpdates } from "react-native";
 import { name } from "./info";
 import { AnyFunction } from "./util";
 
@@ -36,4 +37,5 @@ export function setBatchHandler(fn: AnyFunction) {
   nextTick.batch = fn;
 }
 
+setBatchHandler(unstable_batchedUpdates);
 ObserveConfig.logPrefix = name.toLocaleUpperCase();

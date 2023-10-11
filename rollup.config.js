@@ -6,6 +6,7 @@ import typescript from 'rollup-plugin-typescript2';
 const externals = {
   'react': 'React',
   'react-dom': 'ReactDOM',
+  'react-native': 'ReactNative',
 }
 
 const createConf = ({ name, input, min } = {}) => {
@@ -48,10 +49,16 @@ const createConf = ({ name, input, min } = {}) => {
 
 const normalOptions = { name: 'mota', input: './src/index.ts' };
 const serverOptions = { name: 'mota-server', input: './src/server.ts' };
+const nativeOptions = { name: 'mota-native', input: './src/native.ts' };
 
 export default [
+  // normal
   createConf({ ...normalOptions }),
   createConf({ ...normalOptions, min: true }),
+  // server
   createConf({ ...serverOptions }),
   createConf({ ...serverOptions, min: true }),
+  // native 
+  createConf({ ...nativeOptions }),
+  createConf({ ...nativeOptions, min: true }),
 ];

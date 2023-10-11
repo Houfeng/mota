@@ -1,5 +1,6 @@
 *.log
 .DS_Store
+.vscode
 node_modules/
 .nyc_output/
 coverage/
@@ -11,8 +12,10 @@ examples/
 example/
 tslint.json
 tsconfig.json
+tsconfig.dev.json
 jsconfig.json
 .eslintrc.yml
+.eslintrc
 server.yml
 .dawn/
 *.js.map

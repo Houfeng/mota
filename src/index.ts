@@ -6,7 +6,7 @@
 
 import { ObserveConfig, nextTick } from "ober";
 
-import { unstable_batchedUpdates } from "./batch";
+import { unstable_batchedUpdates } from "react-dom";
 import { name } from "./info";
 import { AnyFunction } from "./util";
 

@@ -5,6 +5,33 @@
   "module": "./dist/mota-es.js",
   "main": "./dist/mota-cjs.js",
   "types": "./types/index.d.ts",
+  "browser": "./dist/mota-es.js",
+  "react-native": "./dist/mota-native-es.js",
+  "exports": {
+    ".": {
+      "require": "./dist/mota-cjs.js",
+      "node": "./dist/mota-cjs.js",
+      "import": "./dist/mota-es.js",
+      "default": "./dist/mota-es.js",
+      "types": "./types/index.d.ts",
+      "browser": "./dist/mota-es.js",
+      "react-native": "./dist/mota-native-es.js"
+    },
+    "./server": {
+      "require": "./dist/mota-server-cjs.js",
+      "node": "./dist/mota-server-cjs.js",
+      "import": "./dist/mota-server-es.js",
+      "default": "./dist/mota-server-es.js",
+      "types": "./types/server.d.ts"
+    },
+    "./native": {
+      "require": "./dist/mota-native-cjs.js",
+      "node": "./dist/mota-native-cjs.js",
+      "import": "./dist/mota-native-es.js",
+      "default": "./dist/mota-native-es.js",
+      "types": "./types/native.d.ts"
+    }
+  },
   "scripts": {
     "config": "dn config registry https://registry.npmjs.com/",
     "test": "npm run config && dn test && dn build -e prod",
@@ -25,7 +52,9 @@
     "tslib": "*"
   },
   "peerDependencies": {
-    "react": "*"
+    "react": "*",
+    "react-dom": "*",
+    "react-native": "*"
   },
   "peerDependenciesMeta": {
     "react-dom": {
@@ -59,6 +88,7 @@
     "prettier": "2.6.2",
     "react": "*",
     "react-dom": "*",
+    "react-native": "*",
     "rollup": "^2.2.0",
     "rollup-plugin-alias": "2.2.0",
     "rollup-plugin-cleanup": "^3.2.1",
